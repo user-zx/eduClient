@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="edu">
     <img src="./assets/logo.png">
     <h1></h1>
     <h2>Essential Links</h2>
@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
+#edu {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
