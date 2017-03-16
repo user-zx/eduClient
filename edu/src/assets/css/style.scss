@@ -60,6 +60,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
         .el-menu-item-group{
           >ul{
             >.el-menu-item{
+              height:36px;
+              line-height: 36px;
+              font-size: 14px;
               color:#ffffff;
               border-right: 2px solid transparent;
               transition: all 1s;
@@ -76,6 +79,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
         }
       }
       >.el-menu-item{
+        height:62px;
+        line-height: 62px;
+        font-size: 18px;
         color:#ffffff;
         border-right: 2px solid transparent;
         transition: all 1s;
@@ -105,6 +111,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
       >.el-submenu{
         border-bottom: 1px solid #2f344f;
         >.el-submenu__title{
+          height: 62px;
+          line-height: 62px;
+          font-size: 18px;
           color:#ffffff;
           border-bottom:1px solid #07080e;
           &:hover{
@@ -138,7 +147,10 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
             border-bottom-color: transparent;
           }
         }
-        >.el-menu-item{
+        /*
+        * 这里没有折叠效果的左侧菜单样式代码
+        */
+        /*>.el-menu-item{
           padding:0 35px !important;
           height:36px;
           line-height: 36px;
@@ -191,7 +203,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
               margin-right: 1px;
             }
           }
-        }
+        }*/
       }
     }
   }

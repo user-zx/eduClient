@@ -8,7 +8,7 @@
                 <img src="../../../assets/images/logo.png" alt="logo" />
             </a>
         </div>
-        <el-menu mode="vertical" default-active="panorama" :unique-opened="true" :router="true" class="el-menu-vertical" @open="handleOpen" @close="handleClose">
+        <el-menu mode="vertical" :default-active="routerName" :router="true" :unique-opened="true" class="el-menu-vertical" @open="handleOpen" @close="handleClose">
             <el-submenu index="1">
                 <template slot="title"><i class="nav-icon nav-icon1"></i>舆情管理</template>
                 <el-menu-item-group>
@@ -22,20 +22,20 @@
             <el-submenu index="2">
                 <template slot="title"><i class="nav-icon nav-icon2"></i>情报内参</template>
                 <el-menu-item-group>
-                    <el-menu-item index="2-1">行业动态</el-menu-item>
-                    <el-menu-item index="2-2">人物动态</el-menu-item>
-                    <el-menu-item index="2-3">两微洞察</el-menu-item>
-                    <el-menu-item index="2-4">媒体声量</el-menu-item>
-                    <el-menu-item index="2-5">内参报告</el-menu-item>
+                    <el-menu-item index="industryNews">行业动态</el-menu-item>
+                    <el-menu-item index="characterNews">人物动态</el-menu-item>
+                    <el-menu-item index="seeClearly">两微洞察</el-menu-item>
+                    <el-menu-item index="mediaCoverage">媒体声量</el-menu-item>
+                    <el-menu-item index="report">内参报告</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
             <el-submenu index="3">
                 <template slot="title"><i class="nav-icon nav-icon3"></i>业务工具</template>
                 <el-menu-item-group>
-                    <el-menu-item index="3-1">两微监测</el-menu-item>
+                    <el-menu-item index="seeWbWeChat">两微监测</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
-            <el-menu-item index="4"><i class="nav-icon nav-icon4"></i>我的关注</el-menu-item>
+            <el-menu-item index="myAttention"><i class="nav-icon nav-icon4"></i>我的关注</el-menu-item>
             <!--<div class="column">-->
                 <!--<el-menu-item class="title" index="1"></el-menu-item>-->
                 <!--<el-menu-item index="1-1">全景舆情</el-menu-item>-->
@@ -67,10 +67,25 @@
     export default{
         data(){
             return {
-                
+                routerName:"",
             }
         },
         components:{} ,
+        watch: {
+            /*
+            * 监测路由地址，当地址变化时，对应不同的菜单。
+            * */
+            '$route.path': {
+                immediate: true,
+                handler(val) {
+                    if(val){
+                        let url=val.split('/')[1];
+                        this.routerName=url;
+                    }
+
+                }
+            }
+        },
         methods:{
             handleOpen(key, keyPath) {
                 console.log(key, keyPath);

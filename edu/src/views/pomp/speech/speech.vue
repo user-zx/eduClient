@@ -17,7 +17,7 @@
     export default{
         data(){
             return {
-                msg:"舆情预警"
+                msg:"舆情报告"
             }
         },
         components:{} ,

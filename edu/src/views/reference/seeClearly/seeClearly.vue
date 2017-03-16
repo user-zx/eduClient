@@ -1,5 +1,5 @@
 /**
-* Created by zhangxin on 2017/3/16.
+* Created by zhangxin on 2017/3/17.
 */
 <template>
     <div>
@@ -17,7 +17,7 @@
     export default{
         data(){
             return {
-                msg:"舆情日报"
+                msg:"两微洞察"
             }
         },
         components:{} ,
