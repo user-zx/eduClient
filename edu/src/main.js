@@ -8,6 +8,7 @@ import Vuex from 'vuex';
 import routerConfig from './router.config';
 import vueConfig from './store.config';
 import "vue-style-loader!css-loader!sass-loader!./assets/css/style.scss";
+import 'vue-style-loader!css-loader!sass-loader!element-ui/lib/theme-default/index.css'
 
 Vue.config.debug=true;
 Vue.use(vueRouter);

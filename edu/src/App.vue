@@ -1,24 +1,27 @@
 <template>
-    <div id="edu" class="page">
-        <div class="page-left">
-            <left></left>
-        </div>
-        <div class="page-content">
-            <div class="page-header">
-                <top></top>
+    <div id="edu">
+        <div class="page">
+            <div class="page-left">
+                <left></left>
             </div>
-            <div class="page-wrapper">
-                <div class="test">
-                    ceshineorpmnhg
+            <div class="page-content">
+                <div class="page-header">
+                    <top></top>
+                </div>
+                <div class="page-wrapper">
+                    <router-view></router-view>
                 </div>
             </div>
         </div>
+        <bottom></bottom>
     </div>
+
 </template>
 
 <script>
 import top from './components/layout/top/top.vue';
 import left from './components/layout/left/left.vue';
+import bottom from './components/layout/bottom/bottom.vue';
 export default {
   name: 'app',
   data () {
@@ -26,10 +29,12 @@ export default {
       msg: 'Welcome to Your Vue.js App'
     }
   },
-  components:{top,left}
+  components:{top,left,bottom},
+    mounted(){
+        $(".page").height($(window).height()-$(".footer").height());
+        $(window).resize(()=> {
+            $(".page").height($(window).height()-$(".footer").height());
+        });
+    }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
