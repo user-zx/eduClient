@@ -1,0 +1,41 @@
+/**
+ * Created by zhangxin on 2017/3/17.
+ * 
+ */
+.overview{
+  padding:27px 20px 30px;
+  background-color: #21273d;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  >div{
+    display: inline-block;
+    vertical-align: middle;
+    &.overview-title{
+      width: 96px;
+      text-align: right;
+      .title{
+        font-size: 14px;
+      }
+    }
+    &.overview-content{
+      padding-left: 42px;
+      padding-right: 42px;
+      border-right: 1px solid rgba(255,255,255,.2);
+      text-align: center;
+      .number,.number-icon{display: inline-block;vertical-align: middle;}
+      .number-icon{
+        margin-bottom: 3px;
+        width: 31px;
+        height:27px;
+        background-color: #b8b8b8;
+      }
+      .number{
+        font-size: 26px;
+      }
+      &:last-child{
+        border-right: none;
+      }
+    }
+  }
+}

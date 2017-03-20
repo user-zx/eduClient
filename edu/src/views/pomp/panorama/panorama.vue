@@ -3,10 +3,141 @@
 */
 <template>
     <div class="panorama">
-        {{msg}}
+        <overview></overview>
+        <el-row :gutter="10">
+            <el-col :span="12">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span class="icons icons-chart"></span><span>舆情数据统计</span>
+                    </div>
+                    <div class="text item">
+                        <el-table :data="tableData" style="width: 100%" border class="tran-table">
+                            <el-table-column prop="col" label="" align="center"></el-table-column>
+                            <el-table-column prop="today" label="今天" align="center"></el-table-column>
+                            <el-table-column prop="yesterday" label="昨天" align="center"></el-table-column>
+                            <el-table-column prop="week" label="近7天" align="center"></el-table-column>
+                            <el-table-column prop="month" label="近30天" align="center"></el-table-column>
+                        </el-table>
+                    </div>
+                </el-card>
+            </el-col>
+            <el-col :span="12">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span class="icons icons-chart"></span><span>舆情数据锥形图</span>
+                    </div>
+                    <div class="text item">
+
+                    </div>
+                </el-card>
+            </el-col>
+            <el-col :span="12">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span class="icons icons-chart"></span><span>载体分布统计</span>
+                    </div>
+                    <div class="text item">
+
+                    </div>
+                </el-card>
+            </el-col>
+            <el-col :span="12">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span class="icons icons-chart"></span><span>人物统计</span>
+                    </div>
+                    <div class="text item">
+
+                    </div>
+                </el-card>
+            </el-col>
+            <el-col :span="24">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span class="icons icons-chart"></span><span>载体趋势分析</span>
+                    </div>
+                    <div class="text item">
+
+                    </div>
+                </el-card>
+            </el-col>
+            <el-col :span="12">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span class="icons icons-chart"></span><span>热点舆情</span>
+                    </div>
+                    <div class="text item">
+                        <el-tabs v-model="activeName" class="center-tabs" @tab-click="handleClick">
+                            <el-tab-pane label="今日热点" name="todayHot">今日热点</el-tab-pane>
+                            <el-tab-pane label="近7天热点" name="weekHot">近7天热点</el-tab-pane>
+                            <el-tab-pane label="近30天热点" name="monthHot">近30天热点</el-tab-pane>
+                        </el-tabs>
+                    </div>
+                </el-card>
+            </el-col>
+            <el-col :span="12">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span class="icons icons-chart"></span><span>人物热点</span>
+                    </div>
+                    <div class="text item">
+
+                    </div>
+                </el-card>
+            </el-col>
+            <el-col :span="12">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span class="icons icons-chart"></span><span>微信热点</span>
+                    </div>
+                    <div class="text item">
+                        <el-table :data="tableData" style="width: 100%" border class="tran-table yellow-table">
+                            <el-table-column prop="col" label="标题" align="center"></el-table-column>
+                            <el-table-column prop="today" label="主题" align="center"></el-table-column>
+                            <el-table-column prop="yesterday" label="阅读量" align="center"></el-table-column>
+                            <el-table-column prop="week" label="时间" align="center"></el-table-column>
+                        </el-table>
+                    </div>
+                </el-card>
+            </el-col>
+            <el-col :span="12">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span class="icons icons-chart"></span><span>微博热点</span>
+                    </div>
+                    <div class="text item">
+                        <el-table :data="tableData" style="width: 100%" border class="tran-table yellow-table">
+                            <el-table-column prop="col" label="标题" align="center"></el-table-column>
+                            <el-table-column prop="today" label="主题" align="center"></el-table-column>
+                            <el-table-column prop="yesterday" label="阅读量" align="center"></el-table-column>
+                            <el-table-column prop="week" label="时间" align="center"></el-table-column>
+                        </el-table>
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
     </div>
 </template>
 <style lang="scss" scoped>
+    .el-row {
+        z-index:0;
+        .el-col {
+            margin-top: 10px;
+            >div{
+                height: 519px;
+                background-color: #21273d;
+            }
+        }
+    }
+</style>
+<style lang="scss">
+    .center-tabs{
+        .el-tabs__nav {
+            width: 289px;
+            float: none;
+            margin: 0 auto;
+        }
+    }
 </style>
 <script>
      /*
@@ -14,15 +145,80 @@
     * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
     * import loginButton from './components/loginButton.vue';
     */
+    import "vue-style-loader!css-loader!sass-loader!../../../assets/css/table/tran-table.css.scss";
+    import overview from './overview/overview.vue';
     export default{
         data(){
             return {
-                msg:"全景舆情"
+                msg:"全景舆情",
+                tableData: [{
+                    col: '论坛',
+                    today: '7263',
+                    yesterday: '231',
+                    week: '824682',
+                    month: '21472332'
+                }, {
+                    col: '博客',
+                    today: '7263',
+                    yesterday: '231',
+                    week: '824682',
+                    month: '21472332'
+                }, {
+                    col: '新闻',
+                    today: '7263',
+                    yesterday: '231',
+                    week: '824682',
+                    month: '21472332'
+                }, {
+                    col: '微博',
+                    today: '7263',
+                    yesterday: '231',
+                    week: '824682',
+                    month: '21472332'
+                },
+                {
+                    col: '全部',
+                    today: '7263',
+                    yesterday: '231',
+                    week: '824682',
+                    month: '21472332'
+                },
+                {
+                    col: '相关',
+                    today: '7263',
+                    yesterday: '231',
+                    week: '824682',
+                    month: '21472332'
+                },
+                {
+                    col: '舆情',
+                    today: '7263',
+                    yesterday: '231',
+                    week: '824682',
+                    month: '21472332'
+                },
+                {
+                    col: '负面',
+                    today: '7263',
+                    yesterday: '231',
+                    week: '824682',
+                    month: '21472332'
+                },
+                {
+                    col: '微信',
+                    today: '7263',
+                    yesterday: '231',
+                    week: '824682',
+                    month: '21472332'
+                }],
+                activeName: 'todayHot'
             }
         },
-        components:{} ,
+        components:{overview} ,
         methods:{
-            
+            handleClick(tab,event){
+                console.log(tab,event)
+            }
         },
         mounted(){
             

@@ -1,0 +1,74 @@
+/**
+ * Created by zhangxin on 2017/3/20.
+ * 
+ */
+.tran-table {
+  &.el-table{
+    background-color:transparent;
+    border-color:rgba(96,163,255,.1);
+    &.yellow-table{
+      tr{
+        td:first-child{
+          color:#d0d7ff;
+        }
+      }
+      th{
+        background-color: #283451;
+        .cell{
+          color:#e4f09e;
+        }
+      }
+    }
+    &:after,&:before{
+      background-color: transparent;
+    }
+    div{
+      border-color: rgba(96,163,255,.1);
+    }
+    .el-table--border{
+      td{
+        border-color: rgba(96,163,255,.1);
+      }
+    }
+    .el-table--border{
+      th{
+        border-color: rgba(96,163,255,.1);
+      }
+    }
+    tr{
+      background-color: transparent;
+      &:hover{
+        background: transparent;
+        td{
+          background: transparent;
+        }
+      }
+    }
+    th{
+      background-color: transparent;
+      border-color:rgba(96,163,255,.1);
+      &.is-leaf{
+        border-color: rgba(96,163,255,.1);
+      }
+      .cell{
+        background-color: transparent;
+        border-color:rgba(96,163,255,.1);
+        color:#60a3ff;
+      }
+    }
+    td{
+      color:#d0d7ff;
+      border-color:rgba(96,163,255,.1);
+    }
+    tbody,thead{
+      border-color:rgba(96,163,255,.1);
+    }
+    tr{
+      td{
+        &:first-child{
+          color:#60a3ff;
+        }
+      }
+    }
+  }
+}
