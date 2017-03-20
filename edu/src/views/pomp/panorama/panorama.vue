@@ -68,9 +68,33 @@
                     </div>
                     <div class="text item">
                         <el-tabs v-model="activeName" class="center-tabs" @tab-click="handleClick">
-                            <el-tab-pane label="今日热点" name="todayHot">今日热点</el-tab-pane>
-                            <el-tab-pane label="近7天热点" name="weekHot">近7天热点</el-tab-pane>
-                            <el-tab-pane label="近30天热点" name="monthHot">近30天热点</el-tab-pane>
+                            <el-tab-pane label="今日热点" name="todayHot">
+                                <el-table :data="tableData" :show-header="false" style="width: 100%" border class="tran-table yellow-table">
+                                    <el-table-column prop="col" label="" align="center"></el-table-column>
+                                    <el-table-column prop="today" label="今天" align="center"></el-table-column>
+                                    <el-table-column prop="yesterday" label="昨天" align="center"></el-table-column>
+                                    <el-table-column prop="week" label="近7天" align="center"></el-table-column>
+                                    <el-table-column prop="month" label="近30天" align="center"></el-table-column>
+                                </el-table>
+                            </el-tab-pane>
+                            <el-tab-pane label="近7天热点" name="weekHot">
+                                <el-table :data="tableData" :show-header="false" style="width: 100%" border class="tran-table yellow-table">
+                                    <el-table-column prop="col" label="" align="center"></el-table-column>
+                                    <el-table-column prop="today" label="今天" align="center"></el-table-column>
+                                    <el-table-column prop="yesterday" label="昨天" align="center"></el-table-column>
+                                    <el-table-column prop="week" label="近7天" align="center"></el-table-column>
+                                    <el-table-column prop="month" label="近30天" align="center"></el-table-column>
+                                </el-table>
+                            </el-tab-pane>
+                            <el-tab-pane label="近30天热点" name="monthHot">
+                                <el-table :data="tableData" :show-header="false" style="width: 100%" border class="tran-table yellow-table">
+                                    <el-table-column prop="col" label="" align="center"></el-table-column>
+                                    <el-table-column prop="today" label="今天" align="center"></el-table-column>
+                                    <el-table-column prop="yesterday" label="昨天" align="center"></el-table-column>
+                                    <el-table-column prop="week" label="近7天" align="center"></el-table-column>
+                                    <el-table-column prop="month" label="近30天" align="center"></el-table-column>
+                                </el-table>
+                            </el-tab-pane>
                         </el-tabs>
                     </div>
                 </el-card>
@@ -81,7 +105,35 @@
                         <span class="icons icons-chart"></span><span>人物热点</span>
                     </div>
                     <div class="text item">
-
+                        <el-tabs v-model="activeName2" class="center-tabs" @tab-click="handleClick">
+                            <el-tab-pane label="今日热点" name="todayHot">
+                                <el-table :data="tableData" :show-header="false" style="width: 100%" border class="tran-table yellow-table">
+                                    <el-table-column prop="col" label="" align="center"></el-table-column>
+                                    <el-table-column prop="today" label="今天" align="center"></el-table-column>
+                                    <el-table-column prop="yesterday" label="昨天" align="center"></el-table-column>
+                                    <el-table-column prop="week" label="近7天" align="center"></el-table-column>
+                                    <el-table-column prop="month" label="近30天" align="center"></el-table-column>
+                                </el-table>
+                            </el-tab-pane>
+                            <el-tab-pane label="近7天热点" name="weekHot">
+                                <el-table :data="tableData" :show-header="false" style="width: 100%" border class="tran-table yellow-table">
+                                    <el-table-column prop="col" label="" align="center"></el-table-column>
+                                    <el-table-column prop="today" label="今天" align="center"></el-table-column>
+                                    <el-table-column prop="yesterday" label="昨天" align="center"></el-table-column>
+                                    <el-table-column prop="week" label="近7天" align="center"></el-table-column>
+                                    <el-table-column prop="month" label="近30天" align="center"></el-table-column>
+                                </el-table>
+                            </el-tab-pane>
+                            <el-tab-pane label="近30天热点" name="monthHot">
+                                <el-table :data="tableData" :show-header="false" style="width: 100%" border class="tran-table yellow-table">
+                                    <el-table-column prop="col" label="" align="center"></el-table-column>
+                                    <el-table-column prop="today" label="今天" align="center"></el-table-column>
+                                    <el-table-column prop="yesterday" label="昨天" align="center"></el-table-column>
+                                    <el-table-column prop="week" label="近7天" align="center"></el-table-column>
+                                    <el-table-column prop="month" label="近30天" align="center"></el-table-column>
+                                </el-table>
+                            </el-tab-pane>
+                        </el-tabs>
                     </div>
                 </el-card>
             </el-col>
@@ -133,9 +185,45 @@
 <style lang="scss">
     .center-tabs{
         .el-tabs__nav {
-            width: 289px;
             float: none;
             margin: 0 auto;
+            width: 289px;
+        }
+        .el-tabs__active-bar{
+            border-radius: 4px;
+            background-color: #e4f09e;
+        }
+        .el-tabs__header{
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        .el-tabs__item{
+            position: relative;
+            font-size: 16px;
+            transition: color .25s;
+            color:rgba(119,145,231,.4);
+            &:after{
+                position: absolute;
+                right: 0;
+                top:50%;
+                margin-top: -8px;
+                width: 1px;
+                height:16px;
+                content: " ";
+                display: block;
+                background-color: #2f4164;
+            }
+            &:last-child{
+                &:after{
+                     width: 0;
+                 }
+             }
+            &:hover{
+                color:#e4f09e;
+            }
+            &.is-active{
+                color:#e4f09e;
+            }
         }
     }
 </style>
@@ -211,7 +299,8 @@
                     week: '824682',
                     month: '21472332'
                 }],
-                activeName: 'todayHot'
+                activeName: 'todayHot',
+                activeName2:'todayHot'
             }
         },
         components:{overview} ,
@@ -221,7 +310,8 @@
             }
         },
         mounted(){
-            
+            let vm =this;
+            console.log(vm.tableData);
         }
     }
 </script>
