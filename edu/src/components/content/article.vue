@@ -154,6 +154,7 @@
             .article-danger-button{
                 float: right;
                 background: #c71b1b;
+                margin-top: -8px;
             }
 
             @media screen and (min-width: 1260px){

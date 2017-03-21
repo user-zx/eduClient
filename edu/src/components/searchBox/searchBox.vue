@@ -20,9 +20,6 @@
                 <span class="search-list">北京大学</span>
                 <span class="search-list">北京航空航天大学</span>
                 <span class="search-list">北京大学</span>
-                <span class="search-list">北京航空航天大学</span>
-                <span class="search-list">北京大学</span>
-                <span class="search-list">北京航空航天大学</span>
             </el-col>
             <el-col :span="2" class="paddingR10 alignRight">
                 <el-button type="primary" class="default-button">添加高校</el-button>
@@ -123,6 +120,24 @@
     }
 </style>
 <script>
-
-
+    export default{
+        data(){
+            return {
+                msg:""
+            }
+        },
+        components:{} ,
+        methods:{
+           add(){
+               let vm = this;
+               setTimeout(function () {
+                   console.log(vm.searchData)
+               },100);
+           },
+        },
+        mounted(){
+            this.add();
+        },
+        props:["searchData"],
+    }
 </script>

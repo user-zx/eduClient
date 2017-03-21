@@ -5,7 +5,7 @@
     <div class="analyse">
         <bread-crumb></bread-crumb>
         <div id="search-container">
-            <search-box></search-box>
+            <search-box :searchData=searchData></search-box>
         </div>
         <div class="content">
             <div class="content-bar">
@@ -40,7 +40,8 @@
     export default{
         data(){
             return {
-                msg: "舆情监测"
+                msg: "舆情监测",
+                searchData:"",
             }
         },
         components: {breadCrumb, searchBox, articleContainer},
@@ -61,7 +62,42 @@
             this.setBreadCrumb();
         },
         mounted(){
+            let searchData = [
+                {
+                    'first-text' :  '选择高校:',
+                    'search-text': [
+                        {id: 0, text: '全部'},
+                        {id: 1, text: '北京大学'},
+                        {id: 2, text: '北京航空航天大学'},
+                        {id: 3, text: '清华大学'},
+                        {id: 4, text: '中央民族大学'},
+                        {id: 5, text: '北京邮电大学'},
+                        {id: 6, text: '北京传媒大学'},
+                        {id: 7, text: '北京科技大学'}
+                    ],
+                    'button-info': [
+                        {'button-text': '添加高校', 'id': 'add-college-btn'},
+                        {'button-text': '清空', 'id': 'clear-college-btn'}
+                    ]
+                },
+                {
+                    'first-text': '高校维度',
+                    'search-text': [
+                        {id: 0, text: '校园舆情'},
+                        {id: 1, text: '校园安全'},
+                        {id: 2, text: '违规违纪'},
+                        {id: 3, text: '媒体报道'},
+                        {id: 4, text: '人才培养'},
+                        {id: 5, text: '科学研究'},
+                        {id: 6, text: '微信微博'},
+                        {id: 7, text: '论坛贴吧'},
+                        {id: 8, text: '敏感时期'},
+                        {id: 9, text: '人物聚焦'}
+                    ]
+                }
+            ];
+            this.searchData = searchData;
+        },
 
-        }
     }
 </script>
