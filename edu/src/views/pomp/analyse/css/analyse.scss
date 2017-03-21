@@ -1,11 +1,18 @@
 .analyse {
 
+  color: #000;
+  font-family: "microsoft yahei";
+
   .paddingR10{
     padding-right: 10px;
   }
 
   .alignRight{
     text-align: right;
+  }
+
+  .marginB10{
+    margin-bottom: 10px;
   }
 
   .navbar {
@@ -19,4 +26,23 @@
     }
   }
 
+  .content-bar{
+    height: 80px;
+    background: #EFEFEF;
+
+    .content-bar-list{
+      list-style: none;
+      float:left;
+      font-size: 16px;
+      font-weight: bold;
+
+      li{
+        display: inline-block;
+        height: 80px;
+        line-height: 80px;
+        padding-left: 20px;
+        padding-right:20px;
+      }
+    }
+  }
 }

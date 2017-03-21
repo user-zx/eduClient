@@ -3,19 +3,19 @@
 */
 <template>
     <div class="analyse">
-        <div class="navbar">
-            <el-breadcrumb separator=">">
-                <el-breadcrumb-item>舆情管理</el-breadcrumb-item>
-                <el-breadcrumb-item>舆情监测</el-breadcrumb-item>
-            </el-breadcrumb>
-        </div>
+        <bread-crumb></bread-crumb>
         <div id="search-container">
             <search-box></search-box>
         </div>
         <div class="content">
             <div class="content-bar">
-
+                <ul class="content-bar-list">
+                    <li>全部</li>
+                    <li>阅读量</li>
+                    <li>时间</li>
+                </ul>
             </div>
+            <articleContainer></articleContainer>
         </div>
     </div>
 </template>
@@ -29,7 +29,9 @@
      * import loginButton from './components/loginButton.vue';
      */
     import "vue-style-loader!css-loader!sass-loader!./css/analyse.scss";
+    import breadCrumb from '../../../components/breadCrumb/breadCrumb.vue';
     import searchBox from '../../../components/searchBox/searchBox.vue'
+    import articleContainer from '../../../components/content/article.vue'
 
     export default{
         data(){
@@ -37,8 +39,23 @@
                 msg: "舆情监测"
             }
         },
-        components: {searchBox},
-        methods: {},
+        components: {breadCrumb, searchBox, articleContainer},
+        methods:{
+            setBreadCrumb(){
+                let breadcrumb=[
+                    {
+                        name:"舆情管理",to:{path:"/"}
+                    },
+                    {
+                        name:"舆情监测",to:{path:"/analyse"}
+                    }
+                ];
+                this.$store.commit("setBreadCrumb",breadcrumb);
+            }
+        },
+        created(){
+            this.setBreadCrumb();
+        },
         mounted(){
 
         }

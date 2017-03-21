@@ -111,7 +111,7 @@
 
             .el-col:first-child {
                 background: #e6e6e6;
-                padding-left: 15px;
+                padding-left: 20px;
             }
 
             button {
