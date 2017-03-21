@@ -31,9 +31,9 @@ export default {
   },
   components:{top,left,bottom},
     mounted(){
-        $(".page").height($(window).height()-$(".footer").height());
+        $(".page .page-wrapper").css({"min-height":$(window).height()-$(".footer").height()-$(".page-header").height()+"px"});
         $(window).resize(()=> {
-            $(".page").height($(window).height()-$(".footer").height());
+            $(".page .page-wrapper").css({"min-height":$(window).height()-$(".footer").height()-$(".page-header").height()+"px"});
         });
     }
 }

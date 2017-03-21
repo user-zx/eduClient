@@ -35,13 +35,18 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
   display: -ms-flexbox;
   display: flex;
   min-width: 1200px;
-  min-height: 768px;
   height:100%;
   background-color: skyblue;
   >.page-left{
     flex: 0 0 185px;
     background-color: #191c2d;
     z-index: 6;
+    .left-nav{
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 185px;
+    }
     .logo-aside{
       border-bottom: 1px solid #2f344f;
       .logo{
