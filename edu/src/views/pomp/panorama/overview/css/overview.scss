@@ -3,7 +3,7 @@
  * 
  */
 .overview{
-  padding:27px 20px 30px;
+  padding:27px 20px 30px 0px;
   background-color: #21273d;
   overflow-x: auto;
   overflow-y: hidden;
@@ -35,6 +35,16 @@
       }
       &:last-child{
         border-right: none;
+      }
+    }
+  }
+}
+@media screen and (max-width:1440px) {
+  .overview{
+    >div{
+      &.overview-content{
+        padding-left: 20px;
+        padding-right: 30px;
       }
     }
   }
