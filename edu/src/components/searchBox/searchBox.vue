@@ -114,9 +114,6 @@
                 padding-left: 20px;
             }
 
-            button {
-                height: 34px;
-            }
             @media screen and (min-width: 1260px){
                 button{
                     width: 84px;

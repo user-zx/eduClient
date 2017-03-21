@@ -14,6 +14,10 @@
                     <li>阅读量</li>
                     <li>时间</li>
                 </ul>
+                <div class="content-bar-button">
+                    <el-button type="primary"><i class="el-icon-plus marginR5"></i>事件库</el-button>
+                    <el-button type="primary"><i class="el-icon-plus marginR5"></i>批量关注</el-button>
+                </div>
             </div>
             <articleContainer></articleContainer>
         </div>

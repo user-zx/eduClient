@@ -156,9 +156,6 @@
                 background: #c71b1b;
             }
 
-            button {
-                height: 34px;
-            }
             @media screen and (min-width: 1260px){
                 button{
                     width: 84px;
