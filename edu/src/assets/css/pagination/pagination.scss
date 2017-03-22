@@ -1,0 +1,48 @@
+/**
+ * Created by zhangxin on 2017/3/22.
+ * 
+ */
+%btnPadding{
+  border-radius: 3px;
+  background-color: rgba(58,65,92,.5);
+  border: none;
+  color:#60a3ff;
+  .el-icon{
+    display: none;
+  }
+}
+.el-pagination{
+  &.edu-pagination{
+    text-align: right;
+    margin-top: 25px;
+    padding-right:40px;
+    color:#60a3ff;
+    button{
+      &.btn-prev{
+        @extend %btnPadding;
+        &:after{
+          padding:10px 20px;
+          content:"上一页"
+        }
+      },
+      &.btn-next{
+        @extend %btnPadding;
+        margin-left: 22px;
+        &:after{
+          padding:10px 20px;
+          content:"下一页"
+        }
+      }
+      &.disabled{
+        color:#97a8be;
+        background-color: rgba(58,65,92,.5);
+      }
+    }
+    .el-pagination__editor{
+      width: 49px !important;
+      color:#d0d7ff;
+      background-color: rgba(58,65,92,.5);
+      border-color: rgba(58,65,92,.5);
+    }
+  }
+}

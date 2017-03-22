@@ -127,7 +127,7 @@
                 <span class="search-list">昨天</span>
                 <span class="search-list">近7天</span>
                 <span class="search-list">近一个月</span>
-                <span class="search-list pointer" v-on:click="setDate()">自定义时间</span>
+                <span class="search-list" v-on:click="setDate()">自定义时间</span>
                 <span class="search-list date-span" v-show="show">
                     <el-date-picker v-model="value1" type="daterange" placeholder="选择日期范围">
                      </el-date-picker>

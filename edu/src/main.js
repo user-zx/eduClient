@@ -17,20 +17,14 @@ Vue.use(Vuex);
 Vue.use(ElementUI);
 const router =new vueRouter(routerConfig);
 const store = new Vuex.Store(vueConfig);
-/*
- //拦截器
- Vue.http.interceptors.push((request, next) => {
- request.method = 'POST';
- next((response) => {
- if(response.ok){
- if(response.data.success){
- return response;
- }else if(response.data.status=='401'){
- window.location.href="/";
- }
- }
- });
- });*/
+Vue.http.interceptors.push((request, next) => {
+    next((response) => {
+        if (response.status == 403) {
+            //to login
+            window.location.href="/login";
+        }
+    });
+});
 new Vue({
     router,
     store,

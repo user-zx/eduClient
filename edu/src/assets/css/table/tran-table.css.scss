@@ -19,6 +19,13 @@
         }
       }
     }
+    &.no-col-title{
+      tr{
+        td:first-child{
+          color:#d0d7ff;
+        }
+      }
+    }
     &:after,&:before{
       background-color: transparent;
     }

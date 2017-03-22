@@ -11,7 +11,7 @@
                         <span class="icons icons-chart"></span><span>舆情数据统计</span>
                     </div>
                     <div class="text item">
-                        <el-table :data="tableData" style="width: 100%" border class="tran-table">
+                        <el-table :data="opinionData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table">
                             <el-table-column prop="col" label="" align="center"></el-table-column>
                             <el-table-column prop="today" label="今天" align="center"></el-table-column>
                             <el-table-column prop="yesterday" label="昨天" align="center"></el-table-column>
@@ -27,7 +27,7 @@
                         <span class="icons icons-chart"></span><span>舆情数据锥形图</span>
                     </div>
                     <div class="text item">
-
+                        <IEcharts :option="opinionFunnel" :loading="opinionFunnelLoading"></IEcharts>
                     </div>
                 </el-card>
             </el-col>
@@ -227,91 +227,5 @@
         }
     }
 </style>
-<script>
-     /*
-    * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
-    * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
-    * import loginButton from './components/loginButton.vue';
-    */
-    import "vue-style-loader!css-loader!sass-loader!../../../assets/css/table/tran-table.css.scss";
-    import overview from './overview/overview.vue';
-    export default{
-        data(){
-            return {
-                msg:"全景舆情",
-                tableData: [{
-                    col: '论坛',
-                    today: '7263',
-                    yesterday: '231',
-                    week: '824682',
-                    month: '21472332'
-                }, {
-                    col: '博客',
-                    today: '7263',
-                    yesterday: '231',
-                    week: '824682',
-                    month: '21472332'
-                }, {
-                    col: '新闻',
-                    today: '7263',
-                    yesterday: '231',
-                    week: '824682',
-                    month: '21472332'
-                }, {
-                    col: '微博',
-                    today: '7263',
-                    yesterday: '231',
-                    week: '824682',
-                    month: '21472332'
-                },
-                {
-                    col: '全部',
-                    today: '7263',
-                    yesterday: '231',
-                    week: '824682',
-                    month: '21472332'
-                },
-                {
-                    col: '相关',
-                    today: '7263',
-                    yesterday: '231',
-                    week: '824682',
-                    month: '21472332'
-                },
-                {
-                    col: '舆情',
-                    today: '7263',
-                    yesterday: '231',
-                    week: '824682',
-                    month: '21472332'
-                },
-                {
-                    col: '负面',
-                    today: '7263',
-                    yesterday: '231',
-                    week: '824682',
-                    month: '21472332'
-                },
-                {
-                    col: '微信',
-                    today: '7263',
-                    yesterday: '231',
-                    week: '824682',
-                    month: '21472332'
-                }],
-                activeName: 'todayHot',
-                activeName2:'todayHot'
-            }
-        },
-        components:{overview} ,
-        methods:{
-            handleClick(tab,event){
-                console.log(tab,event)
-            }
-        },
-        mounted(){
-            let vm =this;
-            console.log(vm.tableData);
-        }
-    }
+<script src="./script/panorama.js">
 </script>

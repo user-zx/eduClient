@@ -18,10 +18,10 @@ export default{
         setBreadCrumb(){
             let breadcrumb=[
                 {
-                    name:"舆情管理",to:{path:"/"}
+                    name:"舆情管理",to:{path:"/home/panorama"}
                 },
                 {
-                    name:"舆情报告",to:{path:"/speech"}
+                    name:"舆情报告",to:{path:"/home/speech"}
                 }
             ];
             this.$store.commit("setBreadCrumb",breadcrumb);
