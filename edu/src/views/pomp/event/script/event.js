@@ -53,7 +53,19 @@ export default{
                     eventState:"未过期"
                 },
             ],
-            currentPage: 1
+            loading:true,
+            currentPage: 1,
+            dialogFormVisible: false,
+            addEventForm: {
+                name: '',
+                startDate: '',
+                endDate: '',
+                keyword: '',
+                people: '',
+                weChat: '',
+                weibo: '',
+            },
+            formLabelWidth: '120px'
         }
     },
     components:{breadCrumb} ,
@@ -70,7 +82,22 @@ export default{
             this.$store.commit("setBreadCrumb",breadcrumb);
         },
         deleteRow(index, rows) {
-            rows.splice(index, 1);
+            this.$confirm('是否删除该事件', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                rows.splice(index, 1);
+                this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
         },
         handleSizeChange(val) {
             console.log(`每页 ${val} 条`);
@@ -84,6 +111,9 @@ export default{
         this.setBreadCrumb();
     },
     mounted(){
-
+        let vm =this;
+        setTimeout(()=>{
+            vm.loading=false;
+        },3000)
     }
 }
