@@ -30,8 +30,6 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {color: #b
 input:-moz-placeholder, textarea:-moz-placeholder {color:#b8b8b8;}
 input::-moz-placeholder, textarea::-moz-placeholder {color:#b8b8b8;}
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
-/*页面按钮基本高度都是33px   by lifei*/
-button{height: 33px;}
 /*layout布局*/
 .page{
   display: -ms-flexbox;
@@ -323,4 +321,9 @@ button{height: 33px;}
 .el-breadcrumb__item:last-child .el-breadcrumb__item__inner a:hover,
 .el-breadcrumb__item:last-child .el-breadcrumb__item__inner:hover{
   color:#ffffff;
+}
+
+/** 小手光标 应该很多地方用到 */
+.pointer{
+  cursor: pointer;
 }

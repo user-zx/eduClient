@@ -1,22 +1,16 @@
 .analyse {
 
   color: #000;
-  font-family: "microsoft yahei";
 
-  .paddingR10{
-    padding-right: 10px;
+
+  .el-button{
+    height: 33px;
+    padding-top: 9px;
+    padding-bottom: 9px;
   }
 
-  .alignRight{
-    text-align: right;
-  }
-
-  .marginB10{
-    margin-bottom: 10px;
-  }
-
-  .marginR5{
-    margin-right: 5px;
+  .button-icon{
+    height: 34px;
   }
 
   .navbar {
@@ -38,7 +32,6 @@
       list-style: none;
       float:left;
       font-size: 16px;
-      font-weight: bold;
       width:300px;
 
       li{
