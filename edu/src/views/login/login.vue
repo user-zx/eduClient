@@ -8,7 +8,7 @@
                 <el-input type="password" name="password" v-model="ruleForm.pass" placeholder="请输入密码" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-checkbox v-model="ruleForm.remember" name="remamberMe">记住密码</el-checkbox>
+                <el-checkbox v-model="ruleForm.remember" name="rememberMe">记住密码</el-checkbox>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
