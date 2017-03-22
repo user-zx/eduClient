@@ -2,7 +2,27 @@
 * Created by lifei on 2017/3/21.
 */
 <template>
-    <div class="search-box" id="search-box">
+    <div class="search-box">
+        <!--<el-row v-for="item in searchData">-->
+        <!--<el-col :span="2">-->
+        <!--{{item.firstText}}-->
+        <!--</el-col>-->
+        <!--<el-col :span="22" v-if="item.buttonInfo == 'N'">-->
+        <!--<span class="search-list" v-for="list in item.searchText">-->
+        <!--{{list.text}}-->
+        <!--</span>-->
+        <!--</el-col>-->
+        <!--<el-col :span="18" v-else>-->
+        <!--<span class="search-list" v-for="list in item.searchText">-->
+        <!--{{list.text}}-->
+        <!--</span>-->
+        <!--</el-col>-->
+        <!--<el-col :span="4" v-if="item.buttonInfo != 'N'">-->
+
+        <!--</el-col>-->
+        <!--</el-row>-->
+
+
         <el-row>
             <el-col :span="2">
                 选择高校：
@@ -80,64 +100,102 @@
                 <span class="search-list">昨天</span>
                 <span class="search-list">近7天</span>
                 <span class="search-list">近一个月</span>
-                <span class="search-list">自定义时间</span>
+                <span class="search-list" v-on:click="setDate()">自定义时间</span>
+                <span class="search-list date-span" v-show="show">
+                     <el-date-picker v-model="value1" type="date" placeholder="选择日期" :picker-options="pickerOptions0">
+                         </el-date-picker>
+                </span>
+                <span class="search-list date-span" v-show="show">
+                     <el-date-picker v-model="value2" type="date" placeholder="选择日期" :picker-options="pickerOptions1">
+                         </el-date-picker>
+                </span>
             </el-col>
         </el-row>
     </div>
 </template>
 <style lang="scss" scoped>
-    .search-box{
+    .search-box {
         margin-bottom: 10px;
         color: #333;
 
-        .el-row {
-            .el-col {
-                background: #fff;
-                height: 50px;
-                border-bottom: 1px solid #d6d6d6;
-                line-height: 50px;
-                color: #333;
+    .el-row {
 
-                .search-list{
-                    display: inline-block;
-                    text-align: center;
-                    padding-left: 15px;
-                    padding-right: 15px;
-                }
-            }
+    .el-col {
+        background: #fff;
+        height: 50px;
+        border-bottom: 1px solid #d6d6d6;
+        line-height: 50px;
+        color: #333;
 
-            .el-col:first-child {
-                background: #e6e6e6;
-                padding-left: 20px;
-            }
+        .search-list {
+            display: inline-block;
+            text-align: center;
+            padding-left: 15px;
+            padding-right: 15px;
 
-            @media screen and (min-width: 1260px){
-                button{
-                    width: 84px;
-                }
+            .el-date-editor{
+                width: 120px;
             }
         }
+
+    }
+
+    .el-col:first-child {
+        background: #e6e6e6;
+        padding-left: 20px;
+    }
+
+    @media screen and (min-width: 1260px) {
+        button {
+            width: 84px;
+        }
+    }
+
+    }
     }
 </style>
 <script>
     export default{
         data(){
             return {
-                msg:""
+                msg: "",
+                show: false,
+                pickerOptions0: {
+                    disabledDate(time) {
+                        return time.getTime() < Date.now() - 8.64e7;
+                    }
+                },
+                pickerOptions1: {
+                    disabledDate(time) {
+                        return time.getTime() < Date.now() - 8.64e7;
+                    }
+                },
+                value1: '',
+                value2: ''
             }
         },
-        components:{} ,
-        methods:{
-           add(){
-               let vm = this;
-               setTimeout(function () {
-                   console.log(vm.searchData)
-               },100);
-           },
+        components: {},
+        methods: {
+            add(){
+                let vm = this;
+                this.$nextTick(function () {
+                    for (var i in vm.searchData) {
+
+                    }
+                });
+            },
+
+            setDate(){
+                if(this.show == false){
+                    this.show = true;
+                }else{
+                    this.show = false;
+                }
+            }
         },
         mounted(){
             this.add();
         },
-        props:["searchData"],
+        props: ["searchData"],
     }
 </script>

@@ -64,8 +64,8 @@
         mounted(){
             let searchData = [
                 {
-                    'first-text' :  '选择高校:',
-                    'search-text': [
+                    'firstText' :  '选择高校:',
+                    'searchText': [
                         {id: 0, text: '全部'},
                         {id: 1, text: '北京大学'},
                         {id: 2, text: '北京航空航天大学'},
@@ -75,14 +75,14 @@
                         {id: 6, text: '北京传媒大学'},
                         {id: 7, text: '北京科技大学'}
                     ],
-                    'button-info': [
-                        {'button-text': '添加高校', 'id': 'add-college-btn'},
-                        {'button-text': '清空', 'id': 'clear-college-btn'}
+                    'buttonInfo': [
+                        {'buttonText': '添加高校', 'id': 'add-college-btn'},
+                        {'buttonText': '清空', 'id': 'clear-college-btn'}
                     ]
                 },
                 {
-                    'first-text': '高校维度',
-                    'search-text': [
+                    'firstText': '高校维度:',
+                    'searchText': [
                         {id: 0, text: '校园舆情'},
                         {id: 1, text: '校园安全'},
                         {id: 2, text: '违规违纪'},
@@ -93,7 +93,8 @@
                         {id: 7, text: '论坛贴吧'},
                         {id: 8, text: '敏感时期'},
                         {id: 9, text: '人物聚焦'}
-                    ]
+                    ],
+                    'buttonInfo': 'N'
                 }
             ];
             this.searchData = searchData;
