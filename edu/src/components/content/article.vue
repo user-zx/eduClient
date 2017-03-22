@@ -9,11 +9,16 @@
                 <el-checkbox></el-checkbox>
             </div>
             <div class="article-right">
-                <div class="article-title marginB10">
-                    <span>杂志赤峰学院学报栏目设置和论文参考的目录</span>
-                    <el-button type="danger" class="article-danger-button">预警</el-button>
+                <div class="article-title-box">
+                    <p class="article-title">
+                        <span>杂志赤峰学院学报栏目设置和论文参考的目录杂志赤峰学院学报栏目设置和论文参考的目录杂志赤峰学院学报栏目设置和论文参考的目录杂志赤峰学院学报栏目设置和论文参考的目录</span>
+                        <i class="title-icon positive-icon"></i>
+                    </p>
+                    <p class="button-box">
+                        <el-button type="danger" class="article-danger-button">预警</el-button>
+                    </p>
                 </div>
-                <p class="article-describe marginB10">
+                <p class="article-describe">
                     <span class="article-source">来源:新浪博客  </span>
                     <span class="article-author">作者:梦想家期刊</span>
                     <span class="article-clickNum blue">阅读量: 2342次</span>
@@ -29,11 +34,16 @@
                 <el-checkbox></el-checkbox>
             </div>
             <div class="article-right">
-                <div class="article-title marginB10">
-                    <span>杂志赤峰学院学报栏目设置和论文参考的目录</span>
-                    <el-button type="danger" class="article-danger-button">预警</el-button>
+                <div class="article-title-box">
+                    <p class="article-title">
+                        <span>杂志赤峰学院学报栏目设置和论文参考的目录</span>
+                        <i class="title-icon positive-icon"></i>
+                    </p>
+                    <p class="button-box">
+                        <el-button type="danger" class="article-danger-button">预警</el-button>
+                    </p>
                 </div>
-                <p class="article-describe marginB10">
+                <p class="article-describe">
                     <span class="article-source">来源:新浪博客  </span>
                     <span class="article-author">作者:梦想家期刊</span>
                     <span class="article-clickNum blue">阅读量: 2342次</span>
@@ -51,11 +61,16 @@
                 <el-checkbox></el-checkbox>
             </div>
             <div class="article-right">
-                <div class="article-title marginB10">
-                    <span>杂志赤峰学院学报栏目设置和论文参考的目录</span>
-                    <el-button type="danger" class="article-danger-button">预警</el-button>
+                <div class="article-title-box">
+                    <p class="article-title">
+                        <span>杂志赤峰学院学报栏目设置和论文参考的目录</span>
+                        <i class="title-icon negative-icon"></i>
+                    </p>
+                    <p class="button-box">
+                        <el-button type="danger" class="article-danger-button">预警</el-button>
+                    </p>
                 </div>
-                <p class="article-describe marginB10">
+                <p class="article-describe">
                     <span class="article-source">来源:新浪博客  </span>
                     <span class="article-author">作者:梦想家期刊</span>
                     <span class="article-clickNum blue">阅读量: 2342次</span>
@@ -73,11 +88,16 @@
                 <el-checkbox></el-checkbox>
             </div>
             <div class="article-right">
-                <div class="article-title marginB10">
-                    <span>杂志赤峰学院学报栏目设置和论文参考的目录</span>
-                    <el-button type="danger" class="article-danger-button">预警</el-button>
+                <div class="article-title-box">
+                    <p class="article-title">
+                        <span>杂志赤峰学院学报栏目设置和论文参考的目录</span>
+                        <i class="title-icon negative-icon"></i>
+                    </p>
+                    <p class="button-box">
+                        <el-button type="danger" class="article-danger-button">预警</el-button>
+                    </p>
                 </div>
-                <p class="article-describe marginB10">
+                <p class="article-describe">
                     <span class="article-source">来源:新浪博客  </span>
                     <span class="article-author">作者:梦想家期刊</span>
                     <span class="article-clickNum blue">阅读量: 2342次</span>
@@ -96,12 +116,9 @@
 <style lang="scss" scoped>
     .article-container{
         background: #ffffff;
-        .marginB10{
-            margin-bottom: 10px;
-        }
 
         .article{
-            height: 198px;
+            height: 196px;
             border-bottom: 1px solid #E3EDFB;
 
         .article-left{
@@ -120,13 +137,65 @@
                 padding: 30px 30px 30px 12px;
                 color: #6a6a6a;
 
-                .article-title{
-                    font-weight: normal;
-                    font-size: 20px;
+                .article-title-box{
+                    clear: both;
+
+                    .article-title{
+                        font-weight: normal;
+                        font-size: 20px;
+                        width: 80%;
+                        height: 28px;
+                        float: left;
+                        display: inline-block;
+                        overflow: hidden;
+                        position: relative;
+
+                            span:first-child{
+                                display: inline-block;
+                                height:100%;
+                                max-width: calc(100% - 58px);
+                                overflow: hidden;
+                                margin-right: 10px;
+                            }
+                            .title-icon{
+                                position: absolute;
+                                display: inline-block;
+                                width: 46px;
+                                font-size: 14px;
+                                text-align: center;
+                                border-radius: 3px;
+                                top: 3px;
+                            }
+
+                            .positive-icon{
+                                color: #e60012;
+                                border: 1px solid #e60012;
+                            }
+
+                            .positive-icon::before{
+                                content: '正面';
+                            }
+
+                            .negative-icon{
+                                color: #22ac38;
+                                border: 1px solid #22ac38;
+                            }
+
+                            .negative-icon::before{
+                                content: '负面';
+                            }
+                    }
+                    .button-box{
+                        width: 20%;
+                        display: inline-block;
+                    }
                 }
 
                 .article-describe{
                     font-size: 12px;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+
                     .article-source{
                         margin-right: 14px;
                     }
@@ -134,8 +203,9 @@
                         margin-right: 16px;
                     }
 
-                    span:last-child{
+                    span.article-publishDate{
                         float: right;
+                        line-height: 20px;
                     }
 
                     .blue{
@@ -146,7 +216,7 @@
 
                 .article-main{
                     height: 70px;
-                    line-height: 25px;
+                    line-height: 24px;
                     overflow: hidden;
                 }
             }
@@ -155,12 +225,6 @@
                 float: right;
                 background: #c71b1b;
                 margin-top: -8px;
-            }
-
-            @media screen and (min-width: 1260px){
-                button{
-                    width: 84px;
-                }
             }
         }
     }
