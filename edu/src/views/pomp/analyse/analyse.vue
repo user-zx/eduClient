@@ -19,7 +19,7 @@
                     <el-button type="primary" icon="plus" class="button-icon">批量关注</el-button>
                 </div>
             </div>
-            <articleContainer></articleContainer>
+            <articleContainer :articleData=articleData></articleContainer>
         </div>
     </div>
 </template>
@@ -42,6 +42,7 @@
             return {
                 msg: "舆情监测",
                 searchData:"",
+                articleData: ""
             }
         },
         components: {breadCrumb, searchBox, articleContainer},
@@ -98,6 +99,66 @@
                 }
             ];
             this.searchData = searchData;
+
+            let articleData = [
+                {
+                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
+                    'attitude': 'positive',
+                    'buttonType': 'warning',
+                    'buttonText': '预警',
+                    'source': '新浪博客',
+                    'author': '梦想家期刊',
+                    'readNum': '2342',
+                    'publishDate': '2016-12-12 12:12',
+                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
+                },
+                {
+                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
+                    'attitude': 'negative',
+                    'buttonType': 'warning',
+                    'buttonText': '预警',
+                    'source': '新浪博客',
+                    'author': '梦想家期刊',
+                    'readNum': '2342',
+                    'publishDate': '2016-12-12 12:12',
+                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
+                },
+                {
+                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
+                    'attitude': 'positive',
+                    'buttonType': 'warning',
+                    'buttonText': '预警',
+                    'source': '新浪博客',
+                    'author': '梦想家期刊',
+                    'readNum': '2342',
+                    'publishDate': '2016-12-12 12:12',
+                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
+                },
+                {
+                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
+                    'attitude': 'positive',
+                    'buttonType': 'warning',
+                    'buttonText': '预警',
+                    'source': '新浪博客',
+                    'author': '梦想家期刊',
+                    'readNum': '2342',
+                    'publishDate': '2016-12-12 12:12',
+                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
+                },
+                {
+                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
+                    'attitude': 'negative',
+                    'buttonType': 'warning',
+                    'buttonText': '预警',
+                    'source': '新浪博客',
+                    'author': '梦想家期刊',
+                    'readNum': '2342',
+                    'publishDate': '2016-12-12 12:12',
+                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
+                }
+            ];
+
+            this.articleData = articleData;
         },
 
     }
