@@ -65,7 +65,18 @@ export default{
                 weChat: '',
                 weibo: '',
             },
-            formLabelWidth: '120px'
+            rules:{
+                name:[
+                    {required:true,message:"请输入事件名称",trigger: 'blur' },
+                    {min:4,max:16,message:"长度在 4 到 16 个字符",trigger: 'blur' },
+                ],
+                startDate:[
+                    {type: 'date',required:true,message:"请选择开始时间",trigger:'change'}
+                ],
+                endDate:[
+                    {type: 'date',required:true,message:"请选择结束时间",trigger:'change'}
+                ]
+            },
         }
     },
     components:{breadCrumb} ,

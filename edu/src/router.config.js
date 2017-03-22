@@ -15,6 +15,7 @@ import seeWbWeChat from './views/serviceTool/seeWbWeChat/seeWbWeChat.vue';
 import myAttention from './views/myAttention/myAttention.vue';
 import login from './views/login/login.vue';
 import home from './views/home/home.vue';
+import eventDetails from './views/pomp/event/eventDetails/eventDetails.vue';
 export default {
     mode:'history',
     base:__dirname,
@@ -33,6 +34,11 @@ export default {
                     name:"panorama",
                     path:"panorama",
                     component:panorama
+                },
+                {
+                    name:"eventDetails",
+                    path:"eventDetails",
+                    component:eventDetails
                 },
                 {
                     name:"analyse",

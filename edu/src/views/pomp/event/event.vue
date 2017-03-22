@@ -38,35 +38,35 @@
                 layout="prev, next, jumper, total"
                 :total="100">
         </el-pagination>
-        <el-dialog title="新建事件" v-model="dialogFormVisible" :rules="rules" ref="ruleForm" label-width="100px">
-            <el-form :model="addEventForm">
-                <el-form-item label="事件名称">
+        <el-dialog title="新建事件" v-model="dialogFormVisible">
+            <el-form :model="addEventForm" :rules="rules" ref="addEventForm" label-width="100px">
+                <el-form-item label="事件名称" prop="name">
                     <el-input v-model="addEventForm.name" auto-complete="off" placeholder="请输入事件名称"></el-input>
                 </el-form-item>
-                <el-form-item label="开始时间">
+                <el-form-item label="开始时间" prop="startDate">
                     <el-date-picker
                             v-model="addEventForm.startDate"
                             type="datetime"
                             placeholder="选择开始时间">
                     </el-date-picker>
                 </el-form-item>
-                <el-form-item label="结束时间">
+                <el-form-item label="结束时间" prop="endDate">
                     <el-date-picker
                             v-model="addEventForm.endDate"
                             type="datetime"
                             placeholder="选择结束时间">
                     </el-date-picker>
                 </el-form-item>
-                <el-form-item label="关键词">
+                <el-form-item label="关键词" prop="keyword">
                     <el-input v-model="addEventForm.keyword" auto-complete="off" placeholder="请输入事件关键字，多个用，隔开"></el-input>
                 </el-form-item>
-                <el-form-item label="相关人物">
+                <el-form-item label="相关人物" prop="people">
                     <el-input v-model="addEventForm.people" auto-complete="off" placeholder="请输入相关预警人物关键字/名称"></el-input>
                 </el-form-item>
-                <el-form-item label="相关微信公众号">
+                <el-form-item label="相关微信公众号" prop="weChat">
                     <el-input v-model="addEventForm.weChat" auto-complete="off" placeholder="请输入相关预警微信号关键字/名称"></el-input>
                 </el-form-item>
-                <el-form-item label="相关微博">
+                <el-form-item label="相关微博" prop="weibo">
                     <el-input v-model="addEventForm.weibo" auto-complete="off" placeholder="请输入相关预警微博号关键字/名称"></el-input>
                 </el-form-item>
             </el-form>
