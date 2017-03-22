@@ -324,3 +324,29 @@ button{height: 33px;}
 .el-breadcrumb__item:last-child .el-breadcrumb__item__inner:hover{
   color:#ffffff;
 }
+.text-left{
+  text-align: left;
+}
+.text-center{
+  text-align: center;
+}
+.text-right{
+  text-align: right;
+}
+/*表格展示*/
+.table-box {
+  background-color: #21273d;
+  padding: 30px 46px;
+  .btn-box {
+    margin-bottom: 30px;
+    .el-button{
+      color:#ffffff;
+    }
+  }
+  .el-button + .el-button{
+    margin-left: 2px;
+  }
+  .el-button{
+    color:#d0d7ff;
+  }
+}
