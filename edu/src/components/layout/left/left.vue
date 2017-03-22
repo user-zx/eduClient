@@ -9,7 +9,7 @@
             </a>
         </div>
         <el-menu mode="vertical" :default-active="routerName" :router="true" :unique-opened="true" class="el-menu-vertical" @open="handleOpen" @close="handleClose">
-            <el-submenu index="1">
+            <el-submenu index="home">
                 <template slot="title"><i class="nav-icon nav-icon1"></i>舆情管理</template>
                 <el-menu-item-group>
                     <el-menu-item index="panorama">全景舆情</el-menu-item>
@@ -79,10 +79,9 @@
                 immediate: true,
                 handler(val) {
                     if(val){
-                        let url=val.split('/')[1];
+                        let url=val.split('/')[2];
                         this.routerName=url;
                     }
-
                 }
             }
         },
