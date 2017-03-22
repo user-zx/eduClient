@@ -13,76 +13,88 @@ import mediaCoverage from './views/reference/mediaCoverage/mediaCoverage.vue';
 import report from './views/reference/report/report.vue';
 import seeWbWeChat from './views/serviceTool/seeWbWeChat/seeWbWeChat.vue';
 import myAttention from './views/myAttention/myAttention.vue';
+import login from './views/login/login.vue';
+import home from './views/home/home.vue';
 export default {
     mode:'history',
     base:__dirname,
     routes:[
         {
             path:"",
-            redirect:"panorama",
-            name:"home"
+            redirect:"/home/panorama",
         },
         {
-            name:"panorama",
-            path:"/panorama",
-            component:panorama
+            name:"home",
+            path:"/home",
+            component:home,
+            redirect:"/home/panorama",
+            children:[
+                {
+                    name:"panorama",
+                    path:"panorama",
+                    component:panorama
+                },
+                {
+                    name:"analyse",
+                    path:"analyse",
+                    component:analyse
+                },
+                {
+                    name:"warning",
+                    path:"warning",
+                    component:warning
+                },
+                {
+                    name:"event",
+                    path:"event",
+                    component:event
+                },
+                {
+                    name:"speech",
+                    path:"speech",
+                    component:speech
+                },
+                {
+                    name:"industryNews",
+                    path:"industryNews",
+                    component:industryNews
+                },
+                {
+                    name:"characterNews",
+                    path:"characterNews",
+                    component:characterNews
+                },
+                {
+                    name:"seeClearly",
+                    path:"seeClearly",
+                    component:seeClearly
+                },
+                {
+                    name:"mediaCoverage",
+                    path:"mediaCoverage",
+                    component:mediaCoverage
+                },
+                {
+                    name:"report",
+                    path:"report",
+                    component:report
+                },
+                {
+                    name:"seeWbWeChat",
+                    path:"seeWbWeChat",
+                    component:seeWbWeChat
+                },
+                {
+                    name:"myAttention",
+                    path:"myAttention",
+                    component:myAttention
+                }
+            ]
         },
         {
-            name:"analyse",
-            path:"/analyse",
-            component:analyse
+            path:"/login",
+            component:login,
+            name:"login"
         },
-        {
-            name:"warning",
-            path:"/warning",
-            component:warning
-        },
-        {
-            name:"event",
-            path:"/event",
-            component:event
-        },
-        {
-            name:"speech",
-            path:"/speech",
-            component:speech
-        },
-        {
-            name:"industryNews",
-            path:"/industryNews",
-            component:industryNews
-        },
-        {
-            name:"characterNews",
-            path:"/characterNews",
-            component:characterNews
-        },
-        {
-            name:"seeClearly",
-            path:"/seeClearly",
-            component:seeClearly
-        },
-        {
-            name:"mediaCoverage",
-            path:"/mediaCoverage",
-            component:mediaCoverage
-        },
-        {
-            name:"report",
-            path:"/report",
-            component:report
-        },
-        {
-            name:"seeWbWeChat",
-            path:"/seeWbWeChat",
-            component:seeWbWeChat
-        },
-        {
-            name:"myAttention",
-            path:"/myAttention",
-            component:myAttention
-        }
-
-
     ]
 }

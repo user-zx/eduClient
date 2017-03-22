@@ -284,3 +284,41 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
   color:#2e4361;
   background-color: #0c0e17;
 }
+/*面包屑*/
+.breadCrumb{
+  height:38px;
+  margin-bottom: 16px;
+  padding:0 12px;
+  background-color: #1b1e2d;
+  .el-breadcrumb{
+    line-height: 38px;
+  }
+  .el-breadcrumb__item{
+    .el-breadcrumb__item__inner{
+      color:#ffffff;
+    }
+    .el-breadcrumb__separator{
+      color:#ffffff;
+    }
+    &:last-child{
+      .el-breadcrumb__item__inner{
+        color:#ffffff;
+        &:hover{
+          color:#ffffff;
+        }
+        a{
+          color:#ffffff;
+          &:hover{
+            color:#ffffff;
+          }
+        }
+      }
+    }
+  }
+}
+.el-breadcrumb__item:last-child .el-breadcrumb__item__inner,
+.el-breadcrumb__item:last-child .el-breadcrumb__item__inner a,
+.el-breadcrumb__item:last-child .el-breadcrumb__item__inner a:hover,
+.el-breadcrumb__item:last-child .el-breadcrumb__item__inner:hover{
+  color:#ffffff;
+}

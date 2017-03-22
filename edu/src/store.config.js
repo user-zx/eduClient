@@ -8,6 +8,9 @@ export default {
     mutations:{
         setBreadCrumb(state,params){
             state.breadCrumb=params;
+        },
+        updateBreadCrumb(state,params){
+            state.breadCrumb.push(params);
         }
     }
 }

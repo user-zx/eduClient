@@ -7,10 +7,6 @@
     </div>
 </template>
 <style lang="scss" scoped>
-    .search-box{
-        background-color: #21273d;
-    }
-</style>
-<script src="./script/warning.js">
 
-</script>
+</style>
+<script src="./script/warning.js"></script>
