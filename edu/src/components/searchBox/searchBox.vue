@@ -4,10 +4,10 @@
 <template>
     <div class="search-box">
         <el-row v-for="(data, index) in searchData">
-            <el-col :span="2">
+            <el-col :span="2" class="transition">
                 {{data.title}}
             </el-col>
-            <el-col :span="22" v-if="data.buttons.length == 0">
+            <el-col :span="22" v-if="data.buttons.length == 0" class="transition">
                 <ul>
                     <li v-for="(item, index1) in data.searchList" class="search-list"
                         @click="searchLiClick(item, index1, data)" :class="{'search-selected': item.selected}">
@@ -19,7 +19,7 @@
                     </li>
                 </ul>
             </el-col>
-            <el-col :span="20" v-else>
+            <el-col :span="20" v-else class="transition">
                 <ul :class="{'school-list': data.hasMore}">
                     <li class="search-list" v-for="(item, index1) in data.searchList"
                         @click="searchLiClick(item, index1, data)" :class="{'search-selected': item.selected}">
@@ -30,7 +30,7 @@
                     </li>
                 </ul>
             </el-col>
-            <el-col :span="2" v-for="btn in data.buttons">
+            <el-col :span="2" v-for="btn in data.buttons" class="transition">
                 <el-button type="primary" @click="btnClick(data)">{{btn.buttonText}}</el-button>
             </el-col>
         </el-row>
@@ -89,8 +89,12 @@
     .search-selected {
         color: #60a3ff;
     }
-    .temp{
 
+    .transition{
+        transition: 0.5s;
+        -moz-transition: 0.5s; /* Firefox 4 */
+        -webkit-transition: 0.5s; /* Safari 和 Chrome */
+        -o-transition: 0.5s; /* Opera */
     }
     }
 </style>
