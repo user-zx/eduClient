@@ -3,7 +3,7 @@
 */
 <template>
     <div class="eventDetails" id="eventDetails">
-        {{msg}}
+        
     </div>
 </template>
 <style lang="scss" scoped>
@@ -14,15 +14,31 @@
     * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
     * import loginButton from './components/loginButton.vue';
     */
-    export default{
+     export default{
         data(){
             return {
-                msg:""
+                msg:"事件详情"
             }
         },
-        components:{} ,
+        components:{},
         methods:{
-            
+            setBreadCrumb(){
+                let breadcrumb=[
+                    {
+                        name:"舆情管理",to:{path:"/home/panorama"}
+                    },
+                    {
+                        name:"事件监测",to:{path:"/home/event"}
+                    },
+                    {
+                        name:"事件详情"
+                    }
+                ];
+                this.$store.commit("setBreadCrumb",breadcrumb);
+            },
+        },
+        created(){
+            this.setBreadCrumb();
         },
         mounted(){
             

@@ -16,6 +16,7 @@ import myAttention from './views/myAttention/myAttention.vue';
 import login from './views/login/login.vue';
 import home from './views/home/home.vue';
 import eventDetails from './views/pomp/event/eventDetails/eventDetails.vue';
+import eventList from './views/pomp/event/evenList/eventList.vue';
 export default {
     mode:'history',
     base:__dirname,
@@ -36,9 +37,24 @@ export default {
                     component:panorama
                 },
                 {
-                    name:"eventDetails",
+                    path:"event",
+                    component:event,
+                    children:[
+                        {
+                            path:"",
+                            component:eventList
+                        }
+                    ]
+                },
+                {
                     path:"eventDetails",
-                    component:eventDetails
+                    component:event,
+                    children:[
+                        {
+                            path:"",
+                            component:eventDetails
+                        }
+                    ]
                 },
                 {
                     name:"analyse",
@@ -49,11 +65,6 @@ export default {
                     name:"warning",
                     path:"warning",
                     component:warning
-                },
-                {
-                    name:"event",
-                    path:"event",
-                    component:event
                 },
                 {
                     name:"speech",

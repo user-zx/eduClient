@@ -17,8 +17,7 @@
     export default{
         data(){
             return {
-                msg:"",
-                breadCrumd:this.$store.state.breadCrumb
+                breadCrumd:""
             }
         },
         components:{} ,
@@ -26,7 +25,15 @@
             
         },
         mounted(){
-
+            let vm =this;
+        },
+        watch:{
+            "$store.state.breadCrumb":{
+                immediate: true,
+                handler(val) {
+                    this.breadCrumd=val;
+                }
+            }
         }
     }
 </script>
