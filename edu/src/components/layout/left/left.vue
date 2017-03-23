@@ -79,8 +79,16 @@
                 immediate: true,
                 handler(val) {
                     if(val){
-                        let url=val.split('/')[2];
-                        this.routerName=url;
+                        let url=val.split('/')[2],
+                            nowNav=null;
+                        if(url.indexOf("panorama")!= -1)nowNav="panorama";
+                        if(url.indexOf("event")!= -1)nowNav="event";
+                        if(nowNav)
+                            this.routerName=nowNav;
+                        else
+                            this.routerName=url;
+
+
                     }
                 }
             }
