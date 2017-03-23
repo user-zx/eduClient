@@ -2,7 +2,6 @@
 
   color: #000;
 
-
   .el-button{
     height: 33px;
     padding-top: 9px;
@@ -27,6 +26,7 @@
   .content-bar{
     height: 80px;
     background: #EFEFEF;
+    clear: both;
 
     .content-bar-list{
       list-style: none;
@@ -46,8 +46,44 @@
     .content-bar-button{
       height: 80px;
       line-height: 80px;
-      width: calc(100% - 310px);
-      float: right;
+      width: 300px;
+      float: left;
+
+        .event-store-box{
+          margin-right: 10px;
+          height: 34px;
+          line-height: 34px;
+        }
     }
+
+    .content-bar-page{
+      float: right;
+      width: calc(100% - 610px);
+      height: 80px;
+      
+        .edu-pagination button{
+          background: #fff;
+        }
+        
+        .edu-pagination button.btn-next{
+          background: #fff;
+        }
+
+        input.el-pagination__editor{
+          background: #ffffff;
+          color: #333;
+        }
+    }
+  }
+}
+
+ul.event-store-item {
+  margin:0;
+  padding:0;
+  border:none;
+  li{
+    color: #000;
+    text-align: center;
+    border-bottom: 1px solid #cccccc;
   }
 }
