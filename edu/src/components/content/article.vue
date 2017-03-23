@@ -23,13 +23,13 @@
                 </div>
                 <p class="article-describe">
                     <span class="article-source">
-                        来源: {{item.source}}
+                        来源： {{item.source}}
                     </span>
                     <span class="article-author">
-                        作者: {{item.author}}
+                        作者： {{item.author}}
                     </span>
                     <span class="article-clickNum blue">
-                        阅读量: {{item.readNum}}
+                        阅读量： {{item.readNum}}
                     </span>
                     <span class="article-publishDate blue">
                         {{item.publishDate}}
@@ -69,6 +69,7 @@
 
                 .article-title-box{
                     clear: both;
+                    height: 28px;
 
                     .article-title{
                         font-weight: normal;
