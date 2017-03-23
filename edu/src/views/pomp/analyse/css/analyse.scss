@@ -41,6 +41,14 @@
         padding-left: 20px;
         padding-right:20px;
       }
+
+      .arrow-up{
+          background: url("../../../../assets/images/arrow-blue-up.png") no-repeat 65px 27px;
+      }
+
+      .arrow-down{
+          background: url("../../../../assets/images/arrow-blue-down.png") no-repeat 52px 29px;
+      }
     }
 
     .content-bar-button{
@@ -60,7 +68,7 @@
       float: right;
       width: calc(100% - 610px);
       height: 80px;
-      
+
         .edu-pagination button{
           background: #fff;
         }

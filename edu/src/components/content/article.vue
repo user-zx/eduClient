@@ -4,7 +4,7 @@
 
 <template>
     <div class="article-container" id="article-container">
-        <div class="article" v-for="item in articleData">
+        <div class="article" v-for="(item, index) in articleData">
             <div class="article-left">
                 <el-checkbox></el-checkbox>
             </div>
@@ -16,7 +16,7 @@
                         <i class="title-icon negative-icon" v-else></i>
                     </p>
                     <p class="button-box">
-                        <el-button type="danger" class="article-danger-button" v-if="item.buttonType == 'warning'">
+                        <el-button type="danger" class="article-danger-button" v-if="item.buttonType == 'warning'" @click="removeArticle(index, articleData)">
                             {{item.buttonText}}
                         </el-button>
                     </p>
@@ -168,7 +168,15 @@
             }
         },
         components: {},
-        methods: {},
+        methods: {
+            removeArticle(index, list){
+                console.log(index)
+                console.log(list)
+                list.splice(index, 1);
+                //要刷新页面
+//                location.reload();
+            }
+        },
         props: ["articleData"]
     }
 </script>

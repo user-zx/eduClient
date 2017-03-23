@@ -3,135 +3,35 @@
 */
 <template>
     <div class="search-box">
-        <!--<el-row v-for="item in searchData">-->
-        <!--<el-col :span="2">-->
-        <!--{{item.firstText}}-->
-        <!--</el-col>-->
-        <!--<el-col :span="22" v-if="item.buttonInfo == 'N'">-->
-        <!--<span class="search-list" v-for="list in item.searchText">-->
-        <!--{{list.text}}-->
-        <!--</span>-->
-        <!--</el-col>-->
-        <!--<el-col :span="18" v-else>-->
-        <!--<span class="search-list" v-for="list in item.searchText">-->
-        <!--{{list.text}}-->
-        <!--</span>-->
-        <!--</el-col>-->
-        <!--<el-col :span="4" v-if="item.buttonInfo != 'N'">-->
-
-        <!--</el-col>-->
-        <!--</el-row>-->
-
-
-        <el-row class="searchList-more-row">
+        <el-row v-for="(data, index) in searchData">
             <el-col :span="2">
-                选择高校：
+                {{data.title}}
             </el-col>
-            <el-col :span="18">
-                <ul class="school-list">
-                    <li class="search-list search-selected">
-                        全部
+            <el-col :span="22" v-if="data.buttons.length == 0">
+                <ul>
+                    <li v-for="(item, index1) in data.searchList" class="search-list"
+                        @click="searchLiClick(item, index1, data)" :class="{'search-selected': item.selected}">
+                        {{item.text}}
                     </li>
-                    <li class="search-list">
-                        北京大学
-                    </li>
-                    <li class="search-list">
-                        北京航空航天大学
-                    </li>
-                    <li class="search-list">
-                        北京大学
-                    </li>
-                    <li class="search-list">
-                        北京航空航天大学
-                    </li>
-                    <li class="search-list">
-                        北京大学
-                    </li>
-                    <li class="search-list">
-                        北京航空航天大学
-                    </li>
-                    <li class="search-list">
-                        北京航空航天大学
-                    </li>
-                    <li>
-                        <i class="el-icon-arrow-down pointer" v-on:click="subSearchItem"></i>
-                        <ul class="sub-list">
-                            <li class="search-list">西安电子科技大学</li>
-                            <li class="search-list">西安电子科技大学</li>
-                            <li class="search-list">西安电子科技大学</li>
-                            <li class="search-list">西安电子科技大学</li>
-                            <li class="search-list">西安电子科技大学</li>
-                            <li class="search-list">西安电子科技大学</li>
-                            <li class="search-list">西安电子科技大学</li>
-                            <li class="search-list">西安电子科技大学</li>
-                        </ul>
+                    <li class="search-list date-span" v-show="show" v-for="item in data.searchList" v-if="item.dateBox == 'show'">
+                        <el-date-picker v-model="value1" type="daterange" placeholder="选择日期范围">
+                        </el-date-picker>
                     </li>
                 </ul>
             </el-col>
-            <el-col :span="2" class="paddingR10 alignRight">
-                <el-button type="primary" class="default-button">添加高校</el-button>
+            <el-col :span="20" v-else>
+                <ul :class="{'school-list': data.hasMore}">
+                    <li class="search-list" v-for="(item, index1) in data.searchList"
+                        @click="searchLiClick(item, index1, data)" :class="{'search-selected': item.selected}">
+                        {{item.text}}
+                    </li>
+                    <li class="search-list" v-if="data.hasMore == true" v-show="foldSchool">
+                        <i class="el-icon-arrow-down pointer" v-on:click="subSearchItem"></i>
+                    </li>
+                </ul>
             </el-col>
-            <el-col :span="2">
-                <el-button type="primary" class="default-button">清空</el-button>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="2">
-                高校维度：
-            </el-col>
-            <el-col :span="22">
-                <span class="search-list search-selected">校园舆情</span>
-                <span class="search-list">校园安全</span>
-                <span class="search-list">违规违纪</span>
-                <span class="search-list">媒体报道</span>
-                <span class="search-list">人才培养</span>
-                <span class="search-list">科学研究</span>
-                <span class="search-list">微信微博</span>
-                <span class="search-list">论坛贴吧</span>
-                <span class="search-list">敏感时期</span>
-                <span class="search-list">人物聚焦</span>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="2">
-                载体：
-            </el-col>
-            <el-col :span="22">
-                <span class="search-list search-selected">不限</span>
-                <span class="search-list">论坛</span>
-                <span class="search-list">微博</span>
-                <span class="search-list">微信</span>
-                <span class="search-list">QQ群</span>
-                <span class="search-list">博客</span>
-                <span class="search-list">网站门户</span>
-                <span class="search-list">贴吧</span>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="2">
-                情感：
-            </el-col>
-            <el-col :span="22">
-                <span class="search-list search-selected">不限</span>
-                <span class="search-list">正面</span>
-                <span class="search-list">负面</span>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="2">
-                时间：
-            </el-col>
-            <el-col :span="22">
-                <span class="search-list search-selected">不限</span>
-                <span class="search-list">今天</span>
-                <span class="search-list">昨天</span>
-                <span class="search-list">近7天</span>
-                <span class="search-list">近一个月</span>
-                <span class="search-list" v-on:click="setDate()">自定义时间</span>
-                <span class="search-list date-span" v-show="show">
-                    <el-date-picker v-model="value1" type="daterange" placeholder="选择日期范围">
-                     </el-date-picker>
-                </span>
+            <el-col :span="2" v-for="btn in data.buttons">
+                <el-button type="primary" @click="btnClick(data)">{{btn.buttonText}}</el-button>
             </el-col>
         </el-row>
     </div>
@@ -165,28 +65,32 @@
         padding-left: 20px;
     }
 
-    }
-
-    .school-list{
+    .school-list {
         position: relative;
 
-        li{
-            display: inline-block;
+    li {
+        display: inline-block;
 
-            .sub-list{
-                display: none;
-            }
-        }
+    .sub-list {
+        display: none;
     }
 
-    .el-icon-arrow-down{
+    }
+    }
+
+    }
+
+    .el-icon-arrow-down {
         position: absolute;
         top: 16px;
-        right: 30px;
+        right: 15px;
     }
-    
-    .search-selected{
+
+    .search-selected {
         color: #60a3ff;
+    }
+    .temp{
+
     }
     }
 </style>
@@ -196,7 +100,8 @@
             return {
                 msg: "",
                 show: false,
-                value1: ''
+                value1: '',
+                foldSchool: false
             }
         },
         components: {},
@@ -204,38 +109,57 @@
             add(){
                 let vm = this;
                 this.$nextTick(function () {
-
+                    if($('.school-list').height() > 50){
+                        this.foldSchool = true;
+                    }
                 });
             },
 
-            setDate(){
-                if (this.show == false) {
-                    this.show = true;
-                } else {
+            searchLiClick(item, index1, data){
+                if(data.multiple == true){
+                    if(item.selected == true){
+
+                    }else{
+
+                    }
+                }else {
+                    for(var i  in data.searchList){
+                        data.searchList[i].selected = false;
+                    }
+                    item.selected = true;
+                }
+
+                if(data.hasDateBox == true && !item.dateBox){
                     this.show = false;
+                }
+
+                if(item.dateBox == 'show'){
+                    this.show = true;
                 }
             },
 
             subSearchItem(){
-                if($('.el-icon-arrow-down').hasClass('el-icon-arrow-up')){
+                if ($('.school-list .el-icon-arrow-down').hasClass('el-icon-arrow-up')) {
                     $('.el-icon-arrow-down').removeClass('el-icon-arrow-up');
-                    $('.sub-list').hide();
-                    $('.searchList-more-row').children().each(function (index) {
+                    $('.school-list').closest('div.el-row').children().each(function (index) {
                         $(this).height(50);
                     });
-                }else {
-                    $('.el-icon-arrow-down').addClass('el-icon-arrow-up');
-                    $('.sub-list').show();
-                    var height = $('.sub-list').height();
-                    $('.searchList-more-row').children().each(function (index) {
-                        var thisHeight = $(this).height();
-                        $(this).height(thisHeight + height)
+                } else {
+                    $('.school-list .el-icon-arrow-down').addClass('el-icon-arrow-up');
+                    var height = $('.school-list').height();
+                    $('.school-list').closest('div.el-row').children().each(function (index) {
+                        $(this).height(height)
                     });
                 }
+            },
+
+            btnClick(item){
+                console.log(item)
             }
         },
         mounted(){
             this.add();
+
         },
         props: ["searchData"],
     }
