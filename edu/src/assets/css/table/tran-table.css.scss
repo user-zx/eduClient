@@ -67,6 +67,17 @@
       color:#d0d7ff;
       border-color:rgba(96,163,255,.1);
     }
+    .hover-row{
+      td{
+        background-color: #21273d;
+      }
+    }
+    .el-table__fixed, .el-table__fixed-right{
+      box-shadow: 1px 0 8px #333333;
+      &:before{
+        background-color: transparent;
+      }
+    }
     tbody,thead{
       border-color:rgba(96,163,255,.1);
     }
@@ -80,5 +91,13 @@
   }
   .el-table__body-wrapper{
     overflow: hidden;
+  }
+  &.fixed-table{
+    .el-table__body-wrapper{
+      overflow: auto;
+    }
+    .el-table__fixed, .el-table__fixed-right{
+      background-color: #21273d;
+    }
   }
 }

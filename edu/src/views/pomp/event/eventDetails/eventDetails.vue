@@ -26,16 +26,15 @@
                     </div>
                 </el-card>
             </el-col>
-            <el-col :span="24">
-                <el-card class="box-card">
-                    <el-col :span="8">
-                        <div class=""></div>
-                    </el-col>
-                    <el-col :span="8"></el-col>
-                    <el-col :span="8"></el-col>
-                </el-card>
-            </el-col>
         </el-row>
+        <div class="speech-tabs">
+            <el-row :gutter="10">
+                <el-col :span="8" class="active"><div class="tab-item" @click="currentFun('eventArticle')">事件文章</div></el-col>
+                <el-col :span="8"><div class="tab-item" @click="currentFun('eventCharts')">事件图表</div></el-col>
+                <el-col :span="8"><div class="tab-item" @click="currentFun('eventAnalyse')">演化分析</div></el-col>
+            </el-row>
+        </div>
+        <components :is="currentTabs.currentTab"></components>
     </div>
 </template>
 <style lang="scss" scoped>
@@ -62,6 +61,33 @@
     .box-card{
         background-color: #21273d;
     }
+    .speech-tabs{
+        background-color: #21273d;
+        margin-top: 10px;
+        margin-bottom:10px;
+        padding:16px 22px;
+        .el-col{
+            .tab-item{
+                height:125px;
+                line-height: 125px;
+                font-size: 16px;
+                text-align: center;
+                color:rgba(193,202,240,.5);
+                background: #282e46;
+                transition: all .25s;
+                cursor: pointer;
+                border:1px solid #273451;
+                &:hover{
+                     color:#60a3ff;
+                 }
+            }
+            &.active{
+                .tab-item{
+                    color:#60a3ff;
+                }
+            }
+        }
+    }
 </style>
 <script>
      /*
@@ -69,6 +95,9 @@
     * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
     * import loginButton from './components/loginButton.vue';
     */
+     import eventArticle from './tabContent/eventArticle.vue';
+     import eventCharts from './tabContent/eventCharts.vue';
+     import eventAnalyse from './tabContent/eventAnalyse.vue';
      export default{
         data(){
             return {
@@ -79,10 +108,16 @@
                         endTime:"2017-03-03 17:00:00",
                         keyword:"关键词，1123，啥都八十多，213自带",
                     }
-                ]
+                ],
+                currentTabs:{
+                    eventArticle:"eventArticle",
+                    eventCharts:"eventCharts",
+                    eventAnalyse:"eventAnalyse",
+                    currentTab:"eventArticle",
+                }
             }
         },
-        components:{},
+        components:{eventArticle,eventCharts,eventAnalyse},
         methods:{
             setBreadCrumb(){
                 let breadcrumb=[
@@ -98,12 +133,17 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
+            currentFun(params){
+                this.currentTabs.currentTab=params;
+            }
         },
         created(){
             this.setBreadCrumb();
         },
         mounted(){
-            
+            $(".speech-tabs").on("click",".tab-item",function () {
+                $(this).parent().addClass("active").siblings().removeClass("active");
+            });
         }
     }
 </script>

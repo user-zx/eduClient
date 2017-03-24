@@ -259,6 +259,10 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
   &.box-card{
     border-radius: 0 !important;
     border:0 !important;
+    background-color: #21273d;
+    .item+.item{
+      margin-top:68px;
+    }
   }
   .el-card__header{
     font-size: 18px;
