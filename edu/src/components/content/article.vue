@@ -16,7 +16,8 @@
                         <i class="title-icon negative-icon" v-else></i>
                     </p>
                     <p class="button-box">
-                        <el-button type="danger" class="article-danger-button" v-if="item.buttonType == 'warning'" @click="removeArticle(index, articleData)">
+                        <el-button type="danger" class="article-danger-button" v-if="item.buttonType == 'warning'"
+                                   @click="alertBtnClick(item)">
                             {{item.buttonText}}
                         </el-button>
                     </p>
@@ -156,7 +157,15 @@
                 float: right;
                 background: #c71b1b;
                 margin-top: -8px;
+                transition: width 0.5s;
+                -moz-transition: width 0.5s; /* Firefox 4 */
+                -webkit-transition:width 0.5s; /* Safari 和 Chrome */
+                -o-transition: width 0.5s; /* Opera */
             }
+
+            /*.article-danger-button-width{*/
+                /*width: 88px;*/
+            /*}*/
         }
     }
 </style>
@@ -169,12 +178,14 @@
         },
         components: {},
         methods: {
-            removeArticle(index, list){
-                console.log(index)
-                console.log(list)
-                list.splice(index, 1);
-                //要刷新页面
-//                location.reload();
+            alertBtnClick(item){
+                if(!item.alerted){
+                    item.alerted = true;
+                    item.buttonText = '取消预警';
+                }else {
+                    item.alerted = false;
+                    item.buttonText = '预警';
+                }
             }
         },
         props: ["articleData"]

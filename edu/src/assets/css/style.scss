@@ -361,3 +361,14 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
     background-color: rgba(0,0,0,.5);
   }
 }
+
+ul.event-store-item {
+  margin:0;
+  padding:0;
+  border:none;
+  li{
+    color: #000;
+    text-align: center;
+    border-bottom: 1px solid #cccccc;
+  }
+}

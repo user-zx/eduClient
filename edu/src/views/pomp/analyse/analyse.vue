@@ -2,7 +2,7 @@
 * Created by zhangxin on 2017/3/16.
 */
 <template>
-    <div class="analyse">
+    <div class="analyse article-wrap">
         <bread-crumb></bread-crumb>
         <div id="search-container">
             <search-box :searchData=searchData></search-box>
@@ -196,7 +196,7 @@
 
             let articleData = [
                 {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
+                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录杂志赤峰学院学报栏目设置和论文参考的目录杂志赤峰学院学报栏目设置和论文参考的目录',
                     'attitude': 'positive',
                     'buttonType': 'warning',
                     'buttonText': '预警',
@@ -254,6 +254,5 @@
 
             this.articleData = articleData;
         },
-
     }
 </script>

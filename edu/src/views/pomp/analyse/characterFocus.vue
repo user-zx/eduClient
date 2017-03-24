@@ -1,5 +1,5 @@
 /**
-* Created by lifei on 2017/3/21.
+* Created by lifei on 2017/3/24.
 */
 <template>
     <el-table :data="tableData"  stripe style="width: 100%">
