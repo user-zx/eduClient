@@ -1,7 +1,19 @@
 .article-wrap {
 
   color: #000;
-
+  .dark{
+    .content-bar{
+      background-color: rgba(96,163,255,.1);
+      .content-bar-list{
+        color:#ffffff;
+      }
+      .content-bar-pagination{
+        float: right;
+        width: calc(100% - 610px);
+        height: 80px;
+      }
+    }
+  }
   .el-button{
     height: 33px;
     padding-top: 9px;

@@ -2,11 +2,11 @@
 * Created by zhangxin on 2017/3/24.
 */
 <template>
-    <div>
+    <div class="article-wrap">
         <div id="search-container">
-            <search-box :searchData=searchData></search-box>
+            <search-box :searchData="searchData" class="dark"></search-box>
         </div>
-        <div class="content">
+        <div class="content dark">
             <div class="content-bar">
                 <ul class="content-bar-list">
                     <li class="pointer">全部</li>
@@ -28,7 +28,7 @@
                     </el-dropdown>
                     <el-button type="primary" icon="plus" class="button-icon">批量关注</el-button>
                 </div>
-                <div class="content-bar-page">
+                <div class="content-bar-pagination">
                     <el-pagination class="edu-pagination"
                                    @size-change="handleSizeChange"
                                    @current-change="handleCurrentChange"
@@ -39,12 +39,10 @@
                     </el-pagination>
                 </div>
             </div>
-            <articleContainer :articleData=articleData></articleContainer>
+            <articleContainer :articleData="articleData" class="dark"></articleContainer>
         </div>
     </div>
 </template>
-<style lang="scss" scoped>
-</style>
 <script>
      /*
     * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';

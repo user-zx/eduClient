@@ -41,62 +41,62 @@
         margin-bottom: 10px;
         color: #333;
         background: #fff;
+        &.dark{
+            background-color: #21273d;
+            color:#d0d7ff;
+            .el-row{
+                .el-col{
+                    border-bottom: 1px solid rgba(96,163,255,.1);
+                    &:first-child {
+                         background: rgba(25,28,45,.32);
+                         padding-left: 20px;
+                    }
+                }
+            }
+         }
+        .el-row {
+            .el-col {
+                height: 50px;
+                border-bottom: 1px solid #d6d6d6;
+                line-height: 50px;
+                overflow: hidden;
+                .search-list {
+                    display: inline-block;
+                    text-align: center;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                    cursor: pointer;
+                }
+                &:first-child {
+                     background: #e6e6e6;
+                     padding-left: 20px;
+                 }
+            }
+            .school-list {
+                position: relative;
+                li {
+                    display: inline-block;
+                    .sub-list {
+                        display: none;
+                    }
 
-    .el-row {
-
-    .el-col {
-        height: 50px;
-        border-bottom: 1px solid #d6d6d6;
-        line-height: 50px;
-        color: #333;
-        overflow: hidden;
-
-    .search-list {
-        display: inline-block;
-        text-align: center;
-        padding-left: 15px;
-        padding-right: 15px;
-        cursor: pointer;
-    }
-
-    }
-
-    .el-col:first-child {
-        background: #e6e6e6;
-        padding-left: 20px;
-    }
-
-    .school-list {
-        position: relative;
-
-    li {
-        display: inline-block;
-
-    .sub-list {
-        display: none;
-    }
-
-    }
-    }
-
-    }
-
-    .el-icon-arrow-down {
-        position: absolute;
-        top: 16px;
-        right: 15px;
-    }
-
-    .search-selected {
-        color: #60a3ff;
-    }
-
-    .transition{
-        transition: 0.5s;
-        -moz-transition: 0.5s; /* Firefox 4 */
-        -webkit-transition: 0.5s; /* Safari 和 Chrome */
-        -o-transition: 0.5s; /* Opera */
-    }
+                }
+            }
+        }
+        .el-icon-arrow-down {
+            position: absolute;
+            top: 16px;
+            right: 15px;
+        }
+        .search-selected {
+            color: #60a3ff;
+        }
+        .transition{
+            transition: 0.5s;
+            -moz-transition: 0.5s; /* Firefox 4 */
+            -webkit-transition: 0.5s; /* Safari 和 Chrome */
+            -o-transition: 0.5s; /* Opera */
+        }
     }
 </style>
 <script>

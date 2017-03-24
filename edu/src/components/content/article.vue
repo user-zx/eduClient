@@ -47,7 +47,6 @@
 <style lang="scss" scoped>
     .article-container{
         background: #ffffff;
-
         .article{
             height: 196px;
             border-bottom: 1px solid #E3EDFB;
@@ -166,6 +165,24 @@
             /*.article-danger-button-width{*/
                 /*width: 88px;*/
             /*}*/
+
+        }
+        &.dark{
+             background-color: #21273d;
+            .article{
+                border-bottom-color: rgba(96,163,255,.1);
+            }
+            .article-left{
+                border-right-color:rgba(96,163,255,.1);
+            }
+            .article-right{
+                color:#d0d7ff;
+                .article-title-box{
+                    .article-title{
+                        color:#60a3ff;
+                    }
+                }
+            }
         }
     }
 </style>
