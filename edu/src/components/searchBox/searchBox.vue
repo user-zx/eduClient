@@ -9,7 +9,7 @@
             </el-col>
             <el-col :span="22" v-if="data.buttons.length == 0" class="transition">
                 <ul>
-                    <li v-for="(item, index1) in data.searchList" class="search-list"
+                    <li v-for="(item, index1) in data.searchList" class="search-list" :key="item.id"
                         @click="searchLiClick(item, index1, data)" :class="{'search-selected': item.selected}">
                         {{item.text}}
                     </li>
@@ -26,7 +26,7 @@
                         {{item.text}}
                     </li>
                     <li class="search-list" v-if="data.hasMore == true" v-show="foldSchool">
-                        <i class="el-icon-arrow-down pointer" v-on:click="subSearchItem"></i>
+                        <i class="el-icon-arrow-down pointer" v-on:click="foldSchoolClick"></i>
                     </li>
                 </ul>
             </el-col>
@@ -40,15 +40,16 @@
     .search-box {
         margin-bottom: 10px;
         color: #333;
+        background: #fff;
 
     .el-row {
 
     .el-col {
-        background: #fff;
         height: 50px;
         border-bottom: 1px solid #d6d6d6;
         line-height: 50px;
         color: #333;
+        overflow: hidden;
 
     .search-list {
         display: inline-block;
@@ -140,9 +141,17 @@
                 if(item.dateBox == 'show'){
                     this.show = true;
                 }
+
+                if(item.showCharacter == true){
+                    this.$parent.showArticle=false;
+                    this.$parent.showCharacterFocus=true;
+                }else{
+                    this.$parent.showArticle=true;
+                    this.$parent.showCharacterFocus=false;
+                }
             },
 
-            subSearchItem(){
+            foldSchoolClick(){
                 if ($('.school-list .el-icon-arrow-down').hasClass('el-icon-arrow-up')) {
                     $('.el-icon-arrow-down').removeClass('el-icon-arrow-up');
                     $('.school-list').closest('div.el-row').children().each(function (index) {

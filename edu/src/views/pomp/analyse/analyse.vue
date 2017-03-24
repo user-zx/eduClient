@@ -43,7 +43,8 @@
                     </el-pagination>
                 </div>
             </div>
-            <articleContainer :articleData=articleData></articleContainer>
+            <articleContainer :articleData=articleData v-show="showArticle"></articleContainer>
+            <characterFocus v-show="showCharacterFocus"></characterFocus>
         </div>
     </div>
 </template>
@@ -58,8 +59,9 @@
      */
     import "vue-style-loader!css-loader!sass-loader!./css/analyse.scss";
     import breadCrumb from '../../../components/breadCrumb/breadCrumb.vue';
-    import searchBox from '../../../components/searchBox/searchBox.vue'
-    import articleContainer from '../../../components/content/article.vue'
+    import searchBox from '../../../components/searchBox/searchBox.vue';
+    import articleContainer from '../../../components/content/article.vue';
+    import characterFocus from './characterFocus.vue';
 
     export default{
         data(){
@@ -69,9 +71,11 @@
                 articleData: "",
                 activeIndex: '1',
                 currentPage: 1,
+                showArticle: true,
+                showCharacterFocus: false
             }
         },
-        components: {breadCrumb, searchBox, articleContainer},
+        components: {breadCrumb, searchBox, articleContainer, characterFocus},
         methods:{
             setBreadCrumb(){
                 let breadcrumb=[
@@ -83,11 +87,6 @@
                     }
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
-            },
-
-            handleSelect(key, keyPath){
-                console.log(key)
-                console.log(keyPath)
             },
 
             handleSizeChange(val) {
@@ -104,6 +103,7 @@
             this.setBreadCrumb();
         },
         mounted(){
+
             let searchData = [
                 {
                     'title' :  '选择高校:',
@@ -140,12 +140,12 @@
                         {id: 6, text: '微信微博', selected: false},
                         {id: 7, text: '论坛贴吧', selected: false},
                         {id: 8, text: '敏感时期', selected: false},
-                        {id: 9, text: '人物聚焦', selected: false}
+                        {id: 9, text: '人物聚焦', selected: false, showCharacter: true}
                     ],
                     'hasMore': false,
                     'multiple': false,
                     'buttons': [],
-                     'hasDateBox': false
+                    'hasDateBox': false
                 },
                 {
                     'title': '载体:',
