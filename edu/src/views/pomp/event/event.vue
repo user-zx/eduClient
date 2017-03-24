@@ -4,7 +4,6 @@
 <template>
     <div class="event" id="event">
         <bread-crumb></bread-crumb>
-        {{ $route.params.type }}
         <router-view></router-view>
     </div>
 </template>
