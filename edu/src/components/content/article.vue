@@ -22,6 +22,9 @@
                         </el-button>
                     </p>
                 </div>
+                <p class="article-main">
+                    {{item.content}}
+                </p>
                 <p class="article-describe">
                     <span class="article-source">
                         来源： {{item.source}}
@@ -33,11 +36,8 @@
                         阅读量： {{item.readNum}}
                     </span>
                     <span class="article-publishDate blue">
-                        {{item.publishDate}}
+                        发布时间：{{item.publishDate}}
                     </span>
-                </p>
-                <p class="article-main">
-                    {{item.content}}
                 </p>
             </div>
         </div>
@@ -125,17 +125,16 @@
                 .article-describe{
                     font-size: 12px;
                     margin-top: 10px;
-                    margin-bottom: 10px;
+                    text-align: right;
 
                     .article-source{
                         margin-right: 14px;
                     }
-                    .article-author{
+                    .article-author, .article-clickNum{
                         margin-right: 16px;
                     }
 
-                    span.article-publishDate{
-                        float: right;
+                    article-publishDate{
                         line-height: 20px;
                     }
 
@@ -148,6 +147,7 @@
                 .article-main{
                     height: 70px;
                     line-height: 24px;
+                    margin-top:10px;
                     overflow: hidden;
                 }
             }
