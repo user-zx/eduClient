@@ -26,8 +26,7 @@
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart"></span><span>舆情数据锥形图</span>
                     </div>
-                    <div class="text item">
-                        <IEcharts :option="opinionFunnel" :loading="opinionFunnelLoading"></IEcharts>
+                    <div class="text item" id="opinionFunnel">
                     </div>
                 </el-card>
             </el-col>

@@ -8,7 +8,7 @@
                 <el-input type="password" name="password" v-model="ruleForm.pass" placeholder="请输入密码" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-checkbox v-model="ruleForm.remember" name="rememberMe">记住密码</el-checkbox>
+                <el-checkbox v-model="ruleForm.rememberMe"  name="rememberMe" id="rememberMe">记住密码</el-checkbox>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -26,13 +26,13 @@
         background-image: url(./images/bg.jpg);
         background-repeat: no-repeat;
         background-size: cover;
-        .ruleForm{
-            width: 400px;
-            margin:50px auto 0;
-            padding:30px 20px;
-            background-color: rgba(255,255,255,.8);
-            border-radius: 10px;
-        }
+    }
+    .ruleForm{
+        width: 400px;
+        margin:50px auto 0;
+        padding:30px 20px;
+        background-color: rgba(255,255,255,.8);
+        border-radius: 10px;
     }
 </style>
 <script>
@@ -43,7 +43,7 @@
                 ruleForm: {
                     user: '',
                     pass: '',
-                    remember: false,
+                    rememberMe: false,
                 },
                 rules:{
                     user:[
@@ -61,6 +61,7 @@
         methods:{
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
+                    console.log($('input[type=checkbox]')[0].checked);
                     if (valid) {
                         this.$http.post('/apis/security/generateKey.do').then((response) => {
                             if (response.data.success) {

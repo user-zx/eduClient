@@ -5,7 +5,8 @@
  */
 import "vue-style-loader!css-loader!sass-loader!../../../../assets/css/table/tran-table.css.scss";
 import overview from '../overview/overview.vue';
-import IEcharts from 'vue-echarts-v3';
+import echarts from 'echarts';
+
 export default{
     data(){
         return {
@@ -77,7 +78,7 @@ export default{
             opinionFunnelLoading: true
         }
     },
-    components:{overview,IEcharts} ,
+    components:{overview} ,
     methods:{
         getOpinionData() {
             this.$http.post('/apis/allViewOpinion/getOpinionData.json').then(
@@ -93,15 +94,14 @@ export default{
             );
         },
         getOpinionFunnel() {
+            let chart = echarts.init(document.getElementById('opinionFunnel'));
+            chart.showLoading();
             this.$http.post('/apis/allViewOpinion/getOpinionFunnel.json').then(
                 (response) => {
                     if (response.data.success) {
-                        this.opinionFunnel = response.data.data;
-                        $.
+                        chart.setOption(response.data.data);
                         this.$nextTick(function(){
-                            if (this.opinionFunnelLoading) {
-                                this.opinionFunnelLoading = false;
-                            }
+                            chart.hideLoading();
                         });
                     } else {
                         console.error(response.data.msg);
