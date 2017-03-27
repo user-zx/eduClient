@@ -2,11 +2,54 @@
 * Created by zhangxin on 2017/3/17.
 */
 <template>
-    <div>
-        {{msg}}
+    <div class="report">
+        <div class="btn-container">
+            <el-button type="primary" icon="plus" @click="createReport">生成报告</el-button>
+        </div>
+        <el-table :data="tableData" class="tran-table" border style="width: 100%"
+                  :resizable="false">
+            <el-table-column label="序号" align="center" prop="orderNum"></el-table-column>
+            <el-table-column label="生成区间" prop="range" align="center"></el-table-column>
+            <el-table-column label="报告名称" prop="reportName" align="center"></el-table-column>
+            <el-table-column label="时间" prop="dateTime" align="center"></el-table-column>
+            <el-table-column label="操作" prop="option" align="center">
+                <template scope="scope">
+                    <el-button @click="editReport" type="text" size="small">编辑</el-button>
+                    <el-button @click="viewReport" type="text" size="small">预览</el-button>
+                    <el-button @click="deleteReport" type="text" size="small">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+
+        <el-dialog title="新建报告" v-model="dialogFormVisible">
+            <el-form :model="form">
+                <el-form-item label="起始时间">
+                    <el-date-picker v-model="beginDateTime" type="date" placeholder="起始时间" :picker-options="pickerOptions0">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item label="结束时间">
+                    <el-date-picker v-model="endDateTime" type="date" placeholder="结束时间" :picker-options="pickerOptions1">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item>
+
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 <style lang="scss" scoped>
+    .report{
+        .btn-container{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-align: right;
+        }
+    }
 </style>
 <script>
      /*
@@ -17,12 +60,68 @@
     export default{
         data(){
             return {
-                msg:"内参日报"
+                tableData: [
+                    {
+                        orderNum: 1,
+                        range: '2015/01/01-2017/03/27',
+                        reportName: '情报内参报告名称情报内参报告名称',
+                        dateTime: '2017-03-27 18:18:18'
+                    },
+                    {
+                        orderNum: 1,
+                        range: '2015/01/01-2017/03/27',
+                        reportName: '情报内参报告名称情报内参报告名称',
+                        dateTime: '2017-03-27 18:18:18'
+                    },
+                    {
+                        orderNum: 1,
+                        range: '2015/01/01-2017/03/27',
+                        reportName: '情报内参报告名称情报内参报告名称',
+                        dateTime: '2017-03-27 18:18:18'
+                    },
+                    {
+                        orderNum: 1,
+                        range: '2015/01/01-2017/03/27',
+                        reportName: '情报内参报告名称情报内参报告名称',
+                        dateTime: '2017-03-27 18:18:18'
+                    },
+                    {
+                        orderNum: 1,
+                        range: '2015/01/01-2017/03/27',
+                        reportName: '情报内参报告名称情报内参报告名称',
+                        dateTime: '2017-03-27 18:18:18'
+                    }
+                ],
+                pickerOptions0: {
+                   onClick(picker){
+                       console.log(picker)
+                   }
+                },
+                pickerOptions1: {
+                    onClick(picker){
+                        console.log(picker)
+                    }
+                },
+                beginDateTime: '',
+                endDateTime: '',
+                dialogFormVisible: false,
+                form: ''
             }
         },
         components:{} ,
         methods:{
-            
+            editReport(){
+
+            },
+            viewReport(){
+
+            },
+            deleteReport(){
+
+            },
+            createReport(){
+                console.log('feifei')
+            }
         },
         mounted(){
             
