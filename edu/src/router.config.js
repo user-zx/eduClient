@@ -11,7 +11,8 @@ import characterNews from './views/reference/characterNews/characterNews.vue';
 import seeClearly from './views/reference/seeClearly/seeClearly.vue';
 import mediaCoverage from './views/reference/mediaCoverage/mediaCoverage.vue';
 import report from './views/reference/report/report.vue';
-import seeWbWeChat from './views/serviceTool/seeWbWeChat/seeWbWeChat.vue';
+import seeWeChat from './views/serviceTool/seeweChat/seeweChat.vue';
+import seeWeibo from './views/serviceTool/seeWeibo/seeWeibo.vue';
 import myAttention from './views/myAttention/myAttention.vue';
 import login from './views/login/login.vue';
 import home from './views/home/home.vue';
@@ -103,9 +104,14 @@ export default {
                     component:report
                 },
                 {
-                    name:"seeWbWeChat",
-                    path:"seeWbWeChat",
-                    component:seeWbWeChat
+                    name:"seeWeChat",
+                    path:"seeWeChat",
+                    component:seeWeChat
+                },
+                {
+                    name:"seeWeibo",
+                    path:"seeWeibo",
+                    component:seeWeibo
                 },
                 {
                     name:"myAttention",
