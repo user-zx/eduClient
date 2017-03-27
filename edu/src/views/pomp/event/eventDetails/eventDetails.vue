@@ -5,11 +5,21 @@
     <div class="eventDetails" id="eventDetails">
         <div class="title-box">
             <h3 class="title">中央财经领导小组会议 释放了三点重磅信号</h3>
-            <div class="btn-box">
-                <el-button type="primary" icon="plus">关注</el-button>
-                <el-button type="primary" icon="plus">预警</el-button>
-                <el-button type="primary" icon="plus">事件库</el-button>
-            </div>
+            <!--<div class="btn-box">
+                <el-button type="primary" icon="plus" @click="follow()">关注</el-button>
+                <el-button type="primary" icon="plus" @click="earlyWarning()">预警</el-button>
+                <el-dropdown class="event-store-box" trigger="click">
+                    <el-button type="primary" icon="plus" class="button-icon">
+                        事件库
+                    </el-button>
+                    <el-dropdown-menu slot="dropdown" class="event-store-item">
+                        <el-dropdown-item @click="addEvent()">事件1</el-dropdown-item>
+                        <el-dropdown-item @click="addEvent()">事件2</el-dropdown-item>
+                        <el-dropdown-item @click="addEvent()">事件3</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+                <el-button type="primary" icon="plus" >事件库</el-button>
+            </div>-->
         </div>
         <el-row :gutter="10">
             <el-col :span="24">
@@ -57,9 +67,6 @@
                 padding:7px 15px;
             }
         }
-    }
-    .box-card{
-        background-color: #21273d;
     }
     .speech-tabs{
         background-color: #21273d;
@@ -135,7 +142,16 @@
             },
             currentFun(params){
                 this.currentTabs.currentTab=params;
-            }
+            },
+            /*follow(){
+
+            },
+            earlyWarning(){
+
+            },
+            addEvent(){
+
+            }*/
         },
         created(){
             this.setBreadCrumb();

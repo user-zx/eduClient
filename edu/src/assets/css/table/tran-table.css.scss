@@ -26,6 +26,13 @@
         }
       }
     }
+    &.white-table{
+      th{
+        .cell{
+          color:#d0d7ff;
+        }
+      }
+    }
     &:after,&:before{
       background-color: transparent;
     }

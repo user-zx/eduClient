@@ -16,17 +16,7 @@
                     <li class="pointer arrow-down">时间</li>
                 </ul>
                 <div class="content-bar-button">
-                    <el-dropdown class="event-store-box" trigger="click">
-                        <el-button type="primary" icon="plus" class="button-icon">
-                            事件库
-                        </el-button>
-                        <el-dropdown-menu slot="dropdown" class="event-store-item">
-                            <el-dropdown-item>事件1</el-dropdown-item>
-                            <el-dropdown-item>事件2</el-dropdown-item>
-                            <el-dropdown-item>事件3</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
-                    <el-button type="primary" icon="plus" class="button-icon">批量关注</el-button>
+                    <el-button type="primary" icon="plus" class="button-icon" @click="follows()">批量关注</el-button>
                 </div>
                 <div class="content-bar-pagination">
                     <el-pagination class="edu-pagination"
@@ -71,51 +61,16 @@
                 this.currentPage = val;
                 console.log(`当前页: ${val}`);
             },
+            follows(){
+                this.$notify({
+                    title:"成功",
+                    message:"批量添加关注成功！",
+                    type:"success"
+                })
+            }
         },
         mounted(){
             let searchData = [
-                {
-                    'title' :  '选择高校:',
-                    'searchList': [
-                        {id: 0, text: '全部', selected: true},
-                        {id: 1, text: '北京大学', selected: false},
-                        {id: 2, text: '北京航空航天大学', selected: false},
-                        {id: 3, text: '清华大学', selected: false},
-                        {id: 4, text: '中央民族大学', selected: false},
-                        {id: 5, text: '北京邮电大学', selected: false},
-                        {id: 6, text: '北京传媒大学', selected: false},
-                        {id: 7, text: '北京科技大学', selected: false},
-                        {id: 8, text: '北京科技大学', selected: false},
-                        {id: 9, text: '北京科技大学', selected: false},
-                        {id: 10, text: '北京科技大学', selected: false},
-                        {id: 11, text: '北京科技大学', selected: false}
-                    ],
-                    'hasMore': true,
-                    'multiple': false,
-                    'buttons': [
-                        {'buttonText': '添加高校', 'id': 'add-college-btn'}
-                    ],
-                    'hasDateBox': false
-                },
-                {
-                    'title': '高校维度:',
-                    'searchList': [
-                        {id: 0, text: '校园舆情', selected: true},
-                        {id: 1, text: '校园安全', selected: false},
-                        {id: 2, text: '违规违纪', selected: false},
-                        {id: 3, text: '媒体报道', selected: false},
-                        {id: 4, text: '人才培养', selected: false},
-                        {id: 5, text: '科学研究', selected: false},
-                        {id: 6, text: '微信微博', selected: false},
-                        {id: 7, text: '论坛贴吧', selected: false},
-                        {id: 8, text: '敏感时期', selected: false},
-                        {id: 9, text: '人物聚焦', selected: false, showCharacter: true}
-                    ],
-                    'hasMore': false,
-                    'multiple': false,
-                    'buttons': [],
-                    'hasDateBox': false
-                },
                 {
                     'title': '载体:',
                     'searchList': [
