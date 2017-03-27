@@ -7,7 +7,7 @@
         <bread-crumb></bread-crumb>
          <div id="search-container">
              <search-box :searchData=searchData></search-box>
-        </div>
+         </div>
           <div class="content">
             <div class="content-bar">
                 <ul class="content-bar-list">
@@ -47,4 +47,6 @@
     </div>
 </template>
 
-<script src="./script/warning.js"></script>
+<script src="./script/warning.js">   
+	
+</script> 

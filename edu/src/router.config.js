@@ -65,10 +65,10 @@ export default {
                 },
                 {
                     name:"舆情预警",
-                    path:"warning",
+                    path:"warning",  
                     component:warning
                 },
-                {
+                { 
                    name:"舆情规则",
                    path:"publicOpinionRule",
                    component:publicOpinionRule

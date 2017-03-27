@@ -3,7 +3,7 @@
 */
 <template>
     <div class="breadCrumb">
-        <el-breadcrumb separator=">">
+        <el-breadcrumb separator=" > ">
             <el-breadcrumb-item v-for="item in breadCrumd" :to="item.to">{{item.name}}</el-breadcrumb-item>
         </el-breadcrumb>
     </div>

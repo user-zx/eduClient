@@ -1,8 +1,8 @@
 
-import breadCrumb from '../../../../components/breadCrumb/breadCrumb.vue';
+ import breadCrumb from '../../../../components/breadCrumb/breadCrumb.vue';
  import searchBox from '../../../../components/searchBox/searchBox.vue';
  import "vue-style-loader!css-loader!sass-loader!../../analyse/css/analyse.scss";
-  import articleContainer from '../../../../components/content/article.vue';
+ import articleContainer from '../../../../components/content/article.vue';
 export default{
     data(){ 
         return {

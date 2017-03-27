@@ -11,69 +11,11 @@ export default{
     data(){
         return {
             msg:"全景舆情",
-            tableData: [{
-                col: '论坛',
-                today: '7263',
-                yesterday: '231',
-                week: '824682',
-                month: '21472332'
-            }, {
-                col: '博客',
-                today: '7263',
-                yesterday: '231',
-                week: '824682',
-                month: '21472332'
-            }, {
-                col: '新闻',
-                today: '7263',
-                yesterday: '231',
-                week: '824682',
-                month: '21472332'
-            }, {
-                col: '微博',
-                today: '7263',
-                yesterday: '231',
-                week: '824682',
-                month: '21472332'
-            },
-                {
-                    col: '全部',
-                    today: '7263',
-                    yesterday: '231',
-                    week: '824682',
-                    month: '21472332'
-                },
-                {
-                    col: '相关',
-                    today: '7263',
-                    yesterday: '231',
-                    week: '824682',
-                    month: '21472332'
-                },
-                {
-                    col: '舆情',
-                    today: '7263',
-                    yesterday: '231',
-                    week: '824682',
-                    month: '21472332'
-                },
-                {
-                    col: '负面',
-                    today: '7263',
-                    yesterday: '231',
-                    week: '824682',
-                    month: '21472332'
-                },
-                {
-                    col: '微信',
-                    today: '7263',
-                    yesterday: '231',
-                    week: '824682',
-                    month: '21472332'
-                }],
             opinionData: [],
             hotOpinion: {todayHot: [], weekHot: [], monthHot: []},
             hotPersonage: {todayHot: [], weekHot: [], monthHot: []},
+            wechatHot: [],
+            weboHot: [],
             activeName: 'todayHot',
             activeName2:'todayHot',
         }
@@ -159,9 +101,81 @@ export default{
                 (response) => {
                     if (response.data.success) {
                         chart.setOption(response.data.data);
-                        this.$nextTick(function(){
+                        this.$nextTick(function (){
                             chart.hideLoading();
                         });
+                    } else {
+                        console.error(response.data.message);
+                    }
+                }, (response) => {
+                    console.error(response);
+                }
+            );
+        },
+        /**获取热点舆情*/
+        getHotOpinion(type) {
+            this.$http.post('/apis/allViewOpinion/getHotOpinion.json',{type: type}).then(
+                (response) => {
+                    if (response.data.success) {
+                        switch (type) {
+                            case 'TODAY' :
+                                this.hotOpinion.todayHot = response.data.data;
+                                break;
+                                return;
+                            case 'LASTWEEK' :
+                                this.hotOpinion.weekHot = response.data.data;
+                                break;
+                                return;
+                            case 'LASTMONTH' :
+                                this.hotOpinion.monthHot = response.data.data;
+                                break;
+                                return;
+
+                        }
+                    } else {
+                        console.error(response.data.message);
+                    }
+                }, (response) => {
+                    console.error(response);
+                }
+            );
+        },
+        /**获取热点人物*/
+        getHotPersonage(type) {
+            this.$http.post('/apis/allViewOpinion/getHotPersonage.json',{type: type}).then(
+                (response) => {
+                    if (response.data.success) {
+                        switch (type) {
+                            case 'TODAY' :
+                                this.hotPersonage.todayHot = response.data.data;
+                                break;
+                                return;
+                            case 'LASTWEEK' :
+                                this.hotPersonage.weekHot = response.data.data;
+                                break;
+                                return;
+                            case 'LASTMONTH' :
+                                this.hotPersonage.monthHot = response.data.data;
+                                break;
+                                return;
+                        }
+                    } else {
+                        console.error(response.data.message);
+                    }
+                }, (response) => {
+                    console.error(response);
+                }
+            );
+        },
+        getHotByVector(vector) {
+            this.$http.post('/apis/allViewOpinion/getHotByVector.json',{vector: vector}).then(
+                (response) => {
+                    if (response.data.success) {
+                        if ('微信' == vector) {
+                            this.wechatHot = response.data.data;
+                        } else {
+                            this.weboHot = response.data.data;
+                        }
                     } else {
                         console.error(response.data.message);
                     }
@@ -177,8 +191,16 @@ export default{
     mounted(){
         this.getOpinionData();
         this.getOpinionFunnel();
-        this.getVectorDistribute('2001-01-01', '2017-03-24');
+        this.getVectorDistribute('2016-03-01', '2017-03-24');
         this.getPersonageCount();
-        this.getVectorTrend('2001-01-01 00:00:00', '2017-03-24 00:00:00');
+        this.getVectorTrend('2016-12-21 00:00:00', '2017-03-24 00:00:00');
+        this.getHotOpinion('TODAY');
+        this.getHotOpinion('LASTWEEK');
+        this.getHotOpinion('LASTMONTH');
+        this.getHotPersonage('TODAY');
+        this.getHotPersonage('LASTWEEK');
+        this.getHotPersonage('LASTMONTH');
+        this.getHotByVector('微信');
+        this.getHotByVector('微博');
     }
 }

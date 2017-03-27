@@ -90,7 +90,7 @@
                         <div class="charts"></div>
                     </div>
                     <div class="col-item item-right">
-                        <el-table :data="tableData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title white-table">
+                        <el-table :data="tableData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title white-table-text">
                             <el-table-column prop="nature" label="载体" align="center"></el-table-column>
                             <el-table-column prop="fNumber" label="负面文章数" align="center"></el-table-column>
                             <el-table-column prop="zNumber" label="正面文章数" align="center"></el-table-column>
@@ -109,7 +109,7 @@
                         <div class="charts"></div>
                     </div>
                     <div class="col-item item-right">
-                        <el-table :data="tableData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title white-table">
+                        <el-table :data="tableData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title white-table-text">
                             <el-table-column prop="siteTop" label="排名" align="center"></el-table-column>
                             <el-table-column prop="nature" label="媒体名称" align="center"></el-table-column>
                             <el-table-column prop="fNumber" label="相关文章数" align="center"></el-table-column>
@@ -130,7 +130,7 @@
                         <div class="charts"></div>
                     </div>
                     <div class="col-item item-right">
-                        <el-table :data="tableData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title white-table">
+                        <el-table :data="tableData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title white-table-text">
                             <el-table-column prop="siteTop" label="排名" align="center"></el-table-column>
                             <el-table-column prop="nature" label="人物" align="center"></el-table-column>
                             <el-table-column prop="fNumber" label="相关文章数" align="center"></el-table-column>
