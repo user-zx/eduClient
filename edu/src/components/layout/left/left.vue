@@ -30,9 +30,10 @@
                 </el-menu-item-group>
             </el-submenu>
             <el-submenu index="3">
-                <template slot="title"><i class="nav-icon nav-icon3"></i>业务工具</template>
+                <template slot="title"><i class="nav-icon nav-icon3"></i>业务平台</template>
                 <el-menu-item-group>
-                    <el-menu-item index="seeWbWeChat">两微监测</el-menu-item>
+                    <el-menu-item index="seeWeChat">微信监测</el-menu-item>
+                    <el-menu-item index="seeWeibo">微博监测</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
             <el-menu-item index="myAttention"><i class="nav-icon nav-icon4"></i>我的关注</el-menu-item>

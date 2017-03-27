@@ -17,7 +17,7 @@
     export default{
         data(){
             return {
-                msg:"两微监测"
+                msg:"微信监测"
             }
         },
         components:{} ,
