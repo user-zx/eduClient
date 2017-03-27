@@ -143,11 +143,13 @@
                 }
 
                 if(item.showCharacter == true){
-                    this.$parent.showArticle=false;
-                    this.$parent.showCharacterFocus=true;
-                }else{
-                    this.$parent.showArticle=true;
-                    this.$parent.showCharacterFocus=false;
+                    this.$parent.currentTabs.currentTab = 'characterFocus';
+                    //重新请求一次数据
+
+                }else if(item.showCharacter == false){
+                    this.$parent.currentTabs.currentTab = 'articleView';
+                    //重新请求一次数据
+
                 }
             },
 

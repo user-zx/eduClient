@@ -3,7 +3,7 @@
 */
 
 <template>
-    <div class="article-container" id="article-container">
+    <div class="article-container" id="article-container" :data="articleData">
         <div class="article" v-for="(item, index) in articleData">
             <div class="article-left">
                 <el-checkbox></el-checkbox>
@@ -190,21 +190,93 @@
     export default{
         data(){
             return {
-                msg: ""
+                msg: "",
+                articleData: [
+                    {
+                        'title': '杂志赤峰学院学报栏目设置和论文参考的目录杂志赤峰学院学报栏目设置和论文参考的目录杂志赤峰学院学报栏目设置和论文参考的目录',
+                        'attitude': 'positive',
+                        'buttonType': 'warning',
+                        'buttonText': '预警',
+                        'source': '新浪博客',
+                        'author': '梦想家期刊',
+                        'readNum': '2342',
+                        'publishDate': '2016-12-12 12:12',
+                        'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
+                    },
+                    {
+                        'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
+                        'attitude': 'negative',
+                        'buttonType': 'warning',
+                        'buttonText': '预警',
+                        'source': '新浪博客',
+                        'author': '梦想家期刊',
+                        'readNum': '2342',
+                        'publishDate': '2016-12-12 12:12',
+                        'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
+                    },
+                    {
+                        'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
+                        'attitude': 'positive',
+                        'buttonType': 'warning',
+                        'buttonText': '预警',
+                        'source': '新浪博客',
+                        'author': '梦想家期刊',
+                        'readNum': '2342',
+                        'publishDate': '2016-12-12 12:12',
+                        'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
+                    },
+                    {
+                        'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
+                        'attitude': 'positive',
+                        'buttonType': 'warning',
+                        'buttonText': '预警',
+                        'source': '新浪博客',
+                        'author': '梦想家期刊',
+                        'readNum': '2342',
+                        'publishDate': '2016-12-12 12:12',
+                        'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
+                    },
+                    {
+                        'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
+                        'attitude': 'negative',
+                        'buttonType': 'warning',
+                        'buttonText': '预警',
+                        'source': '新浪博客',
+                        'author': '梦想家期刊',
+                        'readNum': '2342',
+                        'publishDate': '2016-12-12 12:12',
+                        'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
+                    }
+                ]
             }
         },
         components: {},
         methods: {
             alertBtnClick(item){
+                //向后台发送请求 改变预警状态 然后根据返回参数判断页面展示效果
+
                 if(!item.alerted){
                     item.alerted = true;
                     item.buttonText = '取消预警';
+                    this.$notify({
+                        title: '成功',
+                        message: '添加预警成功',
+                        type: 'success',
+                        duration: 2000
+                    });
                 }else {
                     item.alerted = false;
                     item.buttonText = '预警';
+                    this.$notify({
+                        title: '成功',
+                        message: '取消预警成功',
+                        type: 'success',
+                        duration: 2000
+                    })
                 }
+
             }
         },
-        props: ["articleData"]
+//        props: ["articleData"]
     }
 </script>

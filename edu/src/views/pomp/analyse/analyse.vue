@@ -43,8 +43,9 @@
                     </el-pagination>
                 </div>
             </div>
-            <articleContainer :articleData=articleData v-show="showArticle"></articleContainer>
-            <characterFocus v-show="showCharacterFocus"></characterFocus>
+            <components :is="currentTabs.currentTab"></components>
+            <!--<articleView :articleData=articleData v-show="showArticle" v-if="showArticle == true"></articleView>-->
+            <!--<characterFocus v-show="showCharacterFocus" v-if="showCharacterFocus == true"></characterFocus>-->
         </div>
     </div>
 </template>
@@ -60,7 +61,7 @@
     import "vue-style-loader!css-loader!sass-loader!./css/analyse.scss";
     import breadCrumb from '../../../components/breadCrumb/breadCrumb.vue';
     import searchBox from '../../../components/searchBox/searchBox.vue';
-    import articleContainer from '../../../components/content/article.vue';
+    import articleView from '../../../components/content/article.vue';
     import characterFocus from './characterFocus.vue';
 
     export default{
@@ -68,14 +69,16 @@
             return {
                 msg: "舆情监测",
                 searchData:"",
-                articleData: "",
                 activeIndex: '1',
                 currentPage: 1,
-                showArticle: true,
-                showCharacterFocus: false
+                currentTabs: {
+                    articleView: 'articleView',
+                    characterFocus: 'characterFocus',
+                    currentTab: 'articleView'
+                }
             }
         },
-        components: {breadCrumb, searchBox, articleContainer, characterFocus},
+        components: {breadCrumb, searchBox, articleView, characterFocus},
         methods:{
             setBreadCrumb(){
                 let breadcrumb=[
@@ -103,7 +106,6 @@
             this.setBreadCrumb();
         },
         mounted(){
-
             let searchData = [
                 {
                     'title' :  '选择高校:',
@@ -131,15 +133,15 @@
                 {
                     'title': '高校维度:',
                     'searchList': [
-                        {id: 0, text: '校园舆情', selected: true},
-                        {id: 1, text: '校园安全', selected: false},
-                        {id: 2, text: '违规违纪', selected: false},
-                        {id: 3, text: '媒体报道', selected: false},
-                        {id: 4, text: '人才培养', selected: false},
-                        {id: 5, text: '科学研究', selected: false},
-                        {id: 6, text: '微信微博', selected: false},
-                        {id: 7, text: '论坛贴吧', selected: false},
-                        {id: 8, text: '敏感时期', selected: false},
+                        {id: 0, text: '校园舆情', selected: true, showCharacter: false},
+                        {id: 1, text: '校园安全', selected: false, showCharacter: false},
+                        {id: 2, text: '违规违纪', selected: false, showCharacter: false},
+                        {id: 3, text: '媒体报道', selected: false, showCharacter: false},
+                        {id: 4, text: '人才培养', selected: false, showCharacter: false},
+                        {id: 5, text: '科学研究', selected: false, showCharacter: false},
+                        {id: 6, text: '微信微博', selected: false, showCharacter: false},
+                        {id: 7, text: '论坛贴吧', selected: false, showCharacter: false},
+                        {id: 8, text: '敏感时期', selected: false, showCharacter: false},
                         {id: 9, text: '人物聚焦', selected: false, showCharacter: true}
                     ],
                     'hasMore': false,
@@ -193,66 +195,6 @@
                 }
             ];
             this.searchData = searchData;
-
-            let articleData = [
-                {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录杂志赤峰学院学报栏目设置和论文参考的目录杂志赤峰学院学报栏目设置和论文参考的目录',
-                    'attitude': 'positive',
-                    'buttonType': 'warning',
-                    'buttonText': '预警',
-                    'source': '新浪博客',
-                    'author': '梦想家期刊',
-                    'readNum': '2342',
-                    'publishDate': '2016-12-12 12:12',
-                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                },
-                {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                    'attitude': 'negative',
-                    'buttonType': 'warning',
-                    'buttonText': '预警',
-                    'source': '新浪博客',
-                    'author': '梦想家期刊',
-                    'readNum': '2342',
-                    'publishDate': '2016-12-12 12:12',
-                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                },
-                {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                    'attitude': 'positive',
-                    'buttonType': 'warning',
-                    'buttonText': '预警',
-                    'source': '新浪博客',
-                    'author': '梦想家期刊',
-                    'readNum': '2342',
-                    'publishDate': '2016-12-12 12:12',
-                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                },
-                {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                    'attitude': 'positive',
-                    'buttonType': 'warning',
-                    'buttonText': '预警',
-                    'source': '新浪博客',
-                    'author': '梦想家期刊',
-                    'readNum': '2342',
-                    'publishDate': '2016-12-12 12:12',
-                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                },
-                {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                    'attitude': 'negative',
-                    'buttonType': 'warning',
-                    'buttonText': '预警',
-                    'source': '新浪博客',
-                    'author': '梦想家期刊',
-                    'readNum': '2342',
-                    'publishDate': '2016-12-12 12:12',
-                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                }
-            ];
-
-            this.articleData = articleData;
         },
     }
 </script>
