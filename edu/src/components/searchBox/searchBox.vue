@@ -143,7 +143,7 @@
                 }
 
                 if(item.showCharacter == true){
-                    this.$parent.currentTabs.currentTab = 'characterFocus';
+                    this.$parent.currentTabs.currentTab = 'characterTable';
                     //重新请求一次数据
 
                 }else if(item.showCharacter == false){
