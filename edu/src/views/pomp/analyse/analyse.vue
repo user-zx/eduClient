@@ -28,8 +28,6 @@
                         </el-dropdown-menu>
                     </el-dropdown>
 
-                    <!--<el-button type="primary" icon="plus" class="button-icon">事件库</el-button>-->
-
                     <el-button type="primary" icon="plus" class="button-icon">批量关注</el-button>
                 </div>
                 <div class="content-bar-page">
@@ -44,8 +42,6 @@
                 </div>
             </div>
             <components :is="currentTabs.currentTab"></components>
-            <!--<articleView :articleData=articleData v-show="showArticle" v-if="showArticle == true"></articleView>-->
-            <!--<characterFocus v-show="showCharacterFocus" v-if="showCharacterFocus == true"></characterFocus>-->
         </div>
     </div>
 </template>
@@ -62,23 +58,22 @@
     import breadCrumb from '../../../components/breadCrumb/breadCrumb.vue';
     import searchBox from '../../../components/searchBox/searchBox.vue';
     import articleView from '../../../components/content/article.vue';
-    import characterFocus from './characterFocus.vue';
+    import characterTable from '../../../components/content/characterTable.vue';
     
     export default{
         data(){
             return {
                 msg: "舆情监测",
                 searchData:"",
-                activeIndex: '1',
                 currentPage: 1,
                 currentTabs: {
                     articleView: 'articleView',
-                    characterFocus: 'characterFocus',
+                    characterTable: 'characterTable',
                     currentTab: 'articleView'
                 }
             }
         },
-        components: {breadCrumb, searchBox, articleView, characterFocus},
+        components: {breadCrumb, searchBox, articleView, characterTable},
         methods:{
             setBreadCrumb(){
                 let breadcrumb=[

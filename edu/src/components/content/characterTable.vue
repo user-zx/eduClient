@@ -1,5 +1,5 @@
 /**
-* Created by lifei on 2017/3/24.
+* Created by lifei on 2017/3/27.
 */
 <template>
     <el-table :data="tableData" class="tran-table white-table" border style="width: 100%"
@@ -159,6 +159,16 @@
                         'hot': 5,
                         'emotion': 1
                     }
+                    ,
+                    {
+                        'id': 16,
+                        'all': 16,
+                        'name': '习总',
+                        'voiceNum': 888,
+                        'readNum': 1024,
+                        'hot': 5,
+                        'emotion': 1
+                    }
                 ]
             }
         },
@@ -167,8 +177,8 @@
             addIcon(){
                 this.$nextTick(function () {
                     let  $firstCell = $('.white-table .el-table__body tbody tr:first td:eq(1) div.cell'),
-                         $secondCell = $('.white-table .el-table__body tbody tr:eq(1) td:eq(1) div.cell'),
-                         $thirdCell = $('.white-table .el-table__body tbody tr:eq(2) td:eq(1) div.cell');
+                        $secondCell = $('.white-table .el-table__body tbody tr:eq(1) td:eq(1) div.cell'),
+                        $thirdCell = $('.white-table .el-table__body tbody tr:eq(2) td:eq(1) div.cell');
                     $firstCell.prepend('<i class="icon-rank icon-gold"></i>');
                     $secondCell.prepend('<i class="icon-rank icon-silver"></i>');
                     $thirdCell.prepend('<i class="icon-rank icon-copper"></i>');
