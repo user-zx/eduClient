@@ -31,7 +31,7 @@
                 </ul>
             </el-col>
             <el-col :span="2" v-for="btn in data.buttons" class="transition">
-                <el-button type="primary" @click="btnClick(data)">{{btn.buttonText}}</el-button>
+                <el-button type="primary" @click="btnClick(data,$event)">{{btn.buttonText}}</el-button>
             </el-col>
         </el-row>
     </div>
@@ -143,11 +143,13 @@
                 }
 
                 if(item.showCharacter == true){
-                    this.$parent.showArticle=false;
-                    this.$parent.showCharacterFocus=true;
-                }else{
-                    this.$parent.showArticle=true;
-                    this.$parent.showCharacterFocus=false;
+                    this.$parent.currentTabs.currentTab = 'characterFocus';
+                    //重新请求一次数据
+
+                }else if(item.showCharacter == false){
+                    this.$parent.currentTabs.currentTab = 'articleView';
+                    //重新请求一次数据
+
                 }
             },
 
@@ -166,8 +168,14 @@
                 }
             },
 
-            btnClick(item){
-                console.log(item)
+            btnClick(item,el){
+                let vm  = this;
+              let elVal = $(el.target).html();
+              switch(elVal) {
+                  case "预警设置":
+                       vm.$router.push({path:"/home/publicOpinionRule"});
+                      break;
+              }
             }
         },
         mounted(){

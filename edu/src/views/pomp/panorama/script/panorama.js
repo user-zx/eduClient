@@ -72,14 +72,15 @@ export default{
                     month: '21472332'
                 }],
             opinionData: [],
+            hotOpinion: {todayHot: [], weekHot: [], monthHot: []},
+            hotPersonage: {todayHot: [], weekHot: [], monthHot: []},
             activeName: 'todayHot',
             activeName2:'todayHot',
-            opinionFunnel:{},
-            opinionFunnelLoading: true
         }
     },
     components:{overview} ,
     methods:{
+        /**获取舆情数据*/
         getOpinionData() {
             this.$http.post('/apis/allViewOpinion/getOpinionData.json').then(
                 (response) => {
@@ -93,6 +94,7 @@ export default{
                 }
             );
         },
+        /**获取舆情漏斗*/
         getOpinionFunnel() {
             let chart = echarts.init(document.getElementById('opinionFunnel'));
             chart.showLoading();
@@ -104,7 +106,64 @@ export default{
                             chart.hideLoading();
                         });
                     } else {
-                        console.error(response.data.msg);
+                        console.error(response.data.message);
+                    }
+                }, (response) => {
+                    console.error(response);
+                }
+            );
+        },
+        /**获取载体分布*/
+        getVectorDistribute(startDate, endDate) {
+            let chart = echarts.init(document.getElementById('vectorDistribute'));
+            chart.showLoading();
+            this.$http.post('/apis/allViewOpinion/getVectorDistribute.json',{startDate: startDate, endDate: endDate}).then(
+                (response) => {
+                    if (response.data.success) {
+                        chart.setOption(response.data.data);
+                        this.$nextTick(function(){
+                            chart.hideLoading();
+                        });
+                    } else {
+                        console.error(response.data.message);
+                    }
+                }, (response) => {
+                    console.error(response);
+                }
+            );
+        },
+        /**获取人物统计*/
+        getPersonageCount() {
+            let chart = echarts.init(document.getElementById('personageCount'));
+            chart.showLoading();
+            this.$http.post('/apis/allViewOpinion/getPersonageCount.json').then(
+                (response) => {
+                    if (response.data.success) {
+                        chart.setOption(response.data.data);
+                        this.$nextTick(function(){
+                            chart.hideLoading();
+                        });
+                    } else {
+                        console.error(response.data.message);
+                    }
+                }, (response) => {
+                    console.error(response);
+                }
+            );
+        },
+        /**获取载体走势*/
+        getVectorTrend(startDate, endDate) {
+            let chart = echarts.init(document.getElementById('vectorTrend'));
+            chart.showLoading();
+            this.$http.post('/apis/allViewOpinion/getVectorTrend.json',{startDate: startDate, endDate: endDate}).then(
+                (response) => {
+                    if (response.data.success) {
+                        chart.setOption(response.data.data);
+                        this.$nextTick(function(){
+                            chart.hideLoading();
+                        });
+                    } else {
+                        console.error(response.data.message);
                     }
                 }, (response) => {
                     console.error(response);
@@ -118,5 +177,8 @@ export default{
     mounted(){
         this.getOpinionData();
         this.getOpinionFunnel();
+        this.getVectorDistribute('2001-01-01', '2017-03-24');
+        this.getPersonageCount();
+        this.getVectorTrend('2001-01-01 00:00:00', '2017-03-24 00:00:00');
     }
 }
