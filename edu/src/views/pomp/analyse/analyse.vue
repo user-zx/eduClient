@@ -62,7 +62,7 @@
     import searchBox from '../../../components/searchBox/searchBox.vue';
     import articleContainer from '../../../components/content/article.vue';
     import characterFocus from './characterFocus.vue';
-
+    
     export default{
         data(){
             return {

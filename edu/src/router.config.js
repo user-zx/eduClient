@@ -17,6 +17,7 @@ import login from './views/login/login.vue';
 import home from './views/home/home.vue';
 import eventDetails from './views/pomp/event/eventDetails/eventDetails.vue';
 import eventList from './views/pomp/event/evenList/eventList.vue';
+import publicOpinionRule from "./views/pomp/warning/publicOpinionRule.vue";
 export default {
     mode:'history',
     base:__dirname,
@@ -62,9 +63,14 @@ export default {
                     component:analyse
                 },
                 {
-                    name:"warning",
+                    name:"舆情预警",
                     path:"warning",
                     component:warning
+                },
+                {
+                   name:"舆情规则",
+                   path:"publicOpinionRule",
+                   component:publicOpinionRule
                 },
                 {
                     name:"speech",
