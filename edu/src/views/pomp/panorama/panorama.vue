@@ -35,8 +35,7 @@
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart"></span><span>载体分布统计</span>
                     </div>
-                    <div class="text item">
-
+                    <div class="text item" id="vectorDistribute">
                     </div>
                 </el-card>
             </el-col>
@@ -45,7 +44,7 @@
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart"></span><span>人物统计</span>
                     </div>
-                    <div class="text item">
+                    <div class="text item" id="personageCount">
 
                     </div>
                 </el-card>
@@ -55,7 +54,7 @@
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart"></span><span>载体趋势分析</span>
                     </div>
-                    <div class="text item">
+                    <div class="text item" id="vectorTrend">
 
                     </div>
                 </el-card>
@@ -68,31 +67,28 @@
                     <div class="text item">
                         <el-tabs v-model="activeName" class="center-tabs" @tab-click="handleClick">
                             <el-tab-pane label="今日热点" name="todayHot">
-                                <el-table :data="tableData" :show-header="false" style="width: 100%" border class="tran-table yellow-table">
-                                    <el-table-column prop="col" label="" align="center"></el-table-column>
-                                    <el-table-column prop="today" label="今天" align="center"></el-table-column>
-                                    <el-table-column prop="yesterday" label="昨天" align="center"></el-table-column>
-                                    <el-table-column prop="week" label="近7天" align="center"></el-table-column>
-                                    <el-table-column prop="month" label="近30天" align="center"></el-table-column>
-                                </el-table>
+                                <el-card class="box-card">
+                                    <div class="text item" v-for="art in hotOpinion.toDayHot">
+                                        <a href="#">art.title</a>
+                                        <time class="time right">art.publishDate</time>
+                                    </div>
+                                </el-card>
                             </el-tab-pane>
                             <el-tab-pane label="近7天热点" name="weekHot">
-                                <el-table :data="tableData" :show-header="false" style="width: 100%" border class="tran-table yellow-table">
-                                    <el-table-column prop="col" label="" align="center"></el-table-column>
-                                    <el-table-column prop="today" label="今天" align="center"></el-table-column>
-                                    <el-table-column prop="yesterday" label="昨天" align="center"></el-table-column>
-                                    <el-table-column prop="week" label="近7天" align="center"></el-table-column>
-                                    <el-table-column prop="month" label="近30天" align="center"></el-table-column>
-                                </el-table>
+                                <el-card class="box-card">
+                                    <div class="text item" v-for="art in hotOpinion.weekHot">
+                                        <a href="#">art.title</a>
+                                        <time class="time right">art.publishDate</time>
+                                    </div>
+                                </el-card>
                             </el-tab-pane>
                             <el-tab-pane label="近30天热点" name="monthHot">
-                                <el-table :data="tableData" :show-header="false" style="width: 100%" border class="tran-table yellow-table">
-                                    <el-table-column prop="col" label="" align="center"></el-table-column>
-                                    <el-table-column prop="today" label="今天" align="center"></el-table-column>
-                                    <el-table-column prop="yesterday" label="昨天" align="center"></el-table-column>
-                                    <el-table-column prop="week" label="近7天" align="center"></el-table-column>
-                                    <el-table-column prop="month" label="近30天" align="center"></el-table-column>
-                                </el-table>
+                                <el-card class="box-card">
+                                    <div class="text item" v-for="art in hotOpinion.monthHot">
+                                        <a href="#">art.title</a>
+                                        <time class="time right">art.publishDate</time>
+                                    </div>
+                                </el-card>
                             </el-tab-pane>
                         </el-tabs>
                     </div>
@@ -174,10 +170,13 @@
         z-index:0;
         .el-col {
             margin-top: 10px;
-            >div{
-                height: 519px;
-                background-color: #21273d;
-            }
+            >div {
+                 height: 519px;
+                 background-color: #21273d;
+                >div>.item{
+                     height: 440px;
+                 }
+             }
         }
     }
 </style>
