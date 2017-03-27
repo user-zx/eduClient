@@ -143,6 +143,13 @@
         </el-row>
     </div>
 </template>
+<style lang="scss" scoped>
+    .el-row{
+        &+.el-row{
+              margin-top: 10px;
+        }
+    }
+</style>
 <script>
      /*
     * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
