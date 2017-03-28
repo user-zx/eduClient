@@ -68,26 +68,32 @@
                         <el-tabs v-model="activeName" class="center-tabs" @tab-click="handleClick">
                             <el-tab-pane label="今日热点" name="todayHot">
                                 <el-card class="box-card">
-                                    <div class="text item" v-for="art in hotOpinion.todayHot" style="margin-top: 20px;">
-                                        <a href="#"  style="float: left; margin-left: 30px;">{{ art.title.length > 20 ? art.title.substring(0, 20) + '...' : art.title }}</a>
-                                        <time class="time right" style="float: left;margin-left: 60px;">{{ art.publishDate }}</time>
-                                    </div>
+                                    <el-table :data="hotOpinion.todayHot" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
+                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center" width="77"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center" width="89"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center" width="103"></el-table-column>
+                                    </el-table>
                                 </el-card>
                             </el-tab-pane>
                             <el-tab-pane label="近7天热点" name="weekHot">
                                 <el-card class="box-card">
-                                    <div class="text item" v-for="art in hotOpinion.weekHot" style="margin-top: 20px;">
-                                        <a href="#"  style="float: left; margin-left: 30px;">{{ art.title.length > 20 ? art.title.substring(0, 20) + '...' : art.title }} </a>
-                                        <time class="time right" style="float: left;margin-left: 60px;">{{ art.publishDate }}</time>
-                                    </div>
+                                    <el-table :data="hotOpinion.weekHot" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
+                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center" width="77"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center" width="89"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center" width="103"></el-table-column>
+                                    </el-table>
                                 </el-card>
                             </el-tab-pane>
                             <el-tab-pane label="近30天热点" name="monthHot">
                                 <el-card class="box-card">
-                                    <div class="text item" v-for="art in hotOpinion.monthHot" style="margin-top: 20px;">
-                                        <a href="#"  style="float: left; margin-left: 30px;">{{ art.title.length > 20 ? art.title.substring(0, 20) + '...' : art.title }} </a>
-                                        <time class="time right" style="float: left;margin-left: 60px;">{{ art.publishDate }}</time>
-                                    </div>
+                                    <el-table :data="hotOpinion.monthHot" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
+                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center" width="77"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center" width="89"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center" width="103"></el-table-column>
+                                    </el-table>
                                 </el-card>
                             </el-tab-pane>
                         </el-tabs>
@@ -103,26 +109,32 @@
                         <el-tabs v-model="activeName2" class="center-tabs" @tab-click="handleClick">
                             <el-tab-pane label="今日热点" name="todayHot">
                                 <el-card class="box-card">
-                                    <div class="text item" v-for="art in hotPersonage.todayHot" style="margin-top: 20px;">
-                                        <a href="#"  style="float: left; margin-left: 30px;">{{ art.title.length > 20 ? art.title.substring(0, 20) + '...' : art.title }}</a>
-                                        <time class="time right" style="float: left;margin-left: 60px;">{{ art.publishDate }}</time>
-                                    </div>
+                                    <el-table :data="hotPersonage.todayHot" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
+                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center" width="77"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center" width="89"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center" width="103"></el-table-column>
+                                    </el-table>
                                 </el-card>
                             </el-tab-pane>
                             <el-tab-pane label="近7天热点" name="weekHot">
                                 <el-card class="box-card">
-                                    <div class="text item" v-for="art in hotPersonage.weekHot" style="margin-top: 20px;">
-                                        <a href="#"  style="float: left; margin-left: 30px;">{{ art.title.length > 20 ? art.title.substring(0, 20) + '...' : art.title }} </a>
-                                        <time class="time right" style="float: left;margin-left: 60px;">{{ art.publishDate }}</time>
-                                    </div>
+                                    <el-table :data="hotPersonage.weekHot" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
+                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center" width="77"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center" width="89"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center" width="103"></el-table-column>
+                                    </el-table>
                                 </el-card>
                             </el-tab-pane>
                             <el-tab-pane label="近30天热点" name="monthHot">
                                 <el-card class="box-card">
-                                    <div class="text item" v-for="art in hotPersonage.monthHot" style="margin-top: 20px;">
-                                        <a href="#"  style="float: left; margin-left: 30px;">{{ art.title.length > 20 ? art.title.substring(0, 20) + '...' : art.title }} </a>
-                                        <time class="time right" style="float: left;margin-left: 60px;">{{ art.publishDate }}</time>
-                                    </div>
+                                    <el-table :data="hotPersonage.monthHot" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
+                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center" width="77"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center" width="89"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center" width="103"></el-table-column>
+                                    </el-table>
                                 </el-card>
                             </el-tab-pane>
                         </el-tabs>
@@ -136,10 +148,12 @@
                     </div>
                     <div class="text item">
                         <el-card class="box-card">
-                            <div class="text item" v-for="art in wechatHot" style="margin-top: 20px;">
-                                <a href="#"  style="float: left; margin-left: 30px;">{{ art.title.length > 20 ? art.title.substring(0, 20) + '...' : art.title }} </a>
-                                <time class="time right" style="float: left;margin-left: 60px;">{{ art.publishDate }}</time>
-                            </div>
+                            <el-table :data="wechatHot" :resizable="false" style="width: 100%" border class="tran-table">
+                                <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center" width="77"></el-table-column>
+                                <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center" width="89"></el-table-column>
+                                <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center" width="103"></el-table-column>
+                            </el-table>
                         </el-card>
                     </div>
                 </el-card>
@@ -151,10 +165,12 @@
                     </div>
                     <div class="text item">
                         <el-card class="box-card">
-                            <div class="text item" v-for="art in weboHot" style="margin-top: 20px;">
-                                <a href="#"  style="float: left; margin-left: 30px;">{{ art.title.length > 20 ? art.title.substring(0, 20) + '...' : art.title }} </a>
-                                <time class="time right" style="float: left;margin-left: 60px;">{{ art.publishDate }}</time>
-                            </div>
+                            <el-table :data="weboHot" :resizable="false" style="width: 100%" border class="tran-table">
+                                <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center" width="77"></el-table-column>
+                                <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center" width="89"></el-table-column>
+                                <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center" width="103"></el-table-column>
+                            </el-table>
                         </el-card>
                     </div>
                 </el-card>
@@ -168,11 +184,11 @@
         .el-col {
             margin-top: 10px;
             >div {
-                 height: 519px;
+                 height: 520px;
                  background-color: #21273d;
                 >div>.item{
                      height: 440px;
-                 }
+                }
              }
         }
     }
