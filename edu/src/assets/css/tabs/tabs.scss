@@ -1,0 +1,50 @@
+/**
+ * Created by zhangxin on 2017/3/28.
+ * 
+ */
+.custom-tabs{
+  &.left-tabs{
+
+  }
+  .el-tabs__nav {
+    float: none;
+    margin: 0 auto;
+    width: 289px;
+  }
+  .el-tabs__active-bar{
+    border-radius: 4px;
+    background-color: #e4f09e;
+  }
+  .el-tabs__header{
+    margin-bottom: 0;
+    border-bottom: none;
+  }
+  .el-tabs__item{
+    position: relative;
+    font-size: 16px;
+    transition: color .25s;
+    color:rgba(119,145,231,.4);
+    &:after{
+      position: absolute;
+      right: 0;
+      top:50%;
+      margin-top: -8px;
+      width: 1px;
+      height:16px;
+      content: " ";
+      display: block;
+      background-color: #2f4164;
+    }
+    &:last-child{
+      &:after{
+        width: 0;
+      }
+    }
+    &:hover{
+      color:#e4f09e;
+    }
+    &.is-active{
+      color:#e4f09e;
+    }
+  }
+}
