@@ -6,7 +6,7 @@
         <div class="btn-container">
             <el-button type="primary" icon="plus" @click="createReport">生成报告</el-button>
         </div>
-        <el-table :data="tableData" class="tran-table" border style="width: 100%"
+        <el-table :data="tableData" class="tran-table no-col-title" border style="width: 100%"
                   :resizable="false">
             <el-table-column label="序号" align="center" prop="orderNum" width="70"></el-table-column>
             <el-table-column label="生成区间" prop="range" align="center"></el-table-column>
@@ -130,9 +130,6 @@
             },
             createReport(){
                 this.dialogFormVisible = true;
-            },
-            aaa(){
-                console.log(1)
             },
             saveReport(){
                 console.log('save')

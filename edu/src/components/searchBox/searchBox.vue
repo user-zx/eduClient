@@ -3,18 +3,18 @@
 */
 <template>
     <div class="search-box">
-        <el-row v-for="(data, index) in searchData">
+        <el-row v-for="(data, index) in searchData" v-if="searchNames.indexOf(data.name) != -1">
             <el-col :span="2" class="transition">
                 {{data.title}}
             </el-col>
-            <el-col :span="22" v-if="data.buttons.length == 0" class="transition">
+            <el-col :span="22" v-if="!data.buttons || data.buttons.length == 0" class="transition">
                 <ul>
                     <li v-for="(item, index1) in data.searchList" class="search-list" :key="item.id"
                         @click="searchLiClick(item, index1, data)" :class="{'search-selected': item.selected}">
                         {{item.text}}
                     </li>
                     <li class="search-list date-span" v-show="show" v-for="item in data.searchList" v-if="item.dateBox == 'show'">
-                        <el-date-picker v-model="value1" type="daterange" placeholder="选择日期范围">
+                        <el-date-picker v-model="publishDate" type="daterange" placeholder="选择日期范围" @change="publishDateChange">
                         </el-date-picker>
                     </li>
                 </ul>
@@ -100,18 +100,106 @@
     }
 </style>
 <script>
-    export default{
-        data(){
+    export default {
+        data() {
             return {
+                searchData:[
+                    {
+                        'name': 'university',
+                        'title' :  '选择高校:',
+                        'searchList': [
+                            {id: 0, text: '全部', selected: true},
+                        ],
+                        'hasMore': true,
+                        'buttons': [
+                            {'buttonText': '添加高校', 'id': 'add-college-btn'}
+                        ]
+                    },
+                    {
+                        'name': 'reportPersonage',
+                        'title' :  '选择人物:',
+                        'searchList': [
+                            {id: 0, text: '全部', selected: true},
+                        ],
+                        'hasMore': true,
+                        'buttons': [
+                            {'buttonText': '添加人物', 'id': 'add-person-btn'}
+                        ]
+                    },
+                    {
+                        'name': 'dimension',
+                        'title': '高校维度:',
+                        'searchList': [
+                            {id: 0, text: '校园舆情', selected: true, showCharacter: false},
+                            {id: 1, text: '校园安全', selected: false, showCharacter: false},
+                            {id: 2, text: '违规违纪', selected: false, showCharacter: false},
+                            {id: 3, text: '媒体报道', selected: false, showCharacter: false},
+                            {id: 4, text: '人才培养', selected: false, showCharacter: false},
+                            {id: 5, text: '科学研究', selected: false, showCharacter: false},
+                            {id: 6, text: '微信微博', selected: false, showCharacter: false},
+                            {id: 7, text: '论坛贴吧', selected: false, showCharacter: false},
+                            {id: 8, text: '敏感时期', selected: false, showCharacter: false},
+                            {id: 9, text: '人物聚焦', selected: false, showCharacter: true}
+                        ]
+                    },
+                    {
+                        'name': 'vector',
+                        'title': '载体:',
+                        'searchList': [
+                            {id: 0, text: '不限', selected: true},
+                            {id: 1, text: '论坛', selected: false},
+                            {id: 2, text: '微博', selected: false},
+                            {id: 3, text: '微信', selected: false},
+                            {id: 4, text: 'QQ群', selected: false},
+                            {id: 5, text: '博客', selected: false},
+                            {id: 6, text: '网站门户', selected: false},
+                            {id: 7, text: '贴吧', selected: false}
+                        ]
+                    },
+                    {
+                        'name': 'emotion',
+                        'title': '情感:',
+                        'searchList': [
+                            {id: 0, text: '不限', selected: false},
+                            {id: 1, text: '正面', selected: true},
+                            {id: 2, text: '负面', selected: false}
+                        ]
+                    },{
+                        'name': 'officialAcctType',
+                        'title': '公众号类型:',
+                        'searchList': [
+                            {id: 0, text: '不限', selected: true},
+                            {id: 1, text: '生活服务', selected: false},
+                            {id: 2, text: '运动', selected: false},
+                            {id: 3, text: '教学', selected: false},
+                            {id: 4, text: '情感', selected: false},
+                            {id: 5, text: '政务', selected: false}
+                        ]
+                    },
+                    {
+                        'name': 'publishDateTime',
+                        'title': '时间:',
+                        'searchList': [
+                            {id: 0, text: '不限', selected: false},
+                            {id: 1, text: '今天', selected: true},
+                            {id: 2, text: '昨天', selected: false},
+                            {id: 3, text: '近7天', selected: false},
+                            {id: 4, text: '近一个月', selected: false},
+                            {id: 5, text: '自定义时间', dateBox: 'show', selected: false}
+                        ],
+                        'hasDateBox': true
+                    }
+
+                ],
                 msg: "",
                 show: false,
-                value1: '',
+                publishDate: [],
                 foldSchool: false
             }
         },
         components: {},
         methods: {
-            add(){
+            add() {
                 let vm = this;
                 this.$nextTick(function () {
                     if($('.school-list').height() > 50){
@@ -120,40 +208,43 @@
                 });
             },
 
-            searchLiClick(item, index1, data){
-                if(data.multiple == true){
-                    if(item.selected == true){
-
-                    }else{
-
-                    }
-                }else {
-                    for(var i  in data.searchList){
-                        data.searchList[i].selected = false;
-                    }
-                    item.selected = true;
+            searchLiClick (item, index1, data) {
+                for (var i  in data.searchList) {
+                    data.searchList[i].selected = false;
                 }
+                item.selected = true;
 
-                if(data.hasDateBox == true && !item.dateBox){
+                if (data.hasDateBox == true && !item.dateBox) {
                     this.show = false;
                 }
 
-                if(item.dateBox == 'show'){
+                if (item.dateBox == 'show') {
                     this.show = true;
                 }
 
-                if(item.showCharacter == true){
+                if (item.showCharacter == true) {
                     this.$parent.currentTabs.currentTab = 'characterTable';
                     //重新请求一次数据
 
-                }else if(item.showCharacter == false){
+                } else if(item.showCharacter == false) {
                     this.$parent.currentTabs.currentTab = 'articleView';
                     //重新请求一次数据
-
                 }
+
+                if (data.name === 'publishDateTime') {
+                    if (item.text === '自定义时间') {
+                        //如果是自定义时间，触发回调放在控件的change中
+                        return;
+                    } else {
+                        this.publishDate = [];
+                    }
+                }
+
+                // 回调
+                this.$emit('searchDataChange', this.buildParam());
             },
 
-            foldSchoolClick(){
+            foldSchoolClick() {
                 if ($('.school-list .el-icon-arrow-down').hasClass('el-icon-arrow-up')) {
                     $('.el-icon-arrow-down').removeClass('el-icon-arrow-up');
                     $('.school-list').closest('div.el-row').children().each(function (index) {
@@ -168,20 +259,134 @@
                 }
             },
 
-            btnClick(item,el){
+            btnClick(item,el) {
                 let vm  = this;
-              let elVal = $(el.target).html();
-              switch(elVal) {
-                  case "预警设置":
-                       vm.$router.push({path:"/home/publicOpinionRule"});
-                      break;
-              }
+                let elVal = $(el.target).html();
+                switch(elVal) {
+                    case "预警设置":
+                        vm.$router.push({path:"/home/publicOpinionRule"});
+                        break;
+                }
+            },
+            /**日历控件改变*/
+            publishDateChange() {
+                if (this.publishDate.length > 0) {
+                    this.$emit('searchDataChange', this.buildParam());
+                }
+            },
+            /**获取用户设置信息*/
+            getUserParams() {
+                this.$http.post('/apis/user/getUnivsAndPersonage.json').then(
+                    (response) => {
+                        if (response.data.success) {
+                            let univs = response.data.data.univs;
+                            for (var i = 0; i < univs.length; i++) {
+                                this.searchData[0].searchList.push({id: i + 1, text: univs[i], selected: false})
+                            }
+                            let persons = response.data.data.persons;
+                            for (var i = 0; i < persons.length; i++) {
+                                this.searchData[1].searchList.push({id: i + 1, text: persons[i], selected: false})
+                            }
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            },
+            /**构建参数对象*/
+            buildParam() {
+                let result = {};
+                let searchData = this.searchData;
+                let searchNames = this.searchNames;
+                loop: for (var i = 0; i < searchNames.length; i++) {
+                    var name = searchNames[i];
+                    for (var j = 0; j < searchData.length; j++) {
+                        if (searchData[j].name === name) {
+                            var searchList = searchData[j].searchList;
+                            for (var k = 0; k < searchList.length; k++) {
+                                if (searchList[k].selected) {
+                                    var text = searchList[k].text;
+                                    if (name === 'university' && text === '全部') {
+                                        break;
+                                    }
+                                    if (text === '不限') {
+                                        break;
+                                    }
+                                    if (name === 'publishDateTime') {
+
+                                        var publishDateTime = {};
+                                        var startSuffix = " 00:00:00";
+                                        var endSuffix = " 23:59:59";
+                                        var format = 'yyyy-MM-dd';
+
+                                        if (text === '自定义时间') {
+                                            publishDateTime.startDate = this.formatDate(this.publishDate[0], format) + startSuffix;
+                                            publishDateTime.endDate = this.formatDate(this.publishDate[1], format) + endSuffix;
+                                        } else {
+                                            var now = new Date();
+                                            var nowDate = this.formatDate(now, format);
+                                            var oneDayMills = 1000 * 60 * 60 * 24;
+                                            if (text === '今天') {
+                                                publishDateTime.startDate = nowDate + startSuffix;
+                                                publishDateTime.endDate = nowDate + endSuffix;
+                                            }
+                                            if (text === '昨天') {
+                                                var date = this.formatDate(new Date(now.getTime() - oneDayMills), format);
+                                                publishDateTime.startDate = date + startSuffix;
+                                                publishDateTime.endDate = nowDate + endSuffix;
+                                            }
+                                            if (text === '近7天') {
+                                                var date = this.formatDate(new Date(now.getTime() - oneDayMills * 7), format);
+                                                publishDateTime.startDate = date + startSuffix;
+                                                publishDateTime.endDate = nowDate + endSuffix;
+                                            }
+                                            if (text === '近一个月') {
+                                                var date = this.formatDate(new Date(now.getTime() - oneDayMills * 30), format);
+                                                publishDateTime.startDate = date + startSuffix;
+                                                publishDateTime.endDate = nowDate + endSuffix;
+                                            }
+
+                                        }
+                                        result[name] = publishDateTime;
+                                        break;
+                                    }
+                                    result[name] = text;
+                                    break;
+                                }
+                            }
+                            continue loop;
+                        }
+                    }
+                }
+                return result;
+            },
+            /**格式化日期*/
+            formatDate(date, fmt) {
+                var o = {
+                    "M+": date.getMonth() + 1, //月份
+                    "d+": date.getDate(), //日
+                    "h+": date.getHours(), //小时
+                    "m+": date.getMinutes(), //分
+                    "s+": date.getSeconds(), //秒
+                    "q+": Math.floor((date.getMonth() + 3) / 3), //季度
+                    "S": date.getMilliseconds()
+                    //毫秒
+                };
+                if (/(y+)/.test(fmt))
+                    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "")
+                        .substr(4 - RegExp.$1.length));
+                for (var k in o)
+                    if (new RegExp("(" + k + ")").test(fmt))
+                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                return fmt;
             }
         },
-        mounted(){
+        mounted() {
             this.add();
-
+            this.getUserParams();
         },
-        props: ["searchData"],
+        props: ["searchNames"],
     }
 </script>
