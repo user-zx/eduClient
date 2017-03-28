@@ -3,7 +3,7 @@
 */
 <template>
     <div>
-        <search-box :searchData=searchData></search-box>
+        <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange"></search-box>
         <div class="content">
             <div class="content-bar">
                 <ul class="content-bar-list">
@@ -56,7 +56,8 @@
                     articleView: 'articleView',
                     characterTable: 'characterTable',
                     currentTab: 'articleView'
-                }
+                },
+                searchNames: ['university', 'dimension', 'vector', 'emotion', 'publishDateTime']
             }
         },
         components: {searchBox, articleView, characterTable},
@@ -80,7 +81,10 @@
                 this.currentPage = val;
                 console.log(`当前页: ${val}`);
             },
-
+            onSearchDataChange(data) {
+                console.log("change callback, data :");
+                console.log(data);
+            }
 
         },
         created(){
