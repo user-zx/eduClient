@@ -9,7 +9,25 @@
                     <div class="circle"></div>
                 </div>
                 <div class="time-line-content">
-
+                    <h5 class="title">事件时间轴的标题，大概长度如此……</h5>
+                    <p class="intro">
+                        <label>来源：</label><span>天天基金网</span>
+                    </p>
+                    <p class="intro">
+                        <label>作者：</label><span>佚名</span>
+                    </p>
+                    <p class="intro">
+                        <label>特征：</label><span>相关文章</span>
+                    </p>
+                    <p class="intro">
+                        <label>热度：</label><span>9.3</span>
+                    </p>
+                    <p class="intro">
+                        <label>关键词：</label><span>创业、上市、证券、治理、经营</span>
+                    </p>
+                    <p class="intro">
+                        <label>相同文章：</label><span>23篇</span>
+                    </p>
                 </div>
             </div>
             <div class="time-line-item">
@@ -17,7 +35,25 @@
                     <div class="circle"></div>
                 </div>
                 <div class="time-line-content">
-
+                    <h5 class="title">事件时间轴的标题，大概长度如此……</h5>
+                    <p class="intro">
+                        <label>来源：</label><span>天天基金网</span>
+                    </p>
+                    <p class="intro">
+                        <label>作者：</label><span>佚名</span>
+                    </p>
+                    <p class="intro">
+                        <label>特征：</label><span>相关文章</span>
+                    </p>
+                    <p class="intro">
+                        <label>热度：</label><span>9.3</span>
+                    </p>
+                    <p class="intro">
+                        <label>关键词：</label><span>创业、上市、证券、治理、经营</span>
+                    </p>
+                    <p class="intro">
+                        <label>相同文章：</label><span>23篇</span>
+                    </p>
                 </div>
             </div>
             <div class="time-line-item">
@@ -25,7 +61,25 @@
                     <div class="circle"></div>
                 </div>
                 <div class="time-line-content">
-
+                    <h5 class="title">事件时间轴的标题，大概长度如此……</h5>
+                    <p class="intro">
+                        <label>来源：</label><span>天天基金网</span>
+                    </p>
+                    <p class="intro">
+                        <label>作者：</label><span>佚名</span>
+                    </p>
+                    <p class="intro">
+                        <label>特征：</label><span>相关文章</span>
+                    </p>
+                    <p class="intro">
+                        <label>热度：</label><span>9.3</span>
+                    </p>
+                    <p class="intro">
+                        <label>关键词：</label><span>创业、上市、证券、治理、经营</span>
+                    </p>
+                    <p class="intro">
+                        <label>相同文章：</label><span>23篇</span>
+                    </p>
                 </div>
             </div>
             <div class="time-line-item">
@@ -33,7 +87,25 @@
                     <div class="circle"></div>
                 </div>
                 <div class="time-line-content">
-
+                    <h5 class="title">事件时间轴的标题，大概长度如此……</h5>
+                    <p class="intro">
+                        <label>来源：</label><span>天天基金网</span>
+                    </p>
+                    <p class="intro">
+                        <label>作者：</label><span>佚名</span>
+                    </p>
+                    <p class="intro">
+                        <label>特征：</label><span>相关文章</span>
+                    </p>
+                    <p class="intro">
+                        <label>热度：</label><span>9.3</span>
+                    </p>
+                    <p class="intro">
+                        <label>关键词：</label><span>创业、上市、证券、治理、经营</span>
+                    </p>
+                    <p class="intro">
+                        <label>相同文章：</label><span>23篇</span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -104,6 +176,22 @@
                     -webkit-transform: rotate(225deg) translate(-50%, 0);
                     transform: rotate(225deg) translate(-50%, 0);
                 }
+                 .intro,.title{
+                     max-width: 99%;
+                     line-height: 2;
+                     overflow: hidden;
+                     text-overflow: ellipsis;
+                     white-space: nowrap;
+                     border-bottom: 2px solid rgba(96,163,255,.2);
+                 }
+                 .title{
+                     font-weight:400;
+                     font-size: 18px;
+                     color:#60a3ff;
+                 }
+                 .intro{
+                     color:#d0d7ff;
+                 }
             }
             &:nth-of-type(even){
                 .time-line-content{
