@@ -3,6 +3,9 @@
  * 
  */
 .tran-table {
+  &.el-table--fit{
+    border-left:0;
+  }
   &.el-table{
     background-color:transparent;
     border-color:rgba(96,163,255,.1);
