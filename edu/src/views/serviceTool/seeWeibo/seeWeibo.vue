@@ -4,34 +4,24 @@
 <template>
     <div class="seeWeibo" id="seeWeibo">
         <bread-crumb></bread-crumb>
-        <el-tabs v-model="activeName" class="center-tabs left-tabs" @tab-click="handleClick">
-            <el-tab-pane label="今日热点" name="todayHot">
+        <el-tabs v-model="activeName" class="custom-tabs left-tabs" @tab-click="handleClick">
+            <el-tab-pane label="微博统计" name="todayHot">
                 <el-card class="box-card">
                     <el-table :data="hotOpinion" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center" width="77"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center" width="89"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center" width="103"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
                     </el-table>
                 </el-card>
             </el-tab-pane>
-            <el-tab-pane label="近7天热点" name="weekHot">
+            <el-tab-pane label="微博指数" name="weekHot">
                 <el-card class="box-card">
                     <el-table :data="hotOpinion" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center" width="77"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center" width="89"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center" width="103"></el-table-column>
-                    </el-table>
-                </el-card>
-            </el-tab-pane>
-            <el-tab-pane label="近30天热点" name="monthHot">
-                <el-card class="box-card">
-                    <el-table :data="hotOpinion" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center" width="77"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center" width="89"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center" width="103"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
                     </el-table>
                 </el-card>
             </el-tab-pane>
@@ -39,6 +29,9 @@
     </div>
 </template>
 <style lang="scss" scoped>
+    .left-tabs{
+        background-color: #21273d;
+    }
 </style>
 <script>
      /*
@@ -47,6 +40,7 @@
     * import loginButton from './components/loginButton.vue';
     */
      import breadCrumb from '../../../components/breadCrumb/breadCrumb.vue';
+     import "vue-style-loader!css-loader!sass-loader!../../../assets/css/tabs/tabs.scss";
      export default{
          data(){
              return {

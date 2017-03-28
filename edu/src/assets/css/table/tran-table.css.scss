@@ -3,9 +3,6 @@
  * 
  */
 .tran-table {
-  &.el-table--fit{
-    border-left:0;
-  }
   &.el-table{
     background-color:transparent;
     border-color:rgba(96,163,255,.1);
@@ -33,7 +30,6 @@
           color: #333;
         }
       }
-
       .el-table__body{
         tbody{
           tr:nth-child(even){
@@ -79,6 +75,11 @@
     }
     &:after,&:before{
       background-color: transparent;
+    }
+    .el-table__empty-block{
+      border: 1px solid rgba(96,163,255,.1);
+      margin-left: -1px;
+      border-top: none;
     }
     div{
       border-color: rgba(96,163,255,.1);

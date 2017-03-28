@@ -4,7 +4,9 @@
  */
 .custom-tabs{
   &.left-tabs{
-
+    .el-tabs__nav{
+      float: left;
+    }
   }
   .el-tabs__nav {
     float: none;
