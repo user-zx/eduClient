@@ -1,6 +1,7 @@
 
 import breadCrumb from '../../../../components/breadCrumb/breadCrumb.vue';
 import "vue-style-loader!css-loader!sass-loader!../../../../assets/css/table/tran-table.css.scss";
+import "vue-style-loader!css-loader!sass-loader!../../../../assets/css/pagination/pagination.scss";
 export default{
 	data(){
 		return {
@@ -34,6 +35,30 @@ export default{
 	        input2: '',
 	        currentPage_rules:1,
 	        currentPage_manage:1,
+	         dialogFormVisible: false,
+        form: {
+	          name: '',
+	          region: '',
+	          date1: '',
+	          date2: '', 
+	          delivery: false,
+	          type: [],
+	          resource: '',
+	          desc: '',
+	          recipient:'',
+	          word:'',
+	          person:'',
+	          WeChat:'',
+	          microblog:'',
+      	  },
+           formLabelWidth: '120px',
+           dialogVisible: false,
+           labelPosition: 'right',
+           formLabelAlign: {
+          	 name: '',
+         	 phone: '',
+          	 mailbox: ''
+        	}
 		}
 	},
 	methods:{
@@ -78,6 +103,7 @@ export default{
         this.currentPage = val;
         console.log(`当前页: ${val}`);
       },
+
 	},
 	created(){
         this.setBreadCrumb();
