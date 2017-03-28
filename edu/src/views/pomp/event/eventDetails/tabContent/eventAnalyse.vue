@@ -135,6 +135,14 @@
             content: " ";
             display: table;
             clear: both;
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            left: 50%;
+            bottom: 0;
+            margin-left: -3px;
+            background: #60a3ff;
         }
         .time-line-item{
             position: relative;
