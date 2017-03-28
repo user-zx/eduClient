@@ -23,14 +23,14 @@
 <style lang="scss" scoped>
     .login{
         padding:1px 0;
-        background-image: url(./images/bg.jpg);
+        background-image: url(./images/bg2.jpg);
         background-repeat: no-repeat;
         background-size: cover;
     }
     .ruleForm{
         width: 400px;
-        margin:50px auto 0;
-        padding:30px 20px;
+        margin: 150px auto 0;
+        padding: 30px 20px;
         background-color: rgba(255,255,255,.8);
         border-radius: 10px;
     }
