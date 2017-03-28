@@ -5,8 +5,27 @@
     <el-table :data="tableData" class="tran-table white-table" border style="width: 100%"
               :resizable="false">
         <el-table-column type="selection" width="50" align="center"></el-table-column>
-        <el-table-column label="全部" align="center" prop="all"></el-table-column>
-        <el-table-column label="人物" prop="name" align="center"></el-table-column>
+        <el-table-column label="全部" align="center" prop="all">
+            <template scope="scope">
+                <span v-if="scope.row.all == 1">
+                     <i class="icon-rank icon-gold"></i>
+                </span>
+               <span v-else-if="scope.row.all == 2">
+                    <i class="icon-rank icon-silver"></i>
+               </span>
+                <span v-else-if="scope.row.all == 3">
+                     <i class="icon-rank icon-copper"></i>
+                </span>
+                {{scope.row.all}}
+            </template>
+        </el-table-column>
+        <el-table-column label="人物" prop="name" align="center">
+            <template scope="scope">
+                <span @click="toAnalyseCharacter(scope.row)" class="character-name">
+                    {{scope.row.name}}
+                </span>
+            </template>
+        </el-table-column>
         <el-table-column label="声量" prop="voiceNum" align="center"></el-table-column>
         <el-table-column label="总阅读量" prop="readNum" align="center"></el-table-column>
         <el-table-column label="热度" prop="hot" align="center"></el-table-column>
@@ -17,6 +36,9 @@
 <style lang="scss" scoped>
     .tran-table{
         margin-top: 10px;
+        .character-name{
+            cursor: pointer;
+        }
     }
 </style>
 
@@ -174,19 +196,12 @@
         },
         components: {},
         methods: {
-            addIcon(){
-                this.$nextTick(function () {
-                    let  $firstCell = $('.white-table .el-table__body tbody tr:first td:eq(1) div.cell'),
-                        $secondCell = $('.white-table .el-table__body tbody tr:eq(1) td:eq(1) div.cell'),
-                        $thirdCell = $('.white-table .el-table__body tbody tr:eq(2) td:eq(1) div.cell');
-                    $firstCell.prepend('<i class="icon-rank icon-gold"></i>');
-                    $secondCell.prepend('<i class="icon-rank icon-silver"></i>');
-                    $thirdCell.prepend('<i class="icon-rank icon-copper"></i>');
-                })
+
+            toAnalyseCharacter(data){
+                console.log(data)
             }
         },
         mounted(){
-            this.addIcon()
         }
     }
 

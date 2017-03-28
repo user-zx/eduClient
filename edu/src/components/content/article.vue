@@ -6,7 +6,9 @@
     <div class="article-container" id="article-container" :data="articleData">
         <div class="article" v-for="(item, index) in articleData">
             <div class="article-left">
-                <el-checkbox></el-checkbox>
+                <div class="checkbox-div">
+                    <el-checkbox></el-checkbox>
+                </div>
             </div>
             <div class="article-right">
                 <div class="article-title-box">
