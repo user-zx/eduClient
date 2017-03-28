@@ -1,5 +1,5 @@
 /**
-* Created by lifei on 2017/3/27.
+* Created by lifei on 2017/3/28.
 */
 <template>
     <el-table :data="tableData" class="tran-table white-table" border style="width: 100%"
@@ -10,7 +10,7 @@
                 <span v-if="scope.row.all == 1">
                      <i class="icon-rank icon-gold"></i>
                 </span>
-               <span v-else-if="scope.row.all == 2">
+                <span v-else-if="scope.row.all == 2">
                     <i class="icon-rank icon-silver"></i>
                </span>
                 <span v-else-if="scope.row.all == 3">
@@ -24,6 +24,9 @@
                 <span @click="toCharacterAnalyse(scope.row)" class="character-name">
                     {{scope.row.name}}
                 </span>
+                <!--<router-link to="/home/characterAnalyse">-->
+                    <!--{{scope.row.name}}-->
+                <!--</router-link>-->
             </template>
         </el-table-column>
         <el-table-column label="声量" prop="voiceNum" align="center"></el-table-column>
@@ -36,9 +39,9 @@
 <style lang="scss" scoped>
     .tran-table{
         margin-top: 10px;
-        .character-name{
-            cursor: pointer;
-        }
+    .character-name{
+        cursor: pointer;
+    }
     }
 </style>
 

@@ -84,6 +84,7 @@
                             nowNav=null;
                         if(url.indexOf("panorama")!= -1)nowNav="panorama";
                         if(url.indexOf("event")!= -1)nowNav="event";
+                        if(url.indexOf("analyse") != -1)nowNav="analyse"
                         if(nowNav)
                             this.routerName=nowNav;
                         else
