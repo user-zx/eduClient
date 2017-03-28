@@ -4,7 +4,7 @@
 <template>
     <div class="article-wrap">
         <div id="search-container">
-            <search-box :searchData="searchData" class="dark"></search-box>
+            <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
         </div>
         <div class="content dark">
             <div class="content-bar">
@@ -50,6 +50,7 @@
                 articleData: "",
                 activeIndex: '1',
                 currentPage: 1,
+                searchNames: ['vector', 'emotion', 'publishDateTime']
             }
         },
         components:{ searchBox, articleContainer,} ,
@@ -67,6 +68,10 @@
                     message:"批量添加关注成功！",
                     type:"success"
                 })
+            },
+            onSearchDataChange(data) {
+                console.log("change callback, data :");
+                console.log(data);
             }
         },
         mounted(){
