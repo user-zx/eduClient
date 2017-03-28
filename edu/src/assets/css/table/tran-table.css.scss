@@ -18,6 +18,15 @@
           color:#e4f09e;
         }
       }
+      &.el-table--striped{
+        .el-table__body {
+          tr:nth-child(2n){
+            td{
+              background-color: #283451;
+            }
+          }
+        }
+      }
     }
     &.white-table{
       background: #ffffff;

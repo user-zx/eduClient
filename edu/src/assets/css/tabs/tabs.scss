@@ -4,8 +4,19 @@
  */
 .custom-tabs{
   &.left-tabs{
+    background-color: #21273d;
     .el-tabs__nav{
       float: left;
+    }
+    .el-tabs__header{
+      padding: 20px;
+    }
+    .el-card{
+      &.box-card{
+        >.el-card__body{
+          padding-top: 20px;
+        }
+      }
     }
   }
   .el-tabs__nav {

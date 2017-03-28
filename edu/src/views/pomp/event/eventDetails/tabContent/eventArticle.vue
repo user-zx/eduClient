@@ -3,7 +3,7 @@
 */
 <template>
     <div class="article-wrap">
-        <div id="search-container">
+        <div id="search_container">
             <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
         </div>
         <div class="content dark">

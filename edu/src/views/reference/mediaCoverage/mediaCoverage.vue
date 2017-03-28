@@ -4,7 +4,7 @@
 <template>
     <div class="mediaCoverage article-wrap">
         <bread-crumb></bread-crumb>
-        <div id="search-container">
+        <div id="search_container">
             <searchBox :searchData="searchData"></searchBox>
         </div>
         <div class="content">

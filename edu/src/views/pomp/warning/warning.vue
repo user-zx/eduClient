@@ -5,7 +5,7 @@
          
     <div class="warning article-wrap">
         <bread-crumb></bread-crumb>
-         <div id="search-container">
+         <div id="search_container">
              <search-box :searchData=searchData></search-box>
          </div>
           <div class="content">
