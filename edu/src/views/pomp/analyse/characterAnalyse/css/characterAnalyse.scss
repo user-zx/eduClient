@@ -1,0 +1,189 @@
+.characterAnalyse{
+  .character-info{
+    height: 66px;
+    line-height: 66px;
+    color: #fff;
+    margin-bottom: 7px;
+
+    .info-left{
+      width: 40%;
+      display: inline-block;
+      font-size:18px;
+
+      .characterDate{
+        margin-left:30px;
+      }
+    }
+    .info-right{
+      width:59%;
+      display: inline-block;
+      text-align: right;
+    }
+  }
+
+  .character-div{
+    background: #21273d;
+    margin-bottom: 10px;
+
+    .title{
+      color: #60a3ff;
+      height: 59px;
+      line-height: 59px;
+
+      span.span-icon::before{
+        content: url("../../../../../assets/images/icon-barchat.png");
+        margin-left:15px;
+        margin-right: 10px;
+      }
+      .title-text{
+        color: #455487;
+        width: 110px;
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
+      }
+      .selected{
+        color: #e4f09e;
+      }
+    }
+
+    .graph-div{
+      height:400px;
+      width:90%;
+      margin:auto;
+      margin-left:10px;
+    }
+  }
+
+  .character-basicInfo{
+    height: 158px;
+  }
+
+  .character-rank{
+    height: 158px;
+
+  }
+
+  .character-activity{
+
+    .item{
+      width:70%;
+      height: 440px;
+      display: inline-block;
+    }
+    .activity-describe{
+      width: calc(100% - 70% - 20px);
+      height: 440px;
+      display: inline-block;
+      color: #fff;
+
+      h3{
+        color: #66aaff;
+        text-align: center;
+        font-weight:normal;
+        margin-top:20px;
+        margin-bottom: 20px;
+        width: calc(100% - 20px);
+      }
+
+      .time-line{
+        width: calc(100% - 20px);
+        height: calc(100% - 20px);
+        background: #1c2236;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        .time-line-item{
+          position: relative;
+          border-left: 1px solid #262c43;
+          width: calc(100% - 10px);
+          margin-left: 23px;
+          margin-bottom: 20px;
+
+          .circle-box{
+            position: absolute;
+            top: 5px;
+            left: -5px;
+
+            .circle{
+              width: 10px;
+              height: 10px;
+              background-color: #ffd968;
+              -webkit-border-radius:50%;
+              -moz-border-radius:50%;
+              border-radius:50%;
+            }
+          }
+          .time-line-content{
+            margin-left: 15px;
+
+            .content{
+              color: #848aa7;
+              height:20px;
+              width: calc(100% - 15px);
+              margin-bottom: 13px;
+              overflow: hidden;
+              -ms-text-overflow: ellipsis;
+              -o-text-overflow: ellipsis;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+            .datetime{
+              color: #525c74;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .character-keywords{
+    .keywords-list{
+      width: calc(100% - 40px);
+      height: 400px;
+      margin: auto;
+    }
+  }
+
+  .leftDiv{
+    width: calc(50% - 5px);
+    margin-right: 10px;
+    float: left;
+  }
+  .rightDiv{
+    width:calc(50% - 5px);
+    display: inline-block;
+  }
+
+  .character-relatedInfo{
+    .info-content{
+      height:400px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      color: #fff;
+
+      .item{
+        border-bottom:1px solid #262d48;
+        height: 54px;
+        margin-left: 28px;
+
+        .left{
+          display: inline-block;
+          width: calc(100% - 180px);
+          overflow: hidden;
+          -ms-text-overflow: ellipsis;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .right{
+          float: right;
+          margin-right:15px;
+        }
+      }
+    }
+  }
+  .character-mediaVolume{
+
+  }
+}
