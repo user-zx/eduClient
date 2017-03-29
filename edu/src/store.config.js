@@ -4,6 +4,7 @@
 export default {
     state:{
         breadCrumb:[],
+        curContent: 'article',
     },
     mutations:{
         setBreadCrumb(state,params){
@@ -11,6 +12,9 @@ export default {
         },
         updateBreadCrumb(state,params){
             state.breadCrumb.push(params);
+        },
+        setCurContent(state,params){
+            state.curContent = params;
         }
     }
 }

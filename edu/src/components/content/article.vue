@@ -3,7 +3,7 @@
 */
 
 <template>
-    <div class="article-container" id="article-container" :data="articleData">
+    <div class="article-container" id="articleContainer" :data="articleData">
         <div class="article" v-for="(item, index) in articleData">
             <div class="article-left">
                 <div class="checkbox-div">
