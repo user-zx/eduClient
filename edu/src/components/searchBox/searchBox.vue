@@ -222,14 +222,18 @@
                     this.show = true;
                 }
 
-                if (item.showCharacter == true) {
-                    this.$parent.currentTabs.currentTab = 'characterTable';
-                    //重新请求一次数据
-
-                } else if(item.showCharacter == false) {
-                    this.$parent.currentTabs.currentTab = 'articleView';
-                    //重新请求一次数据
-                }
+                //判断父级页面显示的是文章还是人物表格
+//                let curContent = this.$store.state.curContent;
+//                if (item.showCharacter == true && curContent == 'article') {
+//                    //跳转到人物聚焦页面
+//                    this.$store.commit("setCurContent", "character");
+//                    this.$router.push({path:"/home/characterTableAnalyse"});
+//
+//                } else if(item.showCharacter == false && curContent == 'character') {
+//                    //跳转到文章列表页面
+//                    this.$store.commit("setCurContent", "article");
+//                    this.$router.push({path:"/home/analyse"});
+//                }
 
                 if (data.name === 'publishDateTime') {
                     if (item.text === '自定义时间') {

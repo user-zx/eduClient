@@ -474,7 +474,7 @@
             getMediaHotData(){
                 this.$nextTick(function () {
                     let chart = echarts.init(document.getElementById('hot_graph'));
-                    chart.setOption(this.emotionData)
+                    chart.setOption(this.mediaVolumeData)
                 });
             },
 

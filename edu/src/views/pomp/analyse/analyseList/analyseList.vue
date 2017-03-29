@@ -39,25 +39,19 @@
                     </el-pagination>
                 </div>
             </div>
-            <components :is="currentTabs.currentTab" :articleData="articleData"></components>
+            <articleView :articleData="articleData"></articleView>
         </div>
     </div>
 </template>
 <script>
     import searchBox from '../../../../components/searchBox/searchBox.vue';
     import articleView from '../../../../components/content/article.vue';
-    import characterTable from '../characterTable/characterTable.vue';
     export default{
         data(){
             return {
                 msg: "舆情监测",
                 currentPage: 1,
                 total: 0,
-                currentTabs: {
-                    articleView: 'articleView',
-                    characterTable: 'characterTable',
-                    currentTab: 'articleView'
-                },
                 param: {
                     pageSize: 5,
                     pageNumber: 0,
@@ -75,10 +69,11 @@
                 },
                 searchNames: ['university', 'dimension', 'vector', 'emotion', 'publishDateTime'],
                 articleData: [],
-                loading:true
+                loading:true,
+                curContent: this.$store.state.curContent,
             }
         },
-        components: {searchBox, articleView, characterTable},
+        components: {searchBox, articleView},
         methods:{
             setBreadCrumb(){
                 let breadcrumb=[
@@ -97,6 +92,10 @@
                 this.getArticleList();
             },
             onSearchDataChange(data) {
+                if(data.dimension == "人物聚焦"){
+                    this.$router.push({path:"/home/characterTableAnalyse"});
+                    return ;
+                }
                 data.pageSize = 5;
                 data.pageNumber = 0;
                 data.orders = this.param.orders;

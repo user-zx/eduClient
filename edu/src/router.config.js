@@ -21,6 +21,7 @@ import eventList from './views/pomp/event/evenList/eventList.vue';
 import publicOpinionRule from "./views/pomp/warning/publicOpinionRule.vue";
 import analyseList from "./views/pomp/analyse/analyseList/analyseList.vue"
 import characterAnalyse from "./views/pomp/analyse/characterAnalyse/characterAnalyse.vue"
+import characterTable from "./views/pomp/analyse/characterTable/characterTable.vue"
 export default {
     mode:'history',
     base:__dirname,
@@ -69,6 +70,11 @@ export default {
                             component: analyseList
                         }
                     ]
+                },
+                {
+                    //为了过滤路径 命名后面追加了Analyse
+                    path: "characterTableAnalyse",
+                    component: characterTable
                 },
                 {
                     path: "characterAnalyse",
