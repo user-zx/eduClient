@@ -18,8 +18,12 @@
                         <i class="title-icon negative-icon" v-else></i>
                     </p>
                     <p class="button-box">
-                        <el-button type="danger" class="article-danger-button" v-if="!item.hasWarn"
-                                   @click="alertBtnClick(item)">
+                        <el-button type="warning" class="article-danger-button" v-if="item.hasWarn"
+                                   @click="alertBtnClick(item)" :loading="item.loading">
+                            取消预警
+                        </el-button>
+                        <el-button type="info" class="article-danger-button" v-else
+                                   @click="alertBtnClick(item)" :loading="item.loading">
                             添加预警
                         </el-button>
                     </p>
@@ -156,7 +160,6 @@
 
             .article-danger-button{
                 float: right;
-                background: #c71b1b;
                 margin-top: -8px;
                 transition: width 0.5s;
                 -moz-transition: width 0.5s; /* Firefox 4 */
@@ -198,27 +201,43 @@
         components: {},
         methods: {
             alertBtnClick(item){
-                //向后台发送请求 改变预警状态 然后根据返回参数判断页面展示效果
+                item.loading = true;
+                var tmp = {};
+                tmp.id = item.id;
+                tmp.hasWarn = !item.hasWarn;
+                tmp.emotion = item.emotion;
+                tmp.vector = item.vector;
+                tmp.hitCount = item.hitCount;
+                tmp.publishDate = item.publishDate;
 
-                if(!item.alerted){
-                    item.alerted = true;
-                    item.buttonText = '取消预警';
-                    this.$notify({
-                        title: '成功',
-                        message: '添加预警成功',
-                        type: 'success',
-                        duration: 2000
-                    });
-                }else {
-                    item.alerted = false;
-                    item.buttonText = '预警';
-                    this.$notify({
-                        title: '成功',
-                        message: '取消预警成功',
-                        type: 'success',
-                        duration: 2000
-                    })
-                }
+                this.$http.post('/apis/opinionWarn/warnOrCancel.json', tmp).then(
+                    (response) => {
+                        if (response.data.success) {
+                            if (!item.hasWarn) {
+                                item.hasWarn = true;
+                                this.$notify({
+                                    title: '成功',
+                                    message: '添加预警成功',
+                                    type: 'success',
+                                    duration: 2000
+                                });
+                            } else {
+                                item.hasWarn = false;
+                                this.$notify({
+                                    title: '成功',
+                                    message: '取消预警成功',
+                                    type: 'success',
+                                    duration: 2000
+                                })
+                            }
+                            item.loading = false;
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
 
             }
         },

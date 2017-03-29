@@ -2,16 +2,18 @@
 * Created by lifei on 2017/3/28.
 */
 <template>
-    <div>
+    <div v-loading="loading" element-loading-text="加载中……">
         <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange"></search-box>
-        <div class="content" v-loading="loading" element-loading-text="加载中……">
+        <div class="content">
             <div class="content-bar">
                 <ul class="content-bar-list">
                     <li class="pointer">全部</li>
-                    <li class="pointer arrow-up">
-                        阅读量
+                    <li class="pointer" @click="sort(0)">
+                        阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
                     </li>
-                    <li class="pointer arrow-down">时间</li>
+                    <li class="pointer" @click="sort(1)">
+                        时间<i class="arrow" :class="param.orders[1].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
+                    </li>
                 </ul>
                 <div class="content-bar-button">
                     <el-dropdown class="event-store-box" trigger="click">
@@ -59,7 +61,17 @@
                 param: {
                     pageSize: 5,
                     pageNumber: 0,
-                    dimension: '校园舆情'
+                    dimension: '校园舆情',
+                    orders: [
+                        {
+                            property: 'hitCount',
+                            direction: 'DESC'
+                        },
+                        {
+                            property: 'publishDateTime',
+                            direction: 'DESC'
+                        }
+                    ]
                 },
                 searchNames: ['university', 'dimension', 'vector', 'emotion', 'publishDateTime'],
                 articleData: [],
@@ -80,34 +92,43 @@
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
             handleCurrentChange(pageNumber) {
-                this.param.pageNumber = pageNumber;
+                //后台是从0开始
+                this.param.pageNumber = pageNumber - 1;
                 this.getArticleList();
             },
             onSearchDataChange(data) {
                 data.pageSize = 5;
                 data.pageNumber = 0;
+                data.orders = this.param.orders;
                 this.param = data;
+                this.currentPage = 1;
+                this.getArticleList();
+            },
+            sort(index) {
+                this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
                 this.getArticleList();
             },
             getArticleList() {
                 this.loading = true;
-                this.$http.post('/apis/opinionMonitor/getOpinionMonitor.json', this.param).then(
-                    (response) => {
-                        if (response.data.success) {
-                            this.articleData = response.data.data.content;
-                            // 最多允许翻1000页
-                            this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
-                            console.log("articleData :", this.articleData);
-                            this.$nextTick(function() {
-                               this.loading = false;
-                            });
-                        } else {
-                            console.error(response.data.message);
+                this.$nextTick(function() {
+                    this.$http.post('/apis/opinionMonitor/getOpinionMonitor.json', this.param).then(
+                        (response) => {
+                            if (response.data.success) {
+                                this.articleData = response.data.data.content;
+                                // 最多允许翻1000页
+                                this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
+                                this.$nextTick(function() {
+                                   this.loading = false;
+                                });
+                            } else {
+                                console.error(response.data.message);
+                            }
+                        }, (response) => {
+                            console.error(response);
+                            this.loading = false;
                         }
-                    }, (response) => {
-                        console.error(response);
-                    }
-                );
+                    );
+                });
             }
 
         },

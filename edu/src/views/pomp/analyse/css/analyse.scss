@@ -52,14 +52,22 @@
         line-height: 80px;
         padding-left: 20px;
         padding-right:20px;
-      }
 
+      }
+      .arrow {
+        display: inline-block;
+        width: 12px;
+        height: 15px;
+        vertical-align: middle;
+        background-position: -5px -5px;
+        background-repeat: no-repeat;
+      }
       .arrow-up{
-          background: url("../../../../assets/images/arrow-blue-up.png") no-repeat 65px 27px;
+        background-image: url(../../../../assets/images/arrow-blue-up.png);
       }
 
       .arrow-down{
-          background: url("../../../../assets/images/arrow-blue-down.png") no-repeat 52px 29px;
+        background-image: url(../../../../assets/images/arrow-blue-down.png);
       }
     }
 
