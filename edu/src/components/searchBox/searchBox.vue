@@ -160,8 +160,8 @@
                         'name': 'emotion',
                         'title': '情感:',
                         'searchList': [
-                            {id: 0, text: '不限', selected: false},
-                            {id: 1, text: '正面', selected: true},
+                            {id: 0, text: '不限', selected: true},
+                            {id: 1, text: '正面', selected: false},
                             {id: 2, text: '负面', selected: false}
                         ]
                     },{
@@ -180,8 +180,8 @@
                         'name': 'publishDateTime',
                         'title': '时间:',
                         'searchList': [
-                            {id: 0, text: '不限', selected: false},
-                            {id: 1, text: '今天', selected: true},
+                            {id: 0, text: '不限', selected: true},
+                            {id: 1, text: '今天', selected: false},
                             {id: 2, text: '昨天', selected: false},
                             {id: 3, text: '近7天', selected: false},
                             {id: 4, text: '近一个月', selected: false},
@@ -308,7 +308,16 @@
                             for (var k = 0; k < searchList.length; k++) {
                                 if (searchList[k].selected) {
                                     var text = searchList[k].text;
-                                    if (name === 'university' && text === '全部') {
+                                    if (name === 'university') {
+                                        var univs = [];
+                                        if (text === '全部') {
+                                            for (var l = 1; l < searchList.lenght; l++) {
+                                                univs.push(searchList[l].text);
+                                            }
+                                        } else {
+                                            univs.push(text);
+                                        }
+                                        result[name] = univs;
                                         break;
                                     }
                                     if (text === '不限') {

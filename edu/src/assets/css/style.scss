@@ -236,7 +236,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
       left:185px;
       right:0;
       top:0;
-      z-index: 9999;
+      z-index: 999;
       padding-left:20px;
       padding-right:20px;
       background-color: #60a3ff;
@@ -376,6 +376,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
 #edu{
   .el-loading-mask{
     background-color: rgba(0,0,0,.5);
+    z-index: 998;
   }
 }
 

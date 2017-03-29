@@ -14,13 +14,13 @@
                 <div class="article-title-box">
                     <p class="article-title">
                         <span>{{item.title}}</span>
-                        <i class="title-icon positive-icon" v-if="item.attitude == 'positive'"></i>
+                        <i class="title-icon positive-icon" v-if="item.emotion == 'positive'"></i>
                         <i class="title-icon negative-icon" v-else></i>
                     </p>
                     <p class="button-box">
-                        <el-button type="danger" class="article-danger-button" v-if="item.buttonType == 'warning'"
+                        <el-button type="danger" class="article-danger-button" v-if="!item.hasWarn"
                                    @click="alertBtnClick(item)">
-                            {{item.buttonText}}
+                            添加预警
                         </el-button>
                     </p>
                 </div>
@@ -35,7 +35,7 @@
                         作者： {{item.author}}
                     </span>
                     <span class="article-clickNum blue">
-                        阅读量： {{item.readNum}}
+                        阅读量： {{item.hitCount}}
                     </span>
                     <span class="article-publishDate blue">
                         发布时间：{{item.publishDate}}
@@ -101,8 +101,8 @@
                             }
 
                             .positive-icon{
-                                color: #e60012;
-                                border: 1px solid #e60012;
+                                color: #22ac38;
+                                border: 1px solid #22ac38;
                             }
 
                             .positive-icon::before{
@@ -110,8 +110,8 @@
                             }
 
                             .negative-icon{
-                                color: #22ac38;
-                                border: 1px solid #22ac38;
+                                color: #e60012;
+                                border: 1px solid #e60012;
                             }
 
                             .negative-icon::before{
@@ -192,64 +192,7 @@
     export default{
         data(){
             return {
-                msg: "",
-                articleData: [
-                    {
-                        'title': '杂志赤峰学院学报栏目设置和论文参考的目录杂志赤峰学院学报栏目设置和论文参考的目录杂志赤峰学院学报栏目设置和论文参考的目录',
-                        'attitude': 'positive',
-                        'buttonType': 'warning',
-                        'buttonText': '预警',
-                        'source': '新浪博客',
-                        'author': '梦想家期刊',
-                        'readNum': '2342',
-                        'publishDate': '2016-12-12 12:12',
-                        'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                    },
-                    {
-                        'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                        'attitude': 'negative',
-                        'buttonType': 'warning',
-                        'buttonText': '预警',
-                        'source': '新浪博客',
-                        'author': '梦想家期刊',
-                        'readNum': '2342',
-                        'publishDate': '2016-12-12 12:12',
-                        'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                    },
-                    {
-                        'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                        'attitude': 'positive',
-                        'buttonType': 'warning',
-                        'buttonText': '预警',
-                        'source': '新浪博客',
-                        'author': '梦想家期刊',
-                        'readNum': '2342',
-                        'publishDate': '2016-12-12 12:12',
-                        'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                    },
-                    {
-                        'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                        'attitude': 'positive',
-                        'buttonType': 'warning',
-                        'buttonText': '预警',
-                        'source': '新浪博客',
-                        'author': '梦想家期刊',
-                        'readNum': '2342',
-                        'publishDate': '2016-12-12 12:12',
-                        'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                    },
-                    {
-                        'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                        'attitude': 'negative',
-                        'buttonType': 'warning',
-                        'buttonText': '预警',
-                        'source': '新浪博客',
-                        'author': '梦想家期刊',
-                        'readNum': '2342',
-                        'publishDate': '2016-12-12 12:12',
-                        'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                    }
-                ]
+                msg: ""
             }
         },
         components: {},
@@ -279,6 +222,6 @@
 
             }
         },
-//        props: ["articleData"]
+        props: ["articleData"]
     }
 </script>
