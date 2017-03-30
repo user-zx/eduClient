@@ -17,7 +17,7 @@
                 <el-card class="box-card">
                     <el-table :data="weiBoOption" :resizable="false" stripe style="width: 100%" border class="tran-table no-col-title yellow-table">
                         <el-table-column type="index" width="70" label="序号"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="weiBoNumber" label="微信号" align="center"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="weiBoNumber" label="公众号" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="source" label="所属" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="principal" label="负责人" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="principalEmail" label="负责人邮箱" align="center"></el-table-column>
@@ -55,7 +55,7 @@
                             {{scope.row.all}}
                         </template>
                     </el-table-column>
-                    <el-table-column label="微信号" prop="name" align="center">
+                    <el-table-column label="公众号" prop="name" align="center">
                         <template scope="scope">
                             <span @click="toCharacterAnalyse(scope.row)" class="character-name">
                                 {{scope.row.name}}
@@ -65,14 +65,12 @@
                             <!--</router-link>-->
                         </template>
                     </el-table-column>
-                    <el-table-column label="发博量" prop="voiceNum" align="center"></el-table-column>
-                    <el-table-column label="关注量" prop="readNum" align="center"></el-table-column>
-                    <el-table-column label="粉丝量" prop="readNum" align="center"></el-table-column>
-                    <el-table-column label="转发量" prop="readNum" align="center"></el-table-column>
-                    <el-table-column label="评论数" prop="readNum" align="center"></el-table-column>
-                    <el-table-column label="点赞总数" prop="readNum" align="center"></el-table-column>
-                    <el-table-column label="平均点赞量" prop="hot" align="center"></el-table-column>
-                    <el-table-column label="认证状态" prop="emotion" align="center"></el-table-column>
+                    <el-table-column label="文章数" prop="voiceNum" align="center"></el-table-column>
+                    <el-table-column label="总点赞量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="总阅读量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="平均阅读量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="平均点赞量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="活跃指数" prop="readNum" align="center"></el-table-column>
                 </el-table>
             </el-tab-pane>
         </el-tabs>
