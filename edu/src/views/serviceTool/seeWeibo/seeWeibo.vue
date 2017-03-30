@@ -41,7 +41,7 @@
                 <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
                           :resizable="false">
                     <el-table-column type="selection" width="50" align="center"></el-table-column>
-                    <el-table-column label="全部" align="center" prop="all">
+                    <el-table-column label="排名" align="center" prop="all">
                         <template scope="scope">
                             <span v-if="scope.row.all == 1">
                                  <i class="icon-rank icon-gold"></i>
@@ -55,7 +55,7 @@
                             {{scope.row.all}}
                         </template>
                     </el-table-column>
-                    <el-table-column label="人物" prop="name" align="center">
+                    <el-table-column label="微博号" prop="name" align="center">
                         <template scope="scope">
                             <span @click="toCharacterAnalyse(scope.row)" class="character-name">
                                 {{scope.row.name}}
@@ -65,10 +65,14 @@
                             <!--</router-link>-->
                         </template>
                     </el-table-column>
-                    <el-table-column label="声量" prop="voiceNum" align="center"></el-table-column>
-                    <el-table-column label="总阅读量" prop="readNum" align="center"></el-table-column>
-                    <el-table-column label="热度" prop="hot" align="center"></el-table-column>
-                    <el-table-column label="情感" prop="emotion" align="center"></el-table-column>
+                    <el-table-column label="发博量" prop="voiceNum" align="center"></el-table-column>
+                    <el-table-column label="关注量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="粉丝量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="转发量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="评论数" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="点赞总数" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="平均点赞量" prop="hot" align="center"></el-table-column>
+                    <el-table-column label="认证状态" prop="emotion" align="center"></el-table-column>
                 </el-table>
             </el-tab-pane>
         </el-tabs>
@@ -166,7 +170,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      },
                      {
                          'id': 2,
@@ -175,7 +179,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      },
                      {
                          'id': 3,
@@ -184,7 +188,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      },
                      {
                          'id': 4,
@@ -193,7 +197,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      },
                      {
                          'id': 5,
@@ -202,7 +206,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      },
                      {
                          'id': 6,
@@ -211,7 +215,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      },
                      {
                          'id': 7,
@@ -220,7 +224,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      },
                      {
                          'id': 8,
@@ -229,7 +233,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      },
                      {
                          'id': 9,
@@ -238,7 +242,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      },
                      {
                          'id': 10,
@@ -247,7 +251,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      },
                      {
                          'id': 11,
@@ -256,7 +260,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      },
                      {
                          'id': 12,
@@ -265,7 +269,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      },{
                          'id': 13,
                          'all': 13,
@@ -273,7 +277,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      },
                      {
                          'id': 14,
@@ -282,7 +286,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      },
                      {
                          'id': 15,
@@ -291,7 +295,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      }
                      ,
                      {
@@ -301,7 +305,7 @@
                          'voiceNum': 888,
                          'readNum': 1024,
                          'hot': 5,
-                         'emotion': 1
+                         'emotion': '已认证'
                      }
                  ]
              }
