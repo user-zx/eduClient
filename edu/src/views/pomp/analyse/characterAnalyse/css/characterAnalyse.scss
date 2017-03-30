@@ -183,7 +183,24 @@
       }
     }
   }
-  .character-mediaVolume{
 
+  .character-mediaWeek{
+    clear: both;
+  }
+
+  .character-carrierDis{
+    .item{
+      width:calc(50% - 10px);
+      height: 400px;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .carrierDis-table{
+      width: calc(50% - 10px);
+      height: 400px;
+      display: inline-block;
+      vertical-align: top;
+    }
   }
 }

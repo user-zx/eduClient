@@ -86,10 +86,10 @@
         </div>
         <div class="character-div character-keywords">
             <div class="title"><span class="span-icon">关键词云</span></div>
-            <div class="keywords-list">
-                <span v-for="item in keywords">
-                    {{item}}
-                </span>
+            <div class="keywords-list graph-div" id="keywords">
+                <!--<span v-for="item in keywords">-->
+                    <!--{{item}}-->
+                <!--</span>-->
             </div>
         </div>
         <div class="character-div character-emotionTrend">
@@ -126,12 +126,43 @@
             </div>
         </div>
         <div class="character-div rightDiv mediaHot">
-            <div class="title"><span class="span-icon">{媒体热度}</span></div>
+            <div class="title"><span class="span-icon">媒体热度</span></div>
             <div class="graph-div hot-graph" id="hot_graph"></div>
         </div>
-        <div class="character-div mediaWeek">
-            <div class="title"><span class="span-icon">媒体趋势周统计图</span></div>
+        <div class="character-div character-mediaWeek">
+            <div class="title">
+                <span class="span-icon">媒体趋势周统计图</span>
+            </div>
             <div class="graph-div weekMedia-graph" id="weekMedia_graph"></div>
+        </div>
+        <div class="character-div character-statistics">
+            <div class="title"><span class="span-icon">舆情数据统计</span></div>
+            <div class="statistics-table graph-div">
+                <el-table :data="statisticsData" class="tran-table" style="width: 100%" :resizable="false">
+                    <el-table-column fixed prop="coverage" label="载体\时间" width="150" align="center">
+                    </el-table-column>
+                    <el-table-column prop="date1" label="2017/02/09" align="center"></el-table-column>
+                    <el-table-column prop="date2" label="2017/02/10" align="center"></el-table-column>
+                    <el-table-column prop="date3" label="2017/02/11" align="center"></el-table-column>
+                    <el-table-column prop="date4" label="2017/02/12" align="center"></el-table-column>
+                    <el-table-column prop="date5" label="2017/02/13" align="center"></el-table-column>
+                    <el-table-column prop="date6" label="2017/02/14" align="center"></el-table-column>
+                    <el-table-column prop="date7" label="2017/02/15" align="center"></el-table-column>
+                </el-table>
+            </div>
+        </div>
+        <!--carrier dis: carrier:载体  distribute:分布-->
+        <div class="character-div character-carrierDis">
+            <div class="title"><span class="span-icon">载体分布统计图</span></div>
+            <div class="graph-div item carrierDis-graph" id="carrierDis_graph"></div>
+            <div class="carrierDis-table">
+                <el-table :data="carrierTableData" class="tran-table no-col-title" style="width: 100%" :resizable="false">
+                    <el-table-column fixed prop="coverage" label="载体" width="150" align="center">
+                    </el-table-column>
+                    <el-table-column prop="positive" label="正面文章数" align="center"></el-table-column>
+                    <el-table-column prop="negative" label="负面文章数" align="center"></el-table-column>
+                </el-table>
+            </div>
         </div>
     </div>
 </template>
@@ -140,6 +171,7 @@
 
     import "vue-style-loader!css-loader!sass-loader!./css/characterAnalyse.scss";
     import echarts from "echarts"
+
     export default{
         data(){
             return {
@@ -418,6 +450,282 @@
                         }
                     ]
 
+                },
+                mediaWeekData: {
+                    title: '',
+                    color: ['#6c9aff','#6cfdff','#a06cff','#faff6c','#9383ff','#ff6cef','#6cbfff','#ffc26c'],
+                    grid: {
+                        left: '4%',
+                        right: '4%'
+                    },
+                    legend: {
+                        data: [
+                            {
+                                name: '新闻',
+                                textStyle: {color: '#6c9aff'}
+                            },
+                            {
+                                name: '其他',
+                                textStyle: {color: '#6cfdff'}
+                            },
+                            {
+                                name: '微信',
+                                textStyle: {color: '#a06cff'}
+                            },
+                            {
+                                name: 'QQ群',
+                                textStyle: {color: '#faff6c'}
+                            },
+                            {
+                                name: '综合',
+                                textStyle: {color: '#9383ff'}
+                            },
+                            {
+                                name: '博客',
+                                textStyle: {color: '#ff6cef'}
+                            },
+                            {
+                                name: '微博',
+                                textStyle: {color: '#6cbfff'}
+                            },
+                            {
+                                name: '论坛',
+                                textStyle: {color: '#ffc26c'}
+                            }
+                        ]
+                    },
+                    series: [
+                        {
+                            data: [7999,11800,12200,8999,9999,10421,12000,13999,10421,14010],
+                            name: '微信',
+                            type: 'line'
+                        }
+                    ],
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            animation: false
+                        }
+                    },
+                    xAxis: [
+                        {
+                            data:['1/2:00:00', '2/3:00:00', '1/4:00:00', '1/5:00:00', '1/6:00:00', '1/7:00:00',
+                                '1/8:00:00', '2/9:00:00', '3/10:00:00', '1/11:00:00'],
+                            type: 'category',
+                            axisLine: {onZero: true},
+                            axisLabel: {
+                                textStyle: {color: '#424d74'},
+                                interval: 0
+                            }
+                        },
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            max: 15000,
+                            axisLabel: {
+                                textStyle: {color: '#424d74'}
+                            }
+                        }
+                    ]
+                },
+                statisticsData: [
+                    {
+                        date1: 123,
+                        date2: 11,
+                        date3: 121,
+                        date4: 33,
+                        date5:78,
+                        date6: 9,
+                        date7: 19,
+                        coverage: '微信',
+
+                    }, {
+                        date1: 13,
+                        date2: 61,
+                        date3: 121,
+                        date4: 83,
+                        date5:48,
+                        date6: 39,
+                        date7: 19,
+                        coverage: '微博',
+                    }, {
+                        date1: 113,
+                        date2: 61,
+                        date3: 21,
+                        date4: 83,
+                        date5: 28,
+                        date6: 79,
+                        date7: 94,
+                        coverage: '论坛',
+                    }, {
+                        date1: 13,
+                        date2: 61,
+                        date3: 121,
+                        date4: 83,
+                        date5: 48,
+                        date6: 39,
+                        date7: 19,
+                        coverage: '报纸',
+                    }, {
+                        date1: 13,
+                        date2: 61,
+                        date3: 121,
+                        date4: 83,
+                        date5:48,
+                        date6: 39,
+                        date7: 19,
+                        coverage: '贴吧',
+                    }, {
+                        date1: 43,
+                        date2: 21,
+                        date3: 21,
+                        date4: 83,
+                        date5: 108,
+                        date6: 90,
+                        date7: 19,
+                        coverage: 'QQ群',
+                    }
+                ],
+                carrierDisData: {
+                    title: '',
+                    color: ["#5356ed","#6076ff", "#60a3fe", "#60dab3", "#fbff5"],
+                    grid: {
+                        left: '4%',
+                        right: '4%'
+                    },
+                    legend: {
+                        data: ['微信','贴吧','论坛','qq群','微博','门户网站']
+                    },
+                    series: [
+                        {
+                            data: [
+                                {name: '微信', value: 5251},
+                                {name: '贴吧', value: 3328},
+                                {name: '论坛', value: 4888},
+                                {name: 'qq群', value: 6767},
+                                {name: '微博', value: 4000},
+                                {name: '门户网站', value: 7022}
+                            ],
+                            name: '载体分布统计',
+                            type: 'pie',
+                            radius: ['40%', '55%']
+                        },
+                        {
+                            data: [
+                                {name: '正面', value: 6666},
+                                {name: '负面', value: 4577}
+                            ],
+                            name: '正负面统计图',
+                            type: 'pie',
+                            radius: ['55%', '45%']
+                        }
+                    ],
+                    textStyle: {
+                        color: "#434f70",
+                        fontFamily: "sans-serif",
+                        fontSize: 12,
+                        fontStyle: "normal",
+                        fontWeight: "normal",
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    xAxis: '',
+                    yAxis: ''
+                },
+                carrierTableData: [
+                    {
+                        coverage: '新闻',
+                        positive: 800,
+                        negative: 33
+                    },
+                    {
+                        coverage: 'QQ群',
+                        positive: 340,
+                        negative: 13
+                    },
+                    {
+                        coverage: '微博',
+                        positive: 1038,
+                        negative: 31
+                    },
+                    {
+                        coverage: '博客',
+                        positive: 130,
+                        negative: 3
+                    },
+                    {
+                        coverage: '论坛',
+                        positive: 459,
+                        negative: 23
+                    },
+                    {
+                        coverage: '其他',
+                        positive: 910,
+                        negative: 20
+                    }
+                ],
+                keywordsData: {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            animation: false
+                        }
+                    },
+                    series: [
+                        {
+                            type: 'wordCloud',
+                            gridSize: 1,
+                            sizeRange: [10, 35],
+                            rotationRage: [0,90],
+                            rotationStep: 90,
+                            maskImage: new Image(),
+                            textStyle: {
+                                normal: {
+                                    color: function (v) {
+                                        if(v.value > 1000){
+                                            return 'rgb(0, 116, 111)';
+                                        }else if(v.value > 800){
+                                            return 'rgb(0, 156, 137)';
+                                        }else if(v.value >　100){
+                                            return 'rgb(70, 209, 133)';
+                                        }
+                                    }
+                                }
+                            },
+                            width: 400,
+                            height: 400,
+                            top: 40,
+                            data: [
+                                {name: '蒙奇·D·路飞', value: 1200},
+                                {name: '罗罗诺亚·索隆', value: 1200},
+                                {name: '娜美', value: 800},
+                                {name: '乌索普', value: 600},
+                                {name: '山治', value: 800},
+                                {name: '妮可罗宾', value: 900},
+                                {name: '托尼托尼·乔巴', value: 400},
+                                {name: '弗兰奇', value: 300},
+                                {name: '布鲁克', value: 200},
+                                {name: '艾斯-男神', value: 1500},
+                            ]
+                        }
+                    ],
+                    graphic: {
+                        elements: [{
+                            type: 'image',
+                            style: {
+                                image: '',
+                                width: 40,
+                                height: 40
+                            },
+                            left: 'center',
+                            top:　40
+                        }]
+                    }
                 }
             }
         },
@@ -480,9 +788,23 @@
 
             getMediaWeekData(){
                 this.$nextTick(function () {
-                   let char = echarts.init(document.getElementById('weekMedia_graph'));
-
+                   let chart = echarts.init(document.getElementById('weekMedia_graph'));
+                    chart.setOption(this.mediaWeekData);
                 });
+            },
+
+            getCarrierDisData(){
+                this.$nextTick(function () {
+                    let chart = echarts.init(document.getElementById('carrierDis_graph'));
+                    chart.setOption(this.carrierDisData);
+                })
+            },
+
+            getKeyWordsData(){
+                this.$nextTick(function () {
+                    let chart = echarts.init(document.getElementById('keywords'));
+                    chart.setOption(this.keywordsData);
+                })
             }
         },
         created(){
@@ -492,6 +814,9 @@
             this.getEmotionIndexData();
             this.getMediaVolumeData();
             this.getMediaHotData();
+            this.getMediaWeekData();
+            this.getCarrierDisData();
+            this.getKeyWordsData();
         },
         props: ["characterId"]
     }
