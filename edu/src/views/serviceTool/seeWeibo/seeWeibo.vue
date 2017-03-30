@@ -9,8 +9,10 @@
                 <div id="search_container">
                     <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
                 </div>
-                <div class="text-right clearfix">
-                    <el-button type="primary">微博认证</el-button>
+                <div class="clearfix btn-box">
+                    <div class="pull-right">
+                        <el-button type="primary">微博认证</el-button>
+                    </div>
                 </div>
                 <el-card class="box-card">
                     <el-table :data="weiBoOption" :resizable="false" stripe style="width: 100%" border class="tran-table no-col-title yellow-table">
@@ -28,15 +30,50 @@
                 </el-card>
             </el-tab-pane>
             <el-tab-pane label="微博指数" name="weekHot">
-                <el-card class="box-card">
-                    <el-table :data="weiBoOption" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table yellow-table">
-                        <el-table-column type="index" width="50"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
-                    </el-table>
-                </el-card>
+                <div class="btn-box clearfix">
+                    <div class="pull-left">
+                        <el-button type="primary">批量关注</el-button>
+                    </div>
+                    <div class="pull-right">
+                        <el-button type="primary">微博认证</el-button>
+                    </div>
+                </div>
+                <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
+                          :resizable="false">
+                    <el-table-column type="selection" width="50" align="center"></el-table-column>
+                    <el-table-column label="排名" align="center" prop="all">
+                        <template scope="scope">
+                            <span v-if="scope.row.all == 1">
+                                 <i class="icon-rank icon-gold"></i>
+                            </span>
+                            <span v-else-if="scope.row.all == 2">
+                                <i class="icon-rank icon-silver"></i>
+                           </span>
+                            <span v-else-if="scope.row.all == 3">
+                                 <i class="icon-rank icon-copper"></i>
+                            </span>
+                            {{scope.row.all}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="微博号" prop="name" align="center">
+                        <template scope="scope">
+                            <span @click="toCharacterAnalyse(scope.row)" class="character-name">
+                                {{scope.row.name}}
+                            </span>
+                            <!--<router-link to="/home/characterAnalyse">-->
+                            <!--{{scope.row.name}}-->
+                            <!--</router-link>-->
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="发博量" prop="voiceNum" align="center"></el-table-column>
+                    <el-table-column label="关注量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="粉丝量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="转发量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="评论数" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="点赞总数" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="平均点赞量" prop="hot" align="center"></el-table-column>
+                    <el-table-column label="认证状态" prop="emotion" align="center"></el-table-column>
+                </el-table>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -45,6 +82,13 @@
     #search_container{
         padding: 15px 0 1px;
         background-color: #141725;
+    }
+    .btn-box{
+        padding:20px 20px 0;
+    }
+    .mt20{margin-top: 20px;}
+    .character-name{
+        cursor: pointer;
     }
 </style>
 <script>
@@ -117,7 +161,153 @@
                          state:"已认证",
                      }
                  ],
-                 searchNames: ['vector', 'emotion', 'publishDateTime']
+                 searchNames: ['vector', 'emotion', 'publishDateTime'],
+                 tableData: [
+                     {
+                         'id': 1,
+                         'all': 1,
+                         'name': '习总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     },
+                     {
+                         'id': 2,
+                         'all': 2,
+                         'name': '习总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     },
+                     {
+                         'id': 3,
+                         'all': 3,
+                         'name': '习总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     },
+                     {
+                         'id': 4,
+                         'all': 4,
+                         'name': '习总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     },
+                     {
+                         'id': 5,
+                         'all': 5,
+                         'name': '习总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     },
+                     {
+                         'id': 6,
+                         'all': 6,
+                         'name': '习总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     },
+                     {
+                         'id': 7,
+                         'all': 7,
+                         'name': '习总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     },
+                     {
+                         'id': 8,
+                         'all': 8,
+                         'name': '习总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     },
+                     {
+                         'id': 9,
+                         'all': 9,
+                         'name': '习总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     },
+                     {
+                         'id': 10,
+                         'all': 10,
+                         'name': '习总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     },
+                     {
+                         'id': 11,
+                         'all': 11,
+                         'name': '习1总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     },
+                     {
+                         'id': 12,
+                         'all': 12,
+                         'name': '习总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     },{
+                         'id': 13,
+                         'all': 13,
+                         'name': '习总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     },
+                     {
+                         'id': 14,
+                         'all': 14,
+                         'name': '习总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     },
+                     {
+                         'id': 15,
+                         'all': 15,
+                         'name': '习总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     }
+                     ,
+                     {
+                         'id': 16,
+                         'all': 16,
+                         'name': '习总',
+                         'voiceNum': 888,
+                         'readNum': 1024,
+                         'hot': 5,
+                         'emotion': '已认证'
+                     }
+                 ]
              }
          },
          components:{breadCrumb,searchBox} ,
@@ -139,6 +329,10 @@
              onSearchDataChange(data) {
                  console.log("change callback, data :");
                  console.log(data);
+             },
+             toCharacterAnalyse(data){
+                 console.log(data);
+                 this.$router.push({path:"/home/characterAnalyse"});
              }
          },
          created(){

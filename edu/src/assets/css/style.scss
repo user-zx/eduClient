@@ -347,6 +347,20 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
 .pointer {
   cursor: pointer;
 }
+.clearfix:before,
+.clearfix:after{
+  display: table;
+  content: " ";
+}
+.clearfix:after{
+  clear: both;
+}
+.pull-left{
+  float: left;
+}
+.pull-right{
+  float: right;
+}
 .text-left{
   text-align: left;
 }
@@ -355,6 +369,12 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
 }
 .text-right{
   text-align: right;
+}
+.hide{
+  display: none;
+}
+.show{
+  display: block;
 }
 /*表格展示*/
 .table-box {
