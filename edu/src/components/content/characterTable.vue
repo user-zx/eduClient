@@ -2,7 +2,7 @@
 * Created by lifei on 2017/3/27.
 */
 <template>
-    <el-table :data="tableData" class="tran-table white-table" border style="width: 100%"
+    <el-table :data="tableData" class="tran-table" border style="width: 100%"
               :resizable="false">
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column label="全部" align="center" prop="all">

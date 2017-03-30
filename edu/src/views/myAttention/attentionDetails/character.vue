@@ -1,13 +1,12 @@
 /**
-* Created by zhangxin on 2017/3/17.
+* Created by lifei on 2017/3/28.
 */
 <template>
-    <div class="characterNews article-wrap">
-        <bread-crumb></bread-crumb>
-        <div id="search_container">
-            <search-box :searchData=searchData></search-box>
+    <div class="myAttention-character article-wrap">
+        <div>
+            <search-box :searchNames=searchNames class="dark"></search-box>
         </div>
-        <div class="content">
+        <div class="content dark">
             <div class="content-bar">
                 <ul class="content-bar-list">
                     <li class="pointer">全部</li>
@@ -26,9 +25,9 @@
                             <el-dropdown-item>事件3</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
-                    <el-button type="primary" icon="plus" class="button-icon">批量关注</el-button>
+                    <el-button type="primary" icon="plus">取消关注</el-button>
                 </div>
-                <div class="content-bar-page">
+                <div class="content-bar-pagination">
                     <el-pagination class="edu-pagination"
                                    @size-change="handleSizeChange"
                                    @current-change="handleCurrentChange"
@@ -39,35 +38,21 @@
                     </el-pagination>
                 </div>
             </div>
-            <character-table class="white-table"></character-table>
+            <character-table class="dark"></character-table>
         </div>
     </div>
 </template>
-<style lang="scss" scoped>
-    .characterNews{
-        .content-bar-list{
-            width:200px;
-        }
-    }
-</style>
 <script>
-     /*
-    * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
-    * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
-    * import loginButton from './components/loginButton.vue';
-    */
-     import breadCrumb from '../../../components/breadCrumb/breadCrumb.vue';
-     import searchBox from '../../../components/searchBox/searchBox.vue';
-     import characterTable from '../../../components/content/characterTable.vue'
-
+    import searchBox from '../../../components/searchBox/searchBox.vue';
+    import characterTable from '../../../components/content/characterTable.vue';
     export default{
         data(){
             return {
-                searchData: '',
+                searchNames: ['university', 'dimension', 'vector', 'emotion', 'publishDateTime'],
                 currentPage: 1,
             }
         },
-        components:{breadCrumb, searchBox, characterTable} ,
+        components:{searchBox, characterTable} ,
         methods:{
             setBreadCrumb(){
                 let breadcrumb=[
@@ -75,7 +60,7 @@
                         name:"情报内参",to:{path:"/"}
                     },
                     {
-                        name:"人物动态",to:{path:"/characterNews"}
+                        name:"人物动态",to:{path:"/myAttention-character"}
                     }
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
@@ -140,7 +125,7 @@
                     'hasDateBox': true
                 }
             ];
-            this.searchData = searchData;
+//            this.searchData = searchData;
         },
         created(){
             this.setBreadCrumb();

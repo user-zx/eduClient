@@ -61,3 +61,34 @@
     }
   }
 }
+
+.block-tabs{
+  background: #1f2439;
+  
+  .el-tabs__nav {
+    float: none;
+    margin: 0 10px;
+    width: 100%;
+
+    .el-tabs__active-bar{
+      display: none;
+    }
+
+    .is-active{
+      background: #282e46;
+    }
+
+    .el-tabs__item{
+      width: calc(25% - 10px);
+      height: 110px;
+      line-height:110px;
+      text-align: center;
+      font-size:24px;
+    }
+  }
+
+  .el-tabs__header{
+    border-bottom: none;
+    margin-bottom: 0px;
+  }
+}

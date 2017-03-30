@@ -19,9 +19,11 @@ import home from './views/home/home.vue';
 import eventDetails from './views/pomp/event/eventDetails/eventDetails.vue';
 import eventList from './views/pomp/event/evenList/eventList.vue';
 import publicOpinionRule from "./views/pomp/warning/publicOpinionRule.vue";
-import analyseList from "./views/pomp/analyse/analyseList/analyseList.vue"
-import characterAnalyse from "./views/pomp/analyse/characterAnalyse/characterAnalyse.vue"
-import characterTable from "./views/pomp/analyse/characterTable/characterTable.vue"
+import analyseList from "./views/pomp/analyse/analyseList/analyseList.vue";
+import characterAnalyse from "./views/pomp/analyse/characterAnalyse/characterAnalyse.vue";
+import characterTable from "./views/pomp/analyse/characterTable/characterTable.vue";
+import industryNewsList from "./views/reference/industryNews/newsList/industryNewsList.vue"
+import industryDetailNews from "./views/reference/industryNews/newsDetail/industryDetailNews.vue";
 export default {
     mode:'history',
     base:__dirname,
@@ -104,7 +106,24 @@ export default {
                 {
                     name:"industryNews",
                     path:"industryNews",
-                    component:industryNews
+                    component:industryNews,
+                    children: [
+                        {
+                            path: "",
+                            component:　industryNewsList
+                        }
+                    ]
+                },
+                {
+                    name: "industryDetailNews",
+                    path: "industryDetailNews",
+                    component: industryNews,
+                    children: [
+                        {
+                            path: "",
+                            component: industryDetailNews
+                        }
+                    ]
                 },
                 {
                     name:"characterNews",

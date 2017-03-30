@@ -84,7 +84,8 @@
                             nowNav=null;
                         if(url.indexOf("panorama")!= -1)nowNav="panorama";
                         if(url.indexOf("event")!= -1)nowNav="event";
-                        if(url.indexOf("Analyse") != -1)nowNav="analyse"
+                        if(url.indexOf("Analyse") != -1)nowNav="analyse";
+                        if(url.indexOf("industry") != -1)nowNav="industryNews";
                         if(nowNav)
                             this.routerName=nowNav;
                         else
