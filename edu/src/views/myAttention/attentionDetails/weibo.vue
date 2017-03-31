@@ -68,7 +68,7 @@
         </div>
     </div>
 </template>
-<style scope="scoped" lang="scss">
+<style scoped lang="scss">
     .myAttention-weibo{
         .content .content-bar .content-bar-button{
             margin-left: 15px;

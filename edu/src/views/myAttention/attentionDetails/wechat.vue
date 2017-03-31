@@ -57,7 +57,7 @@
         </div>
     </div>
 </template>
-<style scope="scoped" lang="scss">
+<style scoped lang="scss">
     .myAttention-wechat{
         .content-bar-button{
             margin-left: 15px;

@@ -24,6 +24,10 @@ import characterAnalyse from "./views/pomp/analyse/characterAnalyse/characterAna
 import characterTable from "./views/pomp/analyse/characterTable/characterTable.vue";
 import industryNewsList from "./views/reference/industryNews/newsList/industryNewsList.vue"
 import industryDetailNews from "./views/reference/industryNews/newsDetail/industryDetailNews.vue";
+import myCenter from "./views/myCenter/myCenter1.vue";
+import centerList from "./views/myCenter/subViews/centerList.vue";
+import centerSystemDetail from "./views/myCenter/subViews/detailViews/systemDetail.vue"
+
 export default {
     mode:'history',
     base:__dirname,
@@ -159,7 +163,28 @@ export default {
                     name:"myAttention",
                     path:"myAttention",
                     component:myAttention
-                }
+                },
+                {
+                    name: "myCenter",
+                    path: "myCenter",
+                    component: myCenter,
+                    children: [
+                        {
+                            path: "",
+                            component: centerList
+                        }
+                    ]
+                },
+                {
+                    path: "centerSystemDetail",
+                    component: myCenter,
+                    children: [
+                        {
+                            path: "",
+                            component: centerSystemDetail
+                        }
+                    ]
+                },
             ]
         },
         {
