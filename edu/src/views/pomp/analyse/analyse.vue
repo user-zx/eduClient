@@ -30,7 +30,7 @@
                         name:"舆情管理",to:{path:"/"}
                     },
                     {
-                        name:"舆情监测",to:{path:"/analyse"}
+                        name:"舆情监测"
                     }
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);

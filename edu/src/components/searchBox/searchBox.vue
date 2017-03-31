@@ -222,19 +222,6 @@
                     this.show = true;
                 }
 
-                //判断父级页面显示的是文章还是人物表格
-//                let curContent = this.$store.state.curContent;
-//                if (item.showCharacter == true && curContent == 'article') {
-//                    //跳转到人物聚焦页面
-//                    this.$store.commit("setCurContent", "character");
-//                    this.$router.push({path:"/home/characterTableAnalyse"});
-//
-//                } else if(item.showCharacter == false && curContent == 'character') {
-//                    //跳转到文章列表页面
-//                    this.$store.commit("setCurContent", "article");
-//                    this.$router.push({path:"/home/analyse"});
-//                }
-
                 if (data.name === 'publishDateTime') {
                     if (item.text === '自定义时间') {
                         //如果是自定义时间，触发回调放在控件的change中
@@ -244,7 +231,7 @@
                     }
                 }
 
-                // 回调
+                // searchDataChange回调
                 this.$emit('searchDataChange', this.buildParam());
             },
 
@@ -258,7 +245,7 @@
                     $('.school-list .el-icon-arrow-down').addClass('el-icon-arrow-up');
                     var height = $('.school-list').height();
                     $('.school-list').closest('div.el-row').children().each(function (index) {
-                        $(this).height(height)
+                        $(this).height(height);
                     });
                 }
             },
@@ -294,6 +281,31 @@
                         } else {
                             console.error(response.data.message);
                         }
+
+                        let dimension = this.$route.query.dimension;
+                        if (dimension) {
+                            for (let i  in this.searchData[2].searchList) {
+                                if (this.searchData[2].searchList[i].text == dimension){
+                                    this.searchData[2].searchList[i].selected = true;
+                                } else {
+                                    this.searchData[2].searchList[i].selected = false;
+                                }
+                            }
+                        }
+
+                        let university = this.$route.query.university;
+                        if (university) {
+                            for (let i  in this.searchData[0].searchList) {
+                                if (this.searchData[0].searchList[i].text == university){
+                                    this.searchData[0].searchList[i].selected = true;
+                                } else {
+                                    this.searchData[0].searchList[i].selected = false;
+                                }
+                            }
+                        }
+
+                        // 参数加载完毕回调
+                        this.$emit('onload', this.buildParam());
                     }, (response) => {
                         console.error(response);
                     }

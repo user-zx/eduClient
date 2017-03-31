@@ -30,7 +30,7 @@ export default{
                     if (response.data.success) {
                         this.opinionData = response.data.data;
                     } else {
-                        console.error(response.data.msg);
+                        console.error(response.data.message);
                     }
                 }, (response) => {
                     console.error(response);
@@ -63,7 +63,6 @@ export default{
             this.$http.post('/apis/allViewOpinion/getVectorDistribute.json',{startDate: startDate, endDate: endDate}).then(
                 (response) => {
                     if (response.data.success) {
-                        console.log(response.data.data)
                         chart.setOption(response.data.data);
                         this.$nextTick(function(){
                             chart.hideLoading();
@@ -102,7 +101,6 @@ export default{
             this.$http.post('/apis/allViewOpinion/getVectorTrend.json',{startDate: startDate, endDate: endDate}).then(
                 (response) => {
                     if (response.data.success) {
-                        console.log(response.data.data)
                         chart.setOption(response.data.data);
                         this.$nextTick(function (){
                             chart.hideLoading();
