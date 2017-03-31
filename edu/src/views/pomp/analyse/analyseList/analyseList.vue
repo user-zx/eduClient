@@ -3,7 +3,7 @@
 */
 <template>
     <div v-loading="loading" element-loading-text="加载中……">
-        <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange"></search-box>
+        <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" @onload="onSearchLoad"></search-box>
         <div class="content">
             <div class="content-bar">
                 <ul class="content-bar-list">
@@ -32,7 +32,7 @@
                 <div class="content-bar-page">
                     <el-pagination class="edu-pagination"
                                    @current-change="handleCurrentChange"
-                                   :current-page="currentPage"
+                                   :current-page="param.pageNumber + 1"
                                    :page-size="5"
                                    layout="prev, next, jumper, total"
                                    :total="total">
@@ -50,12 +50,10 @@
         data(){
             return {
                 msg: "舆情监测",
-                currentPage: 1,
                 total: 0,
                 param: {
                     pageSize: 5,
                     pageNumber: 0,
-                    dimension: '校园舆情',
                     orders: [
                         {
                             property: 'hitCount',
@@ -69,7 +67,7 @@
                 },
                 searchNames: ['university', 'dimension', 'vector', 'emotion', 'publishDateTime'],
                 articleData: [],
-                loading:true,
+                loading: false,
                 curContent: this.$store.state.curContent,
             }
         },
@@ -81,7 +79,7 @@
                         name:"舆情管理",to:{path:"/"}
                     },
                     {
-                        name:"舆情监测",to:{path:"/analyse"}
+                        name:"舆情监测"
                     }
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
@@ -93,14 +91,20 @@
             },
             onSearchDataChange(data) {
                 if(data.dimension == "人物聚焦"){
-                    this.$router.push({path:"/home/characterTableAnalyse"});
-                    return ;
+                    this.$router.push({path: "/home/characterTableAnalyse?dimension=人物聚焦" + "&university=" + data.university});
+                    return;
                 }
                 data.pageSize = 5;
                 data.pageNumber = 0;
                 data.orders = this.param.orders;
                 this.param = data;
-                this.currentPage = 1;
+                this.getArticleList();
+            },
+            onSearchLoad(data) {
+                data.pageSize = 5;
+                data.pageNumber = 0;
+                data.orders = this.param.orders;
+                this.param = data;
                 this.getArticleList();
             },
             sort(index) {
@@ -116,15 +120,15 @@
                                 this.articleData = response.data.data.content;
                                 // 最多允许翻1000页
                                 this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
-                                this.$nextTick(function() {
-                                    this.loading = false;
-                                });
                             } else {
                                 console.error(response.data.message);
                             }
+                            this.$nextTick(function() {
+                                this.loading = false;
+                            });
                         }, (response) => {
-                            console.error(response);
                             this.loading = false;
+                            console.error(response);
                         }
                     );
                 });
@@ -133,9 +137,6 @@
         },
         created(){
             this.setBreadCrumb();
-        },
-        mounted(){
-            this.getArticleList();
-        },
+        }
     }
 </script>

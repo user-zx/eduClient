@@ -80,7 +80,13 @@ export default {
                 {
                     //为了过滤路径 命名后面追加了Analyse
                     path: "characterTableAnalyse",
-                    component: characterTable
+                    component:analyse,
+                    children:[
+                        {
+                            path:"",
+                            component: characterTable
+                        }
+                    ]
                 },
                 {
                     path: "characterAnalyse",
