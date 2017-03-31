@@ -42,7 +42,7 @@
                         阅读量： {{item.hitCount}}
                     </span>
                     <span class="article-publishDate blue">
-                        发布时间：{{item.publishDate}}
+                        发布时间：{{item.publishDateTime}}
                     </span>
                 </p>
             </div>
@@ -210,7 +210,7 @@
                     tmp.emotion = item.emotion;
                     tmp.vector = item.vector;
                     tmp.hitCount = item.hitCount;
-                    tmp.publishDate = item.publishDate;
+                    tmp.publishDateTime = item.publishDateTime;
 
                     this.$http.post('/apis/opinionWarn/warnOrCancel.json', tmp).then(
                         (response) => {

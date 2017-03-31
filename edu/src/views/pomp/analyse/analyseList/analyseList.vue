@@ -32,7 +32,7 @@
                 <div class="content-bar-page">
                     <el-pagination class="edu-pagination"
                                    @current-change="handleCurrentChange"
-                                   :current-page="currentPage"
+                                   :current-page="param.pageNumber + 1"
                                    :page-size="5"
                                    layout="prev, next, jumper, total"
                                    :total="total">
@@ -50,7 +50,6 @@
         data(){
             return {
                 msg: "舆情监测",
-                currentPage: 1,
                 total: 0,
                 param: {
                     pageSize: 5,
@@ -80,7 +79,7 @@
                         name:"舆情管理",to:{path:"/"}
                     },
                     {
-                        name:"舆情监测",to:{path:"/analyse"}
+                        name:"舆情监测"
                     }
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
@@ -99,7 +98,6 @@
                 data.pageNumber = 0;
                 data.orders = this.param.orders;
                 this.param = data;
-                this.currentPage = 1;
                 this.getArticleList();
             },
             onSearchLoad(data) {

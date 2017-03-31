@@ -6,16 +6,18 @@
     <div class="warning article-wrap">
         <bread-crumb></bread-crumb>
          <div id="search_container">
-             <search-box :searchData=searchData></search-box>
+             <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange"></search-box>
          </div>
           <div class="content">
             <div class="content-bar">
                 <ul class="content-bar-list">
                     <li class="pointer">全部</li>
-                    <li class="pointer arrow-up">
-                        阅读量
+                    <li class="pointer" @click="sort(0)">
+                        阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
                     </li>
-                    <li class="pointer arrow-down">时间</li>
+                    <li class="pointer" @click="sort(1)">
+                        时间<i class="arrow" :class="param.orders[1].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
+                    </li>
                 </ul>
                 <div class="content-bar-button">
                     <el-dropdown class="event-store-box" trigger="click">
@@ -32,21 +34,19 @@
                 </div> 
                 <div class="content-bar-page">
                   <el-pagination class="edu-pagination"
-                                 @size-change="handleSizeChange"
                                  @current-change="handleCurrentChange"
-                                 :current-page="currentPage"
-                                 :page-size="10"
+                                 :current-page="param.pageNumber + 1"
+                                 :page-size="param.pageSize"
                                  layout="prev, next, jumper, total"
-                                 :total="100">
+                                 :total="total">
                   </el-pagination>
               </div>
             </div> 
-            <article-container :articleData=articleData v-show="showArticle"></article-container>
+            <article-container :articleData=articleData></article-container>
        		 <!--  <characterFocus v-show="showCharacterFocus"></characterFocus> -->
         </div>
     </div>
 </template>
 
-<script src="./script/warning.js">   
-	
+<script src="./script/warning.js">
 </script> 

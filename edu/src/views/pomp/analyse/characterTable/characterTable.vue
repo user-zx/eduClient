@@ -71,11 +71,10 @@
 <style lang="scss" scoped>
     .tran-table{
         margin-top: 10px;
-    .character-name{
-        cursor: pointer;
+        .character-name{
+            cursor: pointer;
+        }
     }
-    }
-
     .characterTable{
         .content-bar-list{
             width: 100px;
@@ -110,7 +109,17 @@
             toCharacterAnalyse(data){
                 this.$router.push({path:"/home/characterAnalyse"});
             },
-
+            setBreadCrumb() {
+                let breadcrumb=[
+                    {
+                        name:"舆情管理",to:{path:"/"}
+                    },
+                    {
+                        name:"舆情监测"
+                    }
+                ];
+                this.$store.commit("setBreadCrumb",breadcrumb);
+            },
             onSearchDataChange(data) {
                 if(data.dimension != "人物聚焦"){
                     this.$router.push({path: "/home/analyse?dimension=" + data.dimension + "&university=" + data.university});
@@ -162,8 +171,11 @@
                 });
             }
         },
-        mounted(){
+        mounted() {
             console.log(this.$route.query);
+        },
+        created() {
+            this.setBreadCrumb();
         }
     }
 

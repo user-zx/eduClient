@@ -360,7 +360,7 @@
                                             if (text === '昨天') {
                                                 var date = this.formatDate(new Date(now.getTime() - oneDayMills), format);
                                                 publishDateTime.startDate = date + startSuffix;
-                                                publishDateTime.endDate = nowDate + endSuffix;
+                                                publishDateTime.endDate = date + endSuffix;
                                             }
                                             if (text === '近7天') {
                                                 var date = this.formatDate(new Date(now.getTime() - oneDayMills * 7), format);
@@ -374,7 +374,8 @@
                                             }
 
                                         }
-                                        result[name] = publishDateTime;
+                                        result['startDate'] = publishDateTime.startDate;
+                                        result['endDate'] = publishDateTime.endDate;
                                         break;
                                     }
                                     result[name] = text;
