@@ -410,3 +410,23 @@ ul.event-store-item {
     border-bottom: 1px solid #cccccc;
   }
 }
+
+.dark{
+  .el-form-item {
+    .el-form-item__label {
+      color: #d0d7ff;
+    }
+  }
+
+  input.el-input__inner {
+    background: #3e455f;
+    border: none;
+    color: #d0d7ff;
+  }
+}
+
+.dialog-center{
+  .el-dialog__header{
+    text-align: center;
+  }
+}

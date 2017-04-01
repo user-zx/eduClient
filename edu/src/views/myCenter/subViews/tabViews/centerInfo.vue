@@ -220,13 +220,23 @@
             }
         },
         methods: {
-
+            setBreadCrumb(){
+                let breadcrumb=[
+                    {
+                        name:"个人中心",to:{path:"/home/myCenter"}
+                    },
+                    {
+                        name:"会员中心"
+                    }
+                ];
+                this.$store.commit("setBreadCrumb",breadcrumb);
+            },
         },
         mounted(){
 
         },
         created(){
-
+            this.setBreadCrumb();
         }
     }
 </script>

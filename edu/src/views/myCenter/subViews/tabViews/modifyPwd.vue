@@ -3,7 +3,7 @@
 */
 <template>
     <div class="modifyPwd">
-        <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="100px" class="pwdForm">
+        <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="100px" class="pwdForm dark">
             <el-form-item prop="curPwd">
                 <el-input type="password" v-model="ruleForm2.curPwd" placeholder="输入当前密码" auto-complete="off"></el-input>
             </el-form-item>
