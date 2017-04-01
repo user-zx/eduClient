@@ -418,7 +418,7 @@ ul.event-store-item {
     }
   }
 
-  input.el-input__inner {
+  input.el-input__inner, .el-input.is-disabled .el-input__inner {
     background: #3e455f;
     border: none;
     color: #d0d7ff;

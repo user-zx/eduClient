@@ -99,7 +99,7 @@
                 </div>
             </div>
             <div class="item" @click="selectPackage">
-                <div class="title blue">A套餐</div>
+                <div class="title blue">B套餐</div>
                 <div class="top">
                     <div class="info">
                         <div class="tree blue">舆情管理</div>
@@ -139,7 +139,7 @@
                         <div class="tree-node">
                             <span>行业动态</span>
                             <div class="checkbox">
-                                <el-checkbox v-model="checked" disabled></el-checkbox>
+                                <el-checkbox v-model="unchecked" disabled></el-checkbox>
                             </div>
                         </div>
                         <div class="tree-node">
@@ -157,13 +157,13 @@
                         <div class="tree-node">
                             <span>媒体声量</span>
                             <div class="checkbox">
-                                <el-checkbox v-model="checked" disabled></el-checkbox>
+                                <el-checkbox v-model="unchecked" disabled></el-checkbox>
                             </div>
                         </div>
                         <div class="tree-node">
                             <span>内参报告</span>
                             <div class="checkbox">
-                                <el-checkbox v-model="checked" disabled></el-checkbox>
+                                <el-checkbox v-model="unchecked" disabled></el-checkbox>
                             </div>
                         </div>
                     </div>
@@ -193,38 +193,38 @@
                 </div>
             </div>
             <div class="item" @click="selectPackage">
-                <div class="title blue">A套餐</div>
+                <div class="title blue">C套餐</div>
                 <div class="top">
                     <div class="info">
                         <div class="tree blue">舆情管理</div>
                         <div class="tree-node">
                             <span>全景舆情</span>
                             <div class="checkbox">
-                                <el-checkbox v-model="checked" disabled></el-checkbox>
+                                <el-checkbox v-model="checked"></el-checkbox>
                             </div>
                         </div>
                         <div class="tree-node">
                             <span>舆情监测</span>
                             <div class="checkbox">
-                                <el-checkbox v-model="checked" disabled></el-checkbox>
+                                <el-checkbox v-model="checked"></el-checkbox>
                             </div>
                         </div>
                         <div class="tree-node">
                             <span>舆情预警</span>
                             <div class="checkbox">
-                                <el-checkbox v-model="checked" disabled></el-checkbox>
+                                <el-checkbox v-model="checked"></el-checkbox>
                             </div>
                         </div>
                         <div class="tree-node">
                             <span>事件监测</span>
                             <div class="checkbox">
-                                <el-checkbox v-model="checked" disabled></el-checkbox>
+                                <el-checkbox v-model="checked"></el-checkbox>
                             </div>
                         </div>
                         <div class="tree-node">
                             <span>舆情报告</span>
                             <div class="checkbox">
-                                <el-checkbox v-model="checked" disabled></el-checkbox>
+                                <el-checkbox v-model="checked"></el-checkbox>
                             </div>
                         </div>
                     </div>
@@ -233,31 +233,31 @@
                         <div class="tree-node">
                             <span>行业动态</span>
                             <div class="checkbox">
-                                <el-checkbox v-model="checked" disabled></el-checkbox>
+                                <el-checkbox v-model="checked"></el-checkbox>
                             </div>
                         </div>
                         <div class="tree-node">
                             <span>人物动态</span>
                             <div class="checkbox">
-                                <el-checkbox v-model="checked" disabled></el-checkbox>
+                                <el-checkbox v-model="checked"></el-checkbox>
                             </div>
                         </div>
                         <div class="tree-node">
                             <span>两微洞察</span>
                             <div class="checkbox">
-                                <el-checkbox v-model="checked" disabled></el-checkbox>
+                                <el-checkbox v-model="checked"></el-checkbox>
                             </div>
                         </div>
                         <div class="tree-node">
                             <span>媒体声量</span>
                             <div class="checkbox">
-                                <el-checkbox v-model="checked" disabled></el-checkbox>
+                                <el-checkbox v-model="checked"></el-checkbox>
                             </div>
                         </div>
                         <div class="tree-node">
                             <span>内参报告</span>
                             <div class="checkbox">
-                                <el-checkbox v-model="checked" disabled></el-checkbox>
+                                <el-checkbox v-model="checked"></el-checkbox>
                             </div>
                         </div>
                     </div>
@@ -266,7 +266,7 @@
                         <div class="tree-node">
                             <span>两微监测</span>
                             <div class="checkbox">
-                                <el-checkbox v-model="checked" disabled></el-checkbox>
+                                <el-checkbox v-model="checked"></el-checkbox>
                             </div>
                         </div>
                     </div>
@@ -431,7 +431,8 @@
     export default{
         data(){
             return {
-                checked: true
+                checked: true,
+                unchecked: false,
             }
         },
         methods: {
