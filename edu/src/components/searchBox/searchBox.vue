@@ -294,7 +294,7 @@
                         }
 
                         let university = this.$route.query.university;
-                        if (university) {
+                        if (university && university.length > 0) {
                             for (let i  in this.searchData[0].searchList) {
                                 if (this.searchData[0].searchList[i].text == university){
                                     this.searchData[0].searchList[i].selected = true;
@@ -326,11 +326,7 @@
                                     var text = searchList[k].text;
                                     if (name === 'university') {
                                         var univs = [];
-                                        if (text === '全部') {
-                                            for (var l = 1; l < searchList.lenght; l++) {
-                                                univs.push(searchList[l].text);
-                                            }
-                                        } else {
+                                        if (text != '全部') {
                                             univs.push(text);
                                         }
                                         result[name] = univs;

@@ -3,7 +3,7 @@
 */
 <template>
          
-    <div class="warning article-wrap">
+    <div class="warning article-wrap" v-loading="loading" element-loading-text="加载中……">
         <bread-crumb></bread-crumb>
          <div id="search_container">
              <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange"></search-box>
