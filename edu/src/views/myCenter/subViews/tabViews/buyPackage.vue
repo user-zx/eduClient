@@ -302,11 +302,9 @@
         .content-wrap{
             width: 90%;
             height: 915px;
-            margin: auto;
-            margin-top: 50px;
+            margin: 50px auto;
 
             .item{
-                height: 860px;
                 width: calc((100% - 310px)/3);
                 border: 1px solid #3a598b;
                 display: inline-block;
@@ -319,36 +317,34 @@
                     font-size: 24px;
                     text-align: center;
                     margin-top: 20px;
+                    margin: 26px auto 38px auto;
                 }
 
                 .top{
                     .info{
-                        width: calc(100% - 40px);
+                        width: calc(100% - 50px);
                         margin: auto;
                         margin-bottom: 30px;
 
                         .tree{
                             font-size: 18px;
+                            margin-bottom: 21px;
                         }
                         
                         .tree-node{
                             color: #d0d7ff;
-                            margin: 15px 0px 15px 80px;
+                            margin: 0px 0px 15px 80px;
 
                             .checkbox{
                                 display: inline-block;
-                                margin-left: 28px;
+                                margin-left: 29px;
                             }
                         }
-                    }
-
-                    .info:first-child{
-                        margin-top: 30px;
                     }
                 }
 
                 .middle{
-                    width: calc(100% - 40px);
+                    width: calc(100% - 50px);
                     border-top: 1px solid #33456b;
                     border-bottom: 1px solid #33456b;
                     margin: auto;
@@ -356,6 +352,16 @@
                     .info:first-child{
                         margin-top: 30px;
                     }
+
+                    .info{
+                        margin-bottom: 19px;
+
+                        .el-input__inner{
+                             width: 100px;
+                             height: 28px;
+                         }
+                    }
+
                     .input-wrap{
                         display: inline-block;
                         width: 105px;
@@ -364,23 +370,12 @@
 
 
                 .bottom{
-                    width: calc(100% - 40px);
+                    width: calc(100% - 50px);
                     height: 66px;
                     line-height: 66px;
                     margin: auto;
                     font-size: 18px;
 
-                    .info{
-                        margin-bottom: 15px;
-
-                        .el-input__inner{
-                            width: 100px;
-                            height: 28px;
-                        }
-                    }
-                    .info:first-child{
-                        margin-top: 30px;
-                    }
                     .money{
                         font-size: 28px;
                         color: #ff8b2e;
@@ -393,7 +388,7 @@
             }
 
             .line{
-                width: calc(100% - 124px);
+                width: calc(100% - 100px);
                 height: 1px;
                 border-top:1px solid #60a3ff;
                 border-bottom: none;
