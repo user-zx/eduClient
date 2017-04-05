@@ -87,7 +87,7 @@ export default {
                     component:analyse,
                     children:[
                         {
-                            path:"",
+                            path: "",
                             component: characterTable
                         }
                     ]

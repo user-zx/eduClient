@@ -54,7 +54,7 @@
                 </el-table-column>
                 <el-table-column label="人物" prop="name" align="center">
                     <template scope="scope">
-                        <span @click="toCharacterAnalyse(scope.row.rank)" class="character-name">
+                        <span @click="toCharacterAnalyse(scope.row)" class="character-name">
                             {{scope.row.name}}
                         </span>
                     </template>
@@ -100,14 +100,16 @@
                         }
                     ]
                 },
+                university: '',
                 tableData: []
             }
         },
         components: {searchBox},
         methods: {
             //带参跳转到人物分析页面
-            toCharacterAnalyse(data){
-                this.$router.push({path:"/home/characterAnalyse"});
+            toCharacterAnalyse(data) {
+                data.university = this.university;
+                this.$router.push({path:"/home/characterAnalyse", query: data});
             },
             setBreadCrumb() {
                 let breadcrumb=[
@@ -122,9 +124,10 @@
             },
             onSearchDataChange(data) {
                 if(data.dimension != "人物聚焦"){
-                    this.$router.push({path: "/home/analyse?dimension=" + data.dimension + "&university=" + data.university});
+                    this.$router.push({path: "/home/analyse", query: {dimension: data.dimension, university: data.university}});
                     return;
                 }
+                this.university = data.university;
                 data.pageSize = 10;
                 data.pageNumber = 0;
                 data.orders = this.param.orders;
@@ -172,7 +175,6 @@
             }
         },
         mounted() {
-            console.log(this.$route.query);
         },
         created() {
             this.setBreadCrumb();
