@@ -7,7 +7,9 @@
             <el-row :gutter="10">
                 <el-col :span="3" class="active"><div class="tab-item" @click="currentFun('centerInfo')">会员中心</div></el-col>
                 <el-col :span="3"><div class="tab-item" @click="currentFun('memberInfo')">会员资料</div></el-col>
-                <el-col :span="3"><div class="tab-item" @click="currentFun('subCount')">子账号管理</div></el-col>
+                <el-col :span="3" class="el-col-subCount">
+                    <div class="tab-item" @click="currentFun('subCount')">子账号管理</div>
+                </el-col>
                 <el-col :span="3"><div class="tab-item" @click="currentFun('modifyPwd')">修改密码</div></el-col>
                 <el-col :span="3"><div class="tab-item" @click="currentFun('operateLog')">操作日志</div></el-col>
                 <el-col :span="3"><div class="tab-item" @click="currentFun('buyPackage')">购买套餐</div></el-col>

@@ -26,7 +26,11 @@ import industryNewsList from "./views/reference/industryNews/newsList/industryNe
 import industryDetailNews from "./views/reference/industryNews/newsDetail/industryDetailNews.vue";
 import myCenter from "./views/myCenter/myCenter1.vue";
 import centerList from "./views/myCenter/subViews/centerList.vue";
-import centerSystemDetail from "./views/myCenter/subViews/detailViews/systemDetail.vue"
+import centerSystemDetail from "./views/myCenter/subViews/detailViews/systemDetail.vue";
+import centerPackageConfirm from "./views/myCenter/subViews/detailViews/packageConfirm.vue";
+import centerPackageResult from "./views/myCenter/subViews/detailViews/packageResult.vue";
+import centerCharacter from "./views/myCenter/subViews/detailViews/editCharacter.vue";
+import centerCollege from "./views/myCenter/subViews/detailViews/editCollege.vue"
 
 export default {
     mode:'history',
@@ -188,6 +192,46 @@ export default {
                         {
                             path: "",
                             component: centerSystemDetail
+                        }
+                    ]
+                },
+                {
+                    path: "centerPackageConfirm",
+                    component: myCenter,
+                    children: [
+                        {
+                            path: "",
+                            component: centerPackageConfirm
+                        }
+                    ]
+                },
+                {
+                    path: "centerPackageResult",
+                    component: myCenter,
+                    children: [
+                        {
+                            path: "",
+                            component: centerPackageResult
+                        }
+                    ]
+                },
+                {
+                    path: "centerCharacter",
+                    component: myCenter,
+                    children: [
+                        {
+                            path: "",
+                            component: centerCharacter
+                        }
+                    ]
+                },
+                {
+                    path: "centerCollege",
+                    component: myCenter,
+                    children: [
+                        {
+                            path: "",
+                            component: centerCollege
                         }
                     ]
                 },

@@ -59,9 +59,10 @@
     .memberInfo{
         background: #21273d;
         overflow: hidden;
+
         .form-wrap{
             width: 60%;
-            margin: 60px auto;
+            margin: 67px auto 134px auto;
     
             .img-wrap{
                 width: 100px;
@@ -113,7 +114,7 @@
             setBreadCrumb(){
                 let breadcrumb=[
                     {
-                        name:"个人中心",to:{path:"/home/myCenter"}
+                        name:"会员中心",to:{path:"/home/myCenter"}
                     },
                     {
                         name:"会员资料"

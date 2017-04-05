@@ -19,9 +19,7 @@
         overflow: hidden;
 
         .table-wrap{
-            width: 90%;
-            margin: auto;
-            margin-top: 35px;
+            margin: 50px 50px 134px 50px;
         }
     }
 </style>
@@ -67,7 +65,7 @@
             setBreadCrumb(){
                 let breadcrumb=[
                     {
-                        name:"个人中心",to:{path:"/home/myCenter"}
+                        name:"会员中心",to:{path:"/home/myCenter"}
                     },
                     {
                         name:"操作日志"

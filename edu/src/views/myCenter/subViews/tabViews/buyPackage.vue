@@ -4,7 +4,7 @@
 <template>
     <div class="buyPackage">
         <div class="content-wrap">
-            <div class="item" @click="selectPackage">
+            <div class="item" @click="selectPackage(1)">
                 <div class="title blue">A套餐</div>
                 <div class="top">
                     <div class="info">
@@ -98,7 +98,7 @@
                     应付金额： <span class="money">999</span>
                 </div>
             </div>
-            <div class="item" @click="selectPackage">
+            <div class="item" @click="selectPackage(2)">
                 <div class="title blue">B套餐</div>
                 <div class="top">
                     <div class="info">
@@ -192,7 +192,7 @@
                     应付金额： <span class="money">999</span>
                 </div>
             </div>
-            <div class="item" @click="selectPackage">
+            <div class="item" @click="selectPackage(3)">
                 <div class="title blue">C套餐</div>
                 <div class="top">
                     <div class="info">
@@ -273,13 +273,17 @@
                 </div>
                 <div class="middle">
                     <div class="info">
-                        可添加高校： <span class="blue">20</span>
+                        可添加高校：
+                        <div class="input-wrap small"><el-input class="dark input-small"></el-input></div>
+                        500元/所
                     </div>
                     <div class="info">
-                        可添加高校： <span class="blue">20</span>
+                        可添加高校：
+                        <div class="input-wrap small"><el-input class="dark input-small"></el-input></div>
+                        500元/人
                     </div>
                     <div class="info">
-                        使用期限：<div class="input-wrap"><el-input  size="small" class="dark"></el-input></div>
+                        使用期限：<div class="input-wrap"><el-input class="dark input-small"></el-input></div>
                     </div>
                 </div>
                 <div class="bottom">
@@ -287,9 +291,9 @@
                 </div>
             </div>
             <hr class="line">
-        </div>
-        <div class="btn-wrap">
-            <el-button type="primary">提交预定</el-button>
+            <div class="btn-wrap">
+                <el-button type="primary" @click="submit()">提交预定</el-button>
+            </div>
         </div>
     </div>
 </template>
@@ -301,8 +305,7 @@
 
         .content-wrap{
             width: 90%;
-            height: 915px;
-            margin: 50px auto;
+            margin: 50px auto 95px auto;
 
             .item{
                 width: calc((100% - 310px)/3);
@@ -316,7 +319,6 @@
                 .title{
                     font-size: 24px;
                     text-align: center;
-                    margin-top: 20px;
                     margin: 26px auto 38px auto;
                 }
 
@@ -352,19 +354,23 @@
                     .info:first-child{
                         margin-top: 30px;
                     }
+                    .info:last-child{
+                        margin-bottom: 19px;
+                    }
 
                     .info{
-                        margin-bottom: 19px;
-
-                        .el-input__inner{
-                             width: 100px;
-                             height: 28px;
-                         }
+                        height: 35px;
+                        line-height: 35px;
                     }
 
                     .input-wrap{
                         display: inline-block;
                         width: 105px;
+                    }
+
+                    .input-wrap.small{
+                        width: 80px;
+                        margin-right: 5px;
                     }
                 }
 
@@ -383,10 +389,6 @@
                 }
             }
 
-            .item:hover{
-                border-color: #60a3ff;
-            }
-
             .line{
                 width: calc(100% - 100px);
                 height: 1px;
@@ -401,21 +403,18 @@
                 border-color: #60a3ff;
             }
 
-        }
+            .btn-wrap{
+                margin-top: 44px;
+                text-align: center;
 
-        .btn-wrap{
-            margin-top: 40px;
-            margin-bottom: 30px;
-            text-align: center;
-
-            .el-button{
-                width: 319px;
-                height: 56px;
-                line-height: 28px;
-                font-size: 18px;
+                .el-button{
+                    width: 319px;
+                    height: 56px;
+                    line-height: 28px;
+                    font-size: 18px;
+                }
             }
         }
-
 
         .blue{
             color: #60a3ff;
@@ -434,7 +433,7 @@
             setBreadCrumb(){
                 let breadcrumb=[
                     {
-                        name:"个人中心",to:{path:"/home/myCenter"}
+                        name:"会员中心",to:{path:"/home/myCenter"}
                     },
                     {
                         name:"购买套餐"
@@ -443,8 +442,19 @@
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
 
-            selectPackage(){
+            selectPackage(index){
+                $('.buyPackage .item').removeClass('selected');
+                if(index == 1){
+                    $('.buyPackage .item:eq(0)').addClass('selected');
+                }else if(index == 2){
+                    $('.buyPackage .item:eq(1)').addClass('selected');
+                }else{
+                    $('.buyPackage .item:eq(2)').addClass('selected');
+                }
+            },
 
+            submit(){
+                this.$router.push({path:"/home/centerPackageConfirm"});
             }
         },
         mounted(){

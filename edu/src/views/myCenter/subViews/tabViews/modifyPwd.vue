@@ -3,21 +3,23 @@
 */
 <template>
     <div class="modifyPwd">
-        <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="100px" class="pwdForm dark">
-            <el-form-item prop="curPwd">
-                <el-input type="password" v-model="ruleForm2.curPwd" placeholder="输入当前密码" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="" prop="pass">
-                <el-input type="password" v-model="ruleForm2.pass" auto-complete="off" placeholder="输入新密码"></el-input>
-            </el-form-item>
-            <el-form-item prop="checkPass">
-                <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="确认新密码"></el-input>
-            </el-form-item>
+       <div class="form-wrap">
+           <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="100px" class="pwdForm dark">
+               <el-form-item prop="curPwd">
+                   <el-input type="password" v-model="ruleForm2.curPwd" placeholder="输入当前密码" auto-complete="off"></el-input>
+               </el-form-item>
+               <el-form-item label="" prop="pass">
+                   <el-input type="password" v-model="ruleForm2.pass" auto-complete="off" placeholder="输入新密码"></el-input>
+               </el-form-item>
+               <el-form-item prop="checkPass">
+                   <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="确认新密码"></el-input>
+               </el-form-item>
 
-            <el-form-item>
-                <el-button type="primary" @click="submitForm('ruleForm2')">确认修改</el-button>
-            </el-form-item>
-        </el-form>
+               <el-form-item>
+                   <el-button type="primary" @click="submitForm('ruleForm2')">确认修改</el-button>
+               </el-form-item>
+           </el-form>
+       </div>
     </div>
 </template>
 <style lang="scss" scoped>
@@ -25,11 +27,9 @@
         background: #21273d;
         overflow: hidden;
 
-        .pwdForm{
+        .form-wrap{
             width: 350px;
-            margin: auto;
-            margin-top: 65px;
-            margin-bottom: 65px;
+            margin: 67px auto 134px auto;
 
             .el-button{
                 width: 100%;
@@ -90,7 +90,7 @@
             setBreadCrumb(){
                 let breadcrumb=[
                     {
-                        name:"个人中心",to:{path:"/home/myCenter"}
+                        name:"会员中心",to:{path:"/home/myCenter"}
                     },
                     {
                         name:"修改密码"

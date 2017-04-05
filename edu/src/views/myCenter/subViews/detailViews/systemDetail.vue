@@ -27,9 +27,10 @@
         overflow: hidden;
 
         .article-wrap{
-            margin-top: 50px;
-            margin-left: 50px;
-            width: calc(100% - 650px);
+            margin: 50px auto 61px 50px;
+            padding: 64px 56px;
+            width: 60%;
+            background: #282e46;
 
             .title{
                 font-size: 24px;

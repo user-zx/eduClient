@@ -85,16 +85,13 @@
 
         .btn-wrap{
             height: 35px;
-            width: 90%;
-            margin:auto;
-            margin-top: 35px;
-            margin-bottom: 20px;
+            margin: 53px 50px 26px 50px;
+            padding-right: 37px;
             text-align: right;
         }
 
         .table-wrap{
-            width: 90%;
-            margin: auto;
+            margin: 0px 50px 134px 50px;
         }
         .dialog-footer{
             text-align: center;
@@ -178,7 +175,7 @@
             setBreadCrumb(){
                 let breadcrumb=[
                     {
-                        name:"个人中心",to:{path:"/home/myCenter"}
+                        name:"会员中心",to:{path:"/home/myCenter"}
                     },
                     {
                         name:"子账号管理"
