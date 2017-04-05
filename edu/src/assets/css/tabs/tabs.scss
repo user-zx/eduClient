@@ -25,8 +25,7 @@
     width: 289px;
   }
   .el-tabs__active-bar{
-    border-radius: 4px;
-    background-color: #e4f09e;
+    display:none;
   }
   .el-tabs__header{
     margin-bottom: 0;
@@ -47,6 +46,20 @@
       content: " ";
       display: block;
       background-color: #2f4164;
+    }
+    &.is-active{
+      &:before{
+        content:" ";
+        display:block;
+        width:15px;
+        height:2px;
+        border-radius:4px;
+        position:absolute;
+        bottom:1px;
+        left:50%;
+        margin-left:-7.5px;
+        background-color:#e4f09e;
+      }
     }
     &:last-child{
       &:after{

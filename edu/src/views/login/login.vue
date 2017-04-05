@@ -1,98 +1,236 @@
 <template>
     <div id="login" class="login">
-        <el-form :model="ruleForm" action="/apis/login.do" method="post" :rules="rules" ref="ruleForm" label-width="70px" class="ruleForm">
-            <el-form-item label="账号：" prop="user">
-                <el-input type="text" name="username" v-model="ruleForm.user" placeholder="请输入账号" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="密码：" prop="pass">
-                <el-input type="password" name="password" v-model="ruleForm.pass" placeholder="请输入密码" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-checkbox v-model="ruleForm.rememberMe"  name="rememberMe" id="rememberMe">记住密码</el-checkbox>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-            </el-form-item>
-        </el-form>
+        <header class="header">
+            <div class="container">
+                <router-link to="/login" class="header-brand">
+                    <img src="./images/login_logo.png" alt="login" />
+                </router-link>
+                <div class="pull-right">
+                    <img src="./images/tel.png" alt="电话" />
+                    400-0617-888
+                </div>
+            </div>
+        </header>
+        <div class="wrapper">
+            <div class="left-banner">
+                <div class="text-center">
+                    <img src="./images/trade.png" alt="教育行业">
+                </div>
+                <div class="text-center">
+                    <img src="./images/pru.png" alt="大数据应用服务平台">
+                </div>
+                <img class="banner" src="./images/data.png" />
+            </div>
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 <style lang="scss">
-    %full{height:100%}
+    %full{min-height:100%;min-width: 1200px;}
     html,body,#edu,.login{@extend %full}
+    #edu{
+        height:100%;
+    }
+    .login{
+        .login-form{
+            .ruleForm{
+                .el-form-item{
+                    margin-bottom:15px;
+                    &.btn-box{
+                        button{
+                            width: 100%;
+                            padding-top:20px;
+                            padding-bottom:20px;
+                            font-size:15px;
+                        }
+                        .white-primary{
+                            background-color: rgba(96,163,255,.2);
+                            border-color: transparent;
+                            color:#d0d7ff;
+                        }
+                    }
+                    &.login-text-color{
+                         margin-top: 10px;
+                        label{
+                            color:#d0d7ff;
+                        }
+                        a{
+                            color:rgba(96,163,255,.8);
+                        }
+                    }
+                    .el-form-item__content {
+                        margin-left: 0 !important;
+                    }
+                    &.login-input-box{
+                         padding-left:3px;
+                         padding-right:3px;
+                         margin-bottom:0;
+                         border:1px solid rgba(96,163,255,.3);
+                         border-bottom:none;
+                         border-radius:4px 4px 0 0;
+                        .el-form-item__label{
+                            display: none;
+                        }
+                        .el-form-item__content{
+                            margin-left: 0 !important;
+                            .el-input__icon{
+                                left:0;
+                                &+.el-input__inner{
+                                      padding-right:0;
+                                      padding-left:35px;
+                                  }
+                                &.el-icon-username{
+
+                                 }
+                                &.el-icon-password{
+
+                                 }
+                            }
+                            .el-form-item__error{
+                                left:35px;
+                            }
+                            input{
+                                background-color: transparent;
+                                box-shadow: none;
+                                border:none;
+                                outline: none;
+                                height:70px;
+                                font-size:16px;
+                                color:#d0d7ff;
+                            }
+                        }
+                        &+.login-input-box{
+                              border-radius: 0 0 4px 4px;
+                              border:1px solid rgba(96,163,255,.3);
+                              border-top:none;
+                            input{
+                                border-radius: 0;
+                                border-top:1px solid rgba(96,163,255,.3);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .right-form{
+            position: absolute;
+            right: 0;
+            top:0;
+            .ruleForm{
+                width: 400px;
+                margin: 0 auto;
+                padding: 25px 20px;
+            }
+            .login-title{
+                span{
+                    display: block;
+                    padding-top:60px;
+                    font-size: 30px;
+                    color:#d0d7ff;
+                    text-align: center;
+                    border-bottom: 1px solid #07080e;
+                }
+                &:after{
+                     content: " ";
+                     display: block;
+                     width: 100%;
+                     height:2px;
+                     border-bottom: 1px solid #2f344f;
+                 }
+            }
+            &.probation{
+                padding-left:10px;
+                padding-right:10px;
+                border:1px solid rgba(96,163,255,.4);
+                border-radius: 5px;
+                .login-title{
+                    span{
+                        padding-top:15px;
+                    }
+                }
+                .submit{
+                    width: 100%;
+                    background-color: #60a3ff;
+                    border-color:#60a3ff;
+                }
+            }
+        }
+    }
+    input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
+        background-color: transparent !important;
+    }
 </style>
 <style lang="scss" scoped>
-    .login{
-        padding:1px 0;
-        background-image: url(./images/bg2.jpg);
-        background-repeat: no-repeat;
-        background-size: cover;
+    %border_bottom{
+        content: " ";
+        display: block;
+        width: 100%;
+        height:2px;
+        border-bottom: 1px solid #2f344f;
     }
-    .ruleForm{
-        width: 400px;
-        margin: 150px auto 0;
-        padding: 30px 20px;
-        background-color: rgba(255,255,255,.8);
-        border-radius: 10px;
+    .login{
+        min-height:100%;
+        background-color: #191c2d;
+        .header{
+            height:89px;
+            line-height:88px;
+            border-bottom:1px solid #07080e;
+            .container{
+                width: 1200px;
+                margin: 0 auto;
+            }
+            .header-brand{
+                display:inline-block;
+                img{
+                    vertical-align: middle;
+                }
+            }
+            .pull-right{
+                img{
+                    vertical-align: middle;
+                    margin-right:5px;
+                }
+            }
+            &:after{
+                @extend %border_bottom
+            }
+        }
+        .left-banner{
+            position: relative;
+            display: inline-block;
+            text-align: left;
+            .text-center{
+                width:100%;
+                position: absolute;
+                transition: text-align 2s;
+                top:-20px;
+                &+.text-center{
+                    top:40px;
+                  }
+            }
+            img.banner{
+                width: 835px;
+                height: 581px;
+            }
+        }
+        .wrapper{
+            position: relative;
+            width: 1200px;
+            margin: 95px auto 0;
+
+        }
     }
 </style>
 <script>
-    import './script/security';
     export default{
         data(){
             return {
-                ruleForm: {
-                    user: '',
-                    pass: '',
-                    rememberMe: false,
-                },
-                rules:{
-                    user:[
-                        { required: true, message: '请输入账号', trigger: 'blur' },
-                        { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
-                    ],
-                    pass:[
-                        {required: true, message: '请输入密码', trigger: 'blur'},
-                        { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
-                    ]
-                }
+
             }
         },
         components:{},
         methods:{
-            submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    console.log($('input[type=checkbox]')[0].checked);
-                    if (valid) {
-                        this.$http.post('/apis/security/generateKey.do').then((response) => {
-                            if (response.data.success) {
-                                console.log(response.data);
-                                let exponent = response.data.data.publicKeyExponent;
-                                let modulus = response.data.data.publicKeyModulus;
-                                RSAUtils.setMaxDigits(200);
-                                let key = new RSAUtils.getKeyPair(exponent, "", modulus);
-                                var password =  $('input[name=password]').val();
-                                let encrypedPwd = RSAUtils.encryptedString(key,password);
-                                $('input[name=password]').val(encrypedPwd);
-                                $(".ruleForm").submit();
-                            } else {
-                                console.error(response.data.msg);
-                                return false;
-                            }
-                        }, (response) => {
-                                console.error(response);
-                                return false;
-                            }
-                        );
-                    } else {
-                        this.$message({message:'登录校验失败!',type:"error"});
-                        return false;
-                    }
-                });
-            },
-            resetForm(formName) {
-                /*重置表单*/
-                this.$refs[formName].resetFields();
-            }
+
         },
         mounted(){
             let vm=this;
