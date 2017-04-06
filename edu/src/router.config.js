@@ -30,8 +30,10 @@ import centerSystemDetail from "./views/myCenter/subViews/detailViews/systemDeta
 import centerPackageConfirm from "./views/myCenter/subViews/detailViews/packageConfirm.vue";
 import centerPackageResult from "./views/myCenter/subViews/detailViews/packageResult.vue";
 import centerCharacter from "./views/myCenter/subViews/detailViews/editCharacter.vue";
-import centerCollege from "./views/myCenter/subViews/detailViews/editCollege.vue"
-
+import centerCollege from "./views/myCenter/subViews/detailViews/editCollege.vue";
+import loginBox from './views/login/loginBox/loginBox.vue';
+import probation from './views/login/probation/probation.vue';
+import forget from './views/login/forget/forget.vue';
 export default {
     mode:'history',
     base:__dirname,
@@ -240,7 +242,33 @@ export default {
         {
             path:"/login",
             component:login,
-            name:"login"
+            name:"login",
+            children:[
+                {
+                    path:"",
+                    component:loginBox
+                }
+            ]
+        },
+        {
+            path:"/probation",
+            component:login,
+            children:[
+                {
+                    path:"",
+                    component:probation
+                }
+            ]
+        },
+        {
+            path:"/forget",
+            component:login,
+            children:[
+                {
+                    path:"",
+                    component:forget
+                }
+            ]
         },
     ]
 }
