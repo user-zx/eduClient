@@ -10,11 +10,15 @@
             <el-col :span="22" v-if="!data.buttons || data.buttons.length == 0" class="transition">
                 <ul>
                     <li v-for="(item, index1) in data.searchList" class="search-list" :key="item.id"
-                        @click="searchLiClick(item, index1, data)" :class="{'search-selected': item.selected}">
+                        @click="searchLiClick(item, index1, data)" :class="{'search-selected': item.selected}" v-if="item.text != ''">
                         {{item.text}}
                     </li>
                     <li class="search-list date-span" v-show="show" v-for="item in data.searchList" v-if="item.dateBox == 'show'">
-                        <el-date-picker v-model="publishDate" type="daterange" placeholder="选择日期范围" @change="publishDateChange">
+                        <el-date-picker v-model="publishDate" type="daterange" placeholder="选择日期范围" @change="publishDateChange" range-separator=" 至 ">
+                        </el-date-picker>
+                    </li>
+                    <li class="search-list date-span" v-for="item in data.searchList" v-else-if="item.dateBox == 'exact'">
+                        <el-date-picker type="date" placeholder="选择日期" v-model="exactDate">
                         </el-date-picker>
                     </li>
                 </ul>
@@ -188,13 +192,28 @@
                             {id: 5, text: '自定义时间', dateBox: 'show', selected: false}
                         ],
                         'hasDateBox': true
+                    },
+                    {
+                        'name': 'verified',
+                        'title': '认证情况',
+                        'searchList': [
+                            {id: 0, text: '全部', selected: true},
+                            {id: 1, text: '已认证', selected: false},
+                            {id: 2, text: '未认证', selected: false}
+                        ],
+                    },
+                    {
+                        'name': 'exactDate',
+                        'title': '日期',
+                        'searchList': [{id: 0, text: '', dateBox: 'exact'}]
                     }
 
                 ],
                 msg: "",
                 show: false,
                 publishDate: [],
-                foldSchool: false
+                foldSchool: false,
+                exactDate: ''
             }
         },
         components: {},

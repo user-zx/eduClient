@@ -86,6 +86,8 @@
                         if(url.indexOf("event")!= -1)nowNav="event";
                         if(url.indexOf("Analyse") != -1)nowNav="analyse";
                         if(url.indexOf("industry") != -1)nowNav="industryNews";
+                        if(url.indexOf("weChat") != -1)nowNav="seeWeChat";
+                        if(url.indexOf("weibo") != -1)nowNav="seeWeibo";
                         if(nowNav)
                             this.routerName=nowNav;
                         else

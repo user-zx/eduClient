@@ -243,7 +243,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
       background-color: #60a3ff;
 
       .nav{
-        clear: both;
+
         .el-menu--horizontal{
           background-color: #60a3ff;
           float: right;
@@ -439,14 +439,18 @@ ul.event-store-item {
 
 .dark{
   .el-form-item {
-    .el-form-item__label {
+    .el-form-item__label{
       color: #d0d7ff;
     }
   }
 
-  input.el-input__inner, .el-input.is-disabled .el-input__inner {
+  input.el-input__inner, .el-input.is-disabled .el-input__inner,textarea {
     background: #3e455f;
     border: none;
+    color: #d0d7ff;
+  }
+
+  .el-row .el-col{
     color: #d0d7ff;
   }
 }
