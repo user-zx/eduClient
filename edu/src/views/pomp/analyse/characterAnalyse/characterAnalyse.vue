@@ -115,19 +115,26 @@
         </div>
         <div class="character-div rightDiv character-relatedInfo">
             <div class="title">
-                <span class="title-text related-info">相关信息</span>
-                <span class="title-text related-positive">正面</span>
-                <span class="title-text related-negative selected">负面</span>
-            </div>
-            <div class="info-content">
-                <p class="item" v-for="item in relatedInfoData">
-                    <span class="left">
-                        {{item.title}}
-                    </span>
-                    <span class="right">
-                        {{item.datetime}}
-                    </span>
-                </p>
+                <el-tabs class="custom-tabs left-tabs" @tab-click="handleClick"  v-model="activeName">
+                    <el-tab-pane label="相关信息" name="related" disabled>
+                    </el-tab-pane>
+                    <el-tab-pane label="正面" name="positive" class="is-active">
+                        <el-card class="box-card">
+                            <el-table :data="relatedInfoData" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
+                                <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center"></el-table-column>
+                                <el-table-column :show-overflow-tooltip="true" prop="date" label="时间" align="center" width="150px"></el-table-column>
+                            </el-table>
+                        </el-card>
+                    </el-tab-pane>
+                    <el-tab-pane label="负面" name="negative">
+                        <el-card class="box-card">
+                            <el-table :data="relatedInfoData" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
+                                <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center"></el-table-column>
+                                <el-table-column :show-overflow-tooltip="true" prop="date" label="时间" align="center" width="150px"></el-table-column>
+                            </el-table>
+                        </el-card>
+                    </el-tab-pane>
+                </el-tabs>
             </div>
         </div>
         <div class="character-div leftDiv character-mediaVolume">
@@ -148,8 +155,8 @@
         <div class="character-div character-statistics">
             <div class="title"><span class="span-icon">舆情数据统计</span></div>
             <div class="statistics-table graph-div">
-                <el-table :data="vectorTableData" class="tran-table" style="width: 100%" :resizable="false">
-                    <el-table-column fixed="left" prop="name" label="载体\时间" width="150" align="center">
+                <el-table :data="vectorTableData" class="tran-table" border style="width: 100%" :resizable="false">
+                    <el-table-column prop="name" label="载体\时间" width="150" align="center">
                     </el-table-column>
                     <el-table-column v-for="item in vectorTableColumn" width="150" :prop="item" :label="item" align="center">
                     </el-table-column>

@@ -3,6 +3,7 @@
  */
 import "vue-style-loader!css-loader!sass-loader!../css/characterAnalyse.scss";
 import echarts from "echarts"
+import echartsWordCloud from "echarts-wordcloud"
 
 export default{
     data(){
@@ -23,7 +24,7 @@ export default{
             relatedInfoData: [],
             param: {},
             timeLineData: [],
-            keywords: ['蒙奇·D·路飞','罗罗诺亚·索隆','娜美','乌索普','山治','托尼托尼·乔巴','妮可·罗宾','弗兰奇','布鲁克']
+            activeName: 'positive'
         }
     },
     components: {},
@@ -257,8 +258,11 @@ export default{
         getKeyWordsData(){
             this.$nextTick(function () {
                 let chart = echarts.init(document.getElementById('keywords'));
-                chart.setOption(this.keywordsData);
             })
+        },
+
+        handleClick(event){
+            console.log(event)
         }
     },
     created(){

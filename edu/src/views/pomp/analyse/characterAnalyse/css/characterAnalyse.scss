@@ -159,30 +159,16 @@
   }
 
   .character-relatedInfo{
-    .info-content{
-      height:400px;
-      overflow-x: hidden;
-      overflow-y: auto;
-      color: #fff;
-
-      .item{
-        border-bottom:1px solid #262d48;
-        height: 54px;
-        margin-left: 28px;
-
-        .left{
-          display: inline-block;
-          width: calc(100% - 180px);
-          overflow: hidden;
-          -ms-text-overflow: ellipsis;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-
-        .right{
-          float: right;
-          margin-right:15px;
-        }
+    height: 459px;
+    .title{
+      .el-tabs__item{
+        padding: 0 50px;
+      }
+      .el-tabs__item.is-disabled{
+        padding-left: 0px;
+      }
+      .el-tabs__item.is-disabled{
+        color:rgba(119,145,231,.4);
       }
     }
   }
