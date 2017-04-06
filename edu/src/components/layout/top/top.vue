@@ -2,7 +2,7 @@
 * Created by zhangxin on 2017/3/14.
 */
 <template>
-    <div class="nav">
+    <div class="nav clearfix">
         <div class="search-wrap">
             <el-input icon="search" :on-icon-click="handleIconClick">
             </el-input>

@@ -12,7 +12,11 @@ import seeClearly from './views/reference/seeClearly/seeClearly.vue';
 import mediaCoverage from './views/reference/mediaCoverage/mediaCoverage.vue';
 import report from './views/reference/report/report.vue';
 import seeWeChat from './views/serviceTool/seeweChat/seeweChat.vue';
+import weChatList from './views/serviceTool/seeWeChat/weChatList/weChatList.vue';
+import weChatVerify from "./views/serviceTool/seeWeChat/weChatVerify/weChatVerify.vue"
 import seeWeibo from './views/serviceTool/seeWeibo/seeWeibo.vue';
+import weiboList from './views/serviceTool/seeWeibo/weiboList/weiboList.vue';
+import weiboVerify from './views/serviceTool/seeWeibo/weiboVerify/weiboVerify.vue';
 import myAttention from './views/myAttention/myAttention.vue';
 import login from './views/login/login.vue';
 import home from './views/home/home.vue';
@@ -164,12 +168,44 @@ export default {
                 {
                     name:"seeWeChat",
                     path:"seeWeChat",
-                    component:seeWeChat
+                    component:seeWeChat,
+                    children: [
+                        {
+                            path: "",
+                            component: weChatList
+                        }
+                    ]
+                },
+                {
+                    path: "weChatVerify",
+                    component: seeWeChat,
+                    children: [
+                        {
+                            path: "",
+                            component: weChatVerify
+                        }
+                    ]
                 },
                 {
                     name:"seeWeibo",
                     path:"seeWeibo",
-                    component:seeWeibo
+                    component:seeWeibo,
+                    children: [
+                        {
+                            path: "",
+                            component:　weiboList
+                        }
+                    ]
+                },
+                {
+                    path: "weiboVerify",
+                    component: seeWeibo,
+                    children: [
+                        {
+                            path: "",
+                            component: weiboVerify
+                        }
+                    ]
                 },
                 {
                     name:"myAttention",

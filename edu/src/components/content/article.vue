@@ -54,45 +54,45 @@
     .article-container{
         background: #ffffff;
         .article{
-            height: 196px;
             border-bottom: 1px solid #E3EDFB;
+            display: table;
 
-        .article-left{
-            width: 6%;
-            height: inherit;
-            float: left;
-            text-align: center;
-            line-height: 198px;
-            border-right: 1px solid #E3EDFB;
-        }
+            .article-left{
+                width: 5%;
+                height: 100%;
+                display: table-cell;
+                text-align: center;
+                vertical-align: middle;
+            }
 
             .article-right{
                 height: inherit;
                 width:94%;
-                float: right;
+                display: table-cell;
                 padding: 30px 30px 30px 12px;
                 color: #6a6a6a;
+                vertical-align: top;
+                border-left: 1px solid #E3EDFB;
 
                 .article-title-box{
-                    clear: both;
                     height: 28px;
 
                     .article-title{
                         font-weight: normal;
                         font-size: 20px;
-                        width: 80%;
-                        height: 28px;
-                        float: left;
+                        width: 79%;
+                        height: 100%;
                         display: inline-block;
-                        overflow: hidden;
                         position: relative;
 
                             span:first-child{
                                 display: inline-block;
                                 height:100%;
-                                max-width: calc(100% - 58px);
+                                max-width: 680px;
                                 overflow: hidden;
                                 margin-right: 10px;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
                             }
                             .title-icon{
                                 position: absolute;
@@ -130,7 +130,7 @@
 
                 .article-describe{
                     font-size: 12px;
-                    margin-top: 10px;
+                    margin-top: 13px;
                     text-align: right;
 
                     .article-source{
@@ -151,10 +151,8 @@
                 }
 
                 .article-main{
-                    height: 70px;
                     line-height: 24px;
-                    margin-top:10px;
-                    overflow: hidden;
+                    margin-top:13px;
                 }
             }
 
