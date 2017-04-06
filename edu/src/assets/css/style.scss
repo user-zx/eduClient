@@ -67,6 +67,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
     }
     .el-menu{
       background-color: #191c2d;
+      display: inline-block;
+
       .el-menu-item, .el-submenu__title{
         transition: none;
       }
@@ -240,19 +242,44 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
       padding-left:20px;
       padding-right:20px;
       background-color: #60a3ff;
-      .el-menu--horizontal{
-        background-color: #60a3ff;
-        >.el-menu-item{
+
+      .nav{
+        clear: both;
+        .el-menu--horizontal{
+          background-color: #60a3ff;
           float: right;
-          height:65px;
-          line-height: 65px;
-          font-size: 12px;
-          color: #fefefe;
-          border-bottom: none;
-          &:hover{
+
+          >.el-menu-item{
+            float: right;
+            height:65px;
+            line-height: 65px;
+            font-size: 14px;
+            color: #fefefe;
             border-bottom: none;
-            background-color: #60a3ff;
-            color:rgba(255,255,255,.6);
+            &:hover{
+              border-bottom: none;
+              background-color: #60a3ff;
+              color:rgba(255,255,255,.6);
+            }
+          }
+
+          .is-active{
+            color: #365a8b;
+          }
+        }
+        .search-wrap{
+          float: left;
+          width: 320px;
+          line-height: 65px;
+          margin-left: 10px;
+
+          .el-input__inner{
+            background: #85b8ff;
+            border: none;
+            color: #fff;
+          }
+          .el-input__icon{
+            color: #cee3ff;
           }
         }
       }
@@ -428,5 +455,11 @@ ul.event-store-item {
 .dialog-center{
   .el-dialog__header{
     text-align: center;
+  }
+}
+
+.input-small{
+  .el-input__inner{
+    height: 28px;
   }
 }

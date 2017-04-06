@@ -2,12 +2,18 @@
 * Created by zhangxin on 2017/3/14.
 */
 <template>
-    <el-menu theme="dark" :default-active="activeIndex" mode="horizontal" @select="handleSelect">
-        <el-menu-item index="4"><a href="javascript:void(0);">退出</a></el-menu-item>
-        <el-menu-item index="3"><a href="/home/myCenter">admin</a></el-menu-item>
-        <el-menu-item index="2"><a href="javascript:void(0);">系统管理</a></el-menu-item>
-        <el-menu-item index="1"><a href="javascript:void(0);">高级搜索</a></el-menu-item>
-    </el-menu>
+    <div class="nav">
+        <div class="search-wrap">
+            <el-input icon="search" :on-icon-click="handleIconClick">
+            </el-input>
+        </div>
+        <el-menu theme="dark" :default-active="activeIndex" mode="horizontal" @select="handleSelect" class="nav-menu">
+            <el-menu-item index="3"><a href="javascript:void(0);">退出</a></el-menu-item>
+            <el-menu-item index="2"><a href="#">admin</a></el-menu-item>
+            <el-menu-item index="1"><router-link to="/home/myCenter">会员中心</router-link></el-menu-item>
+            <el-menu-item index="0"><a href="javascript:void(0);">系统通知</a></el-menu-item>
+        </el-menu>
+    </div>
 </template>
 <script>
      /*
@@ -24,7 +30,10 @@
         components:{} ,
         methods:{
             handleSelect(key, keyPath) {
-                console.log(key, keyPath);
+
+            },
+            handleIconClick(ev) {
+                console.log(ev);
             }
         },
         mounted(){
