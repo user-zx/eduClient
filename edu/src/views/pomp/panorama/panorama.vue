@@ -45,7 +45,7 @@
                         <span class="icons icons-chart"></span><span>人物统计</span>
                     </div>
                     <div class="text item" id="personageCount">
-
+                        
                     </div>
                 </el-card>
             </el-col>

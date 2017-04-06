@@ -1,31 +1,35 @@
 /**
-* Created by zhangxin on 2017/3/17.
+* Created by yu-bing on 2017/3/17.
 */
 <template>
-    <div>
-        {{msg}}
+    <div class="seeClearly">
+       <bread-crumb></bread-crumb>
+        <el-tabs v-model="activeName" @tab-click="handleClick" class="custom-tabs">
+            <el-tab-pane label="信息聚合" name="first">
+            	<overview></overview>
+                <el-row>
+                  <el-col :span="24">
+                       <el-card class="box-card">
+                           <div slot="header" class="clearfix">
+                                <span class="icons icons-chart"></span><span>载体趋势分析</span>
+                            </div>
+                            <div class="text item" id="vectorTrend">
+                                
+                            </div>
+                       </el-card>
+                  </el-col>
+                </el-row>
+            </el-tab-pane>
+            <el-tab-pane label="微博" name="second">配置管理</el-tab-pane>
+            <el-tab-pane label="微信" name="third">角色管理</el-tab-pane>
+       </el-tabs>
     </div>
 </template>
-<style lang="scss" scoped>
-</style>
-<script>
-     /*
-    * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
-    * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
-    * import loginButton from './components/loginButton.vue';
-    */
-    export default{
-        data(){
-            return {
-                msg:"两微洞察"
-            }
-        },
-        components:{} ,
-        methods:{
-            
-        },
-        mounted(){
-            
+<style lang="scss" >
+	.seeClearly{
+		.custom-tabs .el-tabs__nav{
+            margin: 0;       
         }
-    }
-</script>
+	}
+</style>
+<script src="./js/seeClearly.js"></script>
