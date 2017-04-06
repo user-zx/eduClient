@@ -23,7 +23,8 @@ export default{
             relatedInfoData: [],
             param: {},
             timeLineData: [],
-            keywords: ['蒙奇·D·路飞','罗罗诺亚·索隆','娜美','乌索普','山治','托尼托尼·乔巴','妮可·罗宾','弗兰奇','布鲁克']
+            keywords: ['蒙奇·D·路飞','罗罗诺亚·索隆','娜美','乌索普','山治','托尼托尼·乔巴','妮可·罗宾','弗兰奇','布鲁克'],
+            activeName: 'positive'
         }
     },
     components: {},
@@ -259,6 +260,10 @@ export default{
                 let chart = echarts.init(document.getElementById('keywords'));
                 chart.setOption(this.keywordsData);
             })
+        },
+
+        handleClick(event){
+            console.log(event)
         }
     },
     created(){
