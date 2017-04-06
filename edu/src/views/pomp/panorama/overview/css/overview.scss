@@ -28,7 +28,27 @@
         margin-bottom: 3px;
         width: 31px;
         height:27px;
-        background-color: #b8b8b8;
+        background-image: url(../images/pingtai1@1x.png);
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        &.number-icon1{
+          background-position: 0 0;
+        }
+        &.number-icon2{
+          background-position: -31px 0;
+        }
+        &.number-icon3{
+          background-position: -61px 0;
+        }
+        &.number-icon4{
+          background-position: -91px 0;
+        }
+        &.number-icon5{
+          background-position: -126px 0;
+        }
+        &.number-icon6{
+          background-position: -163px 0;
+        }
       }
       .number{
         font-size: 26px;
@@ -45,6 +65,23 @@
       &.overview-content{
         padding-left: 20px;
         padding-right: 30px;
+      }
+    }
+  }
+}
+/*检测屏幕，是否是高清屏，调用*/
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (-moz-min-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 3/2),
+only screen and (min-device-pixel-ratio: 1.5) {
+  .overview{
+    >div{
+      &.overview-content {
+        .number-icon{
+          background-image: url(../images/pingtai1@2x.png);
+          -webkit-background-size: 193px 25px;
+          background-size: 193px 25px;
+        }
       }
     }
   }
