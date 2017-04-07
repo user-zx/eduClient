@@ -17,7 +17,7 @@
                             :show-file-list="false"
                             :on-success="handleAvatarSuccess"
                             :before-upload="beforeAvatarUpload">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <img v-if="countFlag" :src="countFlag" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                 </el-col>
@@ -51,9 +51,9 @@
                             action="https://jsonplaceholder.typicode.com/posts/"
                             class="avatar-uploader"
                             :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                            :on-success="handleAvatarSuccess1"
+                            :before-upload="beforeAvatarUpload1">
+                        <img v-if="qrCode" :src="qrCode" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                 </el-col>
@@ -124,8 +124,8 @@
                 background: #273451;
             }
             .avatar {
-                width: 238px;
-                height: 148px;
+                max-width: 238px;
+                max-height: 148px;
                 display: block;
             }
 
@@ -159,7 +159,8 @@
     export default{
         data(){
             return {
-                imageUrl: '',
+                countFlag: '',
+                qrCode: ''
             }
         },
         components:{} ,
@@ -180,9 +181,15 @@
             },
 
             handleAvatarSuccess(res, file){
-
+                this.countFlag = URL.createObjectURL(file.raw);
             },
             beforeAvatarUpload(file){
+                console.log(file.type)
+            },
+            handleAvatarSuccess1(res, file){
+                this.qrCode = URL.createObjectURL(file.raw);
+            },
+            beforeAvatarUpload1(file){
                 console.log(file.type)
             }
         },

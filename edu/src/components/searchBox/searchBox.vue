@@ -194,6 +194,21 @@
                         'hasDateBox': true
                     },
                     {
+                        'name': 'type',
+                        'title': '类型',
+                        'searchList': [
+                            {id:0, text: '全部', selected: true},
+                            {id:1, text: '生活服务', selected: false},
+                            {id:2, text: '运动', selected: false},
+                            {id:3, text: '社团', selected: false},
+                            {id:4, text: '科研', selected: false},
+                            {id:5, text: '教学', selected: false},
+                            {id:6, text: '情感', selected: false},
+                            {id:7, text: '政务', selected: false},
+                            {id:8, text: '其他', selected: false},
+                        ]
+                    },
+                    {
                         'name': 'verified',
                         'title': '认证情况',
                         'searchList': [
@@ -206,8 +221,7 @@
                         'name': 'exactDate',
                         'title': '日期',
                         'searchList': [{id: 0, text: '', dateBox: 'exact'}]
-                    }
-
+                    },
                 ],
                 msg: "",
                 show: false,

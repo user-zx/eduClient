@@ -5,7 +5,7 @@
     <div class="article-wrap myAttention-wechat">
         <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
         <div class="content dark">
-            <div class="content-bar">
+            <div class="content-bar clearfix">
                 <div class="content-bar-button">
                     <el-dropdown class="event-store-box" trigger="click">
                         <el-button type="primary" icon="plus" class="button-icon">
@@ -29,38 +29,40 @@
                     </el-pagination>
                 </div>
             </div>
-            <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
-                      :resizable="false">
-                <el-table-column type="selection" width="50" align="center"></el-table-column>
-                <el-table-column label="排名" align="center" prop="all">
-                    <template scope="scope">
+            <el-card class="box-card">
+                <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
+                          :resizable="false">
+                    <el-table-column type="selection" width="50" align="center"></el-table-column>
+                    <el-table-column label="排名" align="center" prop="all">
+                        <template scope="scope">
                             <span v-if="scope.row.all == 1">
                                  <i class="icon-rank icon-gold"></i>
                             </span>
-                        <span v-else-if="scope.row.all == 2">
+                            <span v-else-if="scope.row.all == 2">
                                 <i class="icon-rank icon-silver"></i>
                            </span>
-                        <span v-else-if="scope.row.all == 3">
+                            <span v-else-if="scope.row.all == 3">
                                  <i class="icon-rank icon-copper"></i>
                             </span>
-                        {{scope.row.all}}
-                    </template>
-                </el-table-column>
-                <el-table-column label="公众号" prop="name" align="center"></el-table-column>
-                <el-table-column label="文章数" prop="voiceNum" align="center"></el-table-column>
-                <el-table-column label="总点赞量" prop="readNum" align="center"></el-table-column>
-                <el-table-column label="总阅读量" prop="readNum" align="center"></el-table-column>
-                <el-table-column label="平均阅读量" prop="readNum" align="center"></el-table-column>
-                <el-table-column label="平均点赞量" prop="readNum" align="center"></el-table-column>
-                <el-table-column label="活跃指数" prop="readNum" align="center"></el-table-column>
-            </el-table>
+                            {{scope.row.all}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="公众号" prop="name" align="center"></el-table-column>
+                    <el-table-column label="文章数" prop="voiceNum" align="center"></el-table-column>
+                    <el-table-column label="总点赞量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="总阅读量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="平均阅读量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="平均点赞量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="活跃指数" prop="readNum" align="center"></el-table-column>
+                </el-table>
+            </el-card>
         </div>
     </div>
 </template>
 <style scoped lang="scss">
     .myAttention-wechat{
         .content-bar-button{
-            margin-left: 15px;
+            margin-left: 20px;
         }
     }
 </style>
@@ -86,7 +88,7 @@
                         }
                     ]
                 },
-                searchNames: ['university', 'dimension', 'vector', 'emotion', 'publishDateTime'],
+                searchNames: ['university', 'type', 'verified', 'exactDate'],
                 articleData: [],
                 loading:true,
                 curContent: this.$store.state.curContent,

@@ -112,8 +112,8 @@
         background: #273451;
     }
     .avatar {
-        width: 238px;
-        height: 148px;
+        max-width: 238px;
+        max-height: 148px;
         display: block;
     }
 
@@ -168,7 +168,7 @@
             },
 
             handleAvatarSuccess(res, file){
-
+                this.imageUrl = URL.createObjectURL(file.raw);
             },
             beforeAvatarUpload(file){
                 console.log(file.type)

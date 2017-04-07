@@ -63,6 +63,7 @@
                 display: table-cell;
                 text-align: center;
                 vertical-align: middle;
+                border-right: 1px solid #E3EDFB;
             }
 
             .article-right{
@@ -72,7 +73,6 @@
                 padding: 30px 30px 30px 12px;
                 color: #6a6a6a;
                 vertical-align: top;
-                border-left: 1px solid #E3EDFB;
 
                 .article-title-box{
                     height: 28px;
@@ -180,6 +180,7 @@
             }
             .article-right{
                 color:#d0d7ff;
+
                 .article-title-box{
                     .article-title{
                         color:#60a3ff;

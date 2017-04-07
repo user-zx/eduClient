@@ -124,7 +124,6 @@ export default {
                     component:speech
                 },
                 {
-                    name:"industryNews",
                     path:"industryNews",
                     component:industryNews,
                     children: [
@@ -135,7 +134,6 @@ export default {
                     ]
                 },
                 {
-                    name: "industryDetailNews",
                     path: "industryDetailNews",
                     component: industryNews,
                     children: [
@@ -166,7 +164,6 @@ export default {
                     component:report
                 },
                 {
-                    name:"seeWeChat",
                     path:"seeWeChat",
                     component:seeWeChat,
                     children: [
@@ -187,7 +184,6 @@ export default {
                     ]
                 },
                 {
-                    name:"seeWeibo",
                     path:"seeWeibo",
                     component:seeWeibo,
                     children: [
@@ -213,7 +209,6 @@ export default {
                     component:myAttention
                 },
                 {
-                    name: "myCenter",
                     path: "myCenter",
                     component: myCenter,
                     children: [
@@ -278,7 +273,6 @@ export default {
         {
             path:"/login",
             component:login,
-            name:"login",
             children:[
                 {
                     path:"",
