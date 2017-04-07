@@ -6,7 +6,7 @@
         <overview></overview>
         <el-row :gutter="10">
             <el-col :span="12">
-                <el-card class="box-card">
+                <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart"></span><span>舆情数据统计</span>
                     </div>
@@ -22,7 +22,7 @@
                 </el-card>
             </el-col>
             <el-col :span="12">
-                <el-card class="box-card">
+                <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart"></span><span>舆情数据锥形图</span>
                     </div>
@@ -31,7 +31,7 @@
                 </el-card>
             </el-col>
             <el-col :span="12">
-                <el-card class="box-card">
+                <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart"></span><span>载体分布统计</span>
                     </div>
@@ -40,7 +40,7 @@
                 </el-card>
             </el-col>
             <el-col :span="12">
-                <el-card class="box-card">
+                <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart"></span><span>人物统计</span>
                     </div>
@@ -50,7 +50,7 @@
                 </el-card>
             </el-col>
             <el-col :span="24">
-                <el-card class="box-card">
+                <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart"></span><span>载体趋势分析</span>
                     </div>
@@ -60,7 +60,7 @@
                 </el-card>
             </el-col>
             <el-col :span="12">
-                <el-card class="box-card">
+                <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart"></span><span>热点舆情</span>
                     </div>
@@ -101,7 +101,7 @@
                 </el-card>
             </el-col>
             <el-col :span="12">
-                <el-card class="box-card">
+                <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart"></span><span>人物热点</span>
                     </div>
@@ -142,12 +142,12 @@
                 </el-card>
             </el-col>
             <el-col :span="12">
-                <el-card class="box-card">
+                <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart"></span><span>微信热点</span>
                     </div>
                     <div class="text item">
-                        <el-card class="box-card">
+                        <el-card class="box-card educationBox">
                             <el-table :data="wechatHot" :resizable="false" style="width: 100%" border class="tran-table">
                                 <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
@@ -159,7 +159,7 @@
                 </el-card>
             </el-col>
             <el-col :span="12">
-                <el-card class="box-card">
+                <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart"></span><span>微博热点</span>
                     </div>
@@ -179,8 +179,7 @@
     </div>
 </template>
 <style lang="scss" scoped>
-    .el-row {
-        z-index:0;
+    /* .el-row {
         .el-col {
             margin-top: 10px;
             >div {
@@ -191,7 +190,7 @@
                 }
              }
         }
-    }
+    } */ 
 </style>
 <script src="./script/panorama.js">
 </script>

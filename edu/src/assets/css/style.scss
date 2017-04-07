@@ -467,3 +467,18 @@ ul.event-store-item {
   }
 }
 
+.educationBox{
+  height: 520px;
+  background-color: #21273d;
+  margin-top: 10px; 
+  .el-card__header{
+    font-size: 18px;
+    border-bottom: 0;
+    color: #66a3ff;
+    padding: 18px 20px;
+    box-sizing: border-box;
+  }
+  .item{
+    height: 440px; 
+  }
+}

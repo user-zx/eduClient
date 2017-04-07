@@ -7,16 +7,31 @@
         <el-tabs v-model="activeName" @tab-click="handleClick" class="custom-tabs">
             <el-tab-pane label="信息聚合" name="first">
             	<overview></overview>
-                <el-row>
+                <el-row :gutter="10">
                   <el-col :span="24">
-                       <el-card class="box-card">
-                           <div slot="header" class="clearfix">
-                                <span class="icons icons-chart"></span><span>载体趋势分析</span>
+                       <el-card class="box-card educationBox">
+                            <div slot="header" class="clearfix">
+                                <span class="icons icons-chart"></span>
+                                <span>载体趋势分析</span>
                             </div>
                             <div class="text item" id="vectorTrend">
                                 
                             </div>
                        </el-card>
+                  </el-col>
+                  <el-col :span="12">
+                      <el-card class="educationBox box-card">
+                          <el-tabs v-model="activeName" @tab-click="handleClick">
+                            <el-tab-pane label="相关" name="first">相关</el-tab-pane>
+                            <el-tab-pane label="正面" name="second">正面</el-tab-pane>
+                            <el-tab-pane label="负面" name="third">负面</el-tab-pane>
+                          </el-tabs>
+                      </el-card>
+                  </el-col>
+                  <el-col :span="12">
+                      <el-card class="educationBox box-card">
+                          
+                      </el-card>
                   </el-col>
                 </el-row>
             </el-tab-pane>
@@ -25,7 +40,7 @@
        </el-tabs>
     </div>
 </template>
-<style lang="scss" >
+<style lang="scss">
 	.seeClearly{
 		.custom-tabs .el-tabs__nav{
             margin: 0;       
