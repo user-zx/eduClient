@@ -7,7 +7,7 @@
             <el-row :gutter="20" align="middle">
                 <el-col :span="4" class="text-right">微博昵称</el-col>
                 <el-col :span="6">
-                    <el-input></el-input>
+                    <el-input id="blogNickname"></el-input>
                 </el-col>
                 <el-col :span="4" class="text-right uploadLabel">添加微博头像</el-col>
                 <el-col :span="6">
