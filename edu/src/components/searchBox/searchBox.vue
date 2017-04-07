@@ -18,7 +18,7 @@
                         </el-date-picker>
                     </li>
                     <li class="search-list date-span" v-for="item in data.searchList" v-else-if="item.dateBox == 'exact'">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="exactDate">
+                        <el-date-picker type="date" placeholder="选择日期" v-model="exactDate" @change="exactDateChange">
                         </el-date-picker>
                     </li>
                 </ul>
@@ -370,6 +370,7 @@
                                     if (text === '不限') {
                                         break;
                                     }
+
                                     if (name === 'publishDateTime') {
 
                                         var publishDateTime = {};
@@ -412,6 +413,14 @@
                                     result[name] = text;
                                     break;
                                 }
+
+                                if(this.exactDate != '' && searchList[k].dateBox == 'exact'){
+                                    var startSuffix = " 00:00:00";
+                                    var endSuffix = " 23:59:59";
+                                    var format = 'yyyy-MM-dd';
+                                    result.startDate = this.formatDate(this.exactDate, format) + startSuffix;
+                                    result.endDate = this.formatDate(this.exactDate, format) + endSuffix;
+                                }
                             }
                             continue loop;
                         }
@@ -438,7 +447,16 @@
                     if (new RegExp("(" + k + ")").test(fmt))
                         fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
                 return fmt;
-            }
+            },
+
+            /**
+             * 精确搜索某天的日期控件改变
+             */
+            exactDateChange(){
+                if (this.exactDate != null &&　this.exactDate != '') {
+                    this.$emit('searchDataChange', this.buildParam());
+                }
+            },
         },
         mounted() {
             this.add();
