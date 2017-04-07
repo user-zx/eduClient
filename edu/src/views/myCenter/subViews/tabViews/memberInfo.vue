@@ -20,8 +20,8 @@
                <el-form-item label="手机" prop="phone">
                    <el-input v-model="memberForm.phone" placeholder="请输入手机号码">15115111511</el-input>
                </el-form-item>
-               <el-form-item label="邮箱" prop="mail">
-                   <el-input v-model="memberForm.mail" placeholder="请输入邮箱"></el-input>
+               <el-form-item label="邮箱" prop="email">
+                   <el-input v-model="memberForm.email" placeholder="请输入邮箱"></el-input>
                </el-form-item>
                <el-form-item label="所在地">
                    <el-col :span="8">
@@ -42,10 +42,18 @@
                </el-form-item>
                <el-form-item label="头像">
                    <div class="img-wrap">
-                       <img src="../../../../assets/images/lufei-logo.jpg" alt="">
+                       <img :src="imageUrl" alt="" v-if="imageUrl">
+                       <img src="../../../../assets/images/lufei-logo.jpg" alt="" v-else>
                    </div>
                    <div class="btn-wrap">
-                       <el-button type="text">修改头像</el-button>
+                       <el-upload
+                               class="upload-demo"
+                               action="https://jsonplaceholder.typicode.com/posts/"
+                               :show-file-list="false"
+                               :before-upload="beforeAvatarUpload"
+                               :on-success="handleAvatarSuccess">
+                           <el-button type="text">修改头像</el-button>
+                       </el-upload>
                    </div>
                </el-form-item>
                <el-form-item>
@@ -102,12 +110,14 @@
                     college: '火星理工大',
                     job: '',
                     phone: '',
-                    mail: ''
+                    email: ''
                 },
                 rules: {
                     job: [{required: true, message: '请输入您的职务'}],
-                    phone: [{required: true, message: '请输入您的手机号码'}]
-                }
+                    phone: [{required: true, message: '请输入您的手机号码'}],
+                    email: [{type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}]
+                },
+                imageUrl: ''
             }
         },
         methods: {
@@ -122,6 +132,19 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
+            handleAvatarSuccess(res, file) {
+                console.log(res)
+                this.imageUrl = URL.createObjectURL(file.raw);
+            },
+
+            beforeAvatarUpload(file) {
+                let isLt1M = file.size / 1024 / 1024 < 1;
+                if(!isLt1M){
+                    this.$message.error('上传头像照片大小不能超过1MB!');
+
+                    return isLt1M;
+                }
+            }
         },
         mounted(){
         },

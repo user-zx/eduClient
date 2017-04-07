@@ -29,42 +29,51 @@
                     </el-pagination>
                 </div>
             </div>
-            <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
-                      :resizable="false">
-                <el-table-column type="selection" width="50" align="center"></el-table-column>
-                <el-table-column label="排名" align="center" prop="all">
-                    <template scope="scope">
+            <el-card class="box-card">
+                <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
+                          :resizable="false">
+                    <el-table-column type="selection" width="50" align="center"></el-table-column>
+                    <el-table-column label="排名" align="center" prop="all">
+                        <template scope="scope">
                             <span v-if="scope.row.all == 1">
                                  <i class="icon-rank icon-gold"></i>
                             </span>
-                        <span v-else-if="scope.row.all == 2">
+                            <span v-else-if="scope.row.all == 2">
                                 <i class="icon-rank icon-silver"></i>
                            </span>
-                        <span v-else-if="scope.row.all == 3">
+                            <span v-else-if="scope.row.all == 3">
                                  <i class="icon-rank icon-copper"></i>
                             </span>
-                        {{scope.row.all}}
-                    </template>
-                </el-table-column>
-                <el-table-column label="微博号" prop="name" align="center">
-                    <template scope="scope">
+                            {{scope.row.all}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="微博号" prop="name" align="center">
+                        <template scope="scope">
                             <span @click="toCharacterAnalyse(scope.row)" class="character-name">
                                 {{scope.row.name}}
                             </span>
-                        <!--<router-link to="/home/characterAnalyse">-->
-                        <!--{{scope.row.name}}-->
-                        <!--</router-link>-->
-                    </template>
-                </el-table-column>
-                <el-table-column label="发博量" prop="voiceNum" align="center"></el-table-column>
-                <el-table-column label="关注量" prop="readNum" align="center"></el-table-column>
-                <el-table-column label="粉丝量" prop="readNum" align="center"></el-table-column>
-                <el-table-column label="转发量" prop="readNum" align="center"></el-table-column>
-                <el-table-column label="评论数" prop="readNum" align="center"></el-table-column>
-                <el-table-column label="点赞总数" prop="readNum" align="center"></el-table-column>
-                <el-table-column label="平均点赞量" prop="hot" align="center"></el-table-column>
-                <el-table-column label="认证状态" prop="emotion" align="center"></el-table-column>
-            </el-table>
+                            <!--<router-link to="/home/characterAnalyse">-->
+                            <!--{{scope.row.name}}-->
+                            <!--</router-link>-->
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="发博量" prop="voiceNum" align="center"></el-table-column>
+                    <el-table-column label="关注量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="粉丝量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="转发量" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="评论数" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="点赞总数" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="平均点赞量" prop="hot" align="center"></el-table-column>
+                    <el-table-column label="认证状态" prop="state" align="center" width="140px">
+                        <template scope="scope">
+                            <span v-if="scope.row.state == true">已认证</span>
+                            <span v-if="scope.row.state == false">
+                                未认证
+                            </span>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-card>
         </div>
     </div>
 </template>
@@ -72,6 +81,9 @@
     .myAttention-weibo{
         .content .content-bar .content-bar-button{
             margin-left: 20px;
+        }
+        .blue{
+            color: #60a3ff;
         }
     }
 </style>
@@ -109,7 +121,7 @@
                         'voiceNum': 888,
                         'readNum': 1024,
                         'hot': 5,
-                        'emotion': '已认证'
+                        'state': true
                     },
                     {
                         'id': 2,
@@ -118,7 +130,7 @@
                         'voiceNum': 888,
                         'readNum': 1024,
                         'hot': 5,
-                        'emotion': '已认证'
+                        'state': false
                     },
                     {
                         'id': 3,
@@ -127,7 +139,7 @@
                         'voiceNum': 888,
                         'readNum': 1024,
                         'hot': 5,
-                        'emotion': '已认证'
+                        'state': true
                     },
                     {
                         'id': 4,
@@ -136,7 +148,7 @@
                         'voiceNum': 888,
                         'readNum': 1024,
                         'hot': 5,
-                        'emotion': '已认证'
+                        'state': false
                     },
                     {
                         'id': 5,
@@ -145,7 +157,7 @@
                         'voiceNum': 888,
                         'readNum': 1024,
                         'hot': 5,
-                        'emotion': '已认证'
+                        'state': true
                     },
                     {
                         'id': 6,
@@ -154,7 +166,7 @@
                         'voiceNum': 888,
                         'readNum': 1024,
                         'hot': 5,
-                        'emotion': '已认证'
+                        'state': true
                     },
                     {
                         'id': 7,
@@ -163,7 +175,7 @@
                         'voiceNum': 888,
                         'readNum': 1024,
                         'hot': 5,
-                        'emotion': '已认证'
+                        'state': false
                     },
                     {
                         'id': 8,
@@ -172,7 +184,7 @@
                         'voiceNum': 888,
                         'readNum': 1024,
                         'hot': 5,
-                        'emotion': '已认证'
+                        'state': true
                     },
                     {
                         'id': 9,
@@ -181,7 +193,7 @@
                         'voiceNum': 888,
                         'readNum': 1024,
                         'hot': 5,
-                        'emotion': '已认证'
+                        'state': false
                     },
                     {
                         'id': 10,
@@ -190,7 +202,7 @@
                         'voiceNum': 888,
                         'readNum': 1024,
                         'hot': 5,
-                        'emotion': '已认证'
+                        'state': false
                     },
                     {
                         'id': 11,
@@ -199,7 +211,7 @@
                         'voiceNum': 888,
                         'readNum': 1024,
                         'hot': 5,
-                        'emotion': '已认证'
+                        'state': false
                     },
                     {
                         'id': 12,
@@ -208,7 +220,7 @@
                         'voiceNum': 888,
                         'readNum': 1024,
                         'hot': 5,
-                        'emotion': '已认证'
+                        'state': true
                     },{
                         'id': 13,
                         'all': 13,
@@ -216,7 +228,7 @@
                         'voiceNum': 888,
                         'readNum': 1024,
                         'hot': 5,
-                        'emotion': '已认证'
+                        'state': true
                     },
                     {
                         'id': 14,
@@ -225,26 +237,7 @@
                         'voiceNum': 888,
                         'readNum': 1024,
                         'hot': 5,
-                        'emotion': '已认证'
-                    },
-                    {
-                        'id': 15,
-                        'all': 15,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    }
-                    ,
-                    {
-                        'id': 16,
-                        'all': 16,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
+                        'state': false
                     }
                 ]
             }
@@ -266,6 +259,9 @@
             sort(index) {
                 this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
             },
+            toVerified(data){
+
+            }
         },
         created(){
 
