@@ -123,7 +123,8 @@ export default {
                     path:"speech",
                     component:speech
                 },
-                {
+                {   
+                    name:"行业动态",
                     path:"industryNews",
                     component:industryNews,
                     children: [

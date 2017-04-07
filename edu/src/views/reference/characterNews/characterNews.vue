@@ -1,12 +1,9 @@
 /**
-* Created by zhangxin on 2017/3/17.
+* Created by yu-bing on 2017/3/17.
 */
 <template>
     <div class="characterNews article-wrap">
         <bread-crumb></bread-crumb>
-        <div id="search_container">
-            <search-box :searchData=searchData></search-box>
-        </div>
         <div class="content">
             <div class="content-bar">
                 <ul class="content-bar-list">
@@ -89,58 +86,7 @@
             },
         },
         mounted(){
-            let searchData = [
-                {
-                    'title' :  '选择人物:',
-                    'searchList': [
-                        {id: 0, text: '全部', selected: true},
-                        {id: 1, text: '国家领导', selected: false},
-                        {id: 2, text: '政/厅', selected: false},
-                        {id: 3, text: '高校领导', selected: false},
-                        {id: 4, text: '知名学者', selected: false},
-                        {id: 5, text: '我添加的人物', selected: false}
-                    ],
-                    'hasMore': true,
-                    'multiple': false,
-                    'buttons': [
-                        {'buttonText': '添加人物', 'id': 'add-character-btn'}
-                    ],
-                    'hasDateBox': false
-                },
-                {
-                    'title': '国家领导:',
-                    'searchList': [
-                        {id: 0, text: '全部', selected: true},
-                        {id: 1, text: '习近平', selected: false},
-                        {id: 2, text: '李克强', selected: false},
-                        {id: 3, text: '张德江', selected: false},
-                        {id: 4, text: '俞正声', selected: false},
-                        {id: 5, text: '王岐山', selected: false},
-                        {id: 6, text: '刘云山', selected: false},
-                        {id: 7, text: '张高丽', selected: false}
-                    ],
-                    'hasMore': false,
-                    'multiple': false,
-                    'buttons': [],
-                    'hasDateBox': false
-                },
-                {
-                    'title': '时间:',
-                    'searchList': [
-                        {id: 0, text: '全部', selected: false},
-                        {id: 1, text: '今天', selected: true},
-                        {id: 2, text: '昨天', selected: false},
-                        {id: 3, text: '近7天', selected: false},
-                        {id: 4, text: '近一个月', selected: false},
-                        {id: 5, text: '自定义时间', dateBox: 'show', selected: false}
-                    ],
-                    'hasMore': false,
-                    'multiple': false,
-                    'buttons': [],
-                    'hasDateBox': true
-                }
-            ];
-            this.searchData = searchData;
+           
         },
         created(){
             this.setBreadCrumb();
