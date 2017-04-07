@@ -5,7 +5,7 @@
     <div class="article-wrap myAttention-pomp">
         <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
         <div class="content dark">
-            <div class="content-bar">
+            <div class="content-bar clearfix">
                 <ul class="content-bar-list">
                     <li class="pointer">全部</li>
                     <li class="pointer" @click="sort(0)">
@@ -15,9 +15,6 @@
                         时间<i class="arrow arrow-down"></i>
                     </li>
                 </ul>
-                <div class="content-bar-button">
-                    <el-button type="text">获取日期</el-button>
-                </div>
                 <div class="content-bar-pagination">
                     <el-pagination class="edu-pagination"
                                    @current-change="handleCurrentChange"
@@ -32,6 +29,9 @@
         </div>
     </div>
 </template>
+<style>
+
+</style>
 <script>
     import searchBox from '../../../components/searchBox/searchBox.vue';
     import articleView from '../../../components/content/article.vue';
@@ -56,7 +56,7 @@
                         }
                     ]
                 },
-                searchNames: ['university', 'dimension', 'vector', 'emotion', 'publishDateTime'],
+                searchNames: ['university', 'vector', 'emotion', 'publishDateTime'],
                 articleData: [],
                 loading:true,
                 curContent: this.$store.state.curContent,

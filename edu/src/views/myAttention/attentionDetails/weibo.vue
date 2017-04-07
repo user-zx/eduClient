@@ -5,7 +5,7 @@
     <div class="article-wrap myAttention-weibo">
         <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
         <div class="content dark">
-            <div class="content-bar">
+            <div class="content-bar clearfix">
                 <div class="content-bar-button">
                     <el-dropdown class="event-store-box" trigger="click">
                         <el-button type="primary" icon="plus" class="button-icon">
@@ -71,7 +71,7 @@
 <style scoped lang="scss">
     .myAttention-weibo{
         .content .content-bar .content-bar-button{
-            margin-left: 15px;
+            margin-left: 20px;
         }
     }
 </style>
@@ -97,7 +97,7 @@
                         }
                     ]
                 },
-                searchNames: ['university', 'dimension', 'vector', 'emotion', 'publishDateTime'],
+                searchNames: ['university', 'type', 'verified', 'exactDate'],
                 articleData: [],
                 loading:true,
                 curContent: this.$store.state.curContent,
