@@ -4,22 +4,7 @@
 <template>
     <div class="eventDetails" id="eventDetails">
         <div class="title-box">
-            <h3 class="title">中央财经领导小组会议 释放了三点重磅信号</h3>
-            <!--<div class="btn-box">
-                <el-button type="primary" icon="plus" @click="follow()">关注</el-button>
-                <el-button type="primary" icon="plus" @click="earlyWarning()">预警</el-button>
-                <el-dropdown class="event-store-box" trigger="click">
-                    <el-button type="primary" icon="plus" class="button-icon">
-                        事件库
-                    </el-button>
-                    <el-dropdown-menu slot="dropdown" class="event-store-item">
-                        <el-dropdown-item @click="addEvent()">事件1</el-dropdown-item>
-                        <el-dropdown-item @click="addEvent()">事件2</el-dropdown-item>
-                        <el-dropdown-item @click="addEvent()">事件3</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
-                <el-button type="primary" icon="plus" >事件库</el-button>
-            </div>-->
+            <h3 class="title">{{ title }}</h3>
         </div>
         <el-row :gutter="10">
             <el-col :span="24">
@@ -28,10 +13,10 @@
                         <span class="icons icons-chart"></span><span>基本信息</span>
                     </div>
                     <div class="text item">
-                        <el-table :data="opinionData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title">
-                            <el-table-column prop="startTime" label="开始时间" align="center"></el-table-column>
-                            <el-table-column prop="endTime" label="结束时间" align="center"></el-table-column>
-                            <el-table-column prop="keyword" label="关键词" align="center"></el-table-column>
+                        <el-table :data="eventDetail" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title">
+                            <el-table-column prop="monitorStartDateStr" label="开始时间" align="center"></el-table-column>
+                            <el-table-column prop="monitorEndDateStr" label="结束时间" align="center"></el-table-column>
+                            <el-table-column prop="eventKeyword" label="关键词" align="center"></el-table-column>
                         </el-table>
                     </div>
                 </el-card>
@@ -44,7 +29,7 @@
                 <el-col :span="8"><div class="tab-item" @click="currentFun('eventAnalyse')">演化分析</div></el-col>
             </el-row>
         </div>
-        <components :is="currentTabs.currentTab"></components>
+        <components ref="comp" :is="currentTabs.currentTab" :eventDetail="eventDetail"></components>
     </div>
 </template>
 <style lang="scss" scoped>
@@ -109,19 +94,15 @@
         data(){
             return {
                 msg:"事件详情",
-                opinionData:[
-                    {
-                        startTime:"2017-03-03 17:00:00",
-                        endTime:"2017-03-03 17:00:00",
-                        keyword:"关键词，1123，啥都八十多，213自带",
-                    }
-                ],
+                eventDetail:[],
+                title: '',
                 currentTabs:{
                     eventArticle:"eventArticle",
                     eventCharts:"eventCharts",
                     eventAnalyse:"eventAnalyse",
                     currentTab:"eventArticle",
-                }
+                },
+                eventId: -1
             }
         },
         components:{eventArticle,eventCharts,eventAnalyse},
@@ -142,19 +123,34 @@
             },
             currentFun(params){
                 this.currentTabs.currentTab=params;
-            },
-            /*follow(){
 
+                this.$nextTick(()=>{
+                    //当事件详情加载完毕调用子组件方法
+                    this.$refs.comp.onEventLoad();
+                });
             },
-            earlyWarning(){
+            getEventDetail() {
+                this.$http.post('/apis/eventAnalysis/findDetailById.json/' + this.eventId).then(
+                    (response) => {
+                        if (response.data.success) {
+                            this.eventDetail.push(response.data.data);
+                            this.title = response.data.data.title;
 
-            },
-            addEvent(){
-
-            }*/
+                            //当事件详情加载完毕调用子组件方法
+                            this.$refs.comp.onEventLoad();
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            }
         },
         created(){
             this.setBreadCrumb();
+            this.eventId = this.$route.query.id;
+            this.getEventDetail();
         },
         mounted(){
             $(".speech-tabs").on("click",".tab-item",function () {
