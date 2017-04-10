@@ -421,8 +421,9 @@
                                     result.startDate = this.formatDate(this.exactDate, format) + startSuffix;
                                     result.endDate = this.formatDate(this.exactDate, format) + endSuffix;
                                 }else{
-                                    result.startDate = '';
-                                    result.endDate = '';
+                                    //FIXME 这个地方不能默认为空字符串 created by yuwei on 2017-04-10
+                                    //result.startDate = '';
+                                    //result.endDate = '';
                                 }
                             }
                             continue loop;
