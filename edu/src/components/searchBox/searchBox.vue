@@ -302,6 +302,7 @@
             getUserParams() {
                 this.$http.post('/apis/user/getUnivsAndPersonage.json').then(
                     (response) => {
+                        
                         if (response.data.success) {
                             let univs = response.data.data.univs;
                             for (var i = 0; i < univs.length; i++) {
@@ -314,7 +315,7 @@
                         } else {
                             console.error(response.data.message);
                         }
-
+                        
                         let dimension = this.$route.query.dimension;
                         if (dimension) {
                             for (let i  in this.searchData[2].searchList) {
@@ -325,7 +326,7 @@
                                 }
                             }
                         }
-
+                        
                         let university = this.$route.query.university;
                         if (university && university.length > 0) {
                             for (let i  in this.searchData[0].searchList) {
@@ -336,7 +337,7 @@
                                 }
                             }
                         }
-
+                        
                         // 参数加载完毕回调
                         this.$emit('onload', this.buildParam());
                     }, (response) => {
@@ -349,6 +350,7 @@
                 let result = {};
                 let searchData = this.searchData;
                 let searchNames = this.searchNames;
+                //console.log(searchNames);
                 loop: for (var i = 0; i < searchNames.length; i++) {
                     var name = searchNames[i];
                     for (var j = 0; j < searchData.length; j++) {

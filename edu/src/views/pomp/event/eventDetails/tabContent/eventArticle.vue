@@ -2,30 +2,31 @@
 * Created by zhangxin on 2017/3/24.
 */
 <template>
-    <div class="article-wrap">
+    <div class="article-wrap" v-loading="loading" element-loading-text="加载中……">
         <div id="search_container">
-            <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
+            <search-box :searchNames="searchNames" @searchDataChange="onSearchDataChange" class="dark"></search-box>
         </div>
         <div class="content dark">
             <div class="content-bar">
                 <ul class="content-bar-list">
                     <li class="pointer">全部</li>
-                    <li class="pointer arrow-up">
-                        阅读量
+                    <li class="pointer" @click="sort(0)">
+                        阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
                     </li>
-                    <li class="pointer arrow-down">时间</li>
+                    <li class="pointer" @click="sort(1)">
+                        时间<i class="arrow" :class="param.orders[1].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
+                    </li>
                 </ul>
                 <div class="content-bar-button">
                     <el-button type="primary" icon="plus" class="button-icon" @click="follows()">批量关注</el-button>
                 </div>
                 <div class="content-bar-pagination">
                     <el-pagination class="edu-pagination"
-                                   @size-change="handleSizeChange"
                                    @current-change="handleCurrentChange"
-                                   :current-page="currentPage"
+                                   :current-page="param.pageNumber + 1"
                                    :page-size="5"
                                    layout="prev, next, jumper, total"
-                                   :total="100">
+                                   :total="total">
                     </el-pagination>
                 </div>
             </div>
@@ -46,142 +47,84 @@
         data(){
             return {
                 msg:"事件文章",
-                searchData:"",
-                articleData: "",
-                activeIndex: '1',
-                currentPage: 1,
+                articleData: [],
+                total: 0,
+                param: {
+                    pageSize: 5,
+                    pageNumber: 0,
+                    orders: [
+                        {
+                            property: 'hitCount',
+                            direction: 'DESC'
+                        },
+                        {
+                            property: 'publishDateTime',
+                            direction: 'DESC'
+                        }
+                    ]
+                },
+                loading: false,
                 searchNames: ['vector', 'emotion', 'publishDateTime']
             }
         },
         components:{ searchBox, articleContainer,} ,
         methods:{
-            handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
+            follows() {
+                //TODO
             },
-            handleCurrentChange(val) {
-                this.currentPage = val;
-                console.log(`当前页: ${val}`);
-            },
-            follows(){
-                this.$notify({
-                    title:"成功",
-                    message:"批量添加关注成功！",
-                    type:"success"
-                })
+            handleCurrentChange(pageNumber) {
+                //后台是从0开始
+                this.param.pageNumber = pageNumber - 1;
+                this.getArticleList();
             },
             onSearchDataChange(data) {
-                console.log("change callback, data :");
-                console.log(data);
+                if(data.dimension == "人物聚焦"){
+                    this.$router.push({path: "/home/characterTableAnalyse", query: {dimension: '人物聚焦', university: data.university}});
+                    return;
+                }
+                data.pageSize = 5;
+                data.pageNumber = 0;
+                data.orders = this.param.orders;
+                this.param = data;
+                this.getArticleList();
+            },
+            sort(index) {
+                this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
+                this.getArticleList();
+            },
+            onEventLoad() {
+                console.log("eventArticle load")
+                this.getArticleList();
+            },
+            getArticleList() {
+                this.loading = true;
+                this.$nextTick(function() {
+                    this.param.startDate = this.eventDetail[0].monitorStartDateStr;
+                    this.param.endDate = this.eventDetail[0].monitorEndDateStr;
+                    this.param.keywords = this.eventDetail[0].eventKeyword.split(',');
+                    this.$http.post('/apis/eventAnalysis/getEventArticleList.json', this.param).then(
+                        (response) => {
+                            if (response.data.success) {
+                                this.articleData = response.data.data.content;
+                                // 最多允许翻1000页
+                                this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
+                            } else {
+                                console.error(response.data.message);
+                            }
+                            this.$nextTick(function() {
+                                this.loading = false;
+                            });
+                        }, (response) => {
+                            this.loading = false;
+                            console.error(response);
+                        }
+                    );
+                });
             }
         },
         mounted(){
-            let searchData = [
-                {
-                    'title': '载体:',
-                    'searchList': [
-                        {id: 0, text: '不限', selected: true},
-                        {id: 1, text: '论坛', selected: false},
-                        {id: 2, text: '微博', selected: false},
-                        {id: 3, text: '微信', selected: false},
-                        {id: 4, text: 'QQ群', selected: false},
-                        {id: 5, text: '博客', selected: false},
-                        {id: 6, text: '网站门户', selected: false},
-                        {id: 7, text: '贴吧', selected: false}
-                    ],
-                    'hasMore': false,
-                    'multiple': false,
-                    'buttons': [],
-                    'hasDateBox': false
-                },
-                {
-                    'title': '情感:',
-                    'searchList': [
-                        {id: 0, text: '不限', selected: false},
-                        {id: 1, text: '正面', selected: true},
-                        {id: 2, text: '负面', selected: false}
-                    ],
-                    'hasMore': false,
-                    'multiple': false,
-                    'buttons': [],
-                    'hasDateBox': false
-                },
-                {
-                    'title': '时间:',
-                    'searchList': [
-                        {id: 0, text: '不限', selected: false},
-                        {id: 1, text: '今天', selected: true},
-                        {id: 2, text: '昨天', selected: false},
-                        {id: 3, text: '近7天', selected: false},
-                        {id: 4, text: '近一个月', selected: false},
-                        {id: 5, text: '自定义时间', dateBox: 'show', selected: false}
-                    ],
-                    'hasMore': false,
-                    'multiple': false,
-                    'buttons': [],
-                    'hasDateBox': true
-                }
-            ];
-            this.searchData = searchData;
 
-            let articleData = [
-                {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                    'attitude': 'positive',
-                    'buttonType': 'warning',
-                    'buttonText': '预警',
-                    'source': '新浪博客',
-                    'author': '梦想家期刊',
-                    'readNum': '2342',
-                    'publishDate': '2016-12-12 12:12',
-                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                },
-                {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                    'attitude': 'negative',
-                    'buttonType': 'warning',
-                    'buttonText': '预警',
-                    'source': '新浪博客',
-                    'author': '梦想家期刊',
-                    'readNum': '2342',
-                    'publishDate': '2016-12-12 12:12',
-                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                },
-                {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                    'attitude': 'positive',
-                    'buttonType': 'warning',
-                    'buttonText': '预警',
-                    'source': '新浪博客',
-                    'author': '梦想家期刊',
-                    'readNum': '2342',
-                    'publishDate': '2016-12-12 12:12',
-                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                },
-                {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                    'attitude': 'positive',
-                    'buttonType': 'warning',
-                    'buttonText': '预警',
-                    'source': '新浪博客',
-                    'author': '梦想家期刊',
-                    'readNum': '2342',
-                    'publishDate': '2016-12-12 12:12',
-                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                },
-                {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                    'attitude': 'negative',
-                    'buttonType': 'warning',
-                    'buttonText': '预警',
-                    'source': '新浪博客',
-                    'author': '梦想家期刊',
-                    'readNum': '2342',
-                    'publishDate': '2016-12-12 12:12',
-                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                }
-            ];
-
-            this.articleData = articleData;
-        }
+        },
+        props: ['eventDetail']
     }
 </script>

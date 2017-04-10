@@ -3,7 +3,7 @@
 */
 <template>
     <div class="industryNews article-wrap" v-loading="loading" element-loading-text="加载中……">
-        <search-box :searchNames=searchNames @onload="onSearchLoad"></search-box>
+        <search-box :searchNames=searchNames @onload="onSearchLoad" @searchDataChange="onSearchDataChange"></search-box>
         <div class="content">
             <div class="content-bar">
                 <ul class="content-bar-list">
@@ -48,7 +48,6 @@
      * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
      * import loginButton from './components/loginButton.vue';
      */
-
     import searchBox from '../../../../components/searchBox/searchBox.vue'
     import articleView from '../../../../components/content/article.vue'
 
@@ -86,6 +85,19 @@
 //                this.$router.push({path:"/home/industryDetailNews"});
             },
             onSearchLoad(data) {
+                //console.log(data);   
+                data.pageSize = 5; 
+                data.pageNumber = 0;
+                data.orders = this.param.orders;
+                this.param = data;
+                this.getArticleList();
+            },
+             onSearchDataChange(data) {
+                console.log(data);
+                if(data.dimension == "人物聚焦"){
+                    this.$router.push({path: "/home/characterTableAnalyse", query: {dimension: '人物聚焦', university: data.university}});
+                    return;
+                }
                 data.pageSize = 5;
                 data.pageNumber = 0;
                 data.orders = this.param.orders;
@@ -99,22 +111,23 @@
             getArticleList() {
                 this.loading = true;
                 this.$nextTick(function() {
-                    console.log(JSON.stringify(this.param))
+                    //console.log(JSON.stringify(this.param)) 
                     this.$http.post('/apis/industryNews/findEduInfoByCondation.json', this.param).then(
                         (response) => {
+                            console.log(response);
                             if (response.data.success) {
                                 this.articleData = response.data.data.content;
                                 // 最多允许翻1000页
                                 this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
-                            } else {
+                            } else { 
                                 console.error(response.data.message);
                             }
                             this.$nextTick(function() {
                                 this.loading = false;
                             });
-                        }, (response) => {
+                        }, (err) => {
                             this.loading = false;
-                            console.error(response);
+                            console.error(err);
                         }
                     );
                 });

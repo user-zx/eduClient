@@ -1,13 +1,83 @@
 /**
-* Created by zhangxin on 2017/3/17.
+* Created by yu-bing on 2017/3/17.
 */
 <template>
     <div class="characterNews article-wrap">
         <bread-crumb></bread-crumb>
-        <div id="search_container">
-            <search-box :searchData=searchData></search-box>
-        </div>
         <div class="content">
+             <div class="myAttention-character-div">
+                 <el-tabs v-model="activeName" @tab-click="handleClick" class="custom-tabs">
+                      <el-tab-pane label="全部" name="all">
+                          <el-form ref="form" :model="form" label-width="80px" :label-position="labelPosition">
+                              <el-form-item label="全部">
+                                  <el-select v-model="form.all" placeholder="请选择人物">
+                                    <el-option label="小习习" value="shanghai"></el-option>
+                                    <el-option label="小强" value="beijing"></el-option>
+                                 </el-select>
+                              </el-form-item>
+                          </el-form>
+                      </el-tab-pane>
+                      <el-tab-pane label="国家领导" name="stateLeader">
+                            <el-form ref="form" :model="form" label-width="80px" :label-position="labelPosition">
+                                  <el-form-item label="国家领导">
+                                      <el-select v-model="form.stateLeader" placeholder="请选择领导">
+                                        <el-option label="小习习" value="shanghai"></el-option>
+                                        <el-option label="小强" value="beijing"></el-option>
+                                     </el-select>
+                                  </el-form-item>
+                            </el-form>
+                      </el-tab-pane>
+                      <el-tab-pane label="政/厅" name="office">
+                          <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                            <el-form-item label="政/厅">
+                              <el-select v-model="formInline.region" placeholder="请选择地区">
+                                <el-option label="区域一" value="shanghai"></el-option>
+                                <el-option label="区域二" value="beijing"></el-option>
+                              </el-select>
+                            </el-form-item>
+                             <el-form-item >
+                                <el-select v-model="formInline.region" placeholder="请选择人物">
+                                <el-option label="区域一" value="shanghai"></el-option>
+                                <el-option label="区域二" value="beijing"></el-option>
+                              </el-select>
+                            </el-form-item>
+                          </el-form>
+                      </el-tab-pane>
+                      <el-tab-pane label="高校领导" name="school">
+                           <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                                <el-form-item label="高校领导">
+                                  <el-select v-model="formInline.region" placeholder="请选择地区">
+                                    <el-option label="区域一" value="shanghai"></el-option>
+                                    <el-option label="区域二" value="beijing"></el-option>
+                                  </el-select>
+                                </el-form-item>
+                                 <el-form-item >
+                                    <el-select v-model="formInline.region" placeholder="请选择人物">
+                                    <el-option label="区域一" value="shanghai"></el-option>
+                                    <el-option label="区域二" value="beijing"></el-option>
+                                  </el-select>
+                                </el-form-item>
+                           </el-form>
+                      </el-tab-pane>
+                      <el-tab-pane label="知名学者" name="scholar">
+                           <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                                <el-form-item label="知名学者">
+                                  <el-select v-model="formInline.region" placeholder="请选择地区">
+                                    <el-option label="区域一" value="shanghai"></el-option>
+                                    <el-option label="区域二" value="beijing"></el-option>
+                                  </el-select>
+                                </el-form-item>
+                                 <el-form-item>
+                                    <el-select v-model="formInline.region" placeholder="请选择人物">
+                                    <el-option label="区域一" value="shanghai"></el-option>
+                                    <el-option label="区域二" value="beijing"></el-option>
+                                  </el-select>
+                                </el-form-item>
+                           </el-form>
+                      </el-tab-pane>
+                 </el-tabs> 
+                 <el-button type="primary" class="addPerson"><router-link to="/home/myCenter">添加人物</router-link></el-button>
+             </div> 
             <div class="content-bar">
                 <ul class="content-bar-list">
                     <li class="pointer">全部</li>
@@ -43,32 +113,84 @@
         </div>
     </div>
 </template>
-<style lang="scss" scoped>
+<style lang="scss">
     .characterNews{
         .content-bar-list{
             width:200px;
         }
+        .el-row{
+            margin-bottom: 10px; 
+        }
+         .custom-tabs>.el-tabs__header>.el-tabs__nav-wrap>.el-tabs__nav-scroll>.el-tabs__nav{
+                margin: 0;         
+            }
+        .custom-tabs .el-tabs__content{
+            margin-top: 10px; 
+        }
+       .el-form-item__label{
+           margin-left: 16px; 
+       }
+       .myAttention-character-div{
+           position: relative;
+           .addPerson{
+               position: absolute;
+               right: 0;
+               top: 0;  
+           }
+       }
     }
 </style>
 <script>
-     /*
-    * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
-    * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
-    * import loginButton from './components/loginButton.vue';
-    */
      import breadCrumb from '../../../components/breadCrumb/breadCrumb.vue';
      import searchBox from '../../../components/searchBox/searchBox.vue';
      import characterTable from '../../../components/content/characterTable.vue'
-
     export default{
         data(){
             return {
                 searchData: '',
                 currentPage: 1,
+                selectedProfession:"全部",
+                form:{},
+                activeName:"all",
+                labelPosition: 'left',
+                formInline: {
+                  user: '',
+                  region: ''
+                },
+                options: [{
+                      value: '选项1',
+                      label: '黄金糕'
+                    }, {
+                      value: '选项2',
+                      label: '双皮奶'
+                    }, {
+                      value: '选项3',
+                      label: '蚵仔煎'
+                    }, {
+                      value: '选项4',
+                      label: '龙须面'
+                    }, {
+                      value: '选项5',
+                      label: '北京烤鸭'
+                    }],
+                value: '',
+                 pickerOptions0: {
+                  disabledDate(time) {
+                    //return time.getTime() < Date.now() - 8.64e7;
+                    
+                  }
+                },
+                value1: '',
             }
         },
         components:{breadCrumb, searchBox, characterTable} ,
         methods:{
+            profession(item){
+                this.selectedProfession = item;
+            },
+             handleClick(tab, event) {
+                console.log(tab, event);
+            },
             setBreadCrumb(){
                 let breadcrumb=[
                     {
@@ -89,58 +211,7 @@
             },
         },
         mounted(){
-            let searchData = [
-                {
-                    'title' :  '选择人物:',
-                    'searchList': [
-                        {id: 0, text: '全部', selected: true},
-                        {id: 1, text: '国家领导', selected: false},
-                        {id: 2, text: '政/厅', selected: false},
-                        {id: 3, text: '高校领导', selected: false},
-                        {id: 4, text: '知名学者', selected: false},
-                        {id: 5, text: '我添加的人物', selected: false}
-                    ],
-                    'hasMore': true,
-                    'multiple': false,
-                    'buttons': [
-                        {'buttonText': '添加人物', 'id': 'add-character-btn'}
-                    ],
-                    'hasDateBox': false
-                },
-                {
-                    'title': '国家领导:',
-                    'searchList': [
-                        {id: 0, text: '全部', selected: true},
-                        {id: 1, text: '习近平', selected: false},
-                        {id: 2, text: '李克强', selected: false},
-                        {id: 3, text: '张德江', selected: false},
-                        {id: 4, text: '俞正声', selected: false},
-                        {id: 5, text: '王岐山', selected: false},
-                        {id: 6, text: '刘云山', selected: false},
-                        {id: 7, text: '张高丽', selected: false}
-                    ],
-                    'hasMore': false,
-                    'multiple': false,
-                    'buttons': [],
-                    'hasDateBox': false
-                },
-                {
-                    'title': '时间:',
-                    'searchList': [
-                        {id: 0, text: '全部', selected: false},
-                        {id: 1, text: '今天', selected: true},
-                        {id: 2, text: '昨天', selected: false},
-                        {id: 3, text: '近7天', selected: false},
-                        {id: 4, text: '近一个月', selected: false},
-                        {id: 5, text: '自定义时间', dateBox: 'show', selected: false}
-                    ],
-                    'hasMore': false,
-                    'multiple': false,
-                    'buttons': [],
-                    'hasDateBox': true
-                }
-            ];
-            this.searchData = searchData;
+           
         },
         created(){
             this.setBreadCrumb();

@@ -5,16 +5,16 @@
     <div class="event-list" v-loading="loading" element-loading-text="加载中……">
         <div class="table-box">
             <div class="btn-box text-right">
-                <el-button type="primary" @click="dialogFormVisible = true">新建事件库</el-button>
+                <el-button type="primary" @click="addEvent">新建事件库</el-button>
             </div>
             <el-table :data="tableData" style="width: 100%" border class="tran-table no-col-title" :resizable="false">
-                <el-table-column :min-width="180" prop="eventName" label="事件名称" header-align="center" align="left" :show-overflow-tooltip="true"></el-table-column>
+                <el-table-column :min-width="180" prop="title" label="事件名称" header-align="center" align="center" :show-overflow-tooltip="true"></el-table-column>
                 <el-table-column prop="today" label="事件图表" align="center">
                     <template scope="scope">
-                        <el-button type="text" size="small" @click="watchDetails()">查看</el-button>
+                        <el-button type="text" size="small" @click="watchDetails(scope.row.id)">查看</el-button>
                     </template>
                 </el-table-column>
-                <el-table-column prop="eventState" label="事件状态" align="center"></el-table-column>
+                <el-table-column prop="status" label="事件状态" align="center"></el-table-column>
                 <el-table-column prop="week" label="事件报告" align="center">
                     <template scope="scope">
                         <el-button type="text" size="small">生成报告</el-button>
@@ -22,9 +22,9 @@
                 </el-table-column>
                 <el-table-column label="操作" align="center">
                     <template scope="scope">
-                        <el-button type="text" size="small" @click="dialogFormVisible = true">编辑</el-button>
+                        <el-button type="text" size="small" @click="editEvent(scope.row)">编辑</el-button>
                         <el-button type="text" size="small" disable="disable">|</el-button>
-                        <el-button type="text" @click.native.prevent="deleteRow(scope.$index, tableData)" size="small">删除</el-button>
+                        <el-button type="text" @click.native.prevent="deleteRow(scope.row.id)" size="small">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -32,15 +32,16 @@
         <el-pagination class="edu-pagination"
                        @size-change="handleSizeChange"
                        @current-change="handleCurrentChange"
-                       :current-page="currentPage"
+                       :current-page="param.pageNumber + 1"
                        :page-size="10"
                        layout="prev, next, jumper, total"
-                       :total="100">
+                       :total="total">
         </el-pagination>
-        <el-dialog title="新建事件" v-model="dialogFormVisible">
+        <el-dialog :title="formTitle + '事件'" v-model="dialogFormVisible">
             <el-form :model="addEventForm" :rules="rules" ref="addEventForm" label-width="150px">
-                <el-form-item label="事件名称" prop="name">
-                    <el-input v-model="addEventForm.name" auto-complete="off" placeholder="请输入事件名称"></el-input>
+                <input type="hidden" name="id" :value="addEventForm.id"/>
+                <el-form-item label="事件名称" prop="title">
+                    <el-input v-model="addEventForm.title" auto-complete="off" placeholder="请输入事件名称"></el-input>
                 </el-form-item>
                 <el-form-item label="开始时间" prop="startDate">
                     <el-date-picker
@@ -56,22 +57,13 @@
                             placeholder="选择结束时间">
                     </el-date-picker>
                 </el-form-item>
-                <el-form-item label="关键词" prop="keyword">
-                    <el-input v-model="addEventForm.keyword" auto-complete="off" placeholder="请输入事件关键字，多个用，隔开"></el-input>
-                </el-form-item>
-                <el-form-item label="相关人物" prop="people">
-                    <el-input v-model="addEventForm.people" auto-complete="off" placeholder="请输入相关预警人物关键字/名称"></el-input>
-                </el-form-item>
-                <el-form-item label="相关微信公众号" prop="weChat">
-                    <el-input v-model="addEventForm.weChat" auto-complete="off" placeholder="请输入相关预警微信号关键字/名称"></el-input>
-                </el-form-item>
-                <el-form-item label="相关微博" prop="weibo">
-                    <el-input v-model="addEventForm.weibo" auto-complete="off" placeholder="请输入相关预警微博号关键字/名称"></el-input>
+                <el-form-item label="关键词" prop="eventKeyword">
+                    <el-input v-model="addEventForm.eventKeyword" auto-complete="off" placeholder="请输入事件关键字，多个用，隔开"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                <el-button type="primary" @click="dialogSubmit('addEventForm')">确 定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -88,86 +80,38 @@
      export default{
         data(){
             return {
-                tableData:[
-                    {
-                        eventName:"中资企业在缅甸遭冲击，中国使馆交涉",
-                        eventState:"未过期"
-                    },
-                    {
-                        eventName:"中资企业在缅甸遭冲击，中国使馆交涉",
-                        eventState:"未过期"
-                    },
-                    {
-                        eventName:"中资企业在缅甸遭冲击，中国使馆交涉",
-                        eventState:"未过期"
-                    },
-                    {
-                        eventName:"中资企业在缅甸遭冲击，中国使馆交涉",
-                        eventState:"未过期"
-                    },
-                    {
-                        eventName:"中资企业在缅甸遭冲击，中国使馆交涉中子",
-                        eventState:"已过期"
-                    },
-                    {
-                        eventName:"中资企业在缅甸遭冲击，中国使馆交涉",
-                        eventState:"未过期"
-                    },
-                    {
-                        eventName:"中资企业在缅甸遭冲击，中国使馆交涉",
-                        eventState:"未过期"
-                    },
-                    {
-                        eventName:"中资企业在缅甸遭冲击，中国使馆交涉",
-                        eventState:"未过期"
-                    },
-                    {
-                        eventName:"中资企业在缅甸遭冲击，中国使馆交涉",
-                        eventState:"未过期"
-                    },
-                    {
-                        eventName:"中资企业在缅甸遭冲击，中国使馆交涉",
-                        eventState:"未过期"
-                    },
-                ],
+                tableData: [],
                 loading:true,
-                currentPage: 1,
+                total: 0,
+                param: {
+                    pageSize: 10,
+                    pageNumber: 0,
+                },
                 dialogFormVisible: false,
+                formTitle: '',
                 addEventForm: {
-                    name: '',
+                    id: '',
+                    title: '',
+                    monitorStartDate: '',
+                    monitorEndDate: '',
                     startDate: '',
                     endDate: '',
-                    keyword: '',
-                    people: '',
-                    weChat: '',
-                    weibo: '',
+                    eventKeyword: ''
                 },
                 rules:{
-                    name:[
+                    title:[
                         {required:true,message:"请输入事件名称",trigger: 'blur' },
                         {min:4,max:16,message:"长度在 4 到 16 个字符",trigger: 'blur' },
                     ],
                     startDate:[
-                        {type: 'date',required:true,message:"请选择开始时间",trigger:'change'}
+                        {type: 'object',required:true,message:"请选择开始时间",trigger:'change'}
                     ],
                     endDate:[
-                        {type: 'date',required:true,message:"请选择结束时间",trigger:'change'}
+                        {type: 'object',required:true,message:"请选择结束时间",trigger:'change'}
                     ],
-                    keyword:[
+                    eventKeyword:[
                         {required:true,message:"请输入事件关键词",trigger: 'blur' },
-                    ],
-                    people:[
-                        {required:true,message:"请输入事件相关人物",trigger: 'blur' },
-                        {min:4,max:16,message:"长度在 4 到 16 个字符",trigger: 'blur' },
-                    ],
-                    weChat:[
-                        {required:true,message:"请输入相关微信",trigger: 'blur' },
-                        {min:4,max:16,message:"长度在 4 到 16 个字符",trigger: 'blur' },
-                    ],
-                    weibo:[
-                        {required:true,message:"请输入相关微博",trigger: 'blur' },
-                        {min:4,max:16,message:"长度在 4 到 16 个字符",trigger: 'blur' },
-                    ],
+                    ]
                 },
             }
         },
@@ -184,17 +128,28 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
-            deleteRow(index, rows) {
+            deleteRow(id) {
                 this.$confirm('是否删除该事件', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    rows.splice(index, 1);
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    });
+                    this.$http.post('/apis/eventAnalysis/deleteWarnRule.json/' + id).then((response) => {
+                            if (response.data.success) {
+                                this.$message({
+                                    message: '删除成功',
+                                    type: 'success'
+                                });
+                                this.getEventList();
+                            } else {
+                                console.error(response.data.message);
+                                return false;
+                            }
+                        }, (response) => {
+                            console.error(response);
+                            return false;
+                        }
+                    );
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -202,25 +157,112 @@
                     });
                 });
             },
+            addEvent() {
+                this.formTitle = '添加';
+                this.addEventForm = {
+                    id: '',
+                    title: '',
+                    monitorStartDate: '',
+                    monitorEndDate: '',
+                    startDate: '',
+                    endDate: '',
+                    eventKeyword: ''
+                };
+                this.dialogFormVisible = true;
+            },
+            editEvent(form) {
+                this.formTitle = '编辑';
+                this.addEventForm = jQuery.extend({}, form);
+                this.addEventForm.startDate = new Date(this.addEventForm.monitorStartDate);
+                this.addEventForm.endDate = new Date(this.addEventForm.monitorEndDate);
+                this.dialogFormVisible = true;
+            },
+            dialogSubmit(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.addEventForm.monitorStartDate = this.formatDate(this.addEventForm.startDate, 'yyyy-MM-dd hh:mm:ss');
+                        this.addEventForm.monitorEndDate = this.formatDate(this.addEventForm.endDate, 'yyyy-MM-dd hh:mm:ss');
+                        this.$http.post('/apis/eventAnalysis/saveOrUpdateEvent.json', this.addEventForm).then((response) => {
+                                if (response.data.success) {
+                                    this.$message({
+                                        message: this.formTitle + '成功',
+                                        type: 'success'
+                                    });
+                                    this.dialogFormVisible = false;
+                                    this.getEventList();
+                                } else {
+                                    console.error(response.data.message);
+                                    return false;
+                                }
+                            }, (response) => {
+                                console.error(response);
+                                return false;
+                            }
+                        );
+                    } else {
+                        this.$message({message:'校验失败!',type:"error"});
+                        return false;
+                    }
+                });
+            },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
                 this.currentPage = val;
-                console.log(`当前页: ${val}`);
+                this.getEventList();
             },
-            watchDetails(){
-                this.$router.push({path:"/home/eventDetails"});
+            watchDetails(id){
+                this.$router.push({path:"/home/eventDetails", query: {id: id}});
+            },
+            getEventList() {
+                this.loading = true;
+                this.$nextTick(function() {
+                    this.$http.post('/apis/eventAnalysis/getEventList.json', this.param).then(
+                        (response) => {
+                            if (response.data.success) {
+                                this.tableData = response.data.data.content;
+                                // 最多允许翻1000页
+                                this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
+                            } else {
+                                console.error(response.data.message);
+                            }
+                            this.$nextTick(function() {
+                                this.loading = false;
+                            });
+                        }, (response) => {
+                            this.loading = false;
+                            console.error(response);
+                        }
+                    );
+                });
+            },
+            /**格式化日期*/
+            formatDate(date, fmt) {
+                var o = {
+                    "M+": date.getMonth() + 1, //月份
+                    "d+": date.getDate(), //日
+                    "h+": date.getHours(), //小时
+                    "m+": date.getMinutes(), //分
+                    "s+": date.getSeconds(), //秒
+                    "q+": Math.floor((date.getMonth() + 3) / 3), //季度
+                    "S": date.getMilliseconds()
+                    //毫秒
+                };
+                if (/(y+)/.test(fmt))
+                    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "")
+                        .substr(4 - RegExp.$1.length));
+                for (var k in o)
+                    if (new RegExp("(" + k + ")").test(fmt))
+                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                return fmt;
             }
         },
         created(){
             this.setBreadCrumb();
+            this.getEventList();
         },
         mounted(){
-            let vm =this;
-            setTimeout(()=>{
-                vm.loading=false;
-            },3000)
         }
     }
 </script>

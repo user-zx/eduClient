@@ -2,109 +2,28 @@
 * Created by zhangxin on 2017/3/24.
 */
 <template>
-    <div class="event-time-line" id="event_time_line">
+    <div class="event-time-line" id="event_time_line" v-loading="loading" element-loading-text="加载中……">
         <div class="time-line" id="time_line">
-            <div class="time-line-item">
+            <div class="time-line-item" v-for="item in articleData">
                 <div class="circle-box">
                     <div class="circle"></div>
                 </div>
                 <div class="time-line-content">
-                    <h5 class="title">事件时间轴的标题，大概长度如此……</h5>
+                    <h5 class="title">{{item.title}}</h5>
                     <p class="intro">
-                        <label>来源：</label><span>天天基金网</span>
+                        <label>来源：</label><span>{{item.source}}</span>
                     </p>
                     <p class="intro">
-                        <label>作者：</label><span>佚名</span>
+                        <label>作者：</label><span>{{item.author}}</span>
                     </p>
                     <p class="intro">
-                        <label>特征：</label><span>相关文章</span>
+                        <label>特征：</label><span>{{item.emotion == 'positive' ? '正面' : item.emotion == 'negative' ? '负面' : '相关'}}</span>
                     </p>
                     <p class="intro">
-                        <label>热度：</label><span>9.3</span>
+                        <label>阅读量：</label><span>{{item.hitCount}}</span>
                     </p>
                     <p class="intro">
-                        <label>关键词：</label><span>创业、上市、证券、治理、经营</span>
-                    </p>
-                    <p class="intro">
-                        <label>相同文章：</label><span>23篇</span>
-                    </p>
-                </div>
-            </div>
-            <div class="time-line-item">
-                <div class="circle-box">
-                    <div class="circle"></div>
-                </div>
-                <div class="time-line-content">
-                    <h5 class="title">事件时间轴的标题，大概长度如此……</h5>
-                    <p class="intro">
-                        <label>来源：</label><span>天天基金网</span>
-                    </p>
-                    <p class="intro">
-                        <label>作者：</label><span>佚名</span>
-                    </p>
-                    <p class="intro">
-                        <label>特征：</label><span>相关文章</span>
-                    </p>
-                    <p class="intro">
-                        <label>热度：</label><span>9.3</span>
-                    </p>
-                    <p class="intro">
-                        <label>关键词：</label><span>创业、上市、证券、治理、经营</span>
-                    </p>
-                    <p class="intro">
-                        <label>相同文章：</label><span>23篇</span>
-                    </p>
-                </div>
-            </div>
-            <div class="time-line-item">
-                <div class="circle-box">
-                    <div class="circle"></div>
-                </div>
-                <div class="time-line-content">
-                    <h5 class="title">事件时间轴的标题，大概长度如此……</h5>
-                    <p class="intro">
-                        <label>来源：</label><span>天天基金网</span>
-                    </p>
-                    <p class="intro">
-                        <label>作者：</label><span>佚名</span>
-                    </p>
-                    <p class="intro">
-                        <label>特征：</label><span>相关文章</span>
-                    </p>
-                    <p class="intro">
-                        <label>热度：</label><span>9.3</span>
-                    </p>
-                    <p class="intro">
-                        <label>关键词：</label><span>创业、上市、证券、治理、经营</span>
-                    </p>
-                    <p class="intro">
-                        <label>相同文章：</label><span>23篇</span>
-                    </p>
-                </div>
-            </div>
-            <div class="time-line-item">
-                <div class="circle-box">
-                    <div class="circle"></div>
-                </div>
-                <div class="time-line-content">
-                    <h5 class="title">事件时间轴的标题，大概长度如此……</h5>
-                    <p class="intro">
-                        <label>来源：</label><span>天天基金网</span>
-                    </p>
-                    <p class="intro">
-                        <label>作者：</label><span>佚名</span>
-                    </p>
-                    <p class="intro">
-                        <label>特征：</label><span>相关文章</span>
-                    </p>
-                    <p class="intro">
-                        <label>热度：</label><span>9.3</span>
-                    </p>
-                    <p class="intro">
-                        <label>关键词：</label><span>创业、上市、证券、治理、经营</span>
-                    </p>
-                    <p class="intro">
-                        <label>相同文章：</label><span>23篇</span>
+                        <label>关键词：</label><span>{{param.keywords.join(',')}}</span>
                     </p>
                 </div>
             </div>
@@ -267,15 +186,65 @@
     export default{
         data(){
             return {
-                msg:"演化分析"
+                msg:"演化分析",
+                loading: false,
+                articleData: [],
+                total: 0,
+                param: {
+                    pageSize: 5,
+                    pageNumber: 0,
+                    orders: [
+                        {
+                            property: 'publishDateTime',
+                            direction: 'DESC'
+                        }
+                    ]
+                }
             }
         },
         components:{} ,
         methods:{
-            
+            handleScroll: function () {
+                this.scrollPos = document.body.scrollHeight - window.innerHeight - document.body.scrollTop;
+                if (document.body.scrollHeight - window.innerHeight - document.body.scrollTop == 0) {
+                    if (this.param.pageNumber < this.total/this.param.pageSize) {
+                        this.param.pageNumber = this.param.pageNumber + 1;
+                        this.getArticleList();
+                    }
+                }
+            },
+            onEventLoad() {
+                this.param.startDate = this.eventDetail[0].monitorStartDateStr;
+                this.param.endDate = this.eventDetail[0].monitorEndDateStr;
+                this.param.keywords = this.eventDetail[0].eventKeyword.split(',');
+                this.getArticleList();
+            },
+            getArticleList() {
+                this.loading = true;
+                this.$nextTick(function() {
+                    this.$http.post('/apis/eventAnalysis/getEventArticleList.json', this.param).then(
+                        (response) => {
+                            if (response.data.success) {
+                                this.articleData = this.articleData.concat(response.data.data.content);
+                                // 最多允许翻1000页
+                                this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
+                            } else {
+                                console.error(response.data.message);
+                            }
+                            this.$nextTick(function() {
+                                this.loading = false;
+                            });
+                        }, (response) => {
+                            this.loading = false;
+                            console.error(response);
+                        }
+                    );
+                });
+            }
         },
-        mounted(){
-            
-        }
+        created: function () {
+            window.addEventListener('scroll', this.handleScroll);
+        },
+        props: ['eventDetail']
     }
 </script>

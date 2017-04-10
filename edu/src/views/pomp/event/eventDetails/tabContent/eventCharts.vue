@@ -9,71 +9,13 @@
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart"></span><span>载体趋势统计图</span>
                     </div>
-                    <div class="text item">
-                        图表的位置
+                    <div class="text item" id="vectorTrendsChart" style="height: 400px;">
                     </div>
                     <div class="text item">
-                        <el-table :data="tableData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table fixed-table">
-                            <el-table-column
-                                    fixed
-                                    prop="left_title"
-                                    label="载体\时间"
-                                    width="150">
+                        <el-table :data="vectorTableData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table fixed-table">
+                            <el-table-column prop="name" label="载体\时间" width="150" align="center">
                             </el-table-column>
-                            <el-table-column
-                                    prop="name"
-                                    label="姓名"
-                                    width="120">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="province"
-                                    label="省份"
-                                    width="120">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="city"
-                                    label="市区"
-                                    width="120">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="address"
-                                    label="地址"
-                                    width="300">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="zip"
-                                    label="邮编"
-                                    width="120">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="address"
-                                    label="地址"
-                                    width="300">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="zip"
-                                    label="邮编"
-                                    width="120">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="address"
-                                    label="地址"
-                                    width="300">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="zip"
-                                    label="邮编"
-                                    width="120">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="address"
-                                    label="地址"
-                                    width="300">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="zip"
-                                    label="邮编"
-                                    width="120">
+                            <el-table-column v-for="item in vectorTableColumn" width="150" :prop="item" :label="item" align="center">
                             </el-table-column>
                         </el-table>
                     </div>
@@ -87,13 +29,13 @@
                         <span class="icons icons-chart"></span><span>载体分布统计图</span>
                     </div>
                     <div class="col-item item-left">
-                        <div class="charts"></div>
+                        <div class="charts" id="vectorDistributionChart" style="height: 400px;"></div>
                     </div>
                     <div class="col-item item-right">
-                        <el-table :data="tableData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title white-table-text">
-                            <el-table-column prop="nature" label="载体" align="center"></el-table-column>
-                            <el-table-column prop="fNumber" label="负面文章数" align="center"></el-table-column>
-                            <el-table-column prop="zNumber" label="正面文章数" align="center"></el-table-column>
+                        <el-table :data="distributeData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title white-table-text">
+                            <el-table-column prop="name" label="载体" width="150" align="center"></el-table-column>
+                            <el-table-column prop="positive" label="正面文章数" align="center"></el-table-column>
+                            <el-table-column prop="negative" label="负面文章数" align="center"></el-table-column>
                         </el-table>
                     </div>
                 </el-card>
@@ -106,15 +48,15 @@
                         <span class="icons icons-chart"></span><span>站点分布TOP10</span>
                     </div>
                     <div class="col-item item-left">
-                        <div class="charts"></div>
+                        <div class="charts" id="sourceTop10" style="height: 400px;"></div>
                     </div>
                     <div class="col-item item-right">
-                        <el-table :data="tableData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title white-table-text">
-                            <el-table-column prop="siteTop" label="排名" align="center"></el-table-column>
-                            <el-table-column prop="nature" label="媒体名称" align="center"></el-table-column>
-                            <el-table-column prop="fNumber" label="相关文章数" align="center"></el-table-column>
-                            <el-table-column prop="fNumber" label="负面文章数" align="center"></el-table-column>
-                            <el-table-column prop="zNumber" label="正面文章数" align="center"></el-table-column>
+                        <el-table :data="sourceTop10" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title white-table-text">
+                            <el-table-column prop="rank" label="排名" align="center"></el-table-column>
+                            <el-table-column prop="name" label="媒体名称" align="center"></el-table-column>
+                            <el-table-column prop="relevant" label="相关文章数" align="center"></el-table-column>
+                            <el-table-column prop="negative" label="负面文章数" align="center"></el-table-column>
+                            <el-table-column prop="positive" label="正面文章数" align="center"></el-table-column>
                         </el-table>
                     </div>
                 </el-card>
@@ -127,15 +69,15 @@
                         <span class="icons icons-chart"></span><span>人物活跃度TOP10</span>
                     </div>
                     <div class="col-item item-left">
-                        <div class="charts"></div>
+                        <div class="charts" id="personageTop10" style="height: 400px;"></div>
                     </div>
                     <div class="col-item item-right">
-                        <el-table :data="tableData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title white-table-text">
-                            <el-table-column prop="siteTop" label="排名" align="center"></el-table-column>
-                            <el-table-column prop="nature" label="人物" align="center"></el-table-column>
-                            <el-table-column prop="fNumber" label="相关文章数" align="center"></el-table-column>
-                            <el-table-column prop="fNumber" label="负面文章数" align="center"></el-table-column>
-                            <el-table-column prop="zNumber" label="正面文章数" align="center"></el-table-column>
+                        <el-table :data="personageTop10" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title white-table-text">
+                            <el-table-column prop="rank" label="排名" align="center"></el-table-column>
+                            <el-table-column prop="name" label="人物" align="center"></el-table-column>
+                            <el-table-column prop="relevant" label="相关文章数" align="center"></el-table-column>
+                            <el-table-column prop="negative" label="负面文章数" align="center"></el-table-column>
+                            <el-table-column prop="positive" label="正面文章数" align="center"></el-table-column>
                         </el-table>
                     </div>
                 </el-card>
@@ -156,115 +98,161 @@
     * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
     * import loginButton from './components/loginButton.vue';
     */
+    import echarts from 'echarts';
     export default{
         data(){
             return {
                 msg:"事件图表",
-                tableData: [{
-                    left_title:"门户网站",
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    province: '上海',
-                    city: '普陀区',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    zip: 200333,
-                    nature:"新闻",
-                    fNumber:"1242",
-                    zNumber:"1242",
-                    siteTop:1,
-                }, {
-                    left_title:"微信",
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    province: '上海',
-                    city: '普陀区',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    zip: 200333,
-                    nature:"其他",
-                    fNumber:"1242",
-                    zNumber:"1242",
-                    siteTop:2
-                }, {
-                    left_title:"微博",
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    province: '上海',
-                    city: '普陀区',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    zip: 200333,
-                    nature:"微信",
-                    fNumber:"1242",
-                    zNumber:"1242",
-                    siteTop:3
-                }, {
-                    left_title:"论坛",
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    province: '上海',
-                    city: '普陀区',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    zip: 200333,
-                    nature:"QQ群",
-                    fNumber:"1242",
-                    zNumber:"1242",
-                    siteTop:4
-                }, {
-                    left_title:"报纸",
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    province: '上海',
-                    city: '普陀区',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    zip: 200333,
-                    nature:"综合",
-                    fNumber:"1242",
-                    zNumber:"1242",
-                    siteTop:5
-                }, {
-                    left_title:"贴吧",
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    province: '上海',
-                    city: '普陀区',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    zip: 200333,
-                    nature:"博客",
-                    fNumber:"1242",
-                    zNumber:"1242",
-                    siteTop:6
-                }, {
-                    left_title:"QQ群",
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    province: '上海',
-                    city: '普陀区',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    zip: 200333,
-                    nature:"微博",
-                    fNumber:"1242",
-                    zNumber:"1242",
-                    siteTop:7
-                }, {
-                    left_title:"QQ群",
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    province: '上海',
-                    city: '普陀区',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    zip: 200333,
-                    nature:"论坛",
-                    fNumber:"1242",
-                    zNumber:"1242",
-                    siteTop:8
-                }]
+                param: {},
+                vectorTableColumn: [],
+                vectorTableData: [],
+                tableData: [],
+                distributeData: [],
+                sourceTop10: [],
+                personageTop10: []
             }
         },
         components:{} ,
         methods:{
-            
+            onEventLoad() {
+                this.param.startDate = this.eventDetail[0].monitorStartDateStr;
+                this.param.endDate = this.eventDetail[0].monitorEndDateStr;
+                this.param.keywords = this.eventDetail[0].eventKeyword.split(',');
+                this.getVectorTrend();
+                this.getVectorDistribution();
+                this.getVectorTable();
+                this.getSourceDistributionTop10();
+                this.getPersonageTop10();
+            },
+            /**获取载体走势图*/
+            getVectorTrend() {
+                let chart = echarts.init(document.getElementById('vectorTrendsChart'));
+                chart.showLoading();
+                this.$http.post('/apis/eventAnalysis/getVectorTrend.json', this.param).then(
+                    (response) => {
+                        if (response.data.success) {
+                            chart.setOption(response.data.data);
+                            this.$nextTick(function (){
+                                chart.hideLoading();
+                            });
+
+                            let data = response.data.data;
+                            this.vectorTableColumn = data.xAxis.data;
+                            for (let i = 0; i < data.series.length; i++) {
+                                for (let j = 0; j < data.series[i].data.length; j++) {
+                                    data.series[i][data.xAxis.data[j]] = data.series[i].data[j];
+                                }
+                            }
+                            this.vectorTableData = data.series;
+
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            },
+            /**获取载体分布图*/
+            getVectorDistribution() {
+                let chart = echarts.init(document.getElementById('vectorDistributionChart'));
+                chart.showLoading();
+                this.$http.post('/apis/eventAnalysis/getVectorDistribution.json', this.param).then(
+                    (response) => {
+                        if (response.data.success) {
+                            chart.setOption(response.data.data);
+                            this.$nextTick(function (){
+                                chart.hideLoading();
+                            });
+
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            },
+            getVectorTable() {
+                this.$http.post('/apis/eventAnalysis/getVectorTable.json', this.param).then(
+                    (response) => {
+                        if (response.data.success) {
+                            this.distributeData = response.data.data;
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            },
+            /**获取站点分布top10*/
+            getSourceDistributionTop10() {
+                let chart = echarts.init(document.getElementById('sourceTop10'));
+                chart.showLoading();
+                this.$http.post('/apis/eventAnalysis/getSourceDistributionTop10.json', this.param).then(
+                    (response) => {
+                        if (response.data.success) {
+                            chart.setOption(response.data.data);
+                            console.log(response.data.data);
+                            this.$nextTick(function (){
+                                chart.hideLoading();
+                            });
+
+                            let data = response.data.data;
+                            for (let i = 0; i < data.yAxis.data.length; i++) {
+                                let obj = {};
+                                obj.rank = i + 1;
+                                obj.name = data.yAxis.data[i];
+                                obj.positive = data.series[0].data[i];
+                                obj.negative = data.series[1].data[i];
+                                obj.relevant = data.series[2].data[i];
+                                this.sourceTop10.push(obj);
+                            }
+
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            },
+            /**获取人物top10*/
+            getPersonageTop10() {
+                let chart = echarts.init(document.getElementById('personageTop10'));
+                chart.showLoading();
+                this.$http.post('/apis/eventAnalysis/getPersonageTop10.json', this.param).then(
+                    (response) => {
+                        if (response.data.success) {
+                            chart.setOption(response.data.data);
+                            console.log(response.data.data);
+                            this.$nextTick(function (){
+                                chart.hideLoading();
+                            });
+
+                            let data = response.data.data;
+                            for (let i = 0; i < data.yAxis.data.length; i++) {
+                                let obj = {};
+                                obj.rank = i + 1;
+                                obj.name = data.yAxis.data[i];
+                                obj.positive = data.series[0].data[i];
+                                obj.negative = data.series[1].data[i];
+                                obj.relevant = data.series[2].data[i];
+                                this.personageTop10.push(obj);
+                            }
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            },
         },
         mounted(){
             
-        }
+        },
+        props: ['eventDetail']
     }
 </script>

@@ -1,5 +1,5 @@
 /**
-* Created by zhangxin on 2017/3/17.
+* Created by yu-bing on 2017/3/17.
 */
 <template>
     <div class="industryNews">
@@ -10,15 +10,8 @@
 <style lang="scss" scoped>
 </style>
 <script>
-     /*
-    * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
-    * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
-    * import loginButton from './components/loginButton.vue';
-    */
-
      import breadCrumb from '../../../components/breadCrumb/breadCrumb.vue';
-
-    export default{
+     export default{
         data(){
             return {
                 msg: ''
