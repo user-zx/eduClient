@@ -7,74 +7,78 @@
             <el-row :gutter="20" align="middle">
                 <el-col :span="4" class="text-right">微博昵称</el-col>
                 <el-col :span="6">
-                    <el-input id="blogNickname"></el-input>
+                    <el-input id="blogNickname" v-model="weiboInfo.blogNickname" :maxlength=30></el-input>
                 </el-col>
                 <el-col :span="4" class="text-right uploadLabel">添加微博头像</el-col>
                 <el-col :span="6">
-                    <el-upload
-                            action="https://jsonplaceholder.typicode.com/posts/"
-                            class="avatar-uploader"
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
+                    <div class="avatar-uploader">
+                        <div class="el-upload el-upload--text" @click="uploadImg">
+                            <i class="el-icon-plus avatar-uploader-icon" v-if="weiboInfo.microblogAvatar == ''"></i>
+                            <img :src="weiboInfo.microblogAvatar" alt="" v-else="" class="avatar">
+                            <input type="file" class="el-upload__input" id="uploadImg" @change="turnBaseFormat">
+                        </div>
+                    </div>
                 </el-col>
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="4" class="text-right">学校</el-col>
                 <el-col :span="6">
-                    <el-input></el-input>
+                    <el-input v-model="weiboInfo.blogColleage" :maxlength=30></el-input>
                 </el-col>
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="4" class="text-right">所在地</el-col>
                 <el-col :span="6">
-                    <el-input></el-input>
+                    <el-input v-model="weiboInfo.blogAddress" :maxlength=60></el-input>
                 </el-col>
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="4" class="text-right">所属院系</el-col>
                 <el-col :span="6">
-                    <el-input></el-input>
+                    <el-input v-model="weiboInfo.belongDepartment" :maxlength=60></el-input>
                 </el-col>
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="4" class="text-right">简介</el-col>
                 <el-col :span="6">
-                    <el-input type="textarea" :rows="8"></el-input>
+                    <el-input type="textarea" :rows="8" :maxlength=200 v-model="weiboInfo.instruction"></el-input>
                 </el-col>
             </el-row>
             <div class="line"></div>
             <el-row :gutter="20">
                 <el-col :span="4" class="text-right">负责人</el-col>
                 <el-col :span="6">
-                    <el-input></el-input>
+                    <el-input v-model="weiboInfo.responsibleUser" :maxlength=30></el-input>
                 </el-col>
                 <el-col class="text-right" :span="4" :offset="1">
                     发布人
                 </el-col>
                 <el-col :span="6">
-                    <el-input></el-input>
+                    <el-input v-model="weiboInfo.publishUser" :maxlength=30></el-input>
                 </el-col>
             </el-row>
             <el-row :gutter="20">
                 <el-col class="text-right" :span="4">负责人邮箱</el-col>
-                <el-col :span="6"><el-input></el-input></el-col>
+                <el-col :span="6">
+                    <el-input v-model="weiboInfo.responsibleEmail" :maxlength=30></el-input>
+                </el-col>
                 <el-col class="text-right" :span="4" :offset="1">发布人邮箱</el-col>
-                <el-col :span="6"><el-input></el-input></el-col>
+                <el-col :span="6">
+                    <el-input v-model="weiboInfo.publishEmail" :maxlength=30></el-input>
+                </el-col>
             </el-row>
             <el-row :gutter="20">
                 <el-col class="text-right" :span="4">负责人电话</el-col>
-                <el-col :span="6"><el-input></el-input></el-col>
+                <el-col :span="6">
+                    <el-input v-model="weiboInfo.responsibleTel"></el-input>
+                </el-col>
                 <el-col class="text-right" :span="4" :offset="1">发布人电话</el-col>
-                <el-col :span="6"><el-input></el-input></el-col>
+                <el-col :span="6"><el-input v-model="weiboInfo.publishTel"></el-input></el-col>
             </el-row>
             <el-row>
                 <el-col class="text-center" :offset="9" :span="6">
-                    <el-button type="primary">确认并提交</el-button>
-                    <el-button type="primary">清空</el-button>
+                    <el-button type="primary" @click="submitInfo">确认并提交</el-button>
+                    <el-button type="primary" @click="resetInfo">清空</el-button>
                 </el-col>
             </el-row>
         </div>
@@ -93,7 +97,6 @@
     }
 
     .avatar-uploader .el-upload {
-        border: 1px dashed #d9d9d9;
         border-radius: 6px;
         cursor: pointer;
         position: relative;
@@ -148,6 +151,20 @@
         data(){
             return {
                 imageUrl: '',
+                weiboInfo: {
+                    blogNickname : '',
+                    blogColleage : '',
+                    blogAddress: '',
+                    belongDepartment: '',
+                    instruction: '',
+                    microblogAvatar: '',
+                    responsibleUser: '',
+                    responsibleEmail: '',
+                    responsibleTel: '',
+                    publishUser: '',
+                    publishEmail: '',
+                    publishTel: ''
+                }
             }
         },
         components:{} ,
@@ -155,10 +172,10 @@
             setBreadCrumb(){
                 let breadcrumb=[
                     {
-                        name:"业务平台",to:{path:"/home/seeWebo"}
+                        name:"业务平台",to:{path:"/home/seeWeibo"}
                     },
                     {
-                        name:"微博监测",to:{path:"home/seeWebo"}
+                        name:"微博监测",to:{path:"/home/seeWeibo"}
                     },
                     {
                         name: '微博认证'
@@ -166,19 +183,246 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
+            submitInfo(){
+                var info = this.verifyData();
+                if(info === false){
+                    return ;
+                }
 
-            handleAvatarSuccess(res, file){
-                this.imageUrl = URL.createObjectURL(file.raw);
+                this.$http.post('/apis/businessTool/saveMicroblog.json', this.weiboInfo).then(
+                    (response) => {
+                        console.log(response.data);
+                        if(response.data.success){
+                            this.$message({message: '微博认证成功'});
+                        }
+                    }
+                )
             },
-            beforeAvatarUpload(file){
-                console.log(file.type)
+
+            verifyData(){
+                let type = 'error';
+                //名称校验
+                if(this.weiboInfo.blogNickname == ''){
+                    this.$message({
+                        showClose: true,
+                        message: '微博名称不能为空',
+                        type: type
+                    });
+                    return false;
+                }
+                //学校校验
+                if(this.weiboInfo.blogColleage == ''){
+                    this.$message({
+                        showClose: true,
+                        message: '学校不能为空',
+                        type: type
+                    });
+                    return false;
+                }
+
+                //所在地校验
+                if(this.weiboInfo.blogAddress == ''){
+                    this.$message({
+                        showClose:　true,
+                        message: '所在地不能为空',
+                        type: type
+                    });
+                    return false;
+                }
+
+                //院系校验
+                if(this.weiboInfo.belongDepartment == ''){
+                    this.$message({
+                        showClose: true,
+                        message: '所属院系不能为空',
+                        type: type
+                    });
+                    return false;
+                }
+
+                //头像校验
+                if(this.weiboInfo.microblogAvatar == ''){
+                    this.$message({
+                        showClose: '',
+                        message: '微博头像不能为空',
+                        type:　type
+                    });
+                    return false;
+                }
+
+                //负责人校验
+                if(this.weiboInfo.responsibleUser == ''){
+                    this.$message({
+                        showClose: true,
+                        message: '负责人姓名不能为空',
+                        type: type
+                    });
+                    return false;
+                }
+
+                //负责人邮箱校验
+                let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+                let responsibleEmail = this.weiboInfo.responsibleEmail;
+                if(responsibleEmail == ''){
+                    this.$message({
+                        showClose: true,
+                        message: '负责人邮箱不能为空',
+                        type: type
+                    });
+                    return false;
+                }else if(!reg.test(responsibleEmail)){
+                    this.$message({
+                        showClose: true,
+                        message: '负责人邮箱格式不正确',
+                        type: type
+                    });
+                    return false;
+                }
+
+                //负责人电话校验
+                let phoneReg =  /^1(3|4|5|7|8)\d{9}$/;
+                let responsibleTel = this.weiboInfo.responsibleTel;
+                if(responsibleTel == ''){
+                    this.$message({
+                        showClose: true,
+                        message: '负责人电话不能为空',
+                        type: type
+                    });
+                    return false;
+                }else if(!phoneReg.test(responsibleTel)){
+                    this.$message({
+                        showClose: true,
+                        message: '负责人电话格式不正确',
+                        type: type
+                    });
+                    return false;
+                }
+
+                //发布人校验
+                if(this.weiboInfo.publishUser == ''){
+                    this.$message({
+                        showClose: true,
+                        message: '发布人姓名不能为空',
+                        type: type
+                    });
+                    return false;
+                }
+
+                //发布人邮箱校验
+                let publishEmail = this.weiboInfo.publishEmail;
+                if(publishEmail == ''){
+                    this.$message({
+                        showClose: true,
+                        message: '发布人邮箱不能为空',
+                        type: type
+                    });
+                    return false;
+                }else if(!reg.test(publishEmail)){
+                    this.$message({
+                        showClose: true,
+                        message: '发布人邮箱格式不正确',
+                        type: type
+                    });
+                    return false;
+                }
+
+                //发布人电话校验
+                let publishTel = this.weiboInfo.publishTel;
+                if(publishTel == ''){
+                    this.$message({
+                        showClose: true,
+                        message: '发布人电话不能为空',
+                        type: type
+                    });
+                    return false;
+                }else if(!phoneReg.test(publishTel)){
+                    this.$message({
+                        showClose: true,
+                        message: '发布人电话格式不正确',
+                        type: type
+                    });
+                    return false;
+                }
+
+                return true;
+            },
+
+            convertImgToBase64(targetEle, callback){
+               if(typeof(FileReader) == 'undefined'){
+                   this.$message({
+                       message: '抱歉，您的浏览器不能将图片转换成相应格式',
+                       type: 'error'
+                   });
+               }else{
+                   try {
+                       let file = targetEle.files[0];
+                       if(!/image\/\w+/.test(file.type)){
+                            this.$message({
+                                message: '请上传图片格式',
+                                type: 'error'
+                            });
+                            return false;
+                       }
+
+                       let reader = new FileReader();
+                       reader.onload = function () {
+                           let result = this.result;
+                           callback(result);
+                       }
+                       reader.readAsDataURL(file);
+                   }catch (e){
+                       this.$message({
+                           message: '图片格式转换错误，请稍后再试',
+                           type: 'error'
+                       });
+                       console.info(e)
+                   }
+               }
+            },
+
+            uploadImg(){
+               $('#uploadImg').click();
+            },
+
+            turnBaseFormat(e){
+                let weiboInfo = this.weiboInfo;
+                let callback = function (result) {
+                    weiboInfo.microblogAvatar = result;
+                }
+                this.convertImgToBase64(e.target, callback);
+            },
+
+            resetInfo(){
+                this.weiboInfo = {
+                    blogNickname : '',
+                    blogColleage : '',
+                    blogAddress: '',
+                    belongDepartment: '',
+                    instruction: '',
+                    microblogAvatar: '',
+                    responsibleUser: '',
+                    responsibleEmail: '',
+                    responsibleTel: '',
+                    publishUser: '',
+                    publishEmail: '',
+                    publishTel: ''
+                };
+
+                let  fileInput = document.getElementById('uploadImg');
+                if(fileInput.outerHTML){
+                    fileInput.outerHTML = fileInput.outerHTML;
+                }else{
+                    fileInput.value = '';
+                }
             }
         },
         created(){
             this.setBreadCrumb();
+            let data = this.$route.query;
+
         },
         mounted(){
 
-        }
+        },
     }
 </script>

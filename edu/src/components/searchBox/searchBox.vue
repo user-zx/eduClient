@@ -412,12 +412,15 @@
                                     break;
                                 }
 
-                                if(this.exactDate != '' && searchList[k].dateBox == 'exact'){
+                                if(this.exactDate != '' && this.exactDate != undefined && searchList[k].dateBox == 'exact'){
                                     var startSuffix = " 00:00:00";
                                     var endSuffix = " 23:59:59";
                                     var format = 'yyyy-MM-dd';
                                     result.startDate = this.formatDate(this.exactDate, format) + startSuffix;
                                     result.endDate = this.formatDate(this.exactDate, format) + endSuffix;
+                                }else{
+                                    result.startDate = '';
+                                    result.endDate = '';
                                 }
                             }
                             continue loop;
@@ -451,9 +454,7 @@
              * 精确搜索某天的日期控件改变
              */
             exactDateChange(){
-                if (this.exactDate != null &&　this.exactDate != '') {
-                    this.$emit('searchDataChange', this.buildParam());
-                }
+                this.$emit('searchDataChange', this.buildParam());
             },
         },
         mounted() {

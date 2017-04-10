@@ -2,7 +2,7 @@
 * Created by zhangxin on 2017/3/27.
 */
 <template>
-    <div class="seeWeibo" id="seeWeibo">
+    <div class="seeWeibo" id="seeWeibo" v-loading="loading" element-loading-text="加载中……">
         <el-tabs v-model="activeName" class="custom-tabs left-tabs" @tab-click="handleClick">
             <el-tab-pane label="微博统计" name="todayHot">
                 <div id="search_container" class="search_container">
@@ -15,22 +15,9 @@
                 </div>
                 <el-card class="box-card">
                     <el-table :data="weiboStatisticsData" :resizable="false" stripe style="width: 100%" border class="tran-table no-col-title yellow-table">
-                        <el-table-column width="70" label="序号" align="center">
-                            <template scope="scope">
-                                <span v-if="scope.row.rank == 1">
-                                     <i class="icon-rank icon-gold"></i>
-                                </span>
-                                <span v-else-if="scope.row.rank == 2">
-                                    <i class="icon-rank icon-silver"></i>
-                               </span>
-                                <span v-else-if="scope.row.rank == 3">
-                                     <i class="icon-rank icon-copper"></i>
-                                </span>
-                                {{scope.row.rank}}
-                            </template>
-                        </el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="university" label="微博号" align="center"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="author" label="所属" align="center"></el-table-column>
+                        <el-table-column width="70" label="序号" align="center" type="index"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="author" label="微博号" align="center"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="university" label="所属" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleUser" label="负责人" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleEmail" label="负责人邮箱" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleTel" label="负责人电话" align="center"></el-table-column>
@@ -50,7 +37,7 @@
             </el-tab-pane>
             <el-tab-pane label="微博指数" name="weekHot">
                 <div id="search_container1" class="search_container">
-                    <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
+                    <search-box :searchNames=searchNames1 @searchDataChange="onSearchDataChange" class="dark"></search-box>
                 </div>
                 <div class="btn-box clearfix">
                     <div class="pull-left">
@@ -136,21 +123,23 @@
                 activeName: 'todayHot',
                 weiboStatisticsData: [],
                 searchNames: ['verified', 'exactDate'],
+                searchNames1: ['exactDate'],
                 tableData:　[],
                 hotParam: {
                     pageSize: 15,
                     pageNumber: 0,
-                    authcStatus: '全部',
+                    authcStatus: '',
                     startDate: '',
                     endDate: ''
                 },
                 statisticsParam: {
                     pageSize: 15,
                     pageNumber: 0,
-                    authcStatus: '全部',
+                    authcStatus: '',
                     startDate: '',
                     endDate: ''
-                }
+                },
+                loading:true,
             }
         },
         components:{searchBox} ,
@@ -167,6 +156,7 @@
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
             handleClick(event) {
+//                this.loading = true;
                 if(event.index == 0){
                     //微博统计tab页，请求对应数据
                     this.getWeiboStatisticsData();
@@ -176,12 +166,21 @@
                 }
             },
             onSearchDataChange(data) {
+                //因为后台搜索认证条件时， 已认证、未认证传的参数是相应的汉字，但是全部要传空
+                if(data.verified == '全部'){
+                    data.verified = '';
+                }
                 //根据tab页当前状态 判断请求的是微博指数还是微博统计的后台
                 if($('#seeWeibo .el-tabs__nav .el-tabs__item:eq(0)').hasClass('is-active')){
-                    this.statisticsParam = data;
+                    this.statisticsParam.authcStatus = data.verified;
+                    this.statisticsParam.startDate = data.startDate;
+                    this.statisticsParam.endDate = data.endDate;
                     this.getWeiboStatisticsData();
                 }else{
                     this.hotParam = data;
+                    this.hotParam.authcStatus = '';
+                    this.hotParam.startDate = data.startDate;
+                    this.hotParam.endDate = data.endDate;
                     this.getWeiboHotArticleList();
                 }
             },
@@ -189,12 +188,17 @@
                 this.$router.push({path:"/home/characterAnalyse"});
             },
             toVerified(data){
-                this.$router.push({path: "/home/weiboVerify"})
+//                console.log(data)
+                this.$router.push({path: "/home/weiboVerify", query: data});
             },
+
+            //微博指数数据获取
             getWeiboHotArticleList(){
+//                console.log(this.hotParam)
                 this.$http.post('/apis/businessTool/getMicroblogIndexData.json', this.hotParam).then(
                     (response) => {
                         if(response.data.success){
+                            this.loading = false;
                             let content = response.data.data.page.content;
                             for(var i = 0; i < content.length; i++){
                                 content[i].rank = i + 1;
@@ -207,15 +211,13 @@
 
             //微博统计数据获取
             getWeiboStatisticsData(){
+//                console.log(this.statisticsParam)
                 this.$http.post('/apis/businessTool/getMicroblogData.json', this.statisticsParam).then(
                     (response) => {
+                        this.loading = false;
+//                        console.log(response.data)
                         if(response.data.success){
-                            //处理数据 前三排名添加排行图标
-                            let content = response.data.data.page.content;
-                            for(var i = 0; i < content.length; i++){
-                                content[i].rank = i + 1;
-                            }
-                            this.weiboStatisticsData = content;
+                            this.weiboStatisticsData = response.data.data.page.content;
                         }
                     }
                 )
