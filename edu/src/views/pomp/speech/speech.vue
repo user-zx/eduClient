@@ -131,7 +131,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.post('/apis/opinionReport/deleteReport.json/' + id).then((response) => {
+                    this.$http.delete('/apis/opinionReport/deleteReport.json/' + id).then((response) => {
                             if (response.data.success) {
                                 this.$message({
                                     message: '删除成功',
@@ -227,7 +227,6 @@
                 this.$nextTick(function() {
                     this.$http.post('/apis/opinionReport/getReport.json', this.param).then(
                         (response) => {
-                            console.log(response.data.data);
                             if (response.data.success) {
                                 this.tableData = response.data.data.content;
                                 // 最多允许翻1000页
