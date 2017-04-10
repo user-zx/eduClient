@@ -244,8 +244,7 @@
         },
         created: function () {
             window.addEventListener('scroll', this.handleScroll);
-        }
-        ,
+        },
         props: ['eventDetail']
     }
 </script>

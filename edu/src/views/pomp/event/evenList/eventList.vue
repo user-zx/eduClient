@@ -210,7 +210,7 @@
             },
             handleCurrentChange(val) {
                 this.currentPage = val;
-                console.log(`当前页: ${val}`);
+                this.getEventList();
             },
             watchDetails(id){
                 this.$router.push({path:"/home/eventDetails", query: {id: id}});

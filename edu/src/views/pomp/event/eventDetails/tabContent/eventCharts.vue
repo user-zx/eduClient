@@ -10,7 +10,6 @@
                         <span class="icons icons-chart"></span><span>载体趋势统计图</span>
                     </div>
                     <div class="text item" id="vectorTrendsChart" style="height: 400px;">
-                        图表的位置
                     </div>
                     <div class="text item">
                         <el-table :data="vectorTableData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table fixed-table">
