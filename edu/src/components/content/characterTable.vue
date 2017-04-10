@@ -2,7 +2,7 @@
 * Created by lifei on 2017/3/27.
 */
 <template>
-    <el-table :data="tableData" class="tran-table" border style="width: 100%"
+    <el-table :data="getTableData" class="tran-table" border style="width: 100%"
               :resizable="false">
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column label="全部" align="center" prop="all">
@@ -46,7 +46,7 @@
     export default{
         data(){
             return {
-                tableData: [
+               /* getTableData: [
                     {
                         'id': 1,
                         'all': 1,
@@ -191,7 +191,8 @@
                         'hot': 5,
                         'emotion': 1
                     }
-                ]
+                ]*/
+                getTableData: [],
             }
         },
         components: {},
@@ -202,8 +203,13 @@
                 this.$router.push({path:"/home/characterAnalyse"});
             }
         },
-        mounted(){
-        }
+        mounted(){ 
+            this.$nextTick(function(){
+                console.log(this.tableData);
+                this.getTableData = this.tableData;
+            })
+        },
+        props:["tableData"],
     }
 
 </script>

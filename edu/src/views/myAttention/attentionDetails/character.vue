@@ -1,17 +1,84 @@
-/**
-* Created by lifei on 2017/3/28.
-*/
 <template>
     <div class="myAttention-character article-wrap">
-        <div>
-            <search-box :searchNames=searchNames class="dark"></search-box>
-        </div>
+        <div class="myAttention-character-div">
+             <el-tabs v-model="activeName" @tab-click="handleClick" class="custom-tabs">
+                <el-tab-pane label="全部" name="all">
+                    <el-form ref="form" :model="form" label-width="80px" :label-position="labelPosition">
+                        <el-form-item label="全部">
+                            <el-select v-model="form.all" placeholder="请选择人物">
+                              <el-option label="小习习" value="shanghai"></el-option>
+                              <el-option label="小强" value="beijing"></el-option>
+                           </el-select>
+                        </el-form-item>
+                    </el-form>
+                </el-tab-pane>
+                <el-tab-pane label="国家领导" name="stateLeader">
+                      <el-form ref="form" :model="form" label-width="80px" :label-position="labelPosition">
+                            <el-form-item label="国家领导">
+                                <el-select v-model="form.stateLeader" placeholder="请选择领导">
+                                  <el-option label="小习习" value="shanghai"></el-option>
+                                  <el-option label="小强" value="beijing"></el-option>
+                               </el-select>
+                            </el-form-item>
+                      </el-form>
+                </el-tab-pane>
+                <el-tab-pane label="政/厅" name="office">
+                    <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                      <el-form-item label="政/厅">
+                        <el-select v-model="formInline.region" placeholder="请选择地区">
+                          <el-option label="区域一" value="shanghai"></el-option>
+                          <el-option label="区域二" value="beijing"></el-option>
+                        </el-select>
+                      </el-form-item>
+                       <el-form-item >
+                          <el-select v-model="formInline.region" placeholder="请选择人物">
+                          <el-option label="区域一" value="shanghai"></el-option>
+                          <el-option label="区域二" value="beijing"></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-form>
+                </el-tab-pane>
+                <el-tab-pane label="高校领导" name="school">
+                     <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                          <el-form-item label="高校领导">
+                            <el-select v-model="formInline.region" placeholder="请选择地区">
+                              <el-option label="区域一" value="shanghai"></el-option>
+                              <el-option label="区域二" value="beijing"></el-option>
+                            </el-select>
+                          </el-form-item>
+                           <el-form-item >
+                              <el-select v-model="formInline.region" placeholder="请选择人物">
+                              <el-option label="区域一" value="shanghai"></el-option>
+                              <el-option label="区域二" value="beijing"></el-option>
+                            </el-select>
+                          </el-form-item>
+                     </el-form>
+                </el-tab-pane>
+                <el-tab-pane label="知名学者" name="scholar">
+                     <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                          <el-form-item label="知名学者">
+                            <el-select v-model="formInline.region" placeholder="请选择地区">
+                              <el-option label="区域一" value="shanghai"></el-option>
+                              <el-option label="区域二" value="beijing"></el-option>
+                            </el-select>
+                          </el-form-item>
+                           <el-form-item>
+                              <el-select v-model="formInline.region" placeholder="请选择人物">
+                              <el-option label="区域一" value="shanghai"></el-option>
+                              <el-option label="区域二" value="beijing"></el-option>
+                            </el-select>
+                          </el-form-item>
+                     </el-form>
+                </el-tab-pane>
+              </el-tabs> 
+               <el-button type="primary" class="addPerson"><router-link to="/home/myCenter">添加人物</router-link></el-button>
+        </div> 
         <div class="content dark">
             <div class="content-bar">
                 <ul class="content-bar-list">
                     <li class="pointer">全部</li>
-                    <li class="pointer arrow-up">
-                        阅读量
+                    <li class="pointer">
+                        阅读量 <i class="arrow arrow-up"></i>
                     </li>
                 </ul>
                 <div class="content-bar-button">
@@ -37,33 +104,44 @@
                                    :total="100">
                     </el-pagination>
                 </div>
-            </div>
-            <character-table class="dark"></character-table>
+            </div> 
+            <character-table class="dark" :tableData="getTableList"></character-table>
         </div>
     </div>
 </template>
 <script>
-    import searchBox from '../../../components/searchBox/searchBox.vue';
     import characterTable from '../../../components/content/characterTable.vue';
     export default{
         data(){
             return {
                 searchNames: ['university', 'dimension', 'vector', 'emotion', 'publishDateTime'],
                 currentPage: 1,
+                labelPosition: 'left',
+                activeName:"all",
+                form:{
+                    all:'',
+                },
+                 formInline: {
+                  user: '',
+                  region: ''
+                },
+                getTableList: [
+                    {
+                        'id': 1,
+                        'all': 1,
+                        'name': '习总',
+                        'voiceNum': 888,
+                        'readNum': 1024,
+                        'hot': 5,
+                        'emotion': 1
+                    }
+                ],
             }
         },
-        components:{searchBox, characterTable} ,
+        components:{characterTable},
         methods:{
-            setBreadCrumb(){
-                let breadcrumb=[
-                    {
-                        name:"情报内参",to:{path:"/"}
-                    },
-                    {
-                        name:"人物动态",to:{path:"/myAttention-character"}
-                    }
-                ];
-                this.$store.commit("setBreadCrumb",breadcrumb);
+            onSubmit() {
+                console.log('submit!');
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
@@ -72,63 +150,37 @@
                 this.currentPage = val;
                 console.log(`当前页: ${val}`);
             },
+            handleClick(tab, event) {
+                console.log(tab, event);
+            },
+            getCharacterList(){
+
+            }
         },
         mounted(){
-            let searchData = [
-                {
-                    'title' :  '选择人物:',
-                    'searchList': [
-                        {id: 0, text: '全部', selected: true},
-                        {id: 1, text: '国家领导', selected: false},
-                        {id: 2, text: '政/厅', selected: false},
-                        {id: 3, text: '高校领导', selected: false},
-                        {id: 4, text: '知名学者', selected: false},
-                        {id: 5, text: '我添加的人物', selected: false}
-                    ],
-                    'hasMore': true,
-                    'multiple': false,
-                    'buttons': [
-                        {'buttonText': '添加人物', 'id': 'add-character-btn'}
-                    ],
-                    'hasDateBox': false
-                },
-                {
-                    'title': '国家领导:',
-                    'searchList': [
-                        {id: 0, text: '全部', selected: true},
-                        {id: 1, text: '习近平', selected: false},
-                        {id: 2, text: '李克强', selected: false},
-                        {id: 3, text: '张德江', selected: false},
-                        {id: 4, text: '俞正声', selected: false},
-                        {id: 5, text: '王岐山', selected: false},
-                        {id: 6, text: '刘云山', selected: false},
-                        {id: 7, text: '张高丽', selected: false}
-                    ],
-                    'hasMore': false,
-                    'multiple': false,
-                    'buttons': [],
-                    'hasDateBox': false
-                },
-                {
-                    'title': '时间:',
-                    'searchList': [
-                        {id: 0, text: '全部', selected: false},
-                        {id: 1, text: '今天', selected: true},
-                        {id: 2, text: '昨天', selected: false},
-                        {id: 3, text: '近7天', selected: false},
-                        {id: 4, text: '近一个月', selected: false},
-                        {id: 5, text: '自定义时间', dateBox: 'show', selected: false}
-                    ],
-                    'hasMore': false,
-                    'multiple': false,
-                    'buttons': [],
-                    'hasDateBox': true
-                }
-            ];
-//            this.searchData = searchData;
+          
         },
-        created(){
-            this.setBreadCrumb();
-        }
+        
     }
 </script>
+<style lang="scss">
+    .myAttention-character{
+        .custom-tabs>.el-tabs__header>.el-tabs__nav-wrap>.el-tabs__nav-scroll>.el-tabs__nav{
+                margin: 0;         
+            }
+        .custom-tabs .el-tabs__content{
+            margin-top: 10px; 
+        }
+       .el-form-item__label{
+           margin-left: 16px; 
+       }
+       .myAttention-character-div{
+           position: relative;
+           .addPerson{
+               position: absolute;
+               right: 0;
+               top: 0;  
+           }
+       }
+    }
+</style>
