@@ -83,8 +83,8 @@
             },
             getArticleList() {
                 this.loading = true;
-                this.$nextTick(function() {
-                    this.$http.post('/apis/opinionMonitor/getOpinionMonitor.json', this.param).then(
+                this.$nextTick(function() { 
+                    this.$http.post('/apis/concerns/getOpinionMonitor.json',this.param).then(
                         (response) => {
                             if (response.data.success) {
                                 this.articleData = response.data.data.content;

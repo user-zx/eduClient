@@ -5,79 +5,103 @@
     <div class="characterNews article-wrap">
         <bread-crumb></bread-crumb>
         <div class="content">
-             <div class="myAttention-character-div">
-                 <el-tabs v-model="activeName" @tab-click="handleClick" class="custom-tabs">
+              <div class="myAttention-character-div">
+                   <el-tabs v-model="activeName" @tab-click="handleClick" class="custom-tabs" >
                       <el-tab-pane label="全部" name="all">
-                          <el-form ref="form" :model="form" label-width="80px" :label-position="labelPosition">
-                              <el-form-item label="全部">
-                                  <el-select v-model="form.all" placeholder="请选择人物">
-                                    <el-option label="小习习" value="shanghai"></el-option>
-                                    <el-option label="小强" value="beijing"></el-option>
-                                 </el-select>
-                              </el-form-item>
-                          </el-form>
+                                   <el-row  type="flex" class="row-bg row-time">
+                                         <el-col :span="2">
+                                             <span class="chooseTime">全部</span>
+                                         </el-col>
+                                         <el-col :span="20">
+                                              <el-select v-model="formInline.all" placeholder="请选择人物">
+                                                <el-option label="小习习" value="shanghai"></el-option>
+                                                <el-option label="小强" value="beijing"></el-option>
+                                              </el-select>
+                                         </el-col>
+                                   </el-row>
                       </el-tab-pane>
                       <el-tab-pane label="国家领导" name="stateLeader">
-                            <el-form ref="form" :model="form" label-width="80px" :label-position="labelPosition">
-                                  <el-form-item label="国家领导">
-                                      <el-select v-model="form.stateLeader" placeholder="请选择领导">
-                                        <el-option label="小习习" value="shanghai"></el-option>
-                                        <el-option label="小强" value="beijing"></el-option>
-                                     </el-select>
-                                  </el-form-item>
-                            </el-form>
+                                  <el-row type="flex" class="row-bg row-time">
+                                      <el-col :span="2">
+                                          <span class="chooseTime">国家领导</span>
+                                      </el-col>
+                                      <el-col :span="20">
+                                           <el-select v-model="formInline.stateLeader" placeholder="请选择领导">
+                                                <el-option label="小习习" value="shanghai"></el-option>
+                                                <el-option label="小强" value="beijing"></el-option>
+                                           </el-select>
+                                      </el-col>
+                                  </el-row>
                       </el-tab-pane>
                       <el-tab-pane label="政/厅" name="office">
-                          <el-form :inline="true" :model="formInline" class="demo-form-inline">
-                            <el-form-item label="政/厅">
-                              <el-select v-model="formInline.region" placeholder="请选择地区">
-                                <el-option label="区域一" value="shanghai"></el-option>
-                                <el-option label="区域二" value="beijing"></el-option>
-                              </el-select>
-                            </el-form-item>
-                             <el-form-item >
-                                <el-select v-model="formInline.region" placeholder="请选择人物">
-                                <el-option label="区域一" value="shanghai"></el-option>
-                                <el-option label="区域二" value="beijing"></el-option>
-                              </el-select>
-                            </el-form-item>
-                          </el-form>
+                               <el-row type="flex" class="row-bg row-time">
+                                   <el-col :span="2">
+                                       <span class="chooseTime">政/厅</span>
+                                   </el-col>
+                                   <el-col :span="20">
+                                        <el-select v-model="formInline.officeArea" placeholder="请选择地区">
+                                            <el-option label="北京" value="shanghai"></el-option>
+                                            <el-option label="河南" value="beijing"></el-option>
+                                        </el-select>
+                                        <el-select v-model="formInline.region" placeholder="请选择人物">
+                                            <el-option label="区域一" value="shanghai"></el-option>
+                                            <el-option label="区域二" value="beijing"></el-option>
+                                        </el-select>
+                                   </el-col>
+                               </el-row>
                       </el-tab-pane>
                       <el-tab-pane label="高校领导" name="school">
-                           <el-form :inline="true" :model="formInline" class="demo-form-inline">
-                                <el-form-item label="高校领导">
-                                  <el-select v-model="formInline.region" placeholder="请选择地区">
-                                    <el-option label="区域一" value="shanghai"></el-option>
-                                    <el-option label="区域二" value="beijing"></el-option>
-                                  </el-select>
-                                </el-form-item>
-                                 <el-form-item >
-                                    <el-select v-model="formInline.region" placeholder="请选择人物">
-                                    <el-option label="区域一" value="shanghai"></el-option>
-                                    <el-option label="区域二" value="beijing"></el-option>
-                                  </el-select>
-                                </el-form-item>
-                           </el-form>
+                               <el-row type="flex" class="row-bg row-time">
+                                   <el-col :span="2">
+                                       <span class="chooseTime">高校领导</span>
+                                   </el-col>  
+                                   <el-col :span="20">
+                                       <el-select v-model="formInline.schoolArea" placeholder="请选择地区">
+                                            <el-option label="北京" value="shanghai"></el-option>
+                                            <el-option label="河南" value="beijing"></el-option>
+                                          </el-select>
+                                          <el-select v-model="formInline.school" placeholder="请选择人物">
+                                            <el-option label="区域一" value="shanghai"></el-option>
+                                            <el-option label="区域二" value="beijing"></el-option>
+                                          </el-select>
+                                   </el-col>
+                               </el-row>  
                       </el-tab-pane>
                       <el-tab-pane label="知名学者" name="scholar">
-                           <el-form :inline="true" :model="formInline" class="demo-form-inline">
-                                <el-form-item label="知名学者">
-                                  <el-select v-model="formInline.region" placeholder="请选择地区">
-                                    <el-option label="区域一" value="shanghai"></el-option>
-                                    <el-option label="区域二" value="beijing"></el-option>
-                                  </el-select>
-                                </el-form-item>
-                                 <el-form-item>
-                                    <el-select v-model="formInline.region" placeholder="请选择人物">
-                                    <el-option label="区域一" value="shanghai"></el-option>
-                                    <el-option label="区域二" value="beijing"></el-option>
-                                  </el-select>
-                                </el-form-item>
-                           </el-form>
+                               <el-row type="flex" class="row-bg row-time">
+                                   <el-col :span="2">
+                                       <span class="chooseTime">知名学者</span>
+                                   </el-col>
+                                    <el-col :span="20">
+                                         <el-select v-model="formInline.regionArea" placeholder="请选择地区">
+                                            <el-option label="北京" value="shanghai"></el-option>
+                                            <el-option label="河南" value="beijing"></el-option>
+                                          </el-select>
+                                            <el-select v-model="formInline.region" placeholder="请选择人物">
+                                            <el-option label="区域一" value="shanghai"></el-option>
+                                            <el-option label="区域二" value="beijing"></el-option>
+                                        </el-select>
+                                    </el-col>
+                               </el-row>   
+                                 
                       </el-tab-pane>
-                 </el-tabs> 
-                 <el-button type="primary" class="addPerson"><router-link to="/home/myCenter">添加人物</router-link></el-button>
-             </div> 
+                    </el-tabs> 
+                     <el-button type="primary" class="addPerson"><router-link to="/home/myCenter">添加人物</router-link></el-button>
+                     <el-row  type="flex" class="row-bg row-time">
+                         <el-col :span="2">
+                             <span class="chooseTime">选择时间</span>
+                         </el-col>
+                         <el-col :span="8">
+                             <div class="block">
+                                  <el-date-picker
+                                    v-model="valueTime"
+                                    type="daterange"
+                                    placeholder="选择日期范围">
+                                  </el-date-picker>
+                              </div>
+                         </el-col>
+                     </el-row>
+              </div> 
             <div class="content-bar">
                 <ul class="content-bar-list">
                     <li class="pointer">全部</li>
@@ -127,9 +151,7 @@
         .custom-tabs .el-tabs__content{
             margin-top: 10px; 
         }
-       .el-form-item__label{
-           margin-left: 16px; 
-       }
+      
        .myAttention-character-div{
            position: relative;
            .addPerson{
@@ -137,6 +159,22 @@
                right: 0;
                top: 0;  
            }
+       }
+       .chooseTime{
+           padding-left: 16px;
+           line-height: 50px; 
+           display: inline-block;
+           width: 100%;
+           color: #d0d7ff;   
+       }
+       .row-time{
+           border-bottom: 1px solid rgba(96, 163, 255, 0.1);
+       }
+       .el-select{
+           margin-top: 7px; 
+       }
+       .block{
+           margin-top: 7px; 
        }
     }
 </style>
