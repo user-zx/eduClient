@@ -88,9 +88,9 @@
                         </div>
                         <div class="col-item item-right" style="width: 39.5%">
                             <div class="activity-describe">
-                                <h3>12月12日概况</h3>
-                                <div class="time-line">
-                                    <div class="time-line-item" v-for="item in timeLineData">
+                                <h3>{{selectDate}}概况</h3>
+                                <div class="time-line" v-loading="time_loading" element-loading-text="加载中……">
+                                    <div class="time-line-item" v-if="timeLineData.length > 0" v-for="item in timeLineData">
                                         <div class="circle-box">
                                             <div class="circle"></div>
                                         </div>
@@ -136,47 +136,53 @@
         </div>
 
         <div class="base-info-box">
-        <el-row :gutter="10">
-            <el-col :span="12">
-                <el-card class="box-card educationBox" style="height: 480px;margin-top: 0px">
-                    <div slot="header" class="clearfix">
-                        <span class="icons icons-chart"></span><span>情感指数</span>
-                    </div>
-                    <div class="text item">
-                        <div class="charts" id="emotionIndex_graph" style="height: 400px;"></div>
-                    </div>
-                </el-card>
-            </el-col>
-            <el-col :span="12">
-                <el-card class="box-card educationBox" style="height: 480px;margin-top: 0px">
-                    <div slot="header" class="clearfix">
-                        <span class="icons icons-chart"></span><span>微博热点</span>
-                    </div>
-                    <div class="text item">
-                        <el-tabs class="custom-tabs left-tabs" @tab-click="handleClick"  v-model="activeName">
-                            <el-tab-pane label="相关信息" name="related" disabled>
-                            </el-tab-pane>
-                            <el-tab-pane label="正面" name="positive" class="is-active">
-                                <el-card class="box-card">
-                                    <el-table :data="relatedInfoData" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center"></el-table-column>
-                                        <el-table-column :show-overflow-tooltip="true" prop="date" label="时间" align="center" width="150px"></el-table-column>
-                                    </el-table>
-                                </el-card>
-                            </el-tab-pane>
-                            <el-tab-pane label="负面" name="negative">
-                                <el-card class="box-card">
-                                    <el-table :data="relatedInfoData" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center"></el-table-column>
-                                        <el-table-column :show-overflow-tooltip="true" prop="date" label="时间" align="center" width="150px"></el-table-column>
-                                    </el-table>
-                                </el-card>
-                            </el-tab-pane>
-                        </el-tabs>
-                    </div>
-                </el-card>
-            </el-col>
-        </el-row>
+            <el-row :gutter="10">
+                <el-col :span="12">
+                    <el-card class="box-card educationBox" style="height: 520px;margin-top: 0px">
+                        <div slot="header" class="clearfix">
+                            <span class="icons icons-chart"></span><span>情感指数</span>
+                        </div>
+                        <div class="text item">
+                            <div class="charts" id="emotionIndex_graph" style="height: 400px;"></div>
+                        </div>
+                    </el-card>
+                </el-col>
+                <el-col :span="12">
+                    <el-card class="box-card educationBox" style="height: 520px;margin-top: 0px">
+                        <div slot="header" class="clearfix">
+                            <span class="icons icons-chart"></span><span>热点信息</span>
+                        </div>
+                        <div class="text item">
+                            <el-tabs v-model="activeName" class="custom-tabs">
+                                <el-tab-pane label="相关信息" name="related">
+                                    <el-card class="box-card">
+                                        <el-table :data="relatedData" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
+                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                            <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
+                                        </el-table>
+                                    </el-card>
+                                </el-tab-pane>
+                                <el-tab-pane label="正面" name="positive">
+                                    <el-card class="box-card">
+                                        <el-table :data="positiveData" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
+                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                            <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
+                                        </el-table>
+                                    </el-card>
+                                </el-tab-pane>
+                                <el-tab-pane label="负面" name="negative">
+                                    <el-card class="box-card">
+                                        <el-table :data="negativeData" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
+                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                            <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
+                                        </el-table>
+                                    </el-card>
+                                </el-tab-pane>
+                            </el-tabs>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
         </div>
 
         <div class="base-info-box">

@@ -350,7 +350,7 @@
                 let result = {};
                 let searchData = this.searchData;
                 let searchNames = this.searchNames;
-
+                //console.log(searchNames);
                 loop: for (var i = 0; i < searchNames.length; i++) {
                     var name = searchNames[i];
                     for (var j = 0; j < searchData.length; j++) {
@@ -379,28 +379,28 @@
                                         var format = 'yyyy-MM-dd';
 
                                         if (text === '自定义时间') {
-                                            publishDateTime.startDate = this.formatDate(this.publishDate[0], format) + startSuffix;
-                                            publishDateTime.endDate = this.formatDate(this.publishDate[1], format) + endSuffix;
+                                            publishDateTime.startDate = this.publishDate[0].format(format) + startSuffix;
+                                            publishDateTime.endDate = this.publishDate[1].format(format) + endSuffix;
                                         } else {
                                             var now = new Date();
-                                            var nowDate = this.formatDate(now, format);
+                                            var nowDate = now.format(format);
                                             var oneDayMills = 1000 * 60 * 60 * 24;
                                             if (text === '今天') {
                                                 publishDateTime.startDate = nowDate + startSuffix;
                                                 publishDateTime.endDate = nowDate + endSuffix;
                                             }
                                             if (text === '昨天') {
-                                                var date = this.formatDate(new Date(now.getTime() - oneDayMills), format);
+                                                var date = new Date(now.getTime() - oneDayMills).format(format);
                                                 publishDateTime.startDate = date + startSuffix;
                                                 publishDateTime.endDate = date + endSuffix;
                                             }
                                             if (text === '近7天') {
-                                                var date = this.formatDate(new Date(now.getTime() - oneDayMills * 7), format);
+                                                var date = new Date(now.getTime() - oneDayMills * 7).format(format);
                                                 publishDateTime.startDate = date + startSuffix;
                                                 publishDateTime.endDate = nowDate + endSuffix;
                                             }
                                             if (text === '近一个月') {
-                                                var date = this.formatDate(new Date(now.getTime() - oneDayMills * 30), format);
+                                                var date = new Date(now.getTime() - oneDayMills * 30).format(format);
                                                 publishDateTime.startDate = date + startSuffix;
                                                 publishDateTime.endDate = nowDate + endSuffix;
                                             }
@@ -418,8 +418,12 @@
                                     var startSuffix = " 00:00:00";
                                     var endSuffix = " 23:59:59";
                                     var format = 'yyyy-MM-dd';
-                                    result.startDate = this.formatDate(this.exactDate, format) + startSuffix;
-                                    result.endDate = this.formatDate(this.exactDate, format) + endSuffix;
+                                    result.startDate = this.exactDate.format(format) + startSuffix;
+                                    result.endDate = this.exactDate.format(format) + endSuffix;
+                                }else{
+                                    //FIXME 这个地方不能默认为空字符串 created by yuwei on 2017-04-10
+                                    //result.startDate = '';
+                                    //result.endDate = '';
                                 }
                             }
                             continue loop;
@@ -428,27 +432,6 @@
                 }
                 return result;
             },
-            /**格式化日期*/
-            formatDate(date, fmt) {
-                var o = {
-                    "M+": date.getMonth() + 1, //月份
-                    "d+": date.getDate(), //日
-                    "h+": date.getHours(), //小时
-                    "m+": date.getMinutes(), //分
-                    "s+": date.getSeconds(), //秒
-                    "q+": Math.floor((date.getMonth() + 3) / 3), //季度
-                    "S": date.getMilliseconds()
-                    //毫秒
-                };
-                if (/(y+)/.test(fmt))
-                    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "")
-                        .substr(4 - RegExp.$1.length));
-                for (var k in o)
-                    if (new RegExp("(" + k + ")").test(fmt))
-                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-                return fmt;
-            },
-
             /**
              * 精确搜索某天的日期控件改变
              */

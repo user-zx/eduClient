@@ -105,8 +105,8 @@
             <div class="content-bar">
                 <ul class="content-bar-list">
                     <li class="pointer">全部</li>
-                    <li class="pointer arrow-up">
-                        阅读量
+                    <li class="pointer" @click="sort(0)">
+                        阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
                     </li>
                 </ul>
                 <div class="content-bar-button">
@@ -210,13 +210,13 @@
                     }, {
                       value: '选项5',
                       label: '北京烤鸭'
-                    }],
+                }],
                 value: '',
-                 pickerOptions0: {
-                  disabledDate(time) {
+                pickerOptions0: {
+                    disabledDate(time) {
                     //return time.getTime() < Date.now() - 8.64e7;
-                    
-                  }
+
+                    }
                 },
                 value1: '',
             }
