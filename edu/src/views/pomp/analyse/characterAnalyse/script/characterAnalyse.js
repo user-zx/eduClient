@@ -21,10 +21,14 @@ export default{
             vectorTableColumn: [],
             vectorTableData: [],
             distributeData: [],
-            relatedInfoData: [],
+            relatedData: [],
+            positiveData: [],
+            negativeData: [],
             param: {},
             timeLineData: [],
-            activeName: 'positive'
+            activeName: 'related',
+            selectDate: '',
+            time_loading: true
         }
     },
     components: {},
@@ -54,13 +58,16 @@ export default{
             let tmpParam = this.param;
             tmpParam.startDate = startDate;
             tmpParam.endDate = endDate;
-
+            let vm = this;
             this.$http.post('/apis/opinionMonitor/getActionTrail.json', tmpParam).then(
                 (response) => {
                     if (response.data.success) {
                         chart.setOption(response.data.data);
-                        this.$nextTick(function (){
+                        this.$nextTick(() => {
                             chart.hideLoading();
+                            chart.on('click', (params) => {
+                                vm.getPersonageArticle(params.name);
+                            });
                         });
                     } else {
                         console.error(response.data.message);
@@ -71,11 +78,12 @@ export default{
             );
         },
         /**获取人物概况*/
-        getPersonageArticle(startDate, endDate) {
-
+        getPersonageArticle(date) {
+            this.time_loading = true;
+            this.selectDate = date;
             let tmpParam = this.param;
-            tmpParam.startDate = startDate;
-            tmpParam.endDate = endDate;
+            tmpParam.startDate = date + " 00:00:00";
+            tmpParam.endDate =  date + " 23:59:59";
 
             this.$http.post('/apis/opinionMonitor/getPersonageArticle.json', tmpParam).then(
                 (response) => {
@@ -84,6 +92,7 @@ export default{
                     } else {
                         console.error(response.data.message);
                     }
+                    this.time_loading = false;
                 }, (response) => {
                     console.error(response);
                 }
@@ -255,14 +264,56 @@ export default{
                 }
             );
         },
-        getKeyWordsData(){
-            this.$nextTick(function () {
-                let chart = echarts.init(document.getElementById('keywords'));
-            })
-        },
+        getKeyWordsData(startDate, endDate){
+            let chart = echarts.init(document.getElementById('keywords'));
+            chart.showLoading();
 
-        handleClick(event){
-            console.log(event)
+            let tmpParam = this.param;
+            tmpParam.startDate = startDate;
+            tmpParam.endDate = endDate;
+
+            this.$http.post('/apis/opinionMonitor/getWordCloud.json', tmpParam).then(
+                (response) => {
+                    if (response.data.success) {
+                        chart.setOption(response.data.data);
+                        this.$nextTick(function (){
+                            chart.hideLoading();
+                        });
+                    } else {
+                        console.error(response.data.message);
+                    }
+                }, (response) => {
+                    console.error(response);
+                }
+            );
+        },
+        getArticleByEmotion(startDate, endDate, emotion) {
+
+            let tmpParam = this.param;
+            tmpParam.startDate = startDate;
+            tmpParam.endDate =  endDate;
+            if (emotion) {
+                tmpParam.emotion = emotion;
+            }
+
+            this.$http.post('/apis/opinionMonitor/getPersonageArticle.json', tmpParam).then(
+                (response) => {
+                    if (response.data.success) {
+                        if ('positive' == emotion) {
+                           this.positiveData = response.data.data.content;
+                        } else if ('negative' == emotion) {
+                            this.negativeData = response.data.data.content;
+                        } else {
+                            this.relatedData = response.data.data.content;;
+                        }
+                    } else {
+                        console.error(response.data.message);
+                    }
+                    this.time_loading = false;
+                }, (response) => {
+                    console.error(response);
+                }
+            );
         }
     },
     created(){
@@ -278,7 +329,7 @@ export default{
     },
     mounted() {
         this.getActionTrail('2016-12-01 00:00:00', '2016-12-31 00:00:00');
-        this.getPersonageArticle('2016-12-01 00:00:00', '2016-12-31 00:00:00');
+        this.getPersonageArticle('2016-12-01');
         this.getEmotionTrend('2016-12-01 00:00:00', '2016-12-31 00:00:00');
         this.getEmotionVal('2016-12-01 00:00:00', '2016-12-31 00:00:00');
         this.getMediaVolume('2016-12-01 00:00:00', '2016-12-31 00:00:00');
@@ -286,6 +337,9 @@ export default{
         this.getVectorTrend('2016-12-01 00:00:00', '2016-12-31 00:00:00');
         this.getVectorDistribution('2016-12-01 00:00:00', '2016-12-31 00:00:00');
         this.getVectorTable('2016-12-01 00:00:00', '2016-12-31 00:00:00');
-        this.getKeyWordsData();
+        this.getKeyWordsData('2016-12-01 00:00:00', '2016-12-31 00:00:00');
+        this.getArticleByEmotion('2016-12-01 00:00:00', '2016-12-31 00:00:00');
+        this.getArticleByEmotion('2016-12-01 00:00:00', '2016-12-31 00:00:00', 'positive');
+        this.getArticleByEmotion('2016-12-01 00:00:00', '2016-12-31 00:00:00', 'negative');
     }
 }

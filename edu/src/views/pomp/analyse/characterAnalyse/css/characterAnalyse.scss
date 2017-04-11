@@ -2,72 +2,8 @@
   .base-info-box {
     padding-bottom: 10px;
   }
-  .character-info{
-    height: 66px;
-    line-height: 66px;
-    color: #fff;
-    margin-bottom: 7px;
 
-    .info-left{
-      width: 40%;
-      display: inline-block;
-      font-size:18px;
-
-      .characterDate{
-        margin-left:30px;
-      }
-    }
-    .info-right{
-      width:59%;
-      display: inline-block;
-      text-align: right;
-    }
-  }
-
-  .character-div{
-    background: #21273d;
-    margin-bottom: 10px;
-
-    .title{
-      color: #60a3ff;
-      height: 59px;
-      line-height: 59px;
-
-      span.span-icon::before{
-        content: url("../../../../../assets/images/icon-barchat.png");
-        margin-left:15px;
-        margin-right: 10px;
-      }
-      .title-text{
-        color: #455487;
-        width: 110px;
-        display: inline-block;
-        text-align: center;
-        cursor: pointer;
-      }
-      .selected{
-        color: #e4f09e;
-      }
-    }
-
-    .graph-div{
-      height:400px;
-      width:90%;
-      margin:auto;
-      margin-left:10px;
-    }
-  }
-
-  .character-basicInfo{
-    height: 158px;
-  }
-
-  .character-rank{
-    height: 158px;
-
-  }
-
-  .activity-describe{
+  .activity-describe {
     height: 350px;
     color: #fff;
     h3{
@@ -127,59 +63,6 @@
       .time-line-item:last-child {
         margin-bottom: 0px;
       }
-    }
-  }
-
-  .character-keywords{
-    .keywords-list{
-      width: calc(100% - 40px);
-      height: 400px;
-      margin: auto;
-    }
-  }
-
-  .leftDiv{
-    width: calc(50% - 5px);
-    margin-right: 10px;
-    float: left;
-  }
-  .rightDiv{
-    width:calc(50% - 5px);
-    display: inline-block;
-  }
-
-  .character-relatedInfo{
-    height: 459px;
-    .title{
-      .el-tabs__item{
-        padding: 0 50px;
-      }
-      .el-tabs__item.is-disabled{
-        padding-left: 0px;
-      }
-      .el-tabs__item.is-disabled{
-        color:rgba(119,145,231,.4);
-      }
-    }
-  }
-
-  .character-mediaWeek{
-    clear: both;
-  }
-
-  .character-carrierDis{
-    .item{
-      width:calc(50% - 10px);
-      height: 400px;
-      display: inline-block;
-      vertical-align: top;
-    }
-
-    .carrierDis-table{
-      width: calc(50% - 10px);
-      height: 400px;
-      display: inline-block;
-      vertical-align: top;
     }
   }
 }

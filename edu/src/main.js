@@ -6,6 +6,7 @@ import vueRouter from 'vue-router';
 import vueResource from 'vue-resource';
 import Vuex from 'vuex';
 import routerConfig from './router.config';
+import './utils';
 import vueConfig from './store.config';
 import "vue-style-loader!css-loader!sass-loader!./assets/css/style.scss";
 import 'vue-style-loader!css-loader!sass-loader!element-ui/lib/theme-default/index.css'

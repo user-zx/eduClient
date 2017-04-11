@@ -141,13 +141,14 @@
                     </div>
                 </el-card>
             </el-col>
+
             <el-col :span="12">
                 <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart"></span><span>微信热点</span>
                     </div>
                     <div class="text item">
-                        <el-card class="box-card educationBox">
+                        <el-card class="box-card">
                             <el-table :data="wechatHot" :resizable="false" style="width: 100%" border class="tran-table">
                                 <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
@@ -158,6 +159,7 @@
                     </div>
                 </el-card>
             </el-col>
+
             <el-col :span="12">
                 <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
