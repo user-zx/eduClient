@@ -74,19 +74,13 @@
                 currentPage: 1,
                 total: 0,
                 param: {
-                    pageSize: 5,
+                    pageSize: 15,
                     pageNumber: 0,
-                    dimension: '微信',
-                    orders: [
-                        {
-                            property: 'hitCount',
-                            direction: 'DESC'
-                        },
-                        {
-                            property: 'publishDateTime',
-                            direction: 'DESC'
-                        }
-                    ]
+                    vector:[],
+                    authcStatus:"",
+                    startDate:"",
+                    endDate:"",
+                    university:[],
                 },
                 searchNames: ['university', 'type', 'verified', 'exactDate'],
                 articleData: [],
@@ -138,105 +132,6 @@
                         'hot': 5,
                         'emotion': '已认证'
                     },
-                    {
-                        'id': 6,
-                        'all': 6,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    },
-                    {
-                        'id': 7,
-                        'all': 7,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    },
-                    {
-                        'id': 8,
-                        'all': 8,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    },
-                    {
-                        'id': 9,
-                        'all': 9,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    },
-                    {
-                        'id': 10,
-                        'all': 10,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    },
-                    {
-                        'id': 11,
-                        'all': 11,
-                        'name': '习1总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    },
-                    {
-                        'id': 12,
-                        'all': 12,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    },{
-                        'id': 13,
-                        'all': 13,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    },
-                    {
-                        'id': 14,
-                        'all': 14,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    },
-                    {
-                        'id': 15,
-                        'all': 15,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    }
-                    ,
-                    {
-                        'id': 16,
-                        'all': 16,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    }
                 ]
             }
         },
@@ -247,23 +142,30 @@
                 this.param.pageNumber = pageNumber - 1;
             },
             onSearchDataChange(data) {
-                data.pageSize = 5;
-                data.pageNumber = 0;
-                data.orders = this.param.orders;
-                this.param = data;
+                this.param.vector = [];
+                this.param.vector.push(data.type)
+                this.param.authcStatus = data.verified;
                 this.currentPage = 1;
-
+                this.param = data;
+                this.getWechatData();
             },
-            sort(index) {
-                this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
-            },
+            getWechatData(){
+                console.log(this.param);
+                this.$http.post("/apis/concerns/getWechatData.json", this.param).then((res)=>{
+                    console.log(res);
+                },(err)=>{
+                    console.log(err);
+                })
+            }
         },
         created(){
 
         },
         mounted(){
-
-            let articleData = [
+            this.$nextTick(function(){
+                this.getWechatData();
+            })
+            /*let articleData = [
                 {
                     'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
                     'attitude': 'positive',
@@ -320,8 +222,8 @@
                     'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
                 }
             ];
-
-            this.articleData = articleData;
+            
+            this.articleData = articleData;*/
         },
     }
 </script>

@@ -87,7 +87,7 @@
                 this.getArticleList();
             },
             sort(index) { 
-
+                
                 this.orders[index].direction = this.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
                 if(index==0){
                     this.param.sortField = "阅读量"
