@@ -65,10 +65,10 @@
                                 {{scope.row.rank}}
                             </template>
                         </el-table-column>
-                        <el-table-column label="微博号" prop="microblogName" align="center" :show-overflow-tooltip="true">
+                        <el-table-column label="微博号" prop="author" align="center" :show-overflow-tooltip="true">
                             <template scope="scope">
                                 <span @click="toWeiboDetail(scope.row)" class="character-name">
-                                    {{scope.row.microblogName}}
+                                    {{scope.row.author}}
                                 </span>
                             </template>
                         </el-table-column>
