@@ -120,7 +120,7 @@
             </el-row>
         </div>
         <div class="article-wrap">
-            <div class="content space  dark">
+            <div class="content space dark">
                 <div class="content-bar">
                     <ul class="content-bar-list">
                         <li>

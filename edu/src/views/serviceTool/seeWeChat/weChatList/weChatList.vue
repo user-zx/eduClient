@@ -65,10 +65,10 @@
                                 {{scope.row.rank}}
                             </template>
                         </el-table-column>
-                        <el-table-column label="公众号" prop="wechatNumber" align="center">
+                        <el-table-column label="公众号" prop="author" align="center" :show-overflow-tooltip="true">
                             <template scope="scope">
-                                <span @click="toCharacterAnalyse(scope.row)" class="character-name">
-                                    {{scope.row.name}}
+                                <span @click="toWechatDetail(scope.row)" class="character-name">
+                                    {{scope.row.author}}
                                 </span>
                             </template>
                         </el-table-column>
@@ -172,10 +172,7 @@
                     this.getWechatExponentData();
                 }
             },
-            toCharacterAnalyse(data){
-                console.log(data);
-                this.$router.push({path:"/home/characterAnalyse"});
-            },
+
             toVerified(data){
                 this.$router.push({path: "/home/weChatVerify", query: data});
             },
@@ -199,6 +196,12 @@
                         this.wechatExponentData = content;
                     }
                 )
+            },
+
+            toWechatDetail(data){
+                data.startDate = this.exponentParam.startDate;
+                data.endDate = this.exponentParam.endDate;
+                this.$router.push({path:"/home/wechatDetail", query: data});
             }
         },
         created(){
