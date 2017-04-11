@@ -1,20 +1,20 @@
 /**
-* Created by zhangxin on 2017/3/17.
+* Created by lifei on 2017/3/30.
 */
 <template>
-    <div class="mediaCoverage article-wrap">
-        <bread-crumb></bread-crumb>
-        <div id="search_container">
-            <searchBox :searchData="searchData"></searchBox>
-        </div>
+    <div class="mediaCoverage article-wrap" v-loading="loading" element-loading-text="加载中……">
+        <breadCrumb></breadCrumb>
+        <search-box :searchNames=searchNames @onload="onSearchLoad" @searchDataChange="onSearchDataChange"></search-box>
         <div class="content">
             <div class="content-bar">
                 <ul class="content-bar-list">
                     <li class="pointer">全部</li>
-                    <li class="pointer arrow-up">
-                        阅读量
+                    <li class="pointer" @click="sort(0)">
+                        阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
                     </li>
-                    <li class="pointer arrow-down">时间</li>
+                    <li class="pointer" @click="sort(1)">
+                        时间<i class="arrow" :class="param.orders[1].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
+                    </li>
                 </ul>
                 <div class="content-bar-button">
                     <el-dropdown class="event-store-box" trigger="click">
@@ -27,42 +27,56 @@
                             <el-dropdown-item>事件3</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
-                    <el-button type="primary" icon="plus" class="button-icon">批量关注</el-button>
+                    <el-button type="primary" icon="plus" class="button-icon" @click="btnClick()">批量关注</el-button>
                 </div>
                 <div class="content-bar-page">
                     <el-pagination class="edu-pagination"
-                                   @size-change="handleSizeChange"
                                    @current-change="handleCurrentChange"
-                                   :current-page="currentPage"
+                                   :current-page="param.pageNumber + 1"
                                    :page-size="5"
                                    layout="prev, next, jumper, total"
-                                   :total="100">
+                                   :total="total">
                     </el-pagination>
                 </div>
             </div>
-            <article-view></article-view>
+            <articleView :articleData="articleData"></articleView>
         </div>
     </div>
 </template>
-<style lang="scss" scoped>
-</style>
 <script>
-     /*
-    * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
-    * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
-    * import loginButton from './components/loginButton.vue';
-    */
-     import breadCrumb from '../../../components/breadCrumb/breadCrumb.vue';
-     import searchBox from '../../../components/searchBox/searchBox.vue';
-     import articleView from '../../../components/content/article.vue'
+    /*
+     * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
+     * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
+     * import loginButton from './components/loginButton.vue';
+     */
+    import breadCrumb from '../../../components/breadCrumb/breadCrumb.vue';
+    import searchBox from '../../../components/searchBox/searchBox.vue'
+    import articleView from '../../../components/content/article.vue'
+
     export default{
         data(){
             return {
-                searchData: '',
-                currentPage: 1,
+                total:0,
+                searchNames: ['university', 'emotion', 'publishDateTime'],
+                param: {
+                    pageSize: 5,
+                    pageNumber: 0,
+                    orders: [
+                        {
+                            property: 'hitCount',
+                            direction: 'DESC'
+                        },
+                        {
+                            property: 'publishDateTime',
+                            direction: 'DESC'
+                        }
+                    ]
+                },
+                articleData:[],
+                loading: false,
             }
         },
-        components:{breadCrumb,searchBox,articleView} ,
+        components:{searchBox, breadCrumb, articleView} ,
         methods:{
             setBreadCrumb(){
                 let breadcrumb=[
@@ -73,74 +87,64 @@
                         name:"媒体声誉",to:{path:"/characterNews"}
                     }
                 ];
-                this.$store.commit("setBreadCrumb",breadcrumb);
-            },
-            handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
+                this.$store.commit("setBreadCrumb", breadcrumb);
             },
             handleCurrentChange(val) {
-                this.currentPage = val;
-                console.log(`当前页: ${val}`);
+                this.param.pageNumber = val - 1;
+                this.getArticleList();
             },
-
+            btnClick(){
+//                跳转到人物详情是以下这个方法  暂时注释
+//                this.$router.push({path:"/home/industryDetailNews"});
+            },
+            onSearchLoad(data) {
+                //console.log(data);
+                data.pageSize = 5;
+                data.pageNumber = 0;
+                data.orders = this.param.orders;
+                this.param = data;
+                this.getArticleList();
+            },
+            onSearchDataChange(data) {
+                data.pageSize = 5;
+                data.pageNumber = 0;
+                data.orders = this.param.orders;
+                this.param = data;
+                this.getArticleList();
+            },
+            sort(index) {
+                this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
+                this.getArticleList();
+            },
+            getArticleList() {
+                this.loading = true;
+                this.$nextTick(function() {
+                    //console.log(JSON.stringify(this.param))
+                    this.$http.post('/apis/industryNews/findEduInfoByCondation.json', this.param).then(
+                        (response) => {
+                            console.log(response);
+                            if (response.data.success) {
+                                this.articleData = response.data.data.content;
+                                // 最多允许翻1000页
+                                this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
+                            } else {
+                                console.error(response.data.message);
+                            }
+                            this.$nextTick(function() {
+                                this.loading = false;
+                            });
+                        }, (err) => {
+                            this.loading = false;
+                            console.error(err);
+                        }
+                    );
+                });
+            }
         },
         mounted(){
-            let searchData = [
-                {
-                    'title' :  '选择高校:',
-                    'searchList': [
-                        {id: 0, text: '全部', selected: true},
-                        {id: 1, text: '北京大学', selected: false},
-                        {id: 2, text: '北京航空航天大学', selected: false},
-                        {id: 3, text: '清华大学', selected: false},
-                        {id: 4, text: '中央民族大学', selected: false},
-                        {id: 5, text: '北京邮电大学', selected: false},
-                        {id: 6, text: '北京传媒大学', selected: false},
-                        {id: 7, text: '北京科技大学', selected: false},
-                        {id: 8, text: '北京科技大学', selected: false},
-                        {id: 9, text: '北京科技大学', selected: false},
-                        {id: 10, text: '北京科技大学', selected: false},
-                        {id: 11, text: '北京科技大学', selected: false}
-                    ],
-                    'hasMore': true,
-                    'multiple': false,
-                    'buttons': [
-                        {'buttonText': '添加高校', 'id': 'add-college-btn'}
-                    ],
-                    'hasDateBox': false
-                },
-                {
-                    'title': '情感:',
-                    'searchList': [
-                        {id: 0, text: '全部', selected: false},
-                        {id: 1, text: '正面', selected: true},
-                        {id: 2, text: '负面', selected: false}
-                    ],
-                    'hasMore': false,
-                    'multiple': false,
-                    'buttons': [],
-                    'hasDateBox': false
-                },
-                {
-                    'title': '时间:',
-                    'searchList': [
-                        {id: 0, text: '全部', selected: false},
-                        {id: 1, text: '今天', selected: true},
-                        {id: 2, text: '昨天', selected: false},
-                        {id: 3, text: '近7天', selected: false},
-                        {id: 4, text: '近一个月', selected: false},
-                        {id: 5, text: '自定义时间', dateBox: 'show', selected: false}
-                    ],
-                    'hasMore': false,
-                    'multiple': false,
-                    'buttons': [],
-                    'hasDateBox': true
-                }
-            ];
-            this.searchData = searchData;
+            this.setBreadCrumb();
         },
         created(){
-            this.setBreadCrumb();
         }
     }
 </script>

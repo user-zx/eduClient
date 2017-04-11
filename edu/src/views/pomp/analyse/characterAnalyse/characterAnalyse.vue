@@ -3,6 +3,7 @@
 */
 <template>
     <div class="characterAnalyse">
+        <breadCrumb></breadCrumb>
         <div class="character-info">
             <div class="info-left">
                 <span class="characterName">

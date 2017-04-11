@@ -120,7 +120,7 @@
                         name:"舆情管理",to:{path:"/home/panorama"}
                     },
                     {
-                        name:"事件监测"
+                        name:"舆情报告"
                     }
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);

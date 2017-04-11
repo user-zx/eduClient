@@ -93,11 +93,6 @@
                 this.getArticleList();
             },
              onSearchDataChange(data) {
-                console.log(data);
-                if(data.dimension == "人物聚焦"){
-                    this.$router.push({path: "/home/characterTableAnalyse", query: {dimension: '人物聚焦', university: data.university}});
-                    return;
-                }
                 data.pageSize = 5;
                 data.pageNumber = 0;
                 data.orders = this.param.orders;

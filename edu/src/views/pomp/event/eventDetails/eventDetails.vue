@@ -3,6 +3,7 @@
 */
 <template>
     <div class="eventDetails" id="eventDetails">
+        <breadCrumb></breadCrumb>
         <div class="title-box">
             <h3 class="title">{{ title }}</h3>
         </div>
@@ -87,6 +88,7 @@
     * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
     * import loginButton from './components/loginButton.vue';
     */
+     import breadCrumb from '../../../../components/breadCrumb/breadCrumb.vue';
      import eventArticle from './tabContent/eventArticle.vue';
      import eventCharts from './tabContent/eventCharts.vue';
      import eventAnalyse from './tabContent/eventAnalyse.vue';
@@ -105,15 +107,15 @@
                 eventId: -1
             }
         },
-        components:{eventArticle,eventCharts,eventAnalyse},
+        components:{breadCrumb,eventArticle,eventCharts,eventAnalyse},
         methods:{
             setBreadCrumb(){
                 let breadcrumb=[
                     {
-                        name:"舆情管理",to:{path:"/home/panorama"}
+                        name:"舆情管理", to: {path: "/home/panorama"}
                     },
                     {
-                        name:"事件监测",to:{path:"/home/event"}
+                        name:"事件监测", to: {path: "/home/event"}
                     },
                     {
                         name:"事件详情"
