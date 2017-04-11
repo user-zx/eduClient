@@ -84,12 +84,12 @@
             </el-row>
             <el-row :gutter="10">
                 <el-col :span="12">
-                    <el-card class="box-card educationBox">
+                    <el-card class="box-card educationBox" style="margin-top: 0px">
                         <div slot="header" class="clearfix">
                             <span class="icons icons-chart"></span><span>微信热点</span>
                         </div>
                         <div class="text item">
-                            <el-card class="box-card educationBox" style="border: 0px">
+                            <el-card class="box-card educationBox">
                                 <el-table :data="wechatHot" :resizable="false" style="width: 100%" border class="tran-table">
                                     <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
                                     <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
@@ -101,12 +101,12 @@
                     </el-card>
                 </el-col>
                 <el-col :span="12">
-                    <el-card class="box-card educationBox">
+                    <el-card class="box-card educationBox" style="margin-top: 0px">
                         <div slot="header" class="clearfix">
                             <span class="icons icons-chart"></span><span>微博热点</span>
                         </div>
                         <div class="text item">
-                            <el-card class="box-card educationBox" style="border: 0px">
+                            <el-card class="box-card educationBox">
                                 <el-table :data="weboHot" :resizable="false" style="width: 100%" border class="tran-table">
                                     <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
                                     <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
