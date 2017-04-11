@@ -8,9 +8,12 @@
                                        <span class="chooseTime">全部</span>
                                    </el-col>
                                    <el-col :span="20">
-                                        <el-select v-model="formInline.all" placeholder="请选择人物">
-                                          <el-option label="小习习" value="shanghai"></el-option>
-                                          <el-option label="小强" value="beijing"></el-option>
+                                        <el-select v-model="conditionOption" placeholder="请选择人物">
+                                            <el-option 
+                                              v-for="item in allPerson"
+                                              :label="item"
+                                              :value="item"> 
+                                            </el-option>
                                         </el-select>
                                    </el-col>
                              </el-row>
@@ -21,9 +24,9 @@
                                     <span class="chooseTime">国家领导</span>
                                 </el-col>
                                 <el-col :span="20">
-                                     <el-select v-model="formInline.stateLeader" placeholder="请选择领导">
-                                          <el-option label="小习习" value="shanghai"></el-option>
-                                          <el-option label="小强" value="beijing"></el-option>
+                                     <el-select v-model="conditionOption" placeholder="请选择领导">
+                                          <el-option label="小习习" value="习习"></el-option>
+                                          <el-option label="小强" value="强强"></el-option>
                                      </el-select>
                                 </el-col>
                             </el-row>
@@ -34,11 +37,11 @@
                                  <span class="chooseTime">政/厅</span>
                              </el-col>
                              <el-col :span="20">
-                                  <el-select v-model="formInline.officeArea" placeholder="请选择地区">
+                                  <el-select v-model="conditionOption" placeholder="请选择地区">
                                       <el-option label="北京" value="shanghai"></el-option>
                                       <el-option label="河南" value="beijing"></el-option>
                                   </el-select>
-                                  <el-select v-model="formInline.region" placeholder="请选择人物">
+                                  <el-select v-model="formInline.office" placeholder="请选择人物">
                                       <el-option label="区域一" value="shanghai"></el-option>
                                       <el-option label="区域二" value="beijing"></el-option>
                                   </el-select>
@@ -51,11 +54,11 @@
                                  <span class="chooseTime">高校领导</span>
                              </el-col>  
                              <el-col :span="20">
-                                 <el-select v-model="formInline.schoolArea" placeholder="请选择地区">
-                                      <el-option label="北京" value="shanghai"></el-option>
-                                      <el-option label="河南" value="beijing"></el-option>
+                                    <el-select v-model="formInline.schoolArea" placeholder="请选择地区">
+                                      <el-option label="北京" value="北京"></el-option>
+                                      <el-option label="河南" value="河南"></el-option>
                                     </el-select>
-                                    <el-select v-model="formInline.school" placeholder="请选择人物">
+                                    <el-select v-model="conditionOption" placeholder="请选择人物">
                                       <el-option label="区域一" value="shanghai"></el-option>
                                       <el-option label="区域二" value="beijing"></el-option>
                                     </el-select>
@@ -71,14 +74,13 @@
                                    <el-select v-model="formInline.regionArea" placeholder="请选择地区">
                                       <el-option label="北京" value="shanghai"></el-option>
                                       <el-option label="河南" value="beijing"></el-option>
-                                    </el-select>
-                                      <el-select v-model="formInline.region" placeholder="请选择人物">
-                                      <el-option label="区域一" value="shanghai"></el-option>
+                                   </el-select>
+                                    <el-select v-model="conditionOption" placeholder="请选择人物">
+                                      <el-option label="区域一" value="区域一"></el-option>
                                       <el-option label="区域二" value="beijing"></el-option>
-                                  </el-select>
+                                    </el-select>
                               </el-col>
                          </el-row>   
-                           
                 </el-tab-pane>
               </el-tabs> 
                <el-button type="primary" class="addPerson"><router-link to="/home/myCenter">添加人物</router-link></el-button>
@@ -145,6 +147,7 @@
                     reportPersonage : [],
                     pageSize:10,
                 },
+                allPerson:["习大大","彭麻麻"],
                 labelPosition: 'left',
                 activeName:"all",
                 valueTime:'',
@@ -158,6 +161,7 @@
                     scholar:'',
                     scholarArea:'',
                 },
+                conditionOption:"",
                 getTableList: [
                     {
                         'id': 1,
@@ -186,20 +190,7 @@
             handleClick(tab, event) {
                 let vm = this;
                 vm.getBodyData.personageType = tab.label;
-                switch(tab.label) {
-                    case "全部":
-                         vm.getBodyData.reportPersonage = vm.formInline.all;
-                        break;
-                    case "国家领导":
-                         vm.getBodyData.reportPersonage = vm.formInline.stateLeader;
-                        break;
-                    case "政/厅":
-                        vm.getBodyData.reportPersonage = vm.formInline.office;
-                    case "高校领导":
-                        vm.getBodyData.reportPersonage = vm.formInline.school;
-                    case "知名学者":
-                        vm.getBodyData.reportPersonage = vm.formInline.scholar;
-                }
+                vm.conditionOption = "";
             },
             getCharacterList(){
                if(this.valueTime===""){
@@ -208,7 +199,6 @@
                }else{
                     console.log(this.valueTime);
                }
-
                 this.$http.post("/apis/concerns/getPersonData.json",this.getBodyData).then((res)=>{
                     console.log(res);
                 },(err)=>{
@@ -220,8 +210,12 @@
             this.$nextTick(function(){
                 this.getCharacterList();
             });
-            
         },
+        watch:{ 
+            conditionOption:function(val,oldVal){
+                console.log(val);
+            }
+        }    
     }
 </script>
 <style lang="scss">

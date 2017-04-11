@@ -9,11 +9,11 @@
                 <ul class="content-bar-list">
                     <li class="pointer">全部</li>
                     <li class="pointer" @click="sort(0)" >
-                        阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
-                    </li>
+                        阅读量<i class="arrow" :class="orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
+                    </li> 
                     <li class="pointer" @click="sort(1)">
-                        时间<i class="arrow" :class="param.orders[1].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
-                    </li>
+                        时间<i class="arrow" :class="orders[1].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
+                    </li> 
                 </ul>
                 <div class="content-bar-pagination">
                     <el-pagination class="edu-pagination"
@@ -42,9 +42,18 @@
                 currentPage: 1,
                 total: 0,
                 param: {
-                    pageSize: 5,
+                    pageSize: 10,
                     pageNumber: 0,
-                    orders: [
+                    startDate:"",
+                    endDate:"",
+                    sortField:"阅读量",
+                    sortType:"ASC",
+                    vector:[],
+                    university:[],
+                    emotion:"",
+
+                },
+                orders: [
                         {
                             property: 'hitCount',
                             direction: 'DESC'
@@ -53,8 +62,7 @@
                             property: 'publishDateTime',
                             direction: 'DESC'
                         }
-                    ]
-                },
+                    ],
                 searchNames: ['university', 'vector', 'emotion', 'publishDateTime'],
                 articleData: [],
                 loading:true,
@@ -70,29 +78,36 @@
                 this.getArticleList();
             },
             onSearchDataChange(data) {
-                data.pageSize = 5;
-                data.pageNumber = 0;
-                data.orders = this.param.orders;
-                this.param = data;
-                this.currentPage = 1;
+                console.log(data);
+                this.param.university.push  = data.university;
+                this.param.vector.push(data.vector);
+                this.param.emotion = data.emotion;
+                this.param.startDate = data.startDate;
+                this.param.endDate = data.endDate;
                 this.getArticleList();
             },
             sort(index) { 
-                this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
+
+                this.orders[index].direction = this.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
+                if(index==0){
+                    this.param.sortField = "阅读量"
+                }else{
+                     this.param.sortField = "时间"
+                }
+                this.param.sortType  = this.orders[index].direction;
                 this.getArticleList();
             },
             getArticleList() {
                 this.loading = true;
-                this.$nextTick(function() { 
-                    this.$http.post('/apis/concerns/getOpinionMonitor.json',this.param).then(
+                    console.log(this.param);
+                    this.$http.post('/apis/concerns/getOpinionData.json',this.param).then(
                         (response) => {
+                            console.log(response);
                             if (response.data.success) {
                                 this.articleData = response.data.data.content;
                                 // 最多允许翻10000页
                                 this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
-                                this.$nextTick(function() {
-                                    this.loading = false;
-                                });
+                                 this.loading = false;
                             } else {
                                 console.error(response.data.message);
                             }
@@ -101,8 +116,8 @@
                             this.loading = false;
                         }
                     );
-                });
-            }
+            },
+           
 
         },
         created(){
