@@ -14,10 +14,12 @@ import mediaCoverage from './views/reference/mediaCoverage/mediaCoverage.vue';
 import report from './views/reference/report/report.vue';
 import seeWeChat from './views/serviceTool/seeweChat/seeweChat.vue';
 import weChatList from './views/serviceTool/seeWeChat/weChatList/weChatList.vue';
-import weChatVerify from "./views/serviceTool/seeWeChat/weChatVerify/weChatVerify.vue"
+import weChatVerify from "./views/serviceTool/seeWeChat/weChatVerify/weChatVerify.vue";
+import weChatDetail from "./views/serviceTool/seeWeChat/wechatDetail/wechatDetail.vue";
 import seeWeibo from './views/serviceTool/seeWeibo/seeWeibo.vue';
 import weiboList from './views/serviceTool/seeWeibo/weiboList/weiboList.vue';
 import weiboVerify from './views/serviceTool/seeWeibo/weiboVerify/weiboVerify.vue';
+import weiboDetail from './views/serviceTool/seeWeibo/weiboDetail/weiboDetail.vue';
 import myAttention from './views/myAttention/myAttention.vue';
 import login from './views/login/login.vue';
 import home from './views/home/home.vue';
@@ -197,6 +199,16 @@ export default {
                     ]
                 },
                 {
+                    path: "weChatDetail",
+                    component: seeWeChat,
+                    children: [
+                        {
+                            path: "",
+                            component: weChatDetail
+                        }
+                    ]
+                },
+                {
                     path:"seeWeibo",
                     component:seeWeibo,
                     children: [
@@ -213,6 +225,16 @@ export default {
                         {
                             path: "",
                             component: weiboVerify
+                        }
+                    ]
+                },
+                {
+                    path: "weiboDetail",
+                    component:　seeWeibo,
+                    children: [
+                        {
+                            path: "",
+                            component: weiboDetail
                         }
                     ]
                 },

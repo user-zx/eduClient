@@ -116,17 +116,13 @@
                 statisticsParam: {
                     pageSize: 15,
                     pageNumber: 0,
-                    authcStatus: '',
-                    startDate: '',
-                    endDate: ''
+                    authcStatus: ''
                 },
                 //微信指数请求参数
                 exponentParam: {
                     pageSize: 15,
                     pageNumber: 0,
-                    authcStatus: '',
-                    startDate: '',
-                    endDate: ''
+                    authcStatus: ''
                 },
                 //微信统计返回参数
                 wechatStatisticsData: [],
@@ -164,16 +160,15 @@
                 if(data.verified == '全部'){
                     data.verified = '';
                 }
+                data.pageSize = 15;
+                data.pageNumber = 0;
                 //根据tab页当前状态 判断请求的是微博指数还是微博统计的后台
                 if($('#seeWeChat .el-tabs__nav .el-tabs__item:eq(0)').hasClass('is-active')){
+                    this.statisticsParam = data;
                     this.statisticsParam.authcStatus = data.verified;
-                    this.statisticsParam.startDate = data.startDate;
-                    this.statisticsParam.endDate = data.endDate;
                     this.getWechatStatisticsData();
                 }else{
-                    this.exponentParam.authcStatus = '';
-                    this.exponentParam.startDate = data.startDate;
-                    this.exponentParam.endDate = data.endDate;
+                    this.exponentParam = data;
                     this.getWechatExponentData();
                 }
             },

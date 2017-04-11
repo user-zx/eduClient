@@ -67,7 +67,7 @@
                         </el-table-column>
                         <el-table-column label="微博号" prop="microblogName" align="center" :show-overflow-tooltip="true">
                             <template scope="scope">
-                                <span @click="toCharacterAnalyse(scope.row)" class="character-name">
+                                <span @click="toWeiboDetail(scope.row)" class="character-name">
                                     {{scope.row.microblogName}}
                                 </span>
                             </template>
@@ -128,16 +128,12 @@
                 hotParam: {
                     pageSize: 15,
                     pageNumber: 0,
-                    authcStatus: '',
-                    startDate: '',
-                    endDate: ''
+                    authcStatus: ''
                 },
                 statisticsParam: {
                     pageSize: 15,
                     pageNumber: 0,
-                    authcStatus: '',
-                    startDate: '',
-                    endDate: ''
+                    authcStatus: ''
                 },
                 loading:true,
             }
@@ -170,25 +166,22 @@
                 if(data.verified == '全部'){
                     data.verified = '';
                 }
+                data.pageSize = 15;
+                data.pageNumber = 0;
                 //根据tab页当前状态 判断请求的是微博指数还是微博统计的后台
                 if($('#seeWeibo .el-tabs__nav .el-tabs__item:eq(0)').hasClass('is-active')){
+                    this.statisticsParam = data;
                     this.statisticsParam.authcStatus = data.verified;
-                    this.statisticsParam.startDate = data.startDate;
-                    this.statisticsParam.endDate = data.endDate;
                     this.getWeiboStatisticsData();
                 }else{
                     this.hotParam = data;
-                    this.hotParam.authcStatus = '';
-                    this.hotParam.startDate = data.startDate;
-                    this.hotParam.endDate = data.endDate;
                     this.getWeiboHotArticleList();
                 }
             },
-            toCharacterAnalyse(data){
-                this.$router.push({path:"/home/characterAnalyse"});
+            toWeiboDetail(data){
+                this.$router.push({path:"/home/weiboDetail", query: data});
             },
             toVerified(data){
-//                console.log(data)
                 this.$router.push({path: "/home/weiboVerify", query: data});
             },
 
