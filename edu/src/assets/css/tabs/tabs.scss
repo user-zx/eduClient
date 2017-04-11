@@ -75,6 +75,21 @@
   }
 }
 
+.custom-tabs.shorter-tabs{
+  .el-tabs__header{
+    padding: 18px;
+    height: 60px;
+  }
+  .el-card{
+    &.box-card{
+      >.el-card__body{
+        padding-top: 0px;
+      }
+    }
+  }
+}
+
+
 .block-tabs{
   background: #1f2439;
   

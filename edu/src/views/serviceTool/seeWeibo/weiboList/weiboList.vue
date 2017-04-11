@@ -179,6 +179,8 @@
                 }
             },
             toWeiboDetail(data){
+                data.startDate = this.hotParam.startDate;
+                data.endDate = this.hotParam.endDate;
                 this.$router.push({path:"/home/weiboDetail", query: data});
             },
             toVerified(data){
