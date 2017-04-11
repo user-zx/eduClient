@@ -62,26 +62,54 @@ export default {
                 },
                 {
                     path:"event",
-                    component:eventList,
+                    component:event,
+                    children:[
+                        {
+                            path:"",
+                            component:eventList
+                        }
+                    ]
                 },
                 {
                     path:"eventDetails",
-                    component:eventDetails,
-
+                    component:event,
+                    children:[
+                        {
+                            path:"",
+                            component:eventDetails
+                        }
+                    ]
                 },
                 {
                     path:"analyse",
-                    component:analyseList,
-
+                    component:analyse,
+                    children: [
+                        {
+                            path: "",
+                            component: analyseList
+                        }
+                    ]
                 },
                 {
                     //为了过滤路径 命名后面追加了Analyse
                     path: "characterTableAnalyse",
-                    component:characterTable,
+                    component:analyse,
+                    children:[
+                        {
+                            path: "",
+                            component: characterTable
+                        }
+                    ]
                 },
                 {
                     path: "characterAnalyse",
-                    component: characterAnalyse
+                    component: analyse,
+                    children: [
+                        {
+                            path: "",
+                            component: characterAnalyse
+                        }
+                    ]
                 },
                 {
                     name:"舆情预警",
@@ -102,6 +130,12 @@ export default {
                     name: "报告详情",
                     path:"speechDetails",
                     component:speechDetails,
+                    children:[
+                        {
+                            path:"",
+                            component:eventDetails
+                        }
+                    ]
                 },
                 {   
                     name:"行业动态",

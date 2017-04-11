@@ -4,7 +4,6 @@
 import "vue-style-loader!css-loader!sass-loader!../css/characterAnalyse.scss";
 import echarts from "echarts"
 import echartsWordCloud from "echarts-wordcloud"
-import breadCrumb from '../../../../../components/breadCrumb/breadCrumb.vue';
 
 export default{
     data(){
@@ -32,12 +31,12 @@ export default{
             time_loading: true
         }
     },
-    components: {breadCrumb},
+    components: {},
     methods: {
         setBreadCrumb(){
             let breadcrumb = [
                 {
-                    name: "舆情管理", to: {path: "/home/panorama"}
+                    name: "舆情管理", to: {path: "/"}
                 },
                 {
                     name: "舆情监测", to: {path: "/home/analyse"}

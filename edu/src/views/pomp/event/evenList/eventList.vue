@@ -3,7 +3,6 @@
 */
 <template>
     <div class="event-list" v-loading="loading" element-loading-text="加载中……">
-        <breadCrumb></breadCrumb>
         <div class="table-box">
             <div class="btn-box text-right">
                 <el-button type="primary" @click="addEvent">新建事件库</el-button>
@@ -78,7 +77,6 @@
     * import loginButton from './components/loginButton.vue';
     */
      import "vue-style-loader!css-loader!sass-loader!../../../../assets/css/pagination/pagination.scss";
-     import breadCrumb from '../../../../components/breadCrumb/breadCrumb.vue';
      export default{
         data(){
             return {
@@ -117,7 +115,6 @@
                 },
             }
         },
-        components:{breadCrumb} ,
         methods:{
             setBreadCrumb(){
                 let breadcrumb=[
