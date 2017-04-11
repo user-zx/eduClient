@@ -105,7 +105,7 @@
             <div class="content-bar">
                 <ul class="content-bar-list">
                     <li class="pointer">全部</li>
-                    <li class="pointer" @click="sort(0)">
+                    <li class="pointer" @click="sort()">
                         阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
                     </li>
                 </ul>
@@ -214,11 +214,20 @@
                 value: '',
                 pickerOptions0: {
                     disabledDate(time) {
-                    //return time.getTime() < Date.now() - 8.64e7;
-
+                        //return time.getTime() < Date.now() - 8.64e7;
                     }
                 },
                 value1: '',
+                param: {
+                    pageSize: 5,
+                    pageNumber: 0,
+                    orders: [
+                        {
+                            property: 'hitCount',
+                            direction: 'DESC'
+                        }
+                    ]
+                }
             }
         },
         components:{breadCrumb, searchBox, characterTable} ,
@@ -246,6 +255,10 @@
             handleCurrentChange(val) {
                 this.currentPage = val;
                 console.log(`当前页: ${val}`);
+            },
+            sort() {
+                this.param.orders[0].direction = this.param.orders[0].direction == 'DESC' ? 'ASC' : 'DESC';
+                this.getArticleList();
             },
         },
         mounted(){
