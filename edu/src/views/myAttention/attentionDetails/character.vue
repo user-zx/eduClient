@@ -37,13 +37,13 @@
                                  <span class="chooseTime">政/厅</span>
                              </el-col>
                              <el-col :span="20">
-                                  <el-select v-model="conditionOption" placeholder="请选择地区">
+                                  <el-select v-model="formInline.officeArea" placeholder="请选择地区">
                                       <el-option label="北京" value="shanghai"></el-option>
                                       <el-option label="河南" value="beijing"></el-option>
                                   </el-select>
-                                  <el-select v-model="formInline.office" placeholder="请选择人物">
-                                      <el-option label="区域一" value="shanghai"></el-option>
-                                      <el-option label="区域二" value="beijing"></el-option>
+                                  <el-select v-model="conditionOption" placeholder="请选择人物">
+                                      <el-option label="人物1" value="人物1"></el-option>
+                                      <el-option label="人物2" value="人物3"></el-option>
                                   </el-select>
                              </el-col>
                          </el-row>
@@ -146,6 +146,7 @@
                     personageType:[],
                     reportPersonage : [],
                     pageSize:10,
+                    pageNumber:0,
                 },
                 allPerson:["习大大","彭麻麻"],
                 labelPosition: 'left',
@@ -189,15 +190,16 @@
             },
             handleClick(tab, event) {
                 let vm = this;
-                vm.getBodyData.personageType = tab.label;
                 vm.conditionOption = "";
+                vm.valueTime = "";
+                 vm.getBodyData.personageType = [];
+                 vm.getBodyData.reportPersonage = [];
+                vm.getBodyData.personageType.push(tab.label);
             },
             getCharacterList(){
                if(this.valueTime===""){
                     this.getBodyData.startDate = "";
                     this.getBodyData.endDate = ""; 
-               }else{
-                    console.log(this.valueTime);
                }
                 this.$http.post("/apis/concerns/getPersonData.json",this.getBodyData).then((res)=>{
                     console.log(res);
@@ -213,7 +215,21 @@
         },
         watch:{ 
             conditionOption:function(val,oldVal){
-                console.log(val);
+                if(val!=""){
+                  this.getBodyData.reportPersonage.push(val);
+                }
+                this.getCharacterList();
+            },
+            valueTime:function(val,oldVal){
+              if(val[0]!=null){
+                 let startSuffix = " 00:00:00";
+                let endSuffix = " 23:59:59";
+                let format = 'yyyy-MM-dd'; 
+                this.getBodyData.startDate = val[0].format(format) + startSuffix;
+                this.getBodyData.endDate = val[1].format(format) + endSuffix;
+                this.getCharacterList();
+              }
+               
             }
         }    
     }
