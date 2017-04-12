@@ -2,25 +2,24 @@
     <div class="wechatDetail">
         <div class="info-wrap space">
             <div class="logo-div">
-                <img src="../../../../assets/images/university-logo-temp.png" alt="" class="logo">
+                <img :src="wechatInfo.accountSign" alt="" class="logo">
             </div>
             <div class="info">
-                <p>微信昵称： 北京大学</p>
-                <p>微信认证：北京大学官方微信、教育管委联盟成员 </p>
-                <p>学校：北京大学</p>
-                <p>所在地： 北京</p>
-                <p>简介： 发布北大权威信息，展示北大校园生活，服务广大师生校友，哈哈哈发布北大权威信息，展示北大校园生活，服务广大师生校友，哈哈哈发布北大权威信息，展示北大校园生活，服务广大师生校友，哈哈哈 </p>
+                <p>微信号名称： {{wechatInfo.wechatName}}</p>
+                <p>微信号：{{wechatInfo.wechatNumber}} </p>
+                <p>账号主体：{{wechatInfo.wechatSubject}}</p>
+                <p>功能介绍： {{wechatInfo.instruction}}</p>
             </div>
             <div class="btn-area">
                 <div class="btn attention">
-                    <el-button type="primary" icon="plus">关注</el-button>
+                    <el-button type="primary" icon="plus" @click="attentionClick">关注</el-button>
                 </div>
                 <div class="btn alert">
                     <el-button type="primary" icon="plus">预警</el-button>
                 </div>
             </div>
             <div class="qrcode-area">
-                <img src="../../../../assets/images/qrcode-temp.png" alt="">
+                <img :src="wechatInfo.qrCode" alt="">
             </div>
         </div>
         <div class="summary-wrap space">
@@ -74,51 +73,39 @@
                     </el-card>
                 </el-col>
                 <el-col :span="12">
-                    <el-tabs class="custom-tabs left-tabs shorter-tabs" @tab-click="rankArticleTabClick" v-model="activeNameOne">
+                    <el-tabs class="custom-tabs left-tabs shorter-tabs mrt10" @tab-click="rankArticleTabClick" v-model="activeNameOne">
                         <el-tab-pane label="排名变化" name="rank" class="is-active">
-                            <el-card class="box-card educationBox">
-                                <div class="rankChange text item" id="rankGraph"></div>
-                            </el-card>
+                            <div class="rankChange text item" id="rankGraph"></div>
                         </el-tab-pane>
                         <el-tab-pane label="发布文章数" name="publish">
-                            <el-card class="box-card educationBox">
-                                <div class="publishNum text item" id="articleGraph"></div>
-                            </el-card>
+                            <div class="publishNum text item" id="articleGraph"></div>
                         </el-tab-pane>
                     </el-tabs>
                 </el-col>
                 <el-col :span="12">
-                    <el-tabs class="custom-tabs left-tabs shorter-tabs" @tab-click="supportHitSumClick" v-model="activeNameTwo">
+                    <el-tabs class="custom-tabs left-tabs shorter-tabs mrt10" @tab-click="supportHitSumClick" v-model="activeNameTwo">
                         <el-tab-pane label="总阅读量" name="hitSum" class="is-active">
-                            <el-card class="box-card educationBox">
-                                <div class="rankChange text item" id="hitSumGraph"></div>
-                            </el-card>
+                            <div class="rankChange text item" id="hitSumGraph"></div>
                         </el-tab-pane>
                         <el-tab-pane label="总点赞量" name="supportSum">
-                            <el-card class="box-card educationBox">
-                                <div class="publishNum text item" id="supportSumGraph"></div>
-                            </el-card>
+                            <div class="publishNum text item" id="supportSumGraph"></div>
                         </el-tab-pane>
                     </el-tabs>
                 </el-col>
                 <el-col :span="12">
-                    <el-tabs class="custom-tabs left-tabs shorter-tabs" @tab-click="supportHitAvgTabClick" v-model="activeNameThree">
+                    <el-tabs class="custom-tabs left-tabs shorter-tabs mrt10" @tab-click="supportHitAvgTabClick" v-model="activeNameThree">
                         <el-tab-pane label="平均阅读量" name="hitAvg" class="is-active">
-                            <el-card class="box-card educationBox">
-                                <div class="rankChange text item" id="hitAvgGraph"></div>
-                            </el-card>
+                            <div class="rankChange text item" id="hitAvgGraph"></div>
                         </el-tab-pane>
                         <el-tab-pane label="平均点赞量" name="supportAvg">
-                            <el-card class="box-card educationBox">
-                                <div class="publishNum text item" id="supportAvgGraph"></div>
-                            </el-card>
+                            <div class="publishNum text item" id="supportAvgGraph"></div>
                         </el-tab-pane>
                     </el-tabs>
                 </el-col>
             </el-row>
         </div>
-        <div class="article-wrap">
-            <div class="content space dark">
+        <div class="article-wrap space">
+            <div class="content dark">
                 <div class="content-bar">
                     <ul class="content-bar-list">
                         <li>
@@ -214,6 +201,11 @@
                 margin: 26px 57px 32px 50px;
                 vertical-align: top;
                 padding: 8px;
+
+                img{
+                    max-width: 146px;
+                    max-height: 146px;
+                }
             }
         }
 
@@ -252,6 +244,7 @@
 
 
         .graph-wrap{
+            background: #000;
 
             .custom-tabs.left-tabs{
                 .el-tabs__header{
@@ -261,6 +254,11 @@
                 }
 
                 .el-tabs__content{
+
+                    .item{
+                        height: 440px;
+                    }
+
                     .el-card__body{
                         padding-top: 0px;
                     }
@@ -297,6 +295,17 @@
                     startDate: '',
                     endDate: '',
                 },
+                wechatInfo: {
+                    "wechatName": "",
+                    "wechatNumber": "",
+                    "wechatSubject": "",
+                    "wechatType": "",
+                    "belongColleage": "",
+                    "instruction": "",
+                    "authcStatus": "",
+                    "accountSign": "",
+                    "qrCode": "",
+                },
                 total: 0,
                 articleData: [],
                 activeNameOne: 'rank',
@@ -325,6 +334,29 @@
                     }
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
+            },
+
+            getWechatInfoData(){
+                if(this.$route.query == undefined){
+                    return
+                }
+
+                let param = {
+                    author: this.$route.query.author
+                }
+                //TODO 因为后台数据库没数据的原因  暂时author写死
+                param.author = '南京大学';
+
+                this.$http.post('/apis/businessTool/getWechatNumberInfo.json', param).then(
+                    (response) => {
+                        //后台没数据  报错 所以加了非空校验
+                        if(response.data.success && response.data.data != null){
+                            this.wechatInfo = response.data.data;
+                        }else {
+                            console.error(response.data)
+                        }
+                    }
+                )
             },
 
             handleCurrentChange(pageNumber) {
@@ -507,6 +539,23 @@
 
                 }
             },
+
+            attentionClick(){
+                let param = {
+                    type:　3,
+                    content:　this.requestParam.author
+                }
+
+                this.$http.post('/apis/concerns/saveConcerns.json', param).then(
+                    (response) => {
+                        if(response.data.success){
+                            this.$message({message: '微信关注成功', type: 'success'})
+                        }else{
+                            console.error(response.data.message);
+                        }
+                    }
+                )
+            },
         },
         created(){
             let data = this.$route.query;
@@ -532,6 +581,7 @@
             this.setBreadCrumb();
         },
         mounted(){
+            this.getWechatInfoData();
             this.getBlogSupportAvgData();
             this.getRankAndArticleData();
             this.getSupportHitSumData();

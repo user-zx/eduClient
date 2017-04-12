@@ -283,7 +283,13 @@
                         500元/人
                     </div>
                     <div class="info">
-                        使用期限：<div class="input-wrap"><el-input class="dark input-small"></el-input></div>
+                        使用期限：
+                        <div class="input-wrap">
+                            <el-select v-model="value" class="dark input-small">
+                                <el-option v-for="item in monthOption" :label="item.label" :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>
                     </div>
                 </div>
                 <div class="bottom">
@@ -427,6 +433,13 @@
             return {
                 checked: true,
                 unchecked: false,
+                monthOption: [
+                    {label: '6个月', value: '6个月'},
+                    {label: '一年', value: '一年'},
+                    {label: '两年', value: '两年'},
+                    {label: '三年', value: '三年'},
+                ],
+                value: ''
             }
         },
         methods: {
@@ -455,9 +468,18 @@
 
             submit(){
                 this.$router.push({path:"/home/centerPackageConfirm"});
+            },
+
+            getPackageList(){
+                this.$http.post('/apis/packageBuy/getItemPriceList.json').then(
+                    (response) =>{
+                        console.log(response.data)
+                    }
+                )
             }
         },
         mounted(){
+            this.getPackageList();
         },
         created(){
             this.setBreadCrumb();

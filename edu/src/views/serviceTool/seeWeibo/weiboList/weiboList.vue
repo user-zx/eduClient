@@ -8,9 +8,20 @@
                 <div id="search_container" class="search_container">
                     <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
                 </div>
-                <div class="clearfix btn-box">
+                <div class="clearfix btn-box dark">
+                    <div class="pull-left">
+                        <el-button type="primary" @click="verifyWeibo" icon="plus">微博认证</el-button>
+                    </div>
                     <div class="pull-right">
-                        <el-button type="primary" @click="verifyWeibo">微博认证</el-button>
+                        <div class="content-bar-pagination">
+                            <el-pagination class="edu-pagination"
+                                           @current-change="handleCurrentChange"
+                                           :current-page="staticsCurPage"
+                                           :page-size="15"
+                                           layout="prev, next, jumper, total"
+                                           :total="staticsTotal">
+                            </el-pagination>
+                        </div>
                     </div>
                 </div>
                 <el-card class="box-card">
@@ -41,10 +52,17 @@
                 </div>
                 <div class="btn-box clearfix">
                     <div class="pull-left">
-                        <el-button type="primary">批量关注</el-button>
+                        <el-button type="primary" icon="plus" @click="attentionBatch">批量关注</el-button>
+                        <el-button type="primary" @click="verifyWeibo" icon="plus">微博认证</el-button>
                     </div>
                     <div class="pull-right">
-                        <el-button type="primary" @click="verifyWeibo">微博认证</el-button>
+                        <el-pagination class="edu-pagination"
+                                       @current-change="handleHotCurrentChange"
+                                       :current-page="hotCurPage"
+                                       :page-size="5"
+                                       layout="prev, next, jumper, total"
+                                       :total="hotTotal">
+                        </el-pagination>
                     </div>
                 </div>
                 <el-card class="box-card">
@@ -99,6 +117,12 @@
         }
         .btn-box{
             padding:20px 20px 0;
+
+            .pull-right{
+                .el-pagination.edu-pagination{
+                    margin-top: 0px;
+                }
+            }
         }
         .mt20{margin-top: 20px;}
         .character-name{
@@ -120,6 +144,10 @@
     export default{
         data(){
             return {
+                staticsCurPage: 1,
+                staticsTotal: 0,
+                hotCurPage: 1,
+                hotTotal: 0,
                 activeName: 'todayHot',
                 weiboStatisticsData: [],
                 searchNames: ['verified', 'exactDate'],
@@ -168,6 +196,7 @@
                 }
                 data.pageSize = 15;
                 data.pageNumber = 0;
+                this.loading = true;
                 //根据tab页当前状态 判断请求的是微博指数还是微博统计的后台
                 if($('#seeWeibo .el-tabs__nav .el-tabs__item:eq(0)').hasClass('is-active')){
                     this.statisticsParam = data;
@@ -189,7 +218,6 @@
 
             //微博指数数据获取
             getWeiboHotArticleList(){
-//                console.log(this.hotParam)
                 this.$http.post('/apis/businessTool/getMicroblogIndexData.json', this.hotParam).then(
                     (response) => {
                         if(response.data.success){
@@ -199,6 +227,7 @@
                                 content[i].rank = i + 1;
                             }
                             this.tableData = content;
+                            this.hotTotal = response.data.data.page.totalPages;
                         }
                     }
                 )
@@ -206,13 +235,12 @@
 
             //微博统计数据获取
             getWeiboStatisticsData(){
-//                console.log(this.statisticsParam)
                 this.$http.post('/apis/businessTool/getMicroblogData.json', this.statisticsParam).then(
                     (response) => {
                         this.loading = false;
-//                        console.log(response.data)
                         if(response.data.success){
                             this.weiboStatisticsData = response.data.data.page.content;
+                            this.staticsTotal = response.data.data.page.totalPages;
                         }
                     }
                 )
@@ -220,6 +248,22 @@
 
             verifyWeibo(){
                 this.$router.push({path: "/home/weiboVerify"});
+            },
+
+            handleCurrentChange(pageNumber){
+                this.loading = true;
+                this.statisticsParam.pageNumber = pageNumber - 1;
+                this.getWeiboStatisticsData();
+            },
+
+            handleHotCurrentChange(pageNumber){
+                this.loading = true;
+                this.hotParam.pageNumber = pageNumber - 1;
+                this.getWeiboHotArticleList();
+            },
+
+            attentionBatch(){
+
             }
         },
         created(){

@@ -30,7 +30,6 @@ import analyseList from "./views/pomp/analyse/analyseList/analyseList.vue";
 import characterAnalyse from "./views/pomp/analyse/characterAnalyse/characterAnalyse.vue";
 import characterTable from "./views/pomp/analyse/characterTable/characterTable.vue";
 import industryNewsList from "./views/reference/industryNews/newsList/industryNewsList.vue"
-import industryDetailNews from "./views/reference/industryNews/newsDetail/industryDetailNews.vue";
 import myCenter from "./views/myCenter/myCenter1.vue";
 import centerList from "./views/myCenter/subViews/centerList.vue";
 import centerSystemDetail from "./views/myCenter/subViews/detailViews/systemDetail.vue";
@@ -145,16 +144,6 @@ export default {
                         {
                             path: "",
                             component:　industryNewsList
-                        }
-                    ]
-                },
-                {
-                    path: "industryDetailNews",
-                    component: industryNews,
-                    children: [
-                        {
-                            path: "",
-                            component: industryDetailNews
                         }
                     ]
                 },

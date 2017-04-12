@@ -13,7 +13,7 @@
                 <el-col :span="6">
                     <div class="avatar-uploader">
                         <div class="el-upload el-upload--text" @click="uploadImg">
-                            <i class="el-icon-plus avatar-uploader-icon" v-if="weiboInfo.microblogAvatar == ''"></i>
+                            <i class="el-icon-plus avatar-uploader-icon" v-if="weiboInfo.microblogAvatar == '' || weiboInfo.microblogAvatar == null"></i>
                             <img :src="weiboInfo.microblogAvatar" alt="" v-else="" class="avatar">
                             <input type="file" class="el-upload__input" id="uploadImg" @change="turnBaseFormat">
                         </div>
@@ -183,15 +183,38 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
+
+            getWeiboInfoData(){
+
+                if(this.$route.query == undefined){
+                    return
+                }
+
+                let param = {
+                    author: this.$route.query.author
+                }
+                //TODO 因为后台数据库没数据的原因  暂时author写死
+                param.author = '南京大学';
+                this.$http.post('/apis/businessTool/getMicroblogInfo.json', param).then(
+                    (response) => {
+                        if(response.data.success){
+                            console.log(response.data.data)
+                            this.weiboInfo = response.data.data;
+                        }
+                    }
+                )
+            },
+
             submitInfo(){
                 var info = this.verifyData();
                 if(info === false){
                     return ;
                 }
 
+                console.log(this.weiboInfo)
                 this.$http.post('/apis/businessTool/saveMicroblog.json', this.weiboInfo).then(
                     (response) => {
-                        console.log(response.data);
+//                        console.log(response.data);
                         if(response.data.success){
                             this.$message({message: '微博认证成功'});
                         }
@@ -418,11 +441,9 @@
         },
         created(){
             this.setBreadCrumb();
-            let data = this.$route.query;
-
         },
         mounted(){
-
+            this.getWeiboInfoData();
         },
     }
 </script>
