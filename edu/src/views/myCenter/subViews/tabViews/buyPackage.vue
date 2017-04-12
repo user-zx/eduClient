@@ -476,10 +476,19 @@
                         console.log(response.data)
                     }
                 )
+            },
+
+            getPackageData(){
+                this.$http.post('/apis/packageManage/getPackageManageList.json').then(
+                    (response) => {
+                        console.log(response.data)
+                    }
+                )
             }
         },
         mounted(){
             this.getPackageList();
+            this.getPackageData();
         },
         created(){
             this.setBreadCrumb();

@@ -8,6 +8,7 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'build.js'
   },
+  
   module: {
     rules: [
       {
@@ -82,9 +83,10 @@ if (process.env.NODE_ENV === 'production') {
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
+      sourceMap: false,
       compress: {
-        warnings: false
+        warnings: false,
+        drop_console: true
       },
       mangle:true,
     }),
