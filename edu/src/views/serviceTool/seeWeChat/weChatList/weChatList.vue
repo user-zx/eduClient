@@ -4,24 +4,13 @@
 <template>
     <div class="seeWeChat" id="seeWeChat" v-loading="loading" element-loading-text="加载中……">
         <el-tabs v-model="activeName" class="custom-tabs left-tabs" @tab-click="handleClick">
-            <el-tab-pane label="微信统计" name="staticsTab">
+            <el-tab-pane label="微信统计" name="todayHot">
                 <div id="search_container">
                     <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
                 </div>
                 <div class="clearfix btn-box">
-                    <div class="pull-left">
-                        <el-button type="primary" @click="verifyWechat" icon="plus">微信认证</el-button>
-                    </div>
                     <div class="pull-right">
-                        <div class="content-bar-pagination">
-                            <el-pagination class="edu-pagination"
-                                           @current-change="handleCurrentChange"
-                                           :current-page="staticsCurPage"
-                                           :page-size="15"
-                                           layout="prev, next, jumper, total"
-                                           :total="staticsTotal">
-                            </el-pagination>
-                        </div>
+                        <el-button type="primary">微信认证</el-button>
                     </div>
                 </div>
                 <el-card class="box-card">
@@ -46,23 +35,16 @@
                     </el-table>
                 </el-card>
             </el-tab-pane>
-            <el-tab-pane label="微信指数" name="exponentTab">
+            <el-tab-pane label="微信指数" name="weekHot">
                 <div id="search_container1">
                     <search-box :searchNames=searchNames1 @searchDataChange="onSearchDataChange" class="dark"></search-box>
                 </div>
                 <div class="btn-box clearfix">
                     <div class="pull-left">
-                        <el-button type="primary" icon="plus">批量关注</el-button>
-                        <el-button type="primary" @click="verifyWechat" icon="plus">微信认证</el-button>
+                        <el-button type="primary">批量关注</el-button>
                     </div>
                     <div class="pull-right">
-                        <el-pagination class="edu-pagination"
-                                       @current-change="handleExpCurrentChange"
-                                       :current-page="expCurPage"
-                                       :page-size="5"
-                                       layout="prev, next, jumper, total"
-                                       :total="expTotal">
-                        </el-pagination>
+                        <el-button type="primary">微信认证</el-button>
                     </div>
                 </div>
                 <el-card class="box-card">
@@ -129,11 +111,7 @@
     export default{
         data(){
             return {
-                activeName: 'staticsTab',
-                staticsCurPage: 1,
-                staticsTotal: 0,
-                expCurPage: 1,
-                expTotal: 0,
+                activeName: 'todayHot',
                 //微信统计请求参数
                 statisticsParam: {
                     pageSize: 15,
@@ -203,12 +181,7 @@
                 this.$http.post('/apis/businessTool/getWechatData.json', this.statisticsParam).then(
                     (response) => {
                         this.loading = false;
-                        if(response.data.success){
-                            this.wechatStatisticsData = response.data.data.page.content;
-                            this.staticsTotal = response.data.data.page.totalPages;
-                        }else {
-                            console.error(response.data.error)
-                        }
+                        this.wechatStatisticsData = response.data.data.page.content;
                     }
                 )
             },
@@ -216,18 +189,11 @@
             getWechatExponentData(){
                 this.$http.post('/apis/businessTool/getWechatIndexData.json', this.exponentParam).then(
                     (response) => {
-                        this.loading = false;
-                        if(response.data.success){
-                            this.expTotal = response.data.data.page.totalPages;
-
-                            let content = response.data.data.page.content;
-                            for(let i = 0; i < content.length; i++){
-                                content[i].rank = i + 1;
-                            }
-                            this.wechatExponentData = content;
-                        }else {
-                            console.log(response.error)
+                        let content = response.data.data.page.content;
+                        for(let i = 0; i < content.length; i++){
+                            content[i].rank = i + 1;
                         }
+                        this.wechatExponentData = content;
                     }
                 )
             },
@@ -236,22 +202,6 @@
                 data.startDate = this.exponentParam.startDate;
                 data.endDate = this.exponentParam.endDate;
                 this.$router.push({path:"/home/wechatDetail", query: data});
-            },
-
-            verifyWechat(){
-                this.$router.push({path: "/home/weChatVerify"});
-            },
-
-            handleCurrentChange(pageNumber){
-                this.loading = true;
-                this.statisticsParam.pageNumber = pageNumber - 1;
-                this.getWechatStatisticsData();
-            },
-
-            handleExpCurrentChange(pageNumber){
-                this.loading = true;
-                this.exponentParam.pageNumber = pageNumber - 1;
-                this.getWechatExponentData();
             }
         },
         created(){

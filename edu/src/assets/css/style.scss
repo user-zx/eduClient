@@ -46,14 +46,15 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
   min-width: 1200px;
   height:100%;
   >.page-left{
-    flex: 0 0 185px;
+     width: 185px;
+     position: relative;
     background-color: #191c2d;
     z-index: 6;
     .left-nav{
       position: fixed;
       left: 0;
       top: 0;
-      width: 185px;
+     
     }
     .logo-aside{
       border-bottom: 1px solid #2f344f;
@@ -402,10 +403,6 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
 .show{
   display: block;
 }
-
-.mrt10{
-  margin-top: 10px;
-}
 /*表格展示*/
 .table-box {
   background-color: #21273d;
@@ -484,16 +481,5 @@ ul.event-store-item {
   }
   .item{
     height: 440px; 
-  }
-}
-
-span.el-cascader{
-  border: none;
-  background-color: inherit;
-  width: 100%;
-
-  .el-cascader__label{
-    color: #d0d7ff;
-    z-index: 9999;
   }
 }

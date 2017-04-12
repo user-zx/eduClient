@@ -16,7 +16,7 @@
                     <el-button type="primary" icon="plus" @click="attentionClick">关注</el-button>
                 </div>
                 <div class="btn alert">
-                    <el-button type="primary" icon="plus" @click="alertClick">预警</el-button>
+                    <el-button type="primary" icon="plus">预警</el-button>
                 </div>
             </div>
         </div>
@@ -71,35 +71,49 @@
                     </el-card>
                 </el-col>
                 <el-col :span="12">
-                    <el-tabs class="custom-tabs left-tabs shorter-tabs mrt10" @tab-click="rankSendTabClick" v-model="activeNameOne">
+                    <el-tabs class="custom-tabs left-tabs shorter-tabs" @tab-click="rankSendTabClick" v-model="activeNameOne">
                         <el-tab-pane label="排名变化" name="rank" class="is-active">
-                            <div class="rankChange text item" id="rankGraph"></div>
+                            <el-card class="box-card educationBox">
+                                <div class="rankChange text item" id="rankGraph"></div>
+                            </el-card>
                         </el-tab-pane>
                         <el-tab-pane label="发博量" name="publish">
-                            <div class="publishNum text item" id="sendGraph"></div>
+                            <el-card class="box-card educationBox">
+                                <div class="publishNum text item" id="sendGraph"></div>
+                            </el-card>
                         </el-tab-pane>
                     </el-tabs>
                 </el-col>
                 <el-col :span="12">
-                    <el-tabs class="custom-tabs left-tabs shorter-tabs mrt10" @tab-click="concernFanTabClick" v-model="activeNameTwo">
+                    <el-tabs class="custom-tabs left-tabs shorter-tabs" @tab-click="concernFanTabClick" v-model="activeNameTwo">
                         <el-tab-pane label="关注量" name="focus" class="is-active">
-                            <div class="rankChange text item" id="concernGraph"></div>
+                            <el-card class="box-card educationBox">
+                                <div class="rankChange text item" id="concernGraph"></div>
+                            </el-card>
                         </el-tab-pane>
                         <el-tab-pane label="粉丝量" name="fans">
-                            <div class="publishNum text item" id="fansGraph"></div>
+                            <el-card class="box-card educationBox">
+                                <div class="publishNum text item" id="fansGraph"></div>
+                            </el-card>
                         </el-tab-pane>
                     </el-tabs>
                 </el-col>
                 <el-col :span="12">
-                    <el-tabs class="custom-tabs left-tabs shorter-tabs mrt10" @tab-click="forwardSupportHitTabClick" v-model="activeNameThree">
+                    <el-tabs class="custom-tabs left-tabs shorter-tabs" @tab-click="forwardSupportHitTabClick" v-model="activeNameThree">
                         <el-tab-pane label="转发量" name="repost" class="is-active">
-                            <div class="rankChange text item" id="forwardGraph"></div>
+                            <el-card class="box-card educationBox">
+                                <div class="rankChange text item" id="forwardGraph"></div>
+                            </el-card>
                         </el-tab-pane>
                         <el-tab-pane label="评论数" name="comment">
-                            <div class="publishNum text item" id="hitGraph"></div>
+                            <el-card class="box-card educationBox">
+                                <div class="publishNum text item" id="hitGraph"></div>
+                            </el-card>
                         </el-tab-pane>
                         <el-tab-pane label="点赞总数" name="like">
-                            <div class="publishNum text item" id="supportGraph"></div>
+                            <el-card class="box-card educationBox">
+                                <div class="publishNum text item" id="supportGraph"></div>
+                            </el-card>
                         </el-tab-pane>
                     </el-tabs>
                 </el-col>
@@ -231,10 +245,8 @@
 
 
         .graph-wrap{
-            background: #000;
 
             .custom-tabs.left-tabs{
-
                 .el-tabs__header{
                     height: 64px;
                     padding-top: 18px;
@@ -242,11 +254,6 @@
                 }
 
                 .el-tabs__content{
-
-                    .item{
-                        height: 440px;
-                    }
-
                     .el-card__body{
                         padding-top: 0px;
                     }
@@ -530,24 +537,6 @@
             },
 
             attentionClick(){
-                let param = {
-                    type:　4,
-                    content:　this.requestParam.author
-                }
-
-                this.$http.post('/apis/concerns/saveConcerns.json', param).then(
-                    (response) => {
-                        if(response.data.success){
-                            this.$message({message: '微博关注成功', type: 'success'})
-                        }else{
-                            console.error(response.data.message);
-                        }
-                    }
-                )
-            },
-
-            //预警按钮点击事件
-            alertClick(){
 
             }
         },

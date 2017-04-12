@@ -13,7 +13,7 @@
                 <el-col :span="6">
                     <div class="avatar-uploader">
                         <div class="el-upload el-upload--text" @click="uploadSign">
-                            <i class="el-icon-plus avatar-uploader-icon" v-if="wechatInfo.accountSign == '' || wechatInfo.accountSign == null"></i>
+                            <i class="el-icon-plus avatar-uploader-icon" v-if="wechatInfo.accountSign == ''"></i>
                             <img :src="wechatInfo.accountSign" alt="" v-else="" class="avatar">
                             <input type="file" class="el-upload__input" @change="turnSignBaseFormat" id="accountSignInput">
                         </div>
@@ -47,7 +47,7 @@
                 <el-col :span="6">
                     <div class="avatar-uploader">
                         <div class="el-upload el-upload--text" @click="uploadQrCode">
-                            <i class="el-icon-plus avatar-uploader-icon" v-if="wechatInfo.qrCode == '' || wechatInfo.qrCode == null "></i>
+                            <i class="el-icon-plus avatar-uploader-icon" v-if="wechatInfo.qrCode == ''"></i>
                             <img :src="wechatInfo.qrCode" alt="" v-else="" class="avatar">
                             <input type="file" class="el-upload__input" @change="turnQrCodeBaseFormat" id="qrCodeInput">
                         </div>
@@ -187,37 +187,13 @@
                         name:"业务平台",to:{path:"/home/seeWeChat"}
                     },
                     {
-                        name:"微信监测",to:{path:"/home/seeWeChat"}
+                        name:"微信监测",to:{path:"home/seeWeChat"}
                     },
                     {
                         name: '微信认证'
                     }
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
-            },
-
-            getWechatInfoData(){
-
-                if(this.$route.query == undefined){
-                    return
-                }
-
-                let param = {
-                    author: this.$route.query.author
-                }
-                //TODO 因为后台数据库没数据的原因  暂时author写死
-                param.author = '南京大学';
-
-                this.$http.post('/apis/businessTool/getWechatNumberInfo.json', param).then(
-                    (response) => {
-                        //后台没数据  报错 所以加了非空校验
-                        if(response.data.success && response.data.data != null){
-                            this.wechatInfo = response.data.data;
-                        }else {
-                            console.error(response.data)
-                          }
-                    }
-                )
             },
 
             uploadSign(){
@@ -387,7 +363,7 @@
             this.setBreadCrumb();
         },
         mounted(){
-            this.getWechatInfoData();
+
         }
     }
 </script>

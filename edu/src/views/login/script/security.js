@@ -1,6 +1,3 @@
-/**
- * Created by zhangxin on 2017/2/10.
- */
 /*
  * RSA, a suite of routines for performing RSA public-key computations in JavaScript.
  * Copyright 1998-2005 David Shapiro.

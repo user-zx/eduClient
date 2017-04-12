@@ -172,23 +172,23 @@
                 this.dialogFormVisible = true;
             },
             formatCreateDate(row, col) {
-                return this.formatDate(new Date(row.createDate),'yyyy-MM-dd');
+                return new Date(row.createDate).format('yyyy-MM-dd');
             },
             formatRangeDate(row, col) {
-                return this.formatDate(new Date(row.startDate),'yyyy-MM-dd') + '至' + this.formatDate(new Date(row.endDate),'yyyy-MM-dd');
+                return new Date(row.startDate).format('yyyy-MM-dd') + '至' + new Date(row.endDate).format('yyyy-MM-dd');
             },
             viewReport(row) {
-                this.$router.push({path:"/home/speechDetails", query: {
+                this.$router.push({path:"/home/reportDetails", query: {
                     id: row.id,
                     title: row.title,
-                    createDate: this.formatDate(new Date(row.createDate), 'yyyy年MM月dd日'),
+                    createDate: new Date(row.createDate).format('yyyy年MM月dd日'),
                 }});
             },
             dialogSubmit(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.addReportForm.startDate = this.formatDate(this.addReportForm.startDate, 'yyyy-MM-dd hh:mm:ss');
-                        this.addReportForm.endDate = this.formatDate(this.addReportForm.endDate, 'yyyy-MM-dd hh:mm:ss');
+                        this.addReportForm.startDate = this.addReportForm.startDate.format('yyyy-MM-dd hh:mm:ss');
+                        this.addReportForm.endDate = this.addReportForm.endDate.format('yyyy-MM-dd hh:mm:ss');
                         this.$http.post('/apis/internalRefReport/saveOrUpdateReport.json', this.addReportForm).then((response) => {
                                 if (response.data.success) {
                                     this.$message({
@@ -240,26 +240,6 @@
                         }
                     );
                 });
-            },
-            /**格式化日期*/
-            formatDate(date, fmt) {
-                var o = {
-                    "M+": date.getMonth() + 1, //月份
-                    "d+": date.getDate(), //日
-                    "h+": date.getHours(), //小时
-                    "m+": date.getMinutes(), //分
-                    "s+": date.getSeconds(), //秒
-                    "q+": Math.floor((date.getMonth() + 3) / 3), //季度
-                    "S": date.getMilliseconds()
-                    //毫秒
-                };
-                if (/(y+)/.test(fmt))
-                    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "")
-                        .substr(4 - RegExp.$1.length));
-                for (var k in o)
-                    if (new RegExp("(" + k + ")").test(fmt))
-                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-                return fmt;
             }
         },
         created(){

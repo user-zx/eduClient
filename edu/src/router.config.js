@@ -12,6 +12,7 @@ import characterNews from './views/reference/characterNews/characterNews.vue';
 import seeClearly from './views/reference/seeClearly/seeClearly.vue';
 import mediaCoverage from './views/reference/mediaCoverage/mediaCoverage.vue';
 import report from './views/reference/report/report.vue';
+import reportDetails from './views/reference/report/reportDetails.vue';
 import seeWeChat from './views/serviceTool/seeweChat/seeweChat.vue';
 import weChatList from './views/serviceTool/seeWeChat/weChatList/weChatList.vue';
 import weChatVerify from "./views/serviceTool/seeWeChat/weChatVerify/weChatVerify.vue";
@@ -30,6 +31,7 @@ import analyseList from "./views/pomp/analyse/analyseList/analyseList.vue";
 import characterAnalyse from "./views/pomp/analyse/characterAnalyse/characterAnalyse.vue";
 import characterTable from "./views/pomp/analyse/characterTable/characterTable.vue";
 import industryNewsList from "./views/reference/industryNews/newsList/industryNewsList.vue"
+import industryDetailNews from "./views/reference/industryNews/newsDetail/industryDetailNews.vue";
 import myCenter from "./views/myCenter/myCenter1.vue";
 import centerList from "./views/myCenter/subViews/centerList.vue";
 import centerSystemDetail from "./views/myCenter/subViews/detailViews/systemDetail.vue";
@@ -126,15 +128,9 @@ export default {
                     component:speech
                 },
                 {
-                    name: "报告详情",
+                    name: "舆情报告详情",
                     path:"speechDetails",
-                    component:speechDetails,
-                    children:[
-                        {
-                            path:"",
-                            component:eventDetails
-                        }
-                    ]
+                    component:speechDetails
                 },
                 {   
                     name:"行业动态",
@@ -148,24 +144,40 @@ export default {
                     ]
                 },
                 {
-                    name:"characterNews",
+                    name:"行业动态详情",
+                    path: "industryDetailNews",
+                    component: industryNews,
+                    children: [
+                        {
+                            path: "",
+                            component: industryDetailNews
+                        }
+                    ]
+                },
+                {
+                    name:"人物动态",
                     path:"characterNews",
                     component:characterNews
                 },
                 {
-                    name:"seeClearly",
+                    name:"两微洞察",
                     path:"seeClearly",
                     component:seeClearly
                 },
                 {
-                    name:"mediaCoverage",
+                    name:"媒体声量",
                     path:"mediaCoverage",
                     component:mediaCoverage
                 },
                 {
-                    name:"report",
+                    name:"内参报告",
                     path:"report",
                     component:report
+                },
+                {
+                    name: "内参报告详情",
+                    path:"reportDetails",
+                    component:reportDetails
                 },
                 {
                     path:"seeWeChat",

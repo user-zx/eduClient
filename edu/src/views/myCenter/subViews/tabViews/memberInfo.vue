@@ -24,8 +24,20 @@
                    <el-input v-model="memberForm.email" placeholder="请输入邮箱"></el-input>
                </el-form-item>
                <el-form-item label="所在地">
-                   <el-col :span="24">
-                      <el-cascader :options="options" v-model="selectedOptions"></el-cascader>
+                   <el-col :span="8">
+                       <el-select placeholder="请选择" id="memberInfo_province">
+
+                       </el-select>
+                   </el-col>
+                   <el-col :span="8">
+                       <el-select placeholder="请选择" id="memberInfo_city">
+
+                       </el-select>
+                   </el-col>
+                   <el-col :span="8">
+                       <el-select placeholder="请选择" id="memberInfo_areaId">
+
+                       </el-select>
                    </el-col>
                </el-form-item>
                <el-form-item label="头像">
@@ -85,9 +97,9 @@
     }
 </style>
 
+<!--<script src="../../js/selectCity.js"></script>-->
 <script>
-
-    import {regionData} from 'element-china-area-data'
+//    import select from "../../js/selectCity"
 
     export default{
         data(){
@@ -105,9 +117,7 @@
                     phone: [{required: true, message: '请输入您的手机号码'}],
                     email: [{type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}]
                 },
-                imageUrl: '',
-                options: regionData,
-                selectedOptions: []
+                imageUrl: ''
             }
         },
         methods: {
