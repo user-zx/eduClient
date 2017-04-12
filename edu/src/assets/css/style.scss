@@ -43,21 +43,18 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
 .page{
   display: -ms-flexbox;
   display: flex;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
   min-width: 1200px;
   height:100%;
   >.page-left{
-    //flex: 0 0 185px;
-    ///width: 185px;   
+     width: 185px;
+     position: relative;
     background-color: #191c2d;
     z-index: 6;
     .left-nav{
       position: fixed;
       left: 0;
       top: 0;
-      width: 185px;
+     
     }
     .logo-aside{
       border-bottom: 1px solid #2f344f;
@@ -231,7 +228,6 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
     }
   }
   >.page-content{
-    padding-left: 185px; 
     flex: 1;
     padding-top:65px;
     background-color: #141725;
