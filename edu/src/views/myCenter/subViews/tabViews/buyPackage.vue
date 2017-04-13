@@ -325,8 +325,7 @@
                 .top{
                     .info{
                         width: calc(100% - 50px);
-                        margin: 0 auto;
-                        margin-bottom: 30px;
+                        margin: 0 auto 30px;
 
                         .tree{
                             font-size: 18px;
@@ -335,12 +334,20 @@
                         
                         .tree-node{
                             color: #d0d7ff;
-                            margin: 0px 0px 15px 80px;
+                            height: 35px;
+                            line-height: 35px;
+                            text-align: center;
 
                             .checkbox{
                                 display: inline-block;
                                 margin-left: 29px;
                             }
+                        }
+                    }
+
+                    @media screen and (min-width: 1800px){
+                        .info{
+                            width: calc(100% - 120px);
                         }
                     }
                 }
