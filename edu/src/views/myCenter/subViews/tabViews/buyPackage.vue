@@ -282,8 +282,8 @@
                         <div class="input-wrap small"><el-input class="dark input-small"></el-input></div>
                         500元/人
                     </div>
-                    <div class="info">
-                    
+                     <div class="info">
+                        使用期限：<div class="input-wrap"><el-input  size="small" class="dark"></el-input></div>
                     </div>
                 </div>
                 <div class="bottom">
@@ -353,10 +353,11 @@
                 }
 
                 .middle{
-                    width: calc(100% - 50px);
+                    width: 180px; 
+                    margin: 0 auto 30px;
                     border-top: 1px solid #33456b;
                     border-bottom: 1px solid #33456b;
-                    margin: auto;
+                    
 
                     .info:first-child{
                         margin-top: 30px;
@@ -364,12 +365,11 @@
                     .info:last-child{
                         margin-bottom: 19px;
                     }
-
+                    
                     .info{
-                        height: 35px;
                         line-height: 35px;
                     }
-
+                    
                     .input-wrap{
                         display: inline-block;
                         width: 105px;
