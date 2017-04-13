@@ -302,7 +302,6 @@
     .buyPackage{
         background: #21273d;
         overflow: hidden;
-
         .content-wrap{
             width: 90%;
             margin: 50px auto 95px auto;
@@ -324,9 +323,8 @@
 
                 .top{
                     .info{
-                        width: calc(100% - 50px);
+                        width: 180px; 
                         margin: 0 auto 30px;
-
                         .tree{
                             font-size: 18px;
                             margin-bottom: 21px;
@@ -334,20 +332,22 @@
                         
                         .tree-node{
                             color: #d0d7ff;
-                            height: 35px;
-                            line-height: 35px;
-                            text-align: center;
-
+                           position: relative;
+                           line-height: 35px; 
+                            >span{
+                                display: block;
+                                text-align: center; 
+                            }
                             .checkbox{
-                                display: inline-block;
-                                margin-left: 29px;
+                                position: absolute;
+                                right: 30px;
+                                top: 0;  
                             }
                         }
                     }
-
-                    @media screen and (min-width: 1800px){
+                    @media screen and (min-width:1800px){
                         .info{
-                            width: calc(100% - 120px);
+                            width: 250px;
                         }
                     }
                 }
