@@ -315,7 +315,7 @@
                 margin-right: 50px;
                 vertical-align: top;
                 cursor: pointer;
-                
+                position: relative;
                 .title{
                     font-size: 24px;
                     text-align: center;
@@ -325,7 +325,7 @@
                 .top{
                     .info{
                         width: calc(100% - 50px);
-                        margin: auto;
+                        margin: 0 auto;
                         margin-bottom: 30px;
 
                         .tree{
@@ -459,8 +459,8 @@
 
             getPackageData(){
                 this.$http.post('/apis/packageManage/getPackageManageList.json').then(
-                    (response) => {
-                        console.log(response.data)
+                    (res) => {
+                        console.log(res.data)
                     }
                 )
             }

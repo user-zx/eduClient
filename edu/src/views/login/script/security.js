@@ -6,7 +6,7 @@
  * changed by Fuchun, 2010-05-06
  * fcrpg2005@gmail.com
  */
-
+"use strict";
 (function($w) {
 
     if(typeof $w.RSAUtils === 'undefined')
@@ -126,7 +126,7 @@
         var result = hexatrigesimalToChar[qr[1].digits[0]];
         while (RSAUtils.biCompare(qr[0], bigZero) == 1) {
             qr = RSAUtils.biDivideModulo(qr[0], b);
-            digit = qr[1].digits[0];
+            var digit = qr[1].digits[0];
             result += hexatrigesimalToChar[qr[1].digits[0]];
         }
         return (x.isNeg ? "-" : "") + RSAUtils.reverseStr(result);
@@ -150,7 +150,7 @@
     RSAUtils.digitToHex = function(n) {
         var mask = 0xf;
         var result = "";
-        for (i = 0; i < 4; ++i) {
+        for (var i = 0; i < 4; ++i) {
             result += hexToChar[n & mask];
             n >>>= 4;
         }
@@ -314,7 +314,7 @@
         for (var i = 0; i <= t; ++i) {
             c = 0;
             k = i;
-            for (j = 0; j <= n; ++j, ++k) {
+            for (var j = 0; j <= n; ++j, ++k) {
                 uv = result.digits[k] + x.digits[j] * y.digits[i] + c;
                 result.digits[k] = uv & maxDigitVal;
                 c = uv >>> biRadixBits;
@@ -330,7 +330,7 @@
     RSAUtils.biMultiplyDigit = function(x, y) {
         var n, c, uv;
 
-        result = new BigInt();
+        var result = new BigInt();
         n = RSAUtils.biHighIndex(x);
         c = 0;
         for (var j = 0; j <= n; ++j) {

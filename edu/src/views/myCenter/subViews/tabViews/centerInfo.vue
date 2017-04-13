@@ -162,15 +162,15 @@
                 }
 
                 .mask{
-                    height: inherit;
-                    width: inherit;
+                    height: 100%;
+                    width: 100%;
                     -webkit-border-radius:50%;
                     -moz-border-radius:50%;
                     border-radius:50%;
                     position: absolute;
                     top: 0px;
                     left: 0px;
-                    background: rgba(117,112,151, 0.5);
+                    background: rgba(33,39,61,1);
                     z-index: -1;
 
                 .btn-wrap{
