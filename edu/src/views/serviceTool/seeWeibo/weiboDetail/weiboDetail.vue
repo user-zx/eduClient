@@ -126,7 +126,7 @@
                         <li>
                             文章排行
                         </li>
-                        <li class="pointer selected" @click="sort('get')">
+                        <li class="pointer selected" @click="sort('original')">
                             获取日期
                         </li>
                         <li class="pointer" @click="sort('today')">
@@ -313,7 +313,9 @@
                 fansOption: [],
                 supportOption: [],
                 hitOption: [],
-                forwardOption: []
+                forwardOption: [],
+                originalStartDate: '',
+                originalEndDate: ''
             }
         },
         components:　{articleView},
@@ -519,21 +521,32 @@
 //                console.log(this.articleParam)
                 this.$http.post('/apis/businessTool/getMicroblogArticleData.json', this.articleParam).then(
                     (response) => {
+                        //没有数据
+                        this.articleData = response.data.data.page.content;
                         console.log(response.data)
                     }
                 )
             },
 
             sort(param){
+                let date = new Date();
                 if(param == 'today'){
-
+                    //
+                    this.articleParam.startDate = date.format('yyyy-MM-dd 00:00:00');
+                    this.articleParam.endDate = date.format('yyyy-MM-dd 23:59:59');
                 }else if(param == 'yesterday'){
-
+                    let yesterday = date.getTime() - 24 * 3600 * 1000;
+                    this.articleParam.startDate = new Date(yesterday).format('yyyy-MM-dd 00:00:00');
+                    this.articleParam.endDate = new Date(yesterday).format('yyyy-MM-dd 23:59:59');
                 }else if(param == 'range'){
-
+                    let week = date.getTime() - 24 * 7 * 3600 * 1000;
+                    this.articleParam.startDate = new Date(week).format('yyyy-MM-dd 00:00:00');
+                    this.articleParam.endDate = date.format('yyyy-MM-dd 23:59:59');
                 }else{
-
+                    this.articleParam.startDate = this.originalStartDate;
+                    this.articleParam.endDate = this.originalEndDate;
                 }
+                this.getBlogArticleData();
             },
 
             attentionClick(){
@@ -544,22 +557,25 @@
             this.blogData = this.$route.query;
 //            this.requestParam.author = this.blogData.author;
 //            this.articleParam.author = this.blogData.author;
-            //因为后台数据库的原因  暂时athor写死
+            //因为后台数据库的原因  暂时author写死
             this.requestParam.author = '南京大学';
             this.articleParam.author = '南京大学';
             //父级传的参数没有起止时间 则默认为今天
             if(this.blogData.startDate == undefined){
                 let date = new Date();
-                //暂时写死  到时候用公共的格式化日期方法
                 this.requestParam.startDate = date.format('yyyy-MM-dd 00:00:00');
                 this.requestParam.endDate = date.format('yyyy-MM-dd 23:59:59');
                 this.articleParam.startDate = date.format('yyyy-MM-dd 00:00:00');
                 this.articleParam.endDate = date.format('yyyy-MM-dd 23:59:59');
+                this.originalStartDate = date.format('yyyy-MM-dd 00:00:00');
+                this.originalEndDate = date.format('yyyy-MM-dd 23:59:59');
             }else{
                 this.requestParam.startDate = this.blogData.startDate;
                 this.requestParam.endDate = this.blogData.endDate;
                 this.articleParam.startDate = this.blogData.startDate;
                 this.articleParam.endDate = this.blogData.endDate;
+                this.originalStartDate = this.blogData.startDate;
+                this.originalEndDate = this.blogData.endDate;
             }
             this.setBreadCrumb();
         },

@@ -235,6 +235,14 @@
                             return false;
                         }
 
+                        if(file.size / 1024 / 1024 > 1){
+                            this.$message({
+                                message: '图片大小不能超过1M',
+                                type: 'error'
+                            });
+                            return false;
+                        }
+
                         let reader = new FileReader();
                         reader.onload = function () {
                             let result = this.result;

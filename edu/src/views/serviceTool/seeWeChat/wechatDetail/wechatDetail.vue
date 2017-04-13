@@ -124,7 +124,7 @@
                         <li>
                             文章排行
                         </li>
-                        <li class="pointer selected" @click="sort('get')">
+                        <li class="pointer selected" @click="sort('orinigal')">
                             获取日期
                         </li>
                         <li class="pointer" @click="sort('today')">
@@ -307,7 +307,9 @@
                 supportSumOption: [],
                 hitSumOption: [],
                 supportAvgOption: [],
-                hitAvgOption: []
+                hitAvgOption: [],
+                originalStartDate: '',
+                originalEndDate: ''
             }
         },
         components:　{articleView},
@@ -492,20 +494,31 @@
                 this.$http.post('/apis/businessTool/getWechatArticleData.json', this.articleParam).then(
                     (response) => {
                         console.log(response.data)
+                        this.articleData = response.data.data.page.content;
                     }
                 )
             },
 
             sort(param){
+                let date = new Date();
                 if(param == 'today'){
-
+                    //
+                    this.articleParam.startDate = date.format('yyyy-MM-dd 00:00:00');
+                    this.articleParam.endDate = date.format('yyyy-MM-dd 23:59:59');
                 }else if(param == 'yesterday'){
-
+                    let yesterday = date.getTime() - 24 * 3600 * 1000;
+                    this.articleParam.startDate = new Date(yesterday).format('yyyy-MM-dd 00:00:00');
+                    this.articleParam.endDate = new Date(yesterday).format('yyyy-MM-dd 23:59:59');
                 }else if(param == 'range'){
-
+                    let week = date.getTime() - 24 * 7 * 3600 * 1000;
+                    this.articleParam.startDate = new Date(week).format('yyyy-MM-dd 00:00:00');
+                    this.articleParam.endDate = date.format('yyyy-MM-dd 23:59:59');
                 }else{
-
+                    this.articleParam.startDate = this.originalStartDate;
+                    this.articleParam.endDate = this.originalEndDate;
                 }
+
+                this.getWechatArticleList();
             },
         },
         created(){
@@ -518,16 +531,19 @@
             //父级传的参数没有起止时间 则默认为今天
             if(data.startDate == undefined){
                 let date = new Date();
-                //暂时写死  到时候用公共的格式化日期方法
                 this.requestParam.startDate = date.format('yyyy-MM-dd 00:00:00');
                 this.requestParam.endDate = date.format('yyyy-MM-dd 23:59:59');
                 this.articleParam.startDate = date.format('yyyy-MM-dd 00:00:00');
                 this.articleParam.endDate = date.format('yyyy-MM-dd 23:59:59');
+                this.originalStartDate = date.format('yyyy-MM-dd 00:00:00');
+                this.originalEndDate = date.format('yyyy-MM-dd 23:59:59');
             }else{
                 this.requestParam.startDate = data.startDate;
                 this.requestParam.endDate = data.endDate;
                 this.articleParam.startDate = data.startDate;
                 this.articleParam.endDate = data.endDate;
+                this.originalStartDate = data.startDate;
+                this.originalEndDate = data.endDate;
             }
             this.setBreadCrumb();
         },

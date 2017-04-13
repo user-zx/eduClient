@@ -356,12 +356,21 @@
                }else{
                    try {
                        let file = targetEle.files[0];
+
                        if(!/image\/\w+/.test(file.type)){
                             this.$message({
                                 message: '请上传图片格式',
                                 type: 'error'
                             });
                             return false;
+                       }
+
+                       if(file.size / 1024 / 1024 > 1){
+                           this.$message({
+                               message: '图片大小不能超过1M',
+                               type: 'error'
+                           });
+                           return false;
                        }
 
                        let reader = new FileReader();
