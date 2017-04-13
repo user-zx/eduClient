@@ -126,7 +126,7 @@
         var result = hexatrigesimalToChar[qr[1].digits[0]];
         while (RSAUtils.biCompare(qr[0], bigZero) == 1) {
             qr = RSAUtils.biDivideModulo(qr[0], b);
-            var digit = qr[1].digits[0];
+            let digit = qr[1].digits[0];
             result += hexatrigesimalToChar[qr[1].digits[0]];
         }
         return (x.isNeg ? "-" : "") + RSAUtils.reverseStr(result);
@@ -150,7 +150,7 @@
     RSAUtils.digitToHex = function(n) {
         var mask = 0xf;
         var result = "";
-        for (var i = 0; i < 4; ++i) {
+        for (let i = 0; i < 4; ++i) {
             result += hexToChar[n & mask];
             n >>>= 4;
         }
@@ -314,7 +314,7 @@
         for (var i = 0; i <= t; ++i) {
             c = 0;
             k = i;
-            for (var j = 0; j <= n; ++j, ++k) {
+            for (let j = 0; j <= n; ++j, ++k) {
                 uv = result.digits[k] + x.digits[j] * y.digits[i] + c;
                 result.digits[k] = uv & maxDigitVal;
                 c = uv >>> biRadixBits;
