@@ -196,12 +196,12 @@ export default{
         this.getPersonageCount();
         this.getVectorTrend('2016-12-21 00:00:00', '2017-03-24 00:00:00');
         this.getHotOpinion('TODAY');
-        this.getHotOpinion('LASTWEEK');
+        this.getHotOpinion('LASTWEEK'); 
         this.getHotOpinion('LASTMONTH');
         this.getHotPersonage('TODAY');
         this.getHotPersonage('LASTWEEK');
         this.getHotPersonage('LASTMONTH');
         this.getHotByVector('微信');
-        this.getHotByVector('微博');
+        this.getHotByVector('微博');  
     }
 }
