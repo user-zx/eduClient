@@ -26,35 +26,31 @@
             </div>
            <div class="right">
                <div class="data-area">
-                   <p class="data bigSize">60</p>
-                   <p class="data smallSize">2月22日 排行</p>
+                   <p class="data bigSize">{{blogData.rank}}</p>
+                   <p class="data smallSize">{{originalMonth}} 排行</p>
                </div>
                <div class="data-area">
-                   <p class="data bigSize">0.89</p>
-                   <p class="data smallSize">当天指数</p>
-               </div>
-               <div class="data-area">
-                   <p class="data bigSize">1260</p>
+                   <p class="data bigSize">{{blogData.sendCount}}</p>
                    <p class="data smallSize">发博量</p>
                </div>
                <div class="data-area">
-                   <p class="data bigSize">102</p>
+                   <p class="data bigSize">{{blogData.concernsCount}}</p>
                    <p class="data smallSize">关注量</p>
                </div>
                <div class="data-area">
-                   <p class="data bigSize">610</p>
+                   <p class="data bigSize">{{blogData.fansCount}}</p>
                    <p class="data smallSize">粉丝量</p>
                </div>
                <div class="data-area">
-                   <p class="data bigSize">20</p>
+                   <p class="data bigSize">{{blogData.forwardCount}}</p>
                    <p class="data smallSize">转发量</p>
                </div>
                <div class="data-area">
-                   <p class="data bigSize">260</p>
+                   <p class="data bigSize">{{blogData.replySum}}</p>
                    <p class="data smallSize">评论数</p>
                </div>
                <div class="data-area">
-                   <p class="data bigSize">570</p>
+                   <p class="data bigSize">{{blogData.supportSum}}</p>
                    <p class="data smallSize">点赞总数</p>
                </div>
            </div>
@@ -216,6 +212,8 @@
                 .data-area{
                     display: inline-block;
                     width: calc(100% / 9);
+                    margin-top: 32px;
+                    height: 58px;
 
                     .data{
                         text-align: center;
@@ -223,7 +221,13 @@
 
                     .bigSize{
                         font-size: 26px;
-                        margin-top: 30px;
+                        line-height: 33px;
+                        line-height: 33px;
+                    }
+
+                    .smallSize{
+                        line-height: 25px;
+                        height: 25px;
                     }
                 }
             }
@@ -295,7 +299,8 @@
                 hitOption: [],
                 forwardOption: [],
                 originalStartDate: '',
-                originalEndDate: ''
+                originalEndDate: '',
+                originalMonth: ''
             }
         },
         components:　{articleView},
@@ -403,7 +408,7 @@
                 chart.showLoading();
                 this.$http.post('/apis/businessTool/getMicroblogConcersAndFansSumData.json', this.requestParam).then(
                     (response) => {
-                        console.log(response.data)
+
                         if(response.data.success){
                             let option = response.data.data.echart;
                             let seriesOne = [], seriesTwo = [];
@@ -564,6 +569,7 @@
                 this.articleParam.endDate = this.blogData.endDate;
                 this.originalStartDate = this.blogData.startDate;
                 this.originalEndDate = this.blogData.endDate;
+                this.originalMonth = this.blogData.startDate.substring(0,10);
             }
             this.setBreadCrumb();
         },

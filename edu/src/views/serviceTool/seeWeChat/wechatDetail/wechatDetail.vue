@@ -29,36 +29,24 @@
             </div>
             <div class="right">
                 <div class="data-area">
-                    <p class="data bigSize">60</p>
-                    <p class="data smallSize">2月22日 排行</p>
+                    <p class="data bigSize">{{parentData.articleCount}}</p>
+                    <p class="data smallSize">发布文章数</p>
                 </div>
                 <div class="data-area">
-                    <p class="data bigSize">0.89</p>
-                    <p class="data smallSize">当天指数</p>
+                    <p class="data bigSize">{{parentData.hitSum}}</p>
+                    <p class="data smallSize">总阅读量</p>
                 </div>
                 <div class="data-area">
-                    <p class="data bigSize">1260</p>
-                    <p class="data smallSize">发博量</p>
+                    <p class="data bigSize">{{parentData.supportSum}}</p>
+                    <p class="data smallSize">总点赞量</p>
                 </div>
                 <div class="data-area">
-                    <p class="data bigSize">102</p>
-                    <p class="data smallSize">关注量</p>
+                    <p class="data bigSize">{{parentData.hitAvg}}</p>
+                    <p class="data smallSize">平均阅读量</p>
                 </div>
                 <div class="data-area">
-                    <p class="data bigSize">610</p>
-                    <p class="data smallSize">粉丝量</p>
-                </div>
-                <div class="data-area">
-                    <p class="data bigSize">20</p>
-                    <p class="data smallSize">转发量</p>
-                </div>
-                <div class="data-area">
-                    <p class="data bigSize">260</p>
-                    <p class="data smallSize">评论数</p>
-                </div>
-                <div class="data-area">
-                    <p class="data bigSize">570</p>
-                    <p class="data smallSize">点赞总数</p>
+                    <p class="data bigSize">{{parentData.supportAvg}}</p>
+                    <p class="data smallSize">平均点赞量</p>
                 </div>
             </div>
 
@@ -224,7 +212,9 @@
 
                 .data-area{
                     display: inline-block;
-                    width: calc(100% / 9);
+                    width: calc(100% / 6);
+                    height: 58px;
+                    margin-top: 30px;
 
                     .data{
                         text-align: center;
@@ -232,7 +222,12 @@
 
                     .bigSize{
                         font-size: 26px;
-                        margin-top: 30px;
+                        height: 33px;
+                        line-height: 33px;
+                    }
+                    .smallSize{
+                        height: 25px;
+                        line-height: 25px;
                     }
                 }
             }
@@ -291,7 +286,8 @@
                 supportAvgOption: [],
                 hitAvgOption: [],
                 originalStartDate: '',
-                originalEndDate: ''
+                originalEndDate: '',
+                parentData: {}
             }
         },
         components:　{articleView},
@@ -510,6 +506,7 @@
         },
         created(){
             let data = this.$route.query;
+            this.parentData = data;
 //            this.requestParam.author = data.author;
 //            this.articleParam.author = data.author;
             //因为后台数据库的原因  暂时athor写死
