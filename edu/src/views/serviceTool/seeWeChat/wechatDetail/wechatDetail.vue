@@ -63,7 +63,7 @@
             </div>
 
         </div>
-        <div class="graph-wrap space">
+        <div class="graph-wrap">
             <el-row :gutter="10">
                 <el-col :span="12">
                     <el-card class="box-card educationBox">
@@ -76,42 +76,30 @@
                 <el-col :span="12">
                     <el-tabs class="custom-tabs left-tabs shorter-tabs" @tab-click="rankArticleTabClick" v-model="activeNameOne">
                         <el-tab-pane label="排名变化" name="rank" class="is-active">
-                            <el-card class="box-card educationBox">
-                                <div class="rankChange text item" id="rankGraph"></div>
-                            </el-card>
+                            <div class="rankChange text item" id="rankGraph"></div>
                         </el-tab-pane>
                         <el-tab-pane label="发布文章数" name="publish">
-                            <el-card class="box-card educationBox">
-                                <div class="publishNum text item" id="articleGraph"></div>
-                            </el-card>
+                            <div class="publishNum text item" id="articleGraph"></div>
                         </el-tab-pane>
                     </el-tabs>
                 </el-col>
                 <el-col :span="12">
                     <el-tabs class="custom-tabs left-tabs shorter-tabs" @tab-click="supportHitSumClick" v-model="activeNameTwo">
                         <el-tab-pane label="总阅读量" name="hitSum" class="is-active">
-                            <el-card class="box-card educationBox">
-                                <div class="rankChange text item" id="hitSumGraph"></div>
-                            </el-card>
+                            <div class="rankChange text item" id="hitSumGraph"></div>
                         </el-tab-pane>
                         <el-tab-pane label="总点赞量" name="supportSum">
-                            <el-card class="box-card educationBox">
-                                <div class="publishNum text item" id="supportSumGraph"></div>
-                            </el-card>
+                            <div class="publishNum text item" id="supportSumGraph"></div>
                         </el-tab-pane>
                     </el-tabs>
                 </el-col>
                 <el-col :span="12">
                     <el-tabs class="custom-tabs left-tabs shorter-tabs" @tab-click="supportHitAvgTabClick" v-model="activeNameThree">
                         <el-tab-pane label="平均阅读量" name="hitAvg" class="is-active">
-                            <el-card class="box-card educationBox">
-                                <div class="rankChange text item" id="hitAvgGraph"></div>
-                            </el-card>
+                            <div class="rankChange text item" id="hitAvgGraph"></div>
                         </el-tab-pane>
                         <el-tab-pane label="平均点赞量" name="supportAvg">
-                            <el-card class="box-card educationBox">
-                                <div class="publishNum text item" id="supportAvgGraph"></div>
-                            </el-card>
+                            <div class="publishNum text item" id="supportAvgGraph"></div>
                         </el-tab-pane>
                     </el-tabs>
                 </el-col>
@@ -252,18 +240,12 @@
 
 
         .graph-wrap{
+            background: inherit;
+            margin-top: 5px;
 
-            .custom-tabs.left-tabs{
-                .el-tabs__header{
-                    height: 64px;
-                    padding-top: 18px;
-                    padding-bottom: 18px;
-                }
-
-                .el-tabs__content{
-                    .el-card__body{
-                        padding-top: 0px;
-                    }
+            .custom-tabs{
+                .item{
+                    height: 440px;
                 }
             }
         }

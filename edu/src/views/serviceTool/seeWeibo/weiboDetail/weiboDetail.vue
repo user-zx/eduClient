@@ -60,7 +60,7 @@
            </div>
 
         </div>
-        <div class="graph-wrap space">
+        <div class="graph-wrap">
             <el-row :gutter="10">
                 <el-col :span="12">
                     <el-card class="box-card educationBox">
@@ -73,47 +73,33 @@
                 <el-col :span="12">
                     <el-tabs class="custom-tabs left-tabs shorter-tabs" @tab-click="rankSendTabClick" v-model="activeNameOne">
                         <el-tab-pane label="排名变化" name="rank" class="is-active">
-                            <el-card class="box-card educationBox">
-                                <div class="rankChange text item" id="rankGraph"></div>
-                            </el-card>
+                            <div class="rankChange text item" id="rankGraph"></div>
                         </el-tab-pane>
                         <el-tab-pane label="发博量" name="publish">
-                            <el-card class="box-card educationBox">
-                                <div class="publishNum text item" id="sendGraph"></div>
-                            </el-card>
+                            <div class="publishNum text item" id="sendGraph"></div>
                         </el-tab-pane>
                     </el-tabs>
                 </el-col>
                 <el-col :span="12">
                     <el-tabs class="custom-tabs left-tabs shorter-tabs" @tab-click="concernFanTabClick" v-model="activeNameTwo">
                         <el-tab-pane label="关注量" name="focus" class="is-active">
-                            <el-card class="box-card educationBox">
-                                <div class="rankChange text item" id="concernGraph"></div>
-                            </el-card>
+                            <div class="rankChange text item" id="concernGraph"></div>
                         </el-tab-pane>
                         <el-tab-pane label="粉丝量" name="fans">
-                            <el-card class="box-card educationBox">
-                                <div class="publishNum text item" id="fansGraph"></div>
-                            </el-card>
+                            <div class="publishNum text item" id="fansGraph"></div>
                         </el-tab-pane>
                     </el-tabs>
                 </el-col>
                 <el-col :span="12">
                     <el-tabs class="custom-tabs left-tabs shorter-tabs" @tab-click="forwardSupportHitTabClick" v-model="activeNameThree">
                         <el-tab-pane label="转发量" name="repost" class="is-active">
-                            <el-card class="box-card educationBox">
-                                <div class="rankChange text item" id="forwardGraph"></div>
-                            </el-card>
+                            <div class="rankChange text item" id="forwardGraph"></div>
                         </el-tab-pane>
                         <el-tab-pane label="评论数" name="comment">
-                            <el-card class="box-card educationBox">
-                                <div class="publishNum text item" id="hitGraph"></div>
-                            </el-card>
+                            <div class="publishNum text item" id="hitGraph"></div>
                         </el-tab-pane>
                         <el-tab-pane label="点赞总数" name="like">
-                            <el-card class="box-card educationBox">
-                                <div class="publishNum text item" id="supportGraph"></div>
-                            </el-card>
+                            <div class="publishNum text item" id="supportGraph"></div>
                         </el-tab-pane>
                     </el-tabs>
                 </el-col>
@@ -245,18 +231,12 @@
 
 
         .graph-wrap{
+            background: inherit;
+            margin-top: 5px;
 
-            .custom-tabs.left-tabs{
-                .el-tabs__header{
-                    height: 64px;
-                    padding-top: 18px;
-                    padding-bottom: 18px;
-                }
-
-                .el-tabs__content{
-                    .el-card__body{
-                        padding-top: 0px;
-                    }
+            .custom-tabs{
+                .item{
+                    height: 440px;
                 }
             }
         }
@@ -392,8 +372,9 @@
                             optionTwo.legend = {data: ['排行']};
                             this.rankOption = optionTwo;
                             this.sendOption = optionOne;
-                            chart.setOption(this.rankOption);
+
                             this.$nextTick(function () {
+                                chart.setOption(this.rankOption);
                                 chart.hideLoading();
                             });
                         }else{
@@ -422,6 +403,7 @@
                 chart.showLoading();
                 this.$http.post('/apis/businessTool/getMicroblogConcersAndFansSumData.json', this.requestParam).then(
                     (response) => {
+                        console.log(response.data)
                         if(response.data.success){
                             let option = response.data.data.echart;
                             let seriesOne = [], seriesTwo = [];
@@ -437,8 +419,9 @@
                             optionTwo.legend = {data: ['粉丝量']};
                             this.fansOption = optionTwo;
                             this.concernOption = optionOne;
-                            chart.setOption(this.concernOption);
+
                             this.$nextTick(function () {
+                                chart.setOption(this.concernOption);
                                 chart.hideLoading();
                             });
                         }else{
@@ -490,8 +473,8 @@
                             this.supportOption = optionTwo;
                             this.hitOption = optionOne;
 
-                            chart.setOption(this.forwardOption);
                             this.$nextTick(function () {
+                                chart.setOption(this.forwardOption);
                                 chart.hideLoading();
                             });
                         }

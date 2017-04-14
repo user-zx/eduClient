@@ -76,15 +76,18 @@
 }
 
 .custom-tabs.shorter-tabs{
+  margin-top: 10px;
+
   .el-tabs__header{
     padding: 18px;
     height: 60px;
   }
-  .el-card{
-    &.box-card{
-      >.el-card__body{
-        padding-top: 0px;
-      }
+  .el-tabs__content{
+    height: 460px;
+    padding: 0px 20px 20px;
+
+    .el-tab-pane {
+      height: 440px;
     }
   }
 }
