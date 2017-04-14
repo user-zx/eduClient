@@ -186,7 +186,6 @@
     }
 </style>
 <script>
-    import breadCrumb from '../../../components/breadCrumb/breadCrumb.vue';
     import echarts from 'echarts';
     export default{
         data(){

@@ -2,8 +2,8 @@
  * Created by yuwei on 2017/4/1.
  */
 import "vue-style-loader!css-loader!sass-loader!../css/characterAnalyse.scss";
-import echarts from "echarts"
-import echartsWordCloud from "echarts-wordcloud"
+import echarts from "echarts";
+import "echarts-wordcloud";
 
 export default{
     data(){

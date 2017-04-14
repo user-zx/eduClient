@@ -6,7 +6,8 @@ import analyse from './views/pomp/analyse/analyse.vue';
 import warning from './views/pomp/warning/warning.vue';
 import event from './views/pomp/event/event.vue';
 import speech from './views/pomp/speech/speech.vue';
-import speechDetails from './views/pomp/speech/speechDetails.vue';
+import speechList from './views/pomp/speech/speechList/speechList.vue';
+import speechDetails from './views/pomp/speech/speechDetails/speechDetails.vue';
 import industryNews from './views/reference/industryNews/industryNews.vue';
 import characterNews from './views/reference/characterNews/characterNews.vue';
 import seeClearly from './views/reference/seeClearly/seeClearly.vue';
@@ -122,15 +123,28 @@ export default {
                    path:"publicOpinionRule",
                    component:publicOpinionRule
                 },
+
                 {
                     name:"舆情报告",
                     path:"speech",
-                    component:speech
+                    component:speech,
+                    children:[
+                        {
+                            path:"",
+                            component:speechList
+                        }
+                    ]
                 },
                 {
                     name: "舆情报告详情",
                     path:"speechDetails",
-                    component:speechDetails
+                    component:speech,
+                    children:[
+                        {
+                            path:"",
+                            component:speechDetails
+                        }
+                    ]
                 },
                 {   
                     name:"行业动态",

@@ -80,14 +80,16 @@
                 immediate: true,
                 handler(val) {
                     if(val){
-                        let url=val.split('/')[2],
-                            nowNav=null;
-                        if(url.indexOf("panorama")!= -1)nowNav="panorama";
-                        if(url.indexOf("event")!= -1)nowNav="event";
-                        if(url.indexOf("Analyse") != -1)nowNav="analyse";
-                        if(url.indexOf("industry") != -1)nowNav="industryNews";
-                        if(url.indexOf("weChat") != -1)nowNav="seeWeChat";
-                        if(url.indexOf("weibo") != -1)nowNav="seeWeibo";
+                        let url=val.split('/')[2],nowNav=null;
+
+                        if(url.indexOf("panorama")!= -1) nowNav="panorama";
+                        if(url.indexOf("event")!= -1) nowNav="event";
+                        if(url.indexOf("Analyse") != -1) nowNav="analyse";
+                        if(url.indexOf("speech") != -1) nowNav="speech";
+                        if(url.indexOf("industry") != -1) nowNav="industryNews";
+                        if(url.indexOf("weChat") != -1) nowNav="seeWeChat";
+                        if(url.indexOf("weibo") != -1) nowNav="seeWeibo";
+
                         if(nowNav)
                             this.routerName=nowNav;
                         else
