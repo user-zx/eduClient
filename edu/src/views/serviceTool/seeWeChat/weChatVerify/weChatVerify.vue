@@ -187,7 +187,7 @@
                         name:"业务平台",to:{path:"/home/seeWeChat"}
                     },
                     {
-                        name:"微信监测",to:{path:"home/seeWeChat"}
+                        name:"微信监测",to:{path:"/home/seeWeChat"}
                     },
                     {
                         name: '微信认证'

@@ -122,7 +122,7 @@
         <div class="article-wrap">
             <div class="content space dark">
                 <div class="content-bar">
-                    <ul class="content-bar-list">
+                    <ul class="content-bar-list" id="sortUl">
                         <li>
                             文章排行
                         </li>
@@ -530,19 +530,24 @@
 
             sort(param){
                 let date = new Date();
+                $('#sortUl li').removeClass('selected');
                 if(param == 'today'){
                     //
+                    $('#sortUl li:eq(2)').addClass('selected');
                     this.articleParam.startDate = date.format('yyyy-MM-dd 00:00:00');
                     this.articleParam.endDate = date.format('yyyy-MM-dd 23:59:59');
                 }else if(param == 'yesterday'){
+                    $('#sortUl li:eq(3)').addClass('selected');
                     let yesterday = date.getTime() - 24 * 3600 * 1000;
                     this.articleParam.startDate = new Date(yesterday).format('yyyy-MM-dd 00:00:00');
                     this.articleParam.endDate = new Date(yesterday).format('yyyy-MM-dd 23:59:59');
                 }else if(param == 'range'){
+                    $('#sortUl li:eq(4)').addClass('selected');
                     let week = date.getTime() - 24 * 7 * 3600 * 1000;
                     this.articleParam.startDate = new Date(week).format('yyyy-MM-dd 00:00:00');
                     this.articleParam.endDate = date.format('yyyy-MM-dd 23:59:59');
                 }else{
+                    $('#sortUl li:eq(1)').addClass('selected');
                     this.articleParam.startDate = this.originalStartDate;
                     this.articleParam.endDate = this.originalEndDate;
                 }
