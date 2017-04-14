@@ -22,6 +22,7 @@
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
     "echarts": "^3.4.2",
+    "element-china-area-data": "^3.0.0",
     "file-loader": "^0.9.0",
     "jquery": "^1.12.4",
     "node-sass": "^4.5.0",

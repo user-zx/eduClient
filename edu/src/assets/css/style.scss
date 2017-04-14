@@ -483,3 +483,13 @@ ul.event-store-item {
     height: 440px; 
   }
 }
+
+.el-cascader.edu-cascader{
+  background-color: transparent;
+  width: 100%;
+  
+  .el-cascader__label{
+    color: #d0d7ff;
+    z-index: 9999;
+  }
+}
