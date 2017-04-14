@@ -3,7 +3,6 @@
 */
 <template>
     <div class="reportDetails" id="reportDetails">
-        <breadCrumb></breadCrumb>
         <div class="title-box">
             <div>
                 <h3 class="title">{{param.title}}</h3>
@@ -198,7 +197,6 @@
                 weboHot: [],
             }
         },
-        components:{breadCrumb} ,
         methods:{
             setBreadCrumb(){
                 let breadcrumb=[

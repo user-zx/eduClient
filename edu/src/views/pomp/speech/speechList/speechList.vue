@@ -3,7 +3,6 @@
 */
 <template>
     <div class="report" v-loading="loading" element-loading-text="加载中……">
-        <breadCrumb></breadCrumb>
         <div class="content-wrap">
             <div class="btn-container">
                 <el-button type="primary" icon="plus" @click="addReport">生成报告</el-button>
@@ -111,7 +110,6 @@
                 }
             }
         },
-        components:{breadCrumb} ,
         methods:{
             setBreadCrumb(){
                 let breadcrumb=[
