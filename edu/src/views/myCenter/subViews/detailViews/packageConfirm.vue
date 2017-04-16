@@ -13,7 +13,7 @@
                                 使用期限：
                             </el-col>
                             <el-col :span="13">
-                                <span class="yellow deadline">一年</span>
+                                <span class="yellow deadline">{{data[0].time}}</span>
                             </el-col>
                         </el-row>
                         <el-row>
@@ -39,28 +39,29 @@
                     </div>
                 </div>
                 <div class="middle package-detail">
-                    <p class="package-title">套餐类型：<span class="yellow">C套餐</span></p>
+                    <p class="package-title">套餐类型：<span class="yellow">{{data[0].setMeal}}</span></p>
                     <div class="item">
-                        <p class="tree blue">舆情管理</p>
-                        <p class="tree-node">全景舆情</p>
-                        <p class="tree-node">舆情预警</p>
-                        <p class="tree-node">舆情报告</p>
+                        <p class="tree blue">{{data[0].name}}</p>
+                        <p class="tree-node" v-for="item in data[0].item">{{item}}</p>
                     </div>
                     <div class="item">
-                        <p class="tree blue">情报内参</p>
-                        <p class="tree-node">两微洞察</p>
-                        <p class="tree-node">媒体声誉</p>
+                        <p class="tree blue">{{data[1].name}}</p>
+                        <p class="tree-node" v-for="item in data[1].item">{{item}}</p>
+                    </div>
+                    <div class="item">
+                        <p class="tree blue">{{data[2].name}}</p>
+                        <p class="tree-node" v-for="item in data[2].item">{{item}}</p>
                     </div>
                 </div>
                 <div class="bottom">
-                    <p>可关注高校：<span class="blue">6</span></p>
-                    <p>可添加人物：<span class="blue">10</span></p>
+                    <p>可关注高校：<span class="blue">{{data[0].concernCollegeNum}}</span></p>
+                    <p>可添加人物：<span class="blue">{{data[0].concernPersonNum}}</span></p>
                 </div>
             </div>
 
             <div class="btn-wrap">
                 <div class="left">
-                    应支付金额： <span class="money">999</span>
+                    应支付金额： <span class="money">{{data[0].price}}</span>
                 </div>
                 <div class="right">
                     <el-button type="primary" @click="submitOrder('data')" class="save-btn">确认提交</el-button>
@@ -218,17 +219,15 @@
     export default{
         data(){
             return {
-                msg: ''
+                msg: '',
+                data:"",
             }
         },
         methods: {
             setBreadCrumb(){
                 let breadcrumb=[
                     {
-                        name:"个人中心",to:{path:"/home/myCenter"}
-                    },
-                    {
-                        name:"购买套餐", to: {path: ""}
+                        name:"会员中心",to:{path:"/home/myCenter"}
                     },
                     {
                         name: "预定提交"
@@ -242,9 +241,12 @@
             }
         },
         mounted(){
+           
         },
         created(){
             this.setBreadCrumb();
+            this.data = this.$route.query.selected;
+           console.log(this.data)
         }
     }
 </script>

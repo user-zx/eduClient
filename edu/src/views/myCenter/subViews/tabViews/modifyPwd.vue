@@ -119,7 +119,6 @@
                 this.$refs[formName].validate(
                     (valid) => {
                         if(valid){
-                            //
                             this.$http.post('/apis/security/generateKey.do').then(
                                 (response) => {
                                     if (response.data.success) {
@@ -164,7 +163,7 @@
                     (response) => {
                         console.log(response.data)
                         if(response.data.success){
-
+                            
                         }else {
 
                         }
