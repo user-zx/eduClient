@@ -2,14 +2,13 @@
     <div class="wechatDetail">
         <div class="info-wrap space">
             <div class="logo-div">
-                <img src="../../../../assets/images/university-logo-temp.png" alt="" class="logo">
+                <img :src="wechatInfo.accountSign" alt="" class="logo">
             </div>
             <div class="info">
-                <p>微信昵称： 北京大学</p>
-                <p>微信认证：北京大学官方微信、教育管委联盟成员 </p>
-                <p>学校：北京大学</p>
-                <p>所在地： 北京</p>
-                <p>简介： 发布北大权威信息，展示北大校园生活，服务广大师生校友，哈哈哈发布北大权威信息，展示北大校园生活，服务广大师生校友，哈哈哈发布北大权威信息，展示北大校园生活，服务广大师生校友，哈哈哈 </p>
+                <p>微信号名称： {{wechatInfo.wechatName}}</p>
+                <p>微信号：{{wechatInfo.wechatNumber}} </p>
+                <p>账号主体：{{wechatInfo.wechatSubject}}</p>
+                <p>功能介绍： {{wechatInfo.instruction}}</p>
             </div>
             <div class="btn-area">
                 <div class="btn attention">
@@ -20,7 +19,7 @@
                 </div>
             </div>
             <div class="qrcode-area">
-                <img src="../../../../assets/images/qrcode-temp.png" alt="">
+                <img :src="wechatInfo.qrCode" alt="">
             </div>
         </div>
         <div class="summary-wrap space">
@@ -190,6 +189,11 @@
                 margin: 26px 57px 32px 50px;
                 vertical-align: top;
                 padding: 8px;
+
+                img{
+                    max-width: 162px;
+                    max-height: 162px;
+                }
             }
         }
 
@@ -287,7 +291,16 @@
                 hitAvgOption: [],
                 originalStartDate: '',
                 originalEndDate: '',
-                parentData: {}
+                parentData: {},
+                wechatInfo: {
+                    accountSign: '',
+                    belongColleage: '',
+                    instruction: '',
+                    qrCode: '',
+                    wechatName: '',
+                    wechatNumber: '',
+                    wechatSubject: ''
+                },
             }
         },
         components:　{articleView},
@@ -471,7 +484,7 @@
 //                console.log(this.articleParam)
                 this.$http.post('/apis/businessTool/getWechatArticleData.json', this.articleParam).then(
                     (response) => {
-                        console.log(response.data)
+//                        console.log(response.data)
                         this.articleData = response.data.data.page.content;
                     }
                 )
@@ -503,15 +516,31 @@
 
                 this.getWechatArticleList();
             },
+
+            getWechatInfoData(){
+                let param = {
+                    author: this.parentData.author
+                }
+
+                this.$http.post('/apis/businessTool/getWechatNumberInfo.json', param).then(
+                    (response) => {
+                        console.log(response.data)
+                        if(response.data.success && response.data.data != null){
+                            this.wechatInfo = response.data.data;
+                        }else if(response.data.message != null){
+                            console.error(response.data.message)
+                        }
+                    }
+                )
+            },
         },
         created(){
             let data = this.$route.query;
             this.parentData = data;
-//            this.requestParam.author = data.author;
-//            this.articleParam.author = data.author;
-            //因为后台数据库的原因  暂时athor写死
-            this.requestParam.author = '南京大学';
-            this.articleParam.author = '南京大学';
+
+            this.requestParam.author = data.author;
+            this.articleParam.author = data.author;
+
             //父级传的参数没有起止时间 则默认为今天
             if(data.startDate == undefined){
                 let date = new Date();
@@ -532,6 +561,7 @@
             this.setBreadCrumb();
         },
         mounted(){
+            this.getWechatInfoData();
             this.getBlogSupportAvgData();
             this.getRankAndArticleData();
             this.getSupportHitSumData();

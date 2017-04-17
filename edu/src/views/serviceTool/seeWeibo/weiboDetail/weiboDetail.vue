@@ -283,7 +283,7 @@
                     blogColleage: "",
                     blogNickname: "",
                     blogSubject: "",
-                    instruction: "南京大学官方微博",
+                    instruction: "",
                     microblogAvatar: ""
                 },
                 articleData: [],
@@ -548,11 +548,8 @@
         },
         created(){
             this.blogData = this.$route.query;
-//            this.requestParam.author = this.blogData.author;
-//            this.articleParam.author = this.blogData.author;
-            //因为后台数据库的原因  暂时author写死
-            this.requestParam.author = '南京大学';
-            this.articleParam.author = '南京大学';
+            this.requestParam.author = this.blogData.author;
+            this.articleParam.author = this.blogData.author;
             //父级传的参数没有起止时间 则默认为今天
             if(this.blogData.startDate == undefined){
                 let date = new Date();
