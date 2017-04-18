@@ -29,29 +29,7 @@
                     <el-col :span="2" class="transition">选择省份：</el-col>
                     <el-col :span="22" class="transition">
                         <ul class="province-list">
-                            <li class="list">北京</li>
-                            <li class="list">天津</li>
-                            <li class="list">河北</li>
-                            <li class="list">山西</li>
-                            <li class="list">辽宁</li>
-                            <li class="list">吉林</li>
-                            <li class="list">上海</li>
-                            <li class="list">河北</li>
-                            <li class="list">山西</li>
-                            <li class="list">辽宁</li>
-                            <li class="list">吉林</li>
-                            <li class="list">上海</li>
-                            <li class="list">河北</li>
-                            <li class="list">山西</li>
-                            <li class="list">辽宁</li>
-                            <li class="list">吉林</li>
-                            <li class="list">上海</li>
-                            <li class="list">上海</li>
-                            <li class="list">河北</li>
-                            <li class="list">山西</li>
-                            <li class="list">辽宁</li>
-                            <li class="list">吉林</li>
-                            <li class="list">上海</li>
+                            <li class="list" v-for="item in province">{{item}}</li>
                             <li class="list">
                                 <i class="el-icon-arrow-down pointer" v-on:click="foldProvinceClick"></i>
                             </li>
@@ -170,8 +148,8 @@
                     {name: '王小二', college: '清华大学', department: '哲学系', keyword: '时间相对论', count:　'2929292929'},
                     {name: '王小二', college: '清华大学', department: '哲学系', keyword: '时间相对论', count:　'2929292929'},
                     {name: '王小二', college: '清华大学', department: '哲学系', keyword: '时间相对论', count:　'2929292929'},
-
-                ]
+                ],
+                province:["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","香港","澳门","台湾"],
             }
         },
         methods: {

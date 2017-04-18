@@ -22,9 +22,9 @@
                     </div>
                     <div class="mask">
                         <div class="btn-wrap">
-                            <el-button type="text" @click="addCollege()">添加</el-button>
+                            <el-button type="text" @click="addCollege()">设置</el-button>
                             <!--<div class="line"></div>-->
-                            <el-button type="text" @click="setItem()">设置</el-button>
+                           <!--  <el-button type="text" @click="setItem()">设置</el-button> -->
                         </div>
                     </div>
                 </div>
@@ -38,8 +38,7 @@
                    </div>
                    <div class="mask">
                        <div class="btn-wrap">
-                           <el-button type="text" @click="addCharacter()">添加</el-button>
-                           <el-button type="text">设置</el-button>
+                           <el-button type="text" @click="addCharacter()">设置</el-button>
                        </div>
                    </div>
                </div>
@@ -53,8 +52,8 @@
                     </div>
                     <div class="mask">
                         <div class="btn-wrap">
-                            <el-button type="text" @click="addSubCount()">添加</el-button>
-                            <el-button type="text" @click="setSubCount()">设置</el-button>
+                            <el-button type="text" @click="addSubCount()">设置</el-button>
+                          <!--   <el-button type="text" @click="setSubCount()">设置</el-button> -->
                         </div>
                     </div>
                 </div>
@@ -65,7 +64,7 @@
                       :resizable="false">
                 <el-table-column label="订单编号" prop="orderNum" align="center"></el-table-column>
                 <el-table-column label="产品类型" prop="productType" align="center"></el-table-column>
-                <el-table-column label="支付时间" prop="payDate" align="center"></el-table-column>
+                <el-table-column label="提交时间" prop="payDate" align="center"></el-table-column>
                 <el-table-column label="期限" prop="deadline" align="center"></el-table-column>
                 <el-table-column label="到期时间" prop="expireDate" align="center"></el-table-column>
                 <el-table-column label="支付金额" prop="money" align="center"></el-table-column>
@@ -77,6 +76,15 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <div class="block content-bar-pagination">
+                <el-pagination class="edu-pagination"
+                  @current-change="handleCurrentChange"
+                  :page-size= "pageSize"
+                  layout="total, prev, next, jumper"
+                  :total="total">
+                </el-pagination>
+
+            </div>
         </div>
     </div>
 </template>
@@ -214,18 +222,9 @@
     export default{
         data(){
             return {
-                tableData: [
-                    {orderNum: 123456, productType: 'A套餐', payDate: '2017-01-01',
-                        deadline: '一年', expireDate: '2018-01-01', money: 99, viewDetail: '查看'},
-                    {orderNum: 123456, productType: 'A套餐', payDate: '2017-01-01',
-                        deadline: '二年', expireDate: '2018-01-01', money: 99, viewDetail: '查看'},
-                    {orderNum: 123456, productType: 'A套餐', payDate: '2017-01-01',
-                        deadline: '三年', expireDate: '2018-01-01', money: 99, viewDetail: '查看'},
-                    {orderNum: 123456, productType: 'A套餐', payDate: '2017-01-01',
-                        deadline: '四年', expireDate: '2018-01-01', money: 99, viewDetail: '查看'},
-                    {orderNum: 123456, productType: 'A套餐', payDate: '2017-01-01',
-                        deadline: '五年', expireDate: '2018-01-01', money: 99, viewDetail: '查看'}
-                ]
+                tableData: [],
+                pageSize:10,
+                total:1,
             }
         },
         methods: {
@@ -241,7 +240,12 @@
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
             viewDetail(params){
-                console.log(params);
+               // console.log(params);  
+                this.$http.get("/apis/packageManage/getPackageOrderById.json/"+params.orderNum).then((res)=>{
+                    console.log(res);
+                },(err)=>{
+                    console.log(err);
+                })
             },
 
             addCollege(){
@@ -262,10 +266,34 @@
                 $('.attend-tabs .el-col').removeClass('active');
                 $('.attend-tabs .el-col-subCount').addClass('active');
                 this.$parent.currentTabs.currentTab = "subCount";
-            }
+            },
+            handleCurrentChange(val) {
+                this.$http.post("/apis/packageManage/getPackageOrderList.json",{pageSize:this.pageSize,pageNo:val}).then((res)=>{
+                    if(res.data.success){
+                        let content = res.data.data.content;
+                         this.tableData = [];
+                        for (let i in content) {
+                             this.tableData.push({orderNum:content[i].id, productType:content[i].packageType, payDate:"",
+                            deadline:content[i].timeLimit, expireDate:"--", money:content[i].totalPrice, viewDetail: '查看'})  
+                        }
+                    }
+                },(err)=>{ 
+                    console.log(err);
+                })
+            },
+            getDataList(){
+                this.$http.post("/apis/packageManage/getPackageOrderList.json",{pageSize:this.pageSize,pageNo:1}).then((res)=>{
+                    if(res.data.success){
+                        this.total = res.data.data.totalElements;
+                        this.handleCurrentChange(1);
+                    }
+                },(err)=>{ 
+                    console.log(err);
+                })
+            },
         },
         mounted(){
-
+            this.getDataList();
         },
         created(){
             this.setBreadCrumb();

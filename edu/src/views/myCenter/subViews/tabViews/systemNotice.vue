@@ -44,7 +44,7 @@
     export default{
         data(){
             return {
-                msg: '李菲',
+                msg: '系统通知',
                 currentPage: 1,
                 total: 100,
                 tableData: [
