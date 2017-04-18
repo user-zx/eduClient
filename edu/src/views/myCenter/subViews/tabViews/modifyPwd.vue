@@ -14,7 +14,6 @@
                <el-form-item prop="checkPass">
                    <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="确认新密码" name="newPwd2"></el-input>
                </el-form-item>
-
                <el-form-item>
                    <el-button type="primary" @click="submitForm('ruleForm2')">确认修改</el-button>
                </el-form-item>
@@ -92,7 +91,7 @@
                     ],
                     checkPass: [
                         { validator: validatePass2, trigger: 'blur' },
-                        { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
+                        { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur'}
                     ],
                     oldPwd: [
                         { validator: checkOldPwd, trigger: 'blur' },
@@ -115,7 +114,6 @@
             },
 
             submitForm(formName){
-                console.log(formName)
                 this.$refs[formName].validate(
                     (valid) => {
                         if(valid){
@@ -158,14 +156,17 @@
                     oldPassword: this.ruleForm2.oldPwd,
                     newPassword: this.ruleForm2.pass
                 }
-                console.log(param)
                 this.$http.post('/apis/user/updatePassword.json', param).then(
-                    (response) => {
-                        console.log(response.data)
-                        if(response.data.success){
-                            
+                    (res) => {
+                        console.log(res.data)
+                        if(res.data.success){
+                            //console.log();
                         }else {
-
+                            alert(res.data.message)
+                            this.ruleForm2.oldPwd = "";
+                            this.ruleForm2.pass = "";
+                            this.ruleForm2.checkPass = "";
+                            return false;
                         }
                     }
                 )

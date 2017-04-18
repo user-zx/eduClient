@@ -364,7 +364,7 @@
                 item_B_one:["全景舆情","舆情监测","舆情报警","事件测试","舆情报告"],
                 item_B_two:["行业动态","人物动态","媒体声誉","两微洞察","内参报告"],
                 item_B_three:["两微监管"],
-                item_C_one:["行业动态","舆情监测","舆情报警","事件测试","舆情报告"],
+                item_C_one:["全景舆情","舆情监测","舆情报警","事件测试","舆情报告"],
                 item_C_two:["行业动态","人物动态","媒体声誉","两微洞察","内参报告"],
                 item_C_three:["两微监管"],
                 changePrice:{c:""},
@@ -514,7 +514,6 @@
                                }
                             }
                         })
-                         
                         break;    
                 }
                 //console.log(arrData);
@@ -541,12 +540,16 @@
                    for (var i = 0; i < item_C_one.length; i++) {
                        nameC+=item_C_one[i]
                    }
-                   for (var i = 0; i < ListC.length; i++) {
-                       if(nameC.indexOf(ListC[i])>=0){
+                   for (let j = 0; j < ListC.length; j++) {
+                       if(nameC.indexOf(ListC[j])>=0){
                             let objC = {};
-                           objC.name = ListC[i]
-                           objC.price = dataC[i].itemPrice;
-                           objC.id = dataC[i].id;
+                           objC.name = ListC[j]
+                           objC.price = dataC[j].itemPrice;
+                           if(j==3){
+                             objC.id = dataC[j].id;
+                           }else{
+                             objC.id = dataC[j].id+","; 
+                           } 
                            objC.status = true;
                            nameListC.item.push(objC)
                        }
@@ -581,7 +584,7 @@
                   let ListA = "",ListB = "",ListC = [];
                 this.$http.post('/apis/packageManage/getPackageManageList.json').then(
                     (res) => {
-                       // console.log(res);
+                        console.log(res);
                         if(res.ok){
                             if(res.data.success){
                                this.price.a = res.data.data[0].total;
@@ -617,7 +620,6 @@
                 );
                 let dataC = "";
                 this.$http.post("/apis/packageBuy/getItemPriceList.json").then((res)=>{
-                    
                    if(res.ok){
                         if(res.data.success){
                            for (var i = 0; i < res.data.data.length; i++) {

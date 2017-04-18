@@ -120,7 +120,7 @@
                     .el-icon-arrow-down {
                         position: absolute;
                         top: 16px;
-                        right: 15px;
+                        right: 5px;
                     }
                 }
 

@@ -19,17 +19,19 @@
                         <el-row>
                             <el-col :span="6" :offset="2">
                                 联系电话：
-                            </el-col>
-                            <el-col :span="13">
-                                <el-input class="dark input-small"></el-input>
+                            </el-col> 
+                            <el-col :span="13" class="verify_input" :class="{isShow_phone:phone_empty}">
+                              <el-input class="dark input-small" placeholder="请输入手机号" v-model="ruleForm.phone" @blur="onBlurPhone()" @change="onChangePhone"></el-input> 
+                              <p v-html="hintPhone"></p>
                             </el-col>
                         </el-row>
                         <el-row>
                             <el-col :span="6" :offset="2">
                                 电子邮箱：
                             </el-col>
-                            <el-col :span="13">
-                                <el-input class="dark input-small"></el-input>
+                            <el-col :span="13" class="verify_input">
+                                <el-input class="dark input-small" placeholder="请输入邮箱" v-model="ruleForm.email" :class="{isShow_email:email_empty}" @blur="onBlurEmail($event)" @change="onChangeEmail"></el-input>
+                                <p v-html="hintEmail"></p>
                             </el-col>
                         </el-row>
                         <el-row class="service-phone">
@@ -58,13 +60,12 @@
                     <p>可添加人物：<span class="blue">{{data[0].concernPersonNum}}</span></p>
                 </div>
             </div>
-
             <div class="btn-wrap">
                 <div class="left">
                     应支付金额： <span class="money">{{data[0].price}}</span>
                 </div>
                 <div class="right">
-                    <el-button type="primary" @click="submitOrder('data')" class="save-btn">确认提交</el-button>
+                    <el-button type="primary" @click="submitOrder()" class="save-btn">确认提交</el-button>
                 </div>
             </div>
         </div>
@@ -103,8 +104,7 @@
 
                         .el-row{
                             font-size: 16px;
-                            margin-bottom: 16px;
-
+                            margin-bottom: 25px;
                             .deadline{
                                 font-size: 16px;
                             }
@@ -209,21 +209,34 @@
         .yellow{
             color: #e4f09e;
         }
-
+        
         .el-form-item__label{
             font-size: 16px;
+        }
+        
+        .isShow_phone,.isShow_email{
+            border: 1px solid #ff4949; 
+            -webkit-border-radius: 5px; 
+            border-radius: 5px; 
         }
     }
 </style>
 <script>
     export default{
         data(){
+              
             return {
                 msg: '',
                 data:"",
+                hintPhone:"",
+                hintEmail:"", 
+                phone_empty:false,      
+                email_empty:false,    
+                ruleForm:{phone:"",email:""},
+                sign:false,
             }
         },
-        methods: {
+        methods: {  
             setBreadCrumb(){
                 let breadcrumb=[
                     {
@@ -235,9 +248,78 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
-
+            onChangeEmail(){
+                 this.hintEmail = "";
+                 this.email_empty = false;
+             },
+            onBlurEmail(){
+                 if(this.ruleForm.email == ""){
+                    this.hintEmail = "邮箱不能为空!";
+                    this.email_empty = true;
+                    this.sign = false; 
+                }else if(!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(this.ruleForm.email)){
+                    this.hintEmail = "邮箱格式不正确!";
+                    this.email_empty = true;
+                    this.sign = false; 
+                }else{
+                    this.sign = true;
+                }
+            },
+            onChangePhone(){
+                 this.hintPhone = "";
+                 this.phone_empty = false;
+            },
+            onBlurPhone(){
+                if(this.ruleForm.phone == ""){
+                    this.hintPhone = "手机号码不能为空!";
+                    this.phone_empty = true;
+                    this.sign = false;
+                }else if(!/^1(3|4|5|7|8)\d{9}$/.test(this.ruleForm.phone)){
+                    this.hintPhone = "手机号个格式不正确!";
+                    this.phone_empty = true;
+                    this.sign = false;
+                }else{
+                    this.sign = true;
+                }
+            },
             submitOrder(){
-                this.$router.push({path: "/home/centerPackageResult"})
+                let obj = {};
+                if(this.sign){
+                    obj.userAccount = "";
+                    obj.packageType = this.data[0].setMeal;
+                    obj.packageItem = this.data[0].itemNum;
+                    obj.concernCollegeNum = this.data[0].concernCollegeNum;
+                    obj.concernPersonNum = this.data[0].concernPersonNum;
+                    obj.totalPrice = this.data[0].price;
+                    obj.timeLimit = this.data[0].time;
+                    obj.childMemberNum = "",
+                    obj.phone = this.ruleForm.phone;
+                    obj.email = this.ruleForm.email;
+                    obj.consultHotline = "";
+                    obj.isPay = "";
+                    obj.signedDate = "";
+                    obj.createDate = "";
+                    obj.createUser = "";
+                    obj.updateDate = "";
+                    obj.updateUser = "";
+                }
+                
+             
+                this.$http.post("/apis/packageBuy/packageBuy.json",obj).then((res)=>{
+                    console.log(res);
+                    if(res.ok){
+                        if(res.data.success){
+
+                            alert(res.data.data)
+                            this.$router.push({path: "/home/centerPackageResult"})
+                        }else{
+                            alert(res.data.message)
+                        }
+                    }
+                },(err)=>{
+                    console.log(err);
+                })
+               
             }
         },
         mounted(){

@@ -218,17 +218,20 @@
                     {orderNum: 123456, productType: 'A套餐', payDate: '2017-01-01',
                         deadline: '一年', expireDate: '2018-01-01', money: 99, viewDetail: '查看'},
                     {orderNum: 123456, productType: 'A套餐', payDate: '2017-01-01',
-                        deadline: '一年', expireDate: '2018-01-01', money: 99, viewDetail: '查看'},
+                        deadline: '二年', expireDate: '2018-01-01', money: 99, viewDetail: '查看'},
                     {orderNum: 123456, productType: 'A套餐', payDate: '2017-01-01',
-                        deadline: '一年', expireDate: '2018-01-01', money: 99, viewDetail: '查看'},
+                        deadline: '三年', expireDate: '2018-01-01', money: 99, viewDetail: '查看'},
                     {orderNum: 123456, productType: 'A套餐', payDate: '2017-01-01',
-                        deadline: '一年', expireDate: '2018-01-01', money: 99, viewDetail: '查看'},
+                        deadline: '四年', expireDate: '2018-01-01', money: 99, viewDetail: '查看'},
                     {orderNum: 123456, productType: 'A套餐', payDate: '2017-01-01',
-                        deadline: '一年', expireDate: '2018-01-01', money: 99, viewDetail: '查看'}
+                        deadline: '五年', expireDate: '2018-01-01', money: 99, viewDetail: '查看'}
                 ]
             }
         },
         methods: {
+            setItem(){
+                
+            },
             setBreadCrumb(){
                 let breadcrumb=[
                     {
@@ -236,6 +239,9 @@
                     }
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
+            },
+            viewDetail(params){
+                console.log(params);
             },
 
             addCollege(){
