@@ -14,7 +14,7 @@
                <el-form-item label="高校">
                    <el-input v-model="memberForm.college" :disabled="true">火星理工大学</el-input>
                </el-form-item>
-               <el-form-item label="职务" prop="job">
+               <el-form-item label="部门" prop="job">
                    <el-input v-model="memberForm.job" placeholder="请输入您的职务">挖掘机师傅</el-input>
                </el-form-item>
                <el-form-item label="手机" prop="phone">
@@ -25,20 +25,20 @@
                </el-form-item>
                <el-form-item label="所在地">
                    <el-col :span="24">
-                       <el-cascader :options="options" v-model="selectedOptions" class="edu-cascader">
+                       <el-cascader size="large" :options="options" v-model="selectedOptions" @change="handleChange" class="edu-cascader">
 
                        </el-cascader>
                    </el-col>
                </el-form-item>
                <el-form-item label="头像">
                    <div class="img-wrap">
-                       <img :src="imageUrl" alt="" v-if="imageUrl">
-                       <img src="../../../../assets/images/lufei-logo.jpg" alt="" v-else>
+                       <img :src="imageUrl" alt="" >
+                       <!-- <img src="../../../../assets/images/lufei-logo.jpg" alt="" v-else> -->
                    </div>
                    <div class="btn-wrap">
                        <el-upload
                                class="upload-demo"
-                               action="https://jsonplaceholder.typicode.com/posts/"
+                               action="/"
                                :show-file-list="false"
                                :before-upload="beforeAvatarUpload"
                                :on-success="handleAvatarSuccess">
@@ -47,7 +47,7 @@
                    </div>
                </el-form-item>
                <el-form-item>
-                   <el-button type="primary" @click="submitForm('memberForm')" class="save-btn">保存</el-button>
+                   <el-button type="primary" @click="submitForm()" class="save-btn">保存</el-button>
                </el-form-item>
            </el-form>
        </div>
@@ -88,14 +88,14 @@
 </style>
 
 <script>
-    import {regionData} from "element-china-area-data"
+    import {regionData,CodeToText} from "element-china-area-data"
     export default{
         data(){
             return {
                 memberForm: {
-                    name: '唧唧复唧唧',
-                    registDate: '2017-01-01 12:12',
-                    college: '火星理工大',
+                    name: '',
+                    registDate: '',
+                    college: '',
                     job: '',
                     phone: '',
                     email: ''
@@ -111,6 +111,31 @@
             }
         },
         methods: {
+            submitForm(){
+                let params = {}
+                params.userDepartment = this.memberForm.job;
+                params.userPhone = this.memberForm.phone;
+                params.userEmail = this.memberForm.email;
+                params.userPosition = "";
+                params.userImg = this.imageUrl;
+                if(params.userPhone==""||params.userDepartment==""){
+                  this.$message('手机号或部门不能为空');
+                }else{
+                    this.$http.post("/apis/user/updateMemberInfo.json",params).then((res)=>{
+                    if(res.data.success){
+                       this.$message(res.data.data);
+                    }else{
+                       this.$message(res.data.message);
+                    }
+                  },(err)=>{
+                    console.log(err);
+                  })
+                }
+            },
+            handleChange(val){
+              console.log(val);
+              console.log(CodeToText[this.selectedOptions[0]]);
+            }, 
             setBreadCrumb(){
                 let breadcrumb=[
                     {
@@ -125,18 +150,47 @@
             handleAvatarSuccess(res, file) {
                 console.log(res)
                 this.imageUrl = URL.createObjectURL(file.raw);
+                console.log(this.imageUrl);
             },
 
             beforeAvatarUpload(file) {
+                  let vm = this;
+                   if(!/image\/\w+/.test(file.type)){
+                        alert("请确保文件为图像类型");
+                        return false;
+                    }
+                   // console.log(file);
                 let isLt1M = file.size / 1024 / 1024 < 1;
                 if(!isLt1M){
                     this.$message.error('上传头像照片大小不能超过1MB!');
-
                     return isLt1M;
+                }else{
+                  var reader = new FileReader();
+                    reader.onload = function(){
+                        vm.imageUrl = this.result;
+                    }
+                    reader.readAsDataURL(file);
                 }
+            },
+            getUserData(){
+              this.$http.post("/apis/user/getMemberInfo.json").then((res)=>{
+               // console.log(res);
+                if(res.data.success){
+                  this.memberForm.name = res.data.data.realName;
+                  this.memberForm.registDate = res.data.data.createDate;
+                  this.memberForm.college = res.data.data.collegeName;
+                  this.memberForm.phone = res.data.data.userPhone;
+                  this.memberForm.email = res.data.data.userEmail;
+                  this.memberForm.job = res.data.data.userDepartment;
+                  //this.selectedOptions[0] = "北京"; 
+                }
+              },(err)=>{
+                console.log(err);
+              })
             }
         },
         mounted(){
+          this.getUserData();
         },
         created(){
             this.setBreadCrumb();

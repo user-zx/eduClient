@@ -83,9 +83,48 @@
                   layout="total, prev, next, jumper"
                   :total="total">
                 </el-pagination>
-
             </div>
         </div>
+        <el-dialog title="提示" v-model="isShow" size="tiny" class="orderDetails">
+          <h3 class="text-center">订单详情</h3>
+           <el-row class="item-details">
+              <el-col :span="6">订单编号：</el-col>
+              <el-col :span="6">C20170120</el-col>
+          </el-row>
+          <el-row class="item-details">
+              <el-col :span="6">订单类型：</el-col>
+              <el-col :span="6">C套餐</el-col>
+          </el-row>
+          <el-row class="item-details">
+              <el-col :span="24"><div>提供服务：</div></el-col>
+              <el-col :span="6" :offset="6" v-if="showOne.length>0">舆情管理</el-col>
+              <el-col :span="12" :offset="12" v-for="item in showOne">{{item}}</el-col>
+              <el-col :span="6" :offset="6" v-if="showTwo.length>0">情报内参</el-col>
+              <el-col :span="12" :offset="12" v-for="item in showTwo">{{item}}</el-col>
+              <el-col :span="6" :offset="6" v-if="showThree.length>0">业务工具</el-col>
+              <el-col :span="12" :offset="12" v-for="item in showThree">{{item}}</el-col>
+          </el-row>
+          <el-row class="item-details">
+              <el-col :span="6">可关注高校：</el-col>
+              <el-col :span="6">6</el-col>
+          </el-row>
+           <el-row class="item-details">
+              <el-col :span="6">可关注人物：</el-col>
+              <el-col :span="6">16</el-col>
+          </el-row>
+            <el-row class="item-details">
+              <el-col :span="6">开始时间：</el-col>
+              <el-col :span="6">16</el-col>
+          </el-row>
+           <el-row class="item-details">
+              <el-col :span="6">到期时间：</el-col>
+              <el-col :span="6">16</el-col>
+          </el-row>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="isShow = false">取 消</el-button>
+            <el-button type="primary" @click="isShow = false">确 定</el-button>
+          </span>
+        </el-dialog>
     </div>
 </template>
 <style lang="scss" scoped>
@@ -215,8 +254,24 @@
                 margin: auto;
             }
         }
+        .orderDetails{
+            h3{
+                border-bottom: 1px solid #48576a;
+                padding-bottom: 10px; 
+            }
+            .item-details{
+                margin-top: 10px; 
+            }
+        }
     }
 
+</style>
+<style lang="scss">
+    .centerInfo{
+        .el-dialog--tiny{
+            width: 40%; 
+        }
+    }
 </style>
 <script>
     export default{
@@ -225,11 +280,29 @@
                 tableData: [],
                 pageSize:10,
                 total:1,
+                isShow:false,
+                item_one:["全景舆情","舆情监测","舆情预警","事件监测","舆情报告"],
+                item_two:["行业动态","人物动态","媒体声量","两微洞察","内参报告"],
+                item_three:["微信检测","微博检测"],
+                showOne:[],
+                showTwo:[],
+                showThree:[],
             }
         },
         methods: {
             setItem(){
                 
+            },
+            getItemData(arrShow,itemArr,arr){
+                let str = "";
+                for (var i = 0; i < itemArr.length; i++) {
+                    str += itemArr[i];
+                }
+                for (var j = 0; j < arrShow.length; j++) {
+                   if(str.indexOf(arrShow[j])!=-1){
+                       arr.push(arrShow[j]) 
+                   }
+                }
             },
             setBreadCrumb(){
                 let breadcrumb=[
@@ -240,9 +313,15 @@
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
             viewDetail(params){
-               // console.log(params);  
                 this.$http.get("/apis/packageManage/getPackageOrderById.json/"+params.orderNum).then((res)=>{
-                    console.log(res);
+                    if(res.data.success){
+                        this.showOne = [];this.showTwo = [];this.showThree = [];
+                        let itemString = res.data.data.itemPriceList;
+                         this.getItemData(itemString,this.item_one,this.showOne);
+                         this.getItemData(itemString,this.item_two,this.showTwo);
+                         this.getItemData(itemString,this.item_three,this.showThree);
+                         this.isShow = true;
+                    }
                 },(err)=>{
                     console.log(err);
                 })
@@ -267,6 +346,7 @@
                 $('.attend-tabs .el-col-subCount').addClass('active');
                 this.$parent.currentTabs.currentTab = "subCount";
             },
+
             handleCurrentChange(val) {
                 this.$http.post("/apis/packageManage/getPackageOrderList.json",{pageSize:this.pageSize,pageNo:val}).then((res)=>{
                     if(res.data.success){
@@ -281,6 +361,7 @@
                     console.log(err);
                 })
             },
+
             getDataList(){
                 this.$http.post("/apis/packageManage/getPackageOrderList.json",{pageSize:this.pageSize,pageNo:1}).then((res)=>{
                     if(res.data.success){
