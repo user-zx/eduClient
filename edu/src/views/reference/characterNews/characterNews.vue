@@ -2,15 +2,14 @@
 * Created by yu-bing on 2017/3/17.
 */
 <template>
-    <div class="characterNews article-wrap">
+    <div class="characterNews article-wrap" v-loading="loading" element-loading-text="加载中……">
         <bread-crumb></bread-crumb>
         <cascadeBox  @onSearchLoad="onSearchLoad" @onSearchChange="onSearchChange"></cascadeBox>
         <div class="content dark">
             <div class="content-bar">
                 <ul class="content-bar-list">
-                    <li class="pointer">全部</li>
-                    <li class="pointer">
-                        阅读量 <i class="arrow arrow-up"></i>
+                    <li class="pointer" @click="sort(0)">
+                        阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
                     </li>
                 </ul>
                 <div class="content-bar-button">
@@ -24,20 +23,47 @@
                             <el-dropdown-item>事件3</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
-                    <el-button type="primary" icon="plus">取消关注</el-button>
+
+                    <el-button type="primary" icon="plus" class="button-icon">批量关注</el-button>
                 </div>
-                <div class="content-bar-pagination">
+                <div class="content-bar-page">
                     <el-pagination class="edu-pagination"
-                                   @size-change="handleSizeChange"
                                    @current-change="handleCurrentChange"
-                                   :current-page="currentPage"
-                                   :page-size="5"
+                                   :current-page="param.pageNumber + 1"
+                                   :page-size="param.pageSize"
                                    layout="prev, next, jumper, total"
-                                   :total="100">
+                                   :total="total">
                     </el-pagination>
                 </div>
             </div>
-            <character-table class="dark" :tableData="getTableList"></character-table>
+            <el-table :data="tableData" class="dark" style="width: 100%" :resizable="false">
+                <el-table-column type="selection" width="50" align="center"></el-table-column>
+                <el-table-column label="全部" align="center" prop="all">
+                    <template scope="scope">
+                        <span v-if="scope.row.rank == 1">
+                            <i class="icon-rank icon-gold"></i>
+                        </span>
+                        <span v-else-if="scope.row.rank == 2">
+                            <i class="icon-rank icon-silver"></i>
+                        </span>
+                        <span v-else-if="scope.row.rank == 3">
+                            <i class="icon-rank icon-copper"></i>
+                        </span>
+                        {{scope.row.rank}}
+                    </template>
+                </el-table-column>
+                <el-table-column label="人物" prop="name" align="center">
+                    <template scope="scope">
+                        <span @click="toCharacterAnalyse(scope.row)" class="character-name">
+                            {{scope.row.name}}
+                        </span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="声量" prop="volume" align="center"></el-table-column>
+                <el-table-column label="总阅读量" prop="totalHitCount" align="center"></el-table-column>
+                <el-table-column label="热度" prop="hot" align="center"></el-table-column>
+                <el-table-column label="情感" prop="emotionVal" align="center"></el-table-column>
+            </el-table>
         </div>
     </div>
 </template>
@@ -48,50 +74,24 @@
     export default{
         data(){
             return {
-                searchNames: ['university', 'dimension', 'vector', 'emotion', 'publishDateTime'],
-                currentPage: 1,
-                getBodyData:{
-                    personageType:[],
-                    reportPersonage : [],
-                    pageSize:10,
-                    pageNumber:0,
+                loading: false,
+                total: 0,
+                param: {
+                    pageSize: 10,
+                    pageNumber: 0,
+                    orders: [
+                        {
+                            property: 'totalHitCount',
+                            direction: 'DESC'
+                        }
+                    ]
                 },
-                allPerson:["习大大","彭麻麻"],
-                labelPosition: 'left',
-                activeName:"all",
-                valueTime:'',
-                formInline: {
-                    all:'',
-                    stateLeader:'',
-                    office:'',
-                    officeArea:'',
-                    school:'',
-                    schoolArea:'',
-                    scholar:'',
-                    scholarArea:'',
-                },
-                conditionOption:"",
-                getTableList: [
-                    {
-                        'id': 1,
-                        'all': 1,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': 1
-                    }
-                ],
+                university: '',
+                tableData: []
             }
         },
         components:{breadCrumb, cascadeBox, characterTable} ,
         methods:{
-            profession(item){
-                this.selectedProfession = item;
-            },
-             handleClick(tab, event) {
-                console.log(tab, event);
-            },
             setBreadCrumb(){
                 let breadcrumb=[
                     {
@@ -103,22 +103,51 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
-            handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
+            onSearchChange(data) {
+                data.pageSize = 10;
+                data.pageNumber = 0;
+                data.orders = this.param.orders;
+                this.param = data;
+                this.getPersonageRank();
             },
-            handleCurrentChange(val) {
-                this.currentPage = val;
-                console.log(`当前页: ${val}`);
+            onSearchLoad(data) {
+                data.pageSize = 10;
+                data.pageNumber = 0;
+                data.orders = this.param.orders;
+                this.param = data;
+                this.getPersonageRank();
             },
-            sort() {
-                this.param.orders[0].direction = this.param.orders[0].direction == 'DESC' ? 'ASC' : 'DESC';
-                this.getArticleList();
+            handleCurrentChange(pageNumber) {
+                //后台是从0开始
+                this.param.pageNumber = pageNumber - 1;
+                this.getPersonageRank();
             },
-            onSearchLoad(param) {
-                console.log("onSearchLoad", param);
+
+            sort(index){
+                this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
+                this.getPersonageRank();
             },
-            onSearchChange(param) {
-                console.log("onSearchChange", param);
+            getPersonageRank() {
+                this.loading = true;
+                this.$nextTick(function() {
+                    this.$http.post('/apis/personNews/findPersonNewRankingList.json', this.param).then(
+                        (response) => {
+                            if (response.data.success) {
+                                this.tableData = response.data.data.content;
+                                // 最多允许翻1000页
+                                this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
+                            } else {
+                                console.error(response.data.message);
+                            }
+                            this.$nextTick(function() {
+                                this.loading = false;
+                            });
+                        }, (response) => {
+                            this.loading = false;
+                            console.error(response);
+                        }
+                    );
+                });
             }
         },
         mounted(){

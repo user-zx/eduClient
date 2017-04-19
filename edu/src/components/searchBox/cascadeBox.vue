@@ -105,7 +105,7 @@
                 param: {
                     reportPersonage: "",
                     area: "",
-                    startDate: new Date(Date.now() - 8.64e7).format("yyyy-MM-dd") + " 00:00:00",
+                    startDate: new Date(Date.now() - 8.64e7 * 30).format("yyyy-MM-dd") + " 00:00:00",
                     endDate: new Date(Date.now() - 8.64e7).format("yyyy-MM-dd") + " 23:59:59",
                 },
                 stateLeader: [],
@@ -224,7 +224,7 @@
         watch: {
             valueTime: function (val, oldVal) {
                 if (val) {
-                    this.param.startDate = val.format("yyyy-MM-dd") + " 00:00:00";
+                    this.param.startDate = new Date(val.getTime() - 8.64e7 * 30).format("yyyy-MM-dd") + " 00:00:00";
                     this.param.endDate = val.format("yyyy-MM-dd") + " 23:59:59";
                     this.$emit('onSearchChange', this.param);
                 }
