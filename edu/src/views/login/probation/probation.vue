@@ -33,7 +33,7 @@
                 <el-input v-model="form.userEmail" placeholder="请输入邮箱"></el-input>
             </el-form-item>
             <el-form-item label="" prop="area">
-                <el-input v-model="form.area" placeholder="请输入您的所在地（省／市／县）"></el-input>
+                <el-input v-model="form.userPosition" placeholder="请输入您的所在地"></el-input>
             </el-form-item>
             <el-form-item label="">
                 <el-button type="primary submit" @click="submitForm('ruleForm')">提交申请</el-button>
@@ -57,7 +57,7 @@
                     userDepartment: '',
                     userPhone: '',
                     userEmail: '',
-                    area: '',
+                    userPosition: '',
                     captcha: '',
                 },
                 rules:{
@@ -100,7 +100,7 @@
                         this.$http.post('/apis/addTrial.json', this.form).then((response) => {
                                 if (response.data.success) {
                                     this.$message({
-                                        message: '申请成功',
+                                        message: '申请成功, 我们回尽快处理',
                                         type: 'success'
                                     });
                                     this.resetForm(formName);
