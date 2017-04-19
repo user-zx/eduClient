@@ -213,7 +213,7 @@
                         'title': '认证情况',
                         'searchList': [
                             {id: 0, text: '全部', selected: true},
-                            {id: 1, text: '已认证', selected: false},
+                            {id: 1, text: '官方认证', selected: false},
                             {id: 2, text: '未认证', selected: false}
                         ],
                     },

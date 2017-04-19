@@ -176,12 +176,14 @@
             toVerified(data){
                 this.$router.push({path: "/home/weChatVerify", query: data});
             },
-            
+
             getWechatStatisticsData: function () {
                 this.$http.post('/apis/businessTool/getWechatData.json', this.statisticsParam).then(
                     (response) => {
                         this.loading = false;
-                        this.wechatStatisticsData = response.data.data.page.content;
+                        if(response.data.success){
+                            this.wechatStatisticsData = response.data.data.page.content;
+                        }
                     }
                 )
             },
