@@ -32,7 +32,7 @@
             <el-form-item label="" prop="userEmail">
                 <el-input v-model="form.userEmail" placeholder="请输入邮箱"></el-input>
             </el-form-item>
-            <el-form-item label="" prop="area">
+            <el-form-item label="" prop="userPosition">
                 <el-input v-model="form.userPosition" placeholder="请输入您的所在地"></el-input>
             </el-form-item>
             <el-form-item label="">
@@ -81,7 +81,7 @@
                         {required:true,message:"请输入邮箱",trigger: 'blur' },
                         {type: 'email', message: "请输入正确的邮箱",trigger: 'blur' }
                     ],
-                    area:[
+                    userPosition:[
                         {required:true, message:"请输入地区", trigger: 'blur' },
                         {min:2, max:10, message: "长度在 2 到 10 个字符", trigger: 'blur' },
                     ],
