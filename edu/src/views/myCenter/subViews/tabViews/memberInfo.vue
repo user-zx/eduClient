@@ -159,7 +159,6 @@
                         alert("请确保文件为图像类型");
                         return false;
                     }
-                   // console.log(file);
                 let isLt1M = file.size / 1024 / 1024 < 1;
                 if(!isLt1M){
                     this.$message.error('上传头像照片大小不能超过1MB!');
@@ -174,7 +173,7 @@
             },
             getUserData(){
               this.$http.post("/apis/user/getMemberInfo.json").then((res)=>{
-               // console.log(res);
+                console.log(res);
                 if(res.data.success){
                   this.memberForm.name = res.data.data.realName;
                   this.memberForm.registDate = res.data.data.createDate;

@@ -65,9 +65,6 @@
                         name:"个人中心",to:{path:"/home/myCenter"}
                     },
                     {
-                        name:"购买套餐", to: {path: ""}
-                    },
-                    {
                         name: "预定提交"
                     }
                 ];

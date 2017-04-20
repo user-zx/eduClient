@@ -59,7 +59,7 @@
         },
         mounted(){ 
             this.$nextTick(function(){
-                console.log(this.tableData);
+                //console.log(this.tableData);
                 this.getTableData = this.tableData;
             })
         },

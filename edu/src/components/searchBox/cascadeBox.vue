@@ -218,7 +218,7 @@
         },
         mounted() {
             this.getLeader();
-            this.getUserParams();
+            this.getUserParams(); 
             this.$emit('onSearchLoad', this.param);
         },
         watch: {

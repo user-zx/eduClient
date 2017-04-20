@@ -31,11 +31,6 @@
     </div>
 </template>
 <script>
-     /*
-    * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
-    * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
-    * import loginButton from './components/loginButton.vue';
-    */
     import '../script/security';
     export default{
         data(){

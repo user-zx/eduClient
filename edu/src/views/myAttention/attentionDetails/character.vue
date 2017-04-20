@@ -1,104 +1,6 @@
 <template>
     <div class="myAttention-character article-wrap">
-        <div class="myAttention-character-div">
-             <el-tabs v-model="activeName" @tab-click="handleClick" class="custom-tabs" >
-                <el-tab-pane label="全部" name="all">
-                             <el-row  type="flex" class="row-bg row-time">
-                                   <el-col :span="2">
-                                       <span class="chooseTime">全部</span>
-                                   </el-col>
-                                   <el-col :span="20">
-                                        <el-select v-model="conditionOption" placeholder="请选择人物">
-                                            <el-option 
-                                              v-for="item in allPerson"
-                                              :label="item"
-                                              :value="item"> 
-                                            </el-option>
-                                        </el-select>
-                                   </el-col>
-                             </el-row>
-                </el-tab-pane>
-                <el-tab-pane label="国家领导" name="stateLeader">
-                            <el-row type="flex" class="row-bg row-time">
-                                <el-col :span="2">
-                                    <span class="chooseTime">国家领导</span>
-                                </el-col>
-                                <el-col :span="20">
-                                     <el-select v-model="conditionOption" placeholder="请选择领导">
-                                          <el-option label="小习习" value="习习"></el-option>
-                                          <el-option label="小强" value="强强"></el-option>
-                                     </el-select>
-                                </el-col>
-                            </el-row>
-                </el-tab-pane>
-                <el-tab-pane label="政/厅" name="office">
-                         <el-row type="flex" class="row-bg row-time">
-                             <el-col :span="2">
-                                 <span class="chooseTime">政/厅</span>
-                             </el-col>
-                             <el-col :span="20">
-                                  <el-select v-model="formInline.officeArea" placeholder="请选择地区">
-                                      <el-option label="北京" value="shanghai"></el-option>
-                                      <el-option label="河南" value="beijing"></el-option>
-                                  </el-select>
-                                  <el-select v-model="conditionOption" placeholder="请选择人物">
-                                      <el-option label="人物1" value="人物1"></el-option>
-                                      <el-option label="人物2" value="人物3"></el-option>
-                                  </el-select>
-                             </el-col>
-                         </el-row>
-                </el-tab-pane>
-                <el-tab-pane label="高校领导" name="school">
-                         <el-row type="flex" class="row-bg row-time">
-                             <el-col :span="2">
-                                 <span class="chooseTime">高校领导</span>
-                             </el-col>  
-                             <el-col :span="20">
-                                    <el-select v-model="formInline.schoolArea" placeholder="请选择地区">
-                                      <el-option label="北京" value="北京"></el-option>
-                                      <el-option label="河南" value="河南"></el-option>
-                                    </el-select>
-                                    <el-select v-model="conditionOption" placeholder="请选择人物">
-                                      <el-option label="区域一" value="shanghai"></el-option>
-                                      <el-option label="区域二" value="beijing"></el-option>
-                                    </el-select>
-                             </el-col>
-                         </el-row>  
-                </el-tab-pane>
-                <el-tab-pane label="知名学者" name="scholar">
-                         <el-row type="flex" class="row-bg row-time">
-                             <el-col :span="2">
-                                 <span class="chooseTime">知名学者</span>
-                             </el-col>
-                              <el-col :span="20">
-                                   <el-select v-model="formInline.regionArea" placeholder="请选择地区">
-                                      <el-option label="北京" value="shanghai"></el-option>
-                                      <el-option label="河南" value="beijing"></el-option>
-                                   </el-select>
-                                    <el-select v-model="conditionOption" placeholder="请选择人物">
-                                      <el-option label="区域一" value="区域一"></el-option>
-                                      <el-option label="区域二" value="beijing"></el-option>
-                                    </el-select>
-                              </el-col>
-                         </el-row>   
-                </el-tab-pane>
-              </el-tabs> 
-               <el-button type="primary" class="addPerson"><router-link to="/home/myCenter">添加人物</router-link></el-button>
-               <el-row  type="flex" class="row-bg row-time">
-                   <el-col :span="2">
-                       <span class="chooseTime">选择时间</span>
-                   </el-col>
-                   <el-col :span="8">
-                       <div class="block">
-                            <el-date-picker
-                              v-model="valueTime"
-                              type="daterange"
-                              placeholder="选择日期范围">
-                            </el-date-picker>
-                        </div>
-                   </el-col>
-               </el-row>
-        </div> 
+        <cascade-box @onSearchLoad="loadData" @onSearchChange="getData"></cascade-box>
         <div class="content dark">
             <div class="content-bar">
                 <ul class="content-bar-list">
@@ -137,6 +39,7 @@
 </template>
 <script>
     import characterTable from '../../../components/content/characterTable.vue';
+    import cascadeBox from '../../../components/searchBox/cascadeBox.vue';
     export default{
         data(){
             return {
@@ -148,21 +51,7 @@
                     pageSize:10,
                     pageNumber:0,
                 },
-                allPerson:["习大大","彭麻麻"],
                 labelPosition: 'left',
-                activeName:"all",
-                valueTime:'',
-                formInline: {
-                    all:'',
-                    stateLeader:'',
-                    office:'',
-                    officeArea:'',
-                    school:'',
-                    schoolArea:'',
-                    scholar:'',
-                    scholarArea:'',
-                },
-                conditionOption:"",
                 getTableList: [
                     {
                         'id': 1,
@@ -176,7 +65,7 @@
                 ],
             }
         },
-        components:{characterTable},
+        components:{characterTable,cascadeBox},
         methods:{
             onSubmit() {
                 console.log('submit!');
@@ -188,49 +77,21 @@
                 this.currentPage = val;
                 console.log(`当前页: ${val}`);
             },
-            handleClick(tab, event) {
-                let vm = this;
-                vm.conditionOption = "";
-                vm.valueTime = "";
-                 vm.getBodyData.personageType = [];
-                 vm.getBodyData.reportPersonage = [];
-                vm.getBodyData.personageType.push(tab.label);
-            },
-            getCharacterList(){
-               if(this.valueTime===""){
-                    this.getBodyData.startDate = "";
-                    this.getBodyData.endDate = ""; 
-               }
-                this.$http.post("/apis/concerns/getPersonData.json",this.getBodyData).then((res)=>{
-                    console.log(res);
-                },(err)=>{
-                    console.log(err);
-                })
-            }
+           getData(params){
+              console.log(params);
+           }, 
+           loadData(params){
+              console.log(params);
+           },
+           
         },
         mounted(){
             this.$nextTick(function(){
-                this.getCharacterList();
+              
             });
         },
         watch:{ 
-            conditionOption:function(val,oldVal){
-                if(val!=""){
-                  this.getBodyData.reportPersonage.push(val);
-                }
-                this.getCharacterList();
-            },
-            valueTime:function(val,oldVal){
-              if(val[0]!=null){
-                 let startSuffix = " 00:00:00";
-                let endSuffix = " 23:59:59";
-                let format = 'yyyy-MM-dd'; 
-                this.getBodyData.startDate = val[0].format(format) + startSuffix;
-                this.getBodyData.endDate = val[1].format(format) + endSuffix;
-                this.getCharacterList();
-              }
-               
-            }
+          
         }    
     }
 </script>
@@ -242,16 +103,6 @@
         .custom-tabs .el-tabs__content{
             margin-top: 10px; 
         }
-       .myAttention-character-div{
-           position: relative;
-           background-color: rgba(96, 163, 255, 0.1); 
-           margin-bottom: 10px; 
-           .addPerson{
-               position: absolute;
-               right: 20px;
-               top: 10px;  
-           }
-       }
        .chooseTime{
            padding-left: 16px;
            line-height: 50px; 

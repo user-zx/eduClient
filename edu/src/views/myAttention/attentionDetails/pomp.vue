@@ -51,7 +51,6 @@
                     vector:[],
                     university:[],
                     emotion:"",
-
                 },
                 orders: [
                         {
@@ -71,7 +70,6 @@
         },
         components: {searchBox, articleView},
         methods:{
-
             handleCurrentChange(pageNumber) {
                 //后台是从0开始
                 this.param.pageNumber = pageNumber - 1;
@@ -87,7 +85,6 @@
                 this.getArticleList();
             },
             sort(index) { 
-                
                 this.orders[index].direction = this.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
                 if(index==0){
                     this.param.sortField = "阅读量"
@@ -99,14 +96,12 @@
             },
             getArticleList() {
                 this.loading = true;
-                    console.log(this.param);
                     this.$http.post('/apis/concerns/getOpinionData.json',this.param).then(
                         (response) => {
-                            console.log(response);
                             if (response.data.success) {
-                                this.articleData = response.data.data.content;
+                                this.articleData = response.data.data.page.content;
                                 // 最多允许翻10000页
-                                this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
+                                this.total = response.data.data.page.totalElements > 10000 ? 10000 : response.data.data.page.totalElements;
                                  this.loading = false;
                             } else {
                                 console.error(response.data.message);
@@ -117,8 +112,6 @@
                         }
                     );
             },
-           
-
         },
         created(){
 

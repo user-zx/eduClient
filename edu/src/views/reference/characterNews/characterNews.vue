@@ -111,6 +111,7 @@
                 this.getPersonageRank();
             },
             onSearchLoad(data) {
+                console.log(data);
                 data.pageSize = 10;
                 data.pageNumber = 0;
                 data.orders = this.param.orders;
@@ -130,6 +131,7 @@
             getPersonageRank() {
                 this.loading = true;
                 this.$nextTick(function() {
+                    console.log(this.param);
                     this.$http.post('/apis/personNews/findPersonNewRankingList.json', this.param).then(
                         (response) => {
                             if (response.data.success) {
