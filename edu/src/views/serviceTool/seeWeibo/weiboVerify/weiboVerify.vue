@@ -89,55 +89,55 @@
         background: #21273d;
         overflow: hidden;
 
-    .form-wrap{
-        margin: 50px;
+        .form-wrap{
+            margin: 50px;
 
-    .text-right{
-        line-height: 36px;
-    }
+            .text-right{
+                line-height: 36px;
+            }
 
-    .avatar-uploader .el-upload {
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-    .avatar-uploader .el-upload:hover {
-        border-color: #20a0ff;
-    }
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 238px;
-        height: 148px;
-        line-height: 148px;
-        text-align: center;
-        background: #273451;
-    }
-    .avatar {
-        max-width: 238px;
-        max-height: 148px;
-        display: block;
-    }
+            .avatar-uploader .el-upload {
+                border-radius: 6px;
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+            }
+            .avatar-uploader .el-upload:hover {
+                border-color: #20a0ff;
+            }
+            .avatar-uploader-icon {
+                font-size: 28px;
+                color: #8c939d;
+                width: 238px;
+                height: 148px;
+                line-height: 148px;
+                text-align: center;
+                background: #273451;
+            }
+            .avatar {
+                max-width: 238px;
+                max-height: 148px;
+                display: block;
+            }
 
-    .el-row{
-        margin-bottom: 22px;
-    }
+            .el-row{
+                margin-bottom: 22px;
+            }
 
-    .el-row:last-child{
-        margin-top: 65px;
-    }
+            .el-row:last-child{
+                margin-top: 65px;
+            }
 
-    .line{
-        width: calc(100% - 100px);
-        height: 1px;
-        border-top:1px solid #2d3e5f;
-        border-bottom: none;
-        border-left: none;
-        border-right: none;
-        margin: 55px auto;
-    }
-    }
+            .line{
+                width: calc(100% - 100px);
+                height: 1px;
+                border-top:1px solid #2d3e5f;
+                border-bottom: none;
+                border-left: none;
+                border-right: none;
+                margin: 55px auto;
+            }
+        }
     }
 
 </style>
@@ -428,7 +428,8 @@
         created(){
             this.setBreadCrumb();
             let data = this.$route.query;
-
+            this.weiboInfo.blogNickname = data.author;
+            this.weiboInfo.blogColleage = data.university;
         },
         mounted(){
 

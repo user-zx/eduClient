@@ -10,7 +10,7 @@
                 </div>
                 <div class="clearfix btn-box">
                     <div class="pull-right">
-                        <el-button type="primary">微信认证</el-button>
+                        <el-button type="primary" @click="verifyWechat">微信认证</el-button>
                     </div>
                 </div>
                 <el-card class="box-card">
@@ -44,7 +44,7 @@
                         <el-button type="primary">批量关注</el-button>
                     </div>
                     <div class="pull-right">
-                        <el-button type="primary">微信认证</el-button>
+                        <el-button type="primary" @click="verifyWechat">微信认证</el-button>
                     </div>
                 </div>
                 <el-card class="box-card">
@@ -204,6 +204,10 @@
                 data.startDate = this.exponentParam.startDate;
                 data.endDate = this.exponentParam.endDate;
                 this.$router.push({path:"/home/weChatDetail", query: data});
+            },
+
+            verifyWechat(){
+                this.$router.push({path: "/home/weChatVerify"});
             }
         },
         created(){

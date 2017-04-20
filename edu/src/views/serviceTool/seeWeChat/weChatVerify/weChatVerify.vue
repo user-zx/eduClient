@@ -369,6 +369,8 @@
         },
         created(){
             this.setBreadCrumb();
+            this.wechatInfo.belongColleage = this.$route.query.university;
+            console.log(this.$route.query)
         },
         mounted(){
 
