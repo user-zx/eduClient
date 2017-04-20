@@ -322,8 +322,8 @@
 
             handleCurrentChange(pageNumber) {
                 //后台是从0开始
-                this.param.pageNumber = pageNumber - 1;
-                this.getArticleList();
+                this.articleParam.pageNumber = pageNumber - 1;
+                this.getWechatArticleList();
             },
 
             getBlogSupportAvgData(){
@@ -486,6 +486,7 @@
                     (response) => {
 //                        console.log(response.data)
                         this.articleData = response.data.data.page.content;
+                        this.total = response.data.data.page.totalElements;
                     }
                 )
             },

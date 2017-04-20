@@ -203,7 +203,7 @@
             toWechatDetail(data){
                 data.startDate = this.exponentParam.startDate;
                 data.endDate = this.exponentParam.endDate;
-                this.$router.push({path:"/home/wechatDetail", query: data});
+                this.$router.push({path:"/home/weChatDetail", query: data});
             }
         },
         created(){

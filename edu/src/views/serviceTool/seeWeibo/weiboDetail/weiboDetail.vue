@@ -321,8 +321,8 @@
             },
             handleCurrentChange(pageNumber) {
                 //后台是从0开始
-                this.param.pageNumber = pageNumber - 1;
-                this.getArticleList();
+                this.articleParam.pageNumber = pageNumber - 1;
+                this.getBlogArticleData();
             },
 
             getBlogInfoData(){
@@ -511,7 +511,7 @@
                     (response) => {
                         //没有数据
                         this.articleData = response.data.data.page.content;
-                        console.log(response.data)
+                        this.total = response.data.data.page.totalElements;
                     }
                 )
             },
