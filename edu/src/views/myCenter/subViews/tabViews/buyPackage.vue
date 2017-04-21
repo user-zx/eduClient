@@ -194,14 +194,11 @@
             width: 90%;
             margin: 50px auto 95px auto;
             .item{
-                width: calc((100% - 310px)/3);
-                width: calc((100% - 280px)/3);
+                width: calc((100% - 190px)/3);
                 border: 1px solid #3a598b;
                 display: inline-block;
-                margin-left: 50px;
-                margin-right: 50px;
-                margin-left: 45px;
-                margin-right: 45px;
+                margin-left: 30px;
+                margin-right: 30px;
                 vertical-align: top;
                 cursor: pointer;
                 position: relative;
@@ -218,7 +215,7 @@
                             font-size: 18px;
                             margin-bottom: 21px;
                         }
-                        .tree-node{
+                        .tree-node{ 
                             color: #d0d7ff;
                            position: relative;
                            line-height: 35px; 
@@ -240,8 +237,7 @@
                     }
                 }
                 .middle{
-                    width: 180px; 
-                    width: 200px;
+                    width: 250px;
                     margin: 0 auto 30px;
                     border-top: 1px solid #33456b;
                     border-bottom: 1px solid #33456b;
@@ -384,19 +380,21 @@
         },
         methods: {
             chnageTimeC(){
-                let price = this.time_c_vla;  
-                switch(price) {
+                let vm = this;
+                let sumPrice = "";   
+                 sumPrice = vm.changePrice.c + 500 * vm.addition + vm.attention * 500;
+                switch(vm.time_c_vla) {
                     case "6个月":
-                        this.price.c = this.change_Price.c;
+                        vm.price.c = sumPrice;
                         break
                     case "一年":
-                        this.price.c = this.change_Price.c * 2 *0.98;
+                        vm.price.c = Math.floor(sumPrice * 2 *0.98);
                         break;
                     case "二年":
-                        this.price.c = this.change_Price.c * 4 *0.90;  
+                        vm.price.c = Math.floor(sumPrice * 4 *0.90);  
                         break;
                     case "三年":
-                        this.price.c = this.change_Price.c * 6 *0.85;
+                        vm.price.c = Math.floor(sumPrice * 6 *0.85);
                         break;
                 }
             },
@@ -571,21 +569,54 @@
                     $(".price").each(function(index, el) {
                       sum+= parseInt($(el).attr("data-price"))
                       $(el).on("change",function(){
+                        let sumPrice = "";
                          let oldData = $(el).attr("data-price");
                          if($(this).children('.el-checkbox__input').hasClass('is-checked')){
-                            sum = sum + parseInt(oldData)
+                            sum = sum + parseInt(oldData);
+                             sumPrice = sum + 500 * vm.addition + vm.attention * 500;
+                             switch(vm.time_c_vla) {
+                                case "6个月":
+                                   vm.price.c =  sumPrice;
+                                    break;
+                                case "一年":
+                                    vm.price.c = Math.floor(sumPrice * 2 * 0.98);
+                                    break;
+                                case "二年":
+                                    vm.price.c = Math.floor(sumPrice * 4 * 0.9);
+                                    break;
+                                case "三年":
+                                    vm.price.c = Math.floor(sumPrice * 6 * 0.85);
+                                    break;
+                            }
                          }else{
-                            sum = sum - oldData
+                           
                             if($(".price .is-checked").length==0){
                                 vm.price.c = 0;
                             }
+                            
+                             sum = sum - oldData;
+                             sumPrice = sum + 500 * vm.addition + vm.attention * 500;
+                             switch(vm.time_c_vla) {
+                                case "6个月":
+                                   vm.price.c =  sumPrice;
+                                    break;
+                                case "一年":
+                                    vm.price.c = Math.floor(sumPrice * 2 * 0.98);
+                                    break;
+                                case "二年":
+                                    vm.price.c = Math.floor(sumPrice * 4 * 0.9);
+                                    break;
+                                case "三年":
+                                    vm.price.c = Math.floor(sumPrice * 6 * 0.85);
+                                    break;
+                            }
                          }
-                         console.log(sum);
-                         vm.price.c = sum + 500 * vm.addition + vm.attention * 500;
+                      
+                        
                          vm.changePrice.c = sum; 
                       })
                     });
-                   vm.price.c = sum + 500 * vm.addition + vm.attention * 500;
+                   vm.price.c = Math.floor(sum + 500 * vm.addition + vm.attention * 500);
                    vm.changePrice.c = sum;  
                    vm.change_Price.c = sum;
                 }) 
@@ -657,13 +688,13 @@
                                vm.price.c =  sumPrice;
                                 break;
                             case "一年":
-                                vm.price.c =  sumPrice * 2 * 0.98;
+                                vm.price.c = Math.floor(sumPrice * 2 * 0.98);
                                 break;
                             case "二年":
-                                vm.price.c =  sumPrice * 4 * 0.9;
+                                vm.price.c = Math.floor(sumPrice * 4 * 0.9);
                                 break;
                             case "三年":
-                                vm.price.c =  sumPrice * 6 * 0.85;
+                                vm.price.c = Math.floor(sumPrice * 6 * 0.85);
                                 break;
                         } 
                 //时间选择需要的
@@ -694,13 +725,13 @@
                                vm.price.c =  sumPrice;
                                 break;
                             case "一年":
-                                vm.price.c =  sumPrice * 2 * 0.98;
+                                vm.price.c = Math.floor(sumPrice * 2 * 0.98);
                                 break;
                             case "二年":
-                                vm.price.c =  sumPrice * 4 * 0.9;
+                                vm.price.c = Math.floor(sumPrice * 4 * 0.9);
                                 break;
                             case "三年":
-                                vm.price.c =  sumPrice * 6 * 0.85;
+                                vm.price.c = Math.floor(sumPrice * 6 * 0.85);
                                 break;
                         } 
                     vm.change_Price.c = vm.changePrice.c + 500 * val + vm.addition * 500;
@@ -720,13 +751,13 @@
                                vm.price.c =  sumPrice;
                                 break;
                             case "一年":
-                                vm.price.c =  sumPrice * 2 * 0.98;
+                                vm.price.c = Math.floor(sumPrice * 2 * 0.98);
                                 break;
                             case "二年":
-                                vm.price.c =  sumPrice * 4 * 0.9;
+                                vm.price.c = Math.floor(sumPrice * 4 * 0.9);
                                 break;
                             case "三年":
-                                vm.price.c =  sumPrice * 6 * 0.85;
+                                vm.price.c = Math.floor(sumPrice * 6 * 0.85);
                                 break;
                         } 
                         vm.change_Price.c = vm.changePrice.c + 500 * val + vm.attention * 500;
