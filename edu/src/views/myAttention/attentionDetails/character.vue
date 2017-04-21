@@ -1,6 +1,6 @@
 <template>
     <div class="myAttention-character article-wrap">
-        <cascade-box @onSearchLoad="loadData" @onSearchChange="getData"></cascade-box>
+        <cascade-box @onSearchLoad="loadData" @onSearchChange="getParams"></cascade-box>
         <div class="content dark">
             <div class="content-bar">
                 <ul class="content-bar-list">
@@ -63,6 +63,7 @@
                         'emotion': 1
                     }
                 ],
+                params:{},
             }
         },
         components:{characterTable,cascadeBox},
@@ -77,13 +78,33 @@
                 this.currentPage = val;
                 console.log(`当前页: ${val}`);
             },
-           getData(params){
-              console.log(params);
-           }, 
+           getParams(params){
+              this.params.personageType = [];
+              this.params.reportPersonage.push(params.reportPersonage);
+              this.params.startDate = params.startDate;
+              this.params.endDate = params.endDate;
+              this.getDataList();
+           },  
            loadData(params){
-              console.log(params);
+              this.params.personageType = [];
+              this.params.reportPersonage = [];
+              this.params.startDate = params.startDate;
+              this.params.endDate = params.endDate;
+              this.params.pageSize = 10;
+              this.params.pageNumber = 1;
+              this.getDataList();
            },
-           
+           getDataList(){
+              console.log(this.params);
+              this.$http.post("/apis/concerns/getPersonData.json",this.params).then((res)=>{
+                  console.log(res);
+                  if(res.data.success){
+                    
+                  }
+              },(err)=>{
+                 console.log(err);
+              })
+           }
         },
         mounted(){
             this.$nextTick(function(){
