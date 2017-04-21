@@ -9,7 +9,7 @@
         </div>
         <el-menu theme="dark" :default-active="activeIndex" mode="horizontal" @select="handleSelect" class="nav-menu">
             <el-menu-item index="3"><a href="/apis/logOut.do">退出</a></el-menu-item>
-            <el-menu-item index="2"><a href="#">admin</a></el-menu-item>
+            <el-menu-item index="2"><a href="#">{{userAccount}}</a></el-menu-item>
             <el-menu-item index="1"><router-link to="/home/myCenter">会员中心</router-link></el-menu-item>
             <el-menu-item index="0"><a href="javascript:void(0);">系统通知</a></el-menu-item>
         </el-menu>
@@ -24,7 +24,7 @@
     export default{
         data(){
             return {
-                activeIndex: '0',
+                activeIndex: '0'
             }
         },
         components:{} ,
@@ -33,11 +33,10 @@
 
             },
             handleIconClick(ev) {
-                console.log(ev);
-            }
+            },
         },
         mounted(){
-            
-        }
+        },
+        props: ['userAccount']
     }
 </script>

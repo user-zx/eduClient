@@ -12,24 +12,24 @@
             <el-submenu index="home">
                 <template slot="title"><i class="nav-icon nav-icon1"></i>舆情管理</template>
                 <el-menu-item-group>
-                    <el-menu-item index="panorama">全景舆情</el-menu-item>
-                    <el-menu-item index="analyse">舆情监测</el-menu-item>
-                    <el-menu-item index="warning">舆情预警</el-menu-item>
-                    <el-menu-item index="event">事件监测</el-menu-item>
-                    <el-menu-item index="speech">舆情报告</el-menu-item>
+                    <el-menu-item v-if="permissions.indexOf(22) != -1" index="panorama">全景舆情</el-menu-item>
+                    <el-menu-item v-if="permissions.indexOf(12) != -1" index="analyse">舆情监测</el-menu-item>
+                    <el-menu-item v-if="permissions.indexOf(21) != -1" index="warning">舆情预警</el-menu-item>
+                    <el-menu-item v-if="permissions.indexOf(13) != -1" index="event">事件监测</el-menu-item>
+                    <el-menu-item v-if="permissions.indexOf(14) != -1" index="speech">舆情报告</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
             <el-submenu index="2">
                 <template slot="title"><i class="nav-icon nav-icon2"></i>情报内参</template>
                 <el-menu-item-group>
-                    <el-menu-item index="industryNews">行业动态</el-menu-item>
-                    <el-menu-item index="characterNews">人物动态</el-menu-item>
-                    <el-menu-item index="seeClearly">两微洞察</el-menu-item>
-                    <el-menu-item index="mediaCoverage">媒体声量</el-menu-item>
-                    <el-menu-item index="report">内参报告</el-menu-item>
+                    <el-menu-item v-if="permissions.indexOf(15) != -1" index="industryNews">行业动态</el-menu-item>
+                    <el-menu-item v-if="permissions.indexOf(16) != -1" index="characterNews">人物动态</el-menu-item>
+                    <el-menu-item v-if="permissions.indexOf(17) != -1" index="seeClearly">两微洞察</el-menu-item>
+                    <el-menu-item v-if="permissions.indexOf(18) != -1" index="mediaCoverage">媒体声量</el-menu-item>
+                    <el-menu-item v-if="permissions.indexOf(19) != -1" index="report">内参报告</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
-            <el-submenu index="3">
+            <el-submenu index="3"  v-if="permissions.indexOf(20) != -1">
                 <template slot="title"><i class="nav-icon nav-icon3"></i>业务平台</template>
                 <el-menu-item-group>
                     <el-menu-item index="seeWeChat">微信监测</el-menu-item>
@@ -37,25 +37,6 @@
                 </el-menu-item-group>
             </el-submenu>
             <el-menu-item index="myAttention"><i class="nav-icon nav-icon4"></i>我的关注</el-menu-item>
-            <!--<div class="column">-->
-                <!--<el-menu-item class="title" index="1"></el-menu-item>-->
-                <!--<el-menu-item index="1-1">全景舆情</el-menu-item>-->
-                <!--<el-menu-item index="1-2">舆情监测</el-menu-item>-->
-                <!--<el-menu-item index="1-3">舆情预警</el-menu-item>-->
-                <!--<el-menu-item index="1-4">事件监测</el-menu-item>-->
-                <!--<el-menu-item index="1-5">舆情报告</el-menu-item>-->
-            <!--</div>-->
-            <!--<div class="column">-->
-                <!--<el-menu-item class="title" index="2"><i class="nav-icon nav-icon2"></i>情报内参</el-menu-item>-->
-
-            <!--</div>-->
-            <!--<div class="column">-->
-                <!--<el-menu-item class="title" index="3"><i class="nav-icon nav-icon3"></i>业务工具</el-menu-item>-->
-                <!--<el-menu-item index="3-1">两微监测</el-menu-item>-->
-            <!--</div>-->
-            <!--<div class="column">-->
-                <!--<el-menu-item class="title" index="4"><i class="nav-icon nav-icon4"></i>我的关注</el-menu-item>-->
-            <!--</div>-->
         </el-menu>
     </div>
 </template>
@@ -69,6 +50,7 @@
         data(){
             return {
                 routerName:"",
+                permissions: []
             }
         },
         components:{} ,
@@ -103,14 +85,14 @@
         },
         methods:{
             handleOpen(key, keyPath) {
-                console.log(key, keyPath);
             },
             handleClose(key, keyPath) {
-                console.log(key, keyPath);
+            },
+            onPermissionsLoad(permissions) {
+                this.permissions = permissions;
             }
         },
-        mounted(){
-            
+        mounted() {
         }
     }
 </script>
