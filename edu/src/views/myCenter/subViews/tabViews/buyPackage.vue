@@ -194,11 +194,11 @@
             width: 90%;
             margin: 50px auto 95px auto;
             .item{
-                width: calc((100% - 310px)/3);
+                width: calc((100% - 280px)/3);
                 border: 1px solid #3a598b;
                 display: inline-block;
-                margin-left: 50px;
-                margin-right: 50px;
+                margin-left: 45px;
+                margin-right: 45px;
                 vertical-align: top;
                 cursor: pointer;
                 position: relative;
@@ -237,7 +237,7 @@
                     }
                 }
                 .middle{
-                    width: 180px; 
+                    width: 200px;
                     margin: 0 auto 30px;
                     border-top: 1px solid #33456b;
                     border-bottom: 1px solid #33456b;
@@ -360,13 +360,13 @@
                 nameListC:[{name:"舆情管理",item:[]},{name:"情报内参",item:[]},{name:"业务工具",item:[]}],
                 item_A_one:["全景舆情","舆情监测","舆情预警","事件监测","舆情报告"],
                 item_A_two:["行业动态","人物动态","媒体声量","两微洞察","内参报告"],
-                item_A_three:["微信检测","微博检测"],
+                item_A_three:["两微监管"],
                 item_B_one:["全景舆情","舆情监测","舆情预警","事件监测","舆情报告"],
                 item_B_two:["行业动态","人物动态","媒体声量","两微洞察","内参报告"],
-                item_B_three:["微信检测","微博检测"],
+                item_B_three:["两微监管"],
                 item_C_one:["全景舆情","舆情监测","舆情预警","事件监测","舆情报告"],
                 item_C_two:["行业动态","人物动态","媒体声量","两微洞察","内参报告"],
-                item_C_three:["微信检测","微博检测"],
+                item_C_three:["两微监管"],
                 changePrice:{c:""},
                 change_Price:{c:"",b:"",a:""},
                 activeClick:1,
