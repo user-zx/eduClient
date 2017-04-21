@@ -32,8 +32,14 @@
             <el-form-item label="" prop="userEmail">
                 <el-input v-model="form.userEmail" placeholder="请输入邮箱"></el-input>
             </el-form-item>
-            <el-form-item label="" prop="userPosition">
-                <el-input v-model="form.userPosition" placeholder="请输入您的所在地"></el-input>
+           <!--  <el-form-item label="" prop="userPosition">
+               <el-input v-model="form.userPosition" placeholder="请输入您的所在地"></el-input>
+           </el-form-item> --> 
+            <el-form-item label="" prop="position">
+                 <el-col :span="24">
+                   <el-cascader size="large" :options="options" v-model="position" @change="handleChange" class="edu-cascader"  placeholder="请输入您的所在地">
+                   </el-cascader>
+                 </el-col>
             </el-form-item>
             <el-form-item label="">
                 <el-button type="primary submit" @click="submitForm('ruleForm')">提交申请</el-button>
@@ -42,23 +48,22 @@
     </div>
 </template>
 <script>
-     /*
-    * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
-    * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
-    * import loginButton from './components/loginButton.vue';
-    */
+    import {regionData,CodeToText} from "element-china-area-data"
     export default{
         data(){
             return {
                 msg:"申请试用",
+                options: regionData,
+                position: [],
                 form: {
                     realName: '',
                     collegeName: '',
                     userDepartment: '',
                     userPhone: '',
                     userEmail: '',
-                    userPosition: '',
                     captcha: '',
+                    area:'',
+                    areaCode:'',
                 },
                 rules:{
                     realName:[
@@ -81,10 +86,10 @@
                         {required:true,message:"请输入邮箱",trigger: 'blur' },
                         {type: 'email', message: "请输入正确的邮箱",trigger: 'blur' }
                     ],
-                    userPosition:[
+                  /*  position:[ 
                         {required:true, message:"请输入地区", trigger: 'blur' },
                         {min:2, max:10, message: "长度在 2 到 10 个字符", trigger: 'blur' },
-                    ],
+                    ],*/
                     captcha:[
                         {required:true, message:"请输入验证码", trigger: 'blur' },
                         {min:4,max:4,message: "长度在 4 个字符",trigger: 'blur' },
@@ -126,6 +131,18 @@
                 /*重置表单*/
                 this.$refs[formName].resetFields();
             },
+            handleChange(val){
+              let str = "";
+             for (var i = 0; i < val.length; i++) {
+                if(i==val.length-1){
+                    str += val[i];
+                }else{
+                     str += val[i] + ","
+                }
+             }
+             this.form.areaCode = str;
+             this.form.area = CodeToText[this.position[0]];
+            }
         },
         mounted(){
             

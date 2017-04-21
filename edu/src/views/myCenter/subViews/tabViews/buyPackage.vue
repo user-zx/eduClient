@@ -580,6 +580,7 @@
                                 vm.price.c = 0;
                             }
                          }
+                         console.log(sum);
                          vm.price.c = sum + 500 * vm.addition + vm.attention * 500;
                          vm.changePrice.c = sum; 
                       })

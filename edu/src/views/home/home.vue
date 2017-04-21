@@ -45,6 +45,7 @@
                         if (response.data.success) {
                             this.user = response.data.data;
                             var left = this.$refs.left;
+                            console.log(left);
                             left.onPermissionsLoad(this.user.permissions);
                         } else {
                             console.error(response.data.message);

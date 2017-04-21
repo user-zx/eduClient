@@ -309,11 +309,10 @@
                     console.log(res);
                     if(res.ok){
                         if(res.data.success){
-
-                            alert(res.data.data)
+                            this.$message(res.data.data)
                             this.$router.push({path: "/home/centerPackageResult"})
                         }else{
-                            alert(res.data.message)
+                            this.$message(res.data.message)
                         }
                     }
                 },(err)=>{
