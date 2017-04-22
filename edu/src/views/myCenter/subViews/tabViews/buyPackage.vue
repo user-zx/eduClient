@@ -626,7 +626,6 @@
                   let ListA = "",ListB = "",ListC = [];
                 this.$http.post('/apis/packageManage/getPackageManageList.json').then(
                     (res) => {
-                        console.log(res);
                         if(res.ok){
                             if(res.data.success){
                                this.price.a = res.data.data[0].total;

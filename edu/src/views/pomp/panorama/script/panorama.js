@@ -1,8 +1,3 @@
-/*
- * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
- * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
- * import loginButton from './components/loginButton.vue';
- */
 import "vue-style-loader!css-loader!sass-loader!../../../../assets/css/table/tran-table.css.scss";
 import "vue-style-loader!css-loader!sass-loader!../../../../assets/css/tabs/tabs.scss";
 import overview from '../overview/overview.vue';
@@ -21,7 +16,7 @@ export default{
             activeName2:'todayHot',
         }
     },
-    components:{overview} ,
+    components:{overview},
     methods:{
         /**获取舆情数据*/
         getOpinionData() {
