@@ -5,13 +5,13 @@
                 选择您想关注的
                 <span class="yellow">人物</span>
             </div>
-            <div class="item">
-                您购买的
-                <span class="yellow">C套餐</span>，
-                最多可添加
-                <span class="yellow">10</span>
-                个人物
-            </div>
+           <!--  <div class="item">
+               您购买的
+               <span class="yellow">C套餐</span>，
+               最多可添加
+               <span class="yellow">10</span>
+               个人物
+           </div> -->
         </div>
         <div class="bottom">
             <div class="btn-wrap">
@@ -31,7 +31,7 @@
         </div>
         <el-dialog title="提示" v-model="dialogVisible" size="tiny">
           <h3 class="text-center addPersonDetails">添加人物详细信息</h3>
-          <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" class="demo-ruleForm">
+          <el-form :model="ruleForm" :rules="rules"  ref="ruleForm" label-width="100px" class="demo-ruleForm"> 
                  <el-form-item label="活动名称" prop="name">
                     <el-input v-model="ruleForm.name"></el-input>
                  </el-form-item>
@@ -114,7 +114,23 @@
                     word:"",
                     account:"",
                 },
-
+                rules:{
+                    name: [
+                        { required: true, message: '请输入活动名称', trigger: 'blur' },
+                    ],
+                    colleges: [
+                        { required: true, message: '请输入所在高校', trigger: 'blur' },
+                    ],
+                    faculty: [
+                       { required: true, message: '请输入所在院系', trigger: 'blur' }, 
+                    ],
+                    word: [
+                       { required: true, message: '请输入社交账号', trigger: 'blur' }, 
+                    ],
+                    account: [
+                       { required: true, message: '请输入昵称/关键字', trigger: 'blur' }, 
+                    ],
+                }
             }
         },
         methods: {
@@ -138,34 +154,33 @@
                 this.dialogVisible = true;
             },
             addPersonSure(){
-                if(this.ruleForm.name==""||this.ruleForm.colleges==""|| this.ruleForm.faculty==""||this.ruleForm.word==""||this.ruleForm.account==""){
-                    this.$message("提交有误,请核实")
-                }else{
-                    let params = {};
-                    params.name = this.ruleForm.name;
-                    params.collegeName = this.ruleForm.colleges;
-                    params.department = this.ruleForm.faculty;
-                    params.nickname = this.ruleForm.word;
-                    params.socialAccount = this.ruleForm.account;
-                    this.$http.post("/apis/concernPerson/addConcernPerson.json",params).then((res)=>{
-                        console.log(res);
-                        if(res.data.success){
-                            this.$message("添加成功");
-                            this.dialogVisible = false;
-                        }else{
-                            this.$message(res.data.message);
-                        }
-                    },(err)=>{
-                        console.log(err);
-                    })
-                }
+                this.$refs['ruleForm'].validate((valid)=>{
+                    if(valid){
+                         let params = {};
+                            params.name = this.ruleForm.name;
+                            params.collegeName = this.ruleForm.colleges;
+                            params.department = this.ruleForm.faculty;
+                            params.nickname = this.ruleForm.word;
+                            params.socialAccount = this.ruleForm.account;
+                            this.$http.post("/apis/concernPerson/addConcernPerson.json",params).then((res)=>{
+                                if(res.data.success){
+                                    this.$message("添加成功");
+                                    this.dialogVisible = false;
+                                    this.getPerson();
+                                }else{
+                                    this.$message(res.data.message);
+                                }
+                            },(err)=>{
+                                console.log(err);
+                            })
+                    }
+                })
+               
             },
             getPerson(){
                 this.$http.post("/apis/concernPerson/concernPersonPageList.json").then((res)=>{
-                   // console.log(res);
                     if(res.data.success){
                         let arr = res.data.data;
-                        //console.log(arr);
                         for (let i in arr) {
                             this.tableData.push({name: arr[i].name, college: arr[i].collegeName, department: arr[i].department, keyword: arr[i].nickname, count:　arr[i].socialAccount})
                         }

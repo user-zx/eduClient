@@ -188,7 +188,7 @@
                     }
                 },(err)=>{
                     console.log(err);
-                })
+                });
             }
         },
         mounted(){
