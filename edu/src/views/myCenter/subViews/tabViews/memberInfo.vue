@@ -176,12 +176,20 @@
                 console.log(res);
                 if(res.data.success){
                   this.memberForm.name = res.data.data.realName;
-                  this.memberForm.registDate = res.data.data.createDate;
+                 // this.memberForm.registDate = res.data.data.createDate;
                   this.memberForm.college = res.data.data.collegeName;
                   this.memberForm.phone = res.data.data.userPhone;
                   this.memberForm.email = res.data.data.userEmail;
                   this.memberForm.job = res.data.data.userDepartment;
                   this.imageUrl = res.data.data.userImg;
+                     let newTime = new Date(res.data.data.createDate);
+                     let year = newTime.getFullYear();
+                     let month = newTime.getMonth()+1;
+                     let date = newTime.getDate();
+                     let hours = newTime.getHours();
+                     let minutes = newTime.getMinutes();
+                     let seconds = newTime.getSeconds(); 
+                    this.memberForm.registDate = year +"-"+ month +"-" + date +" "+ hours +":"+ minutes + ":" +seconds;
                   //this.selectedOptions[0] = "北京"; 
                 }
               },(err)=>{

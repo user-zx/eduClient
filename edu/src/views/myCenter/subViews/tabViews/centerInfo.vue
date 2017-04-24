@@ -5,11 +5,11 @@
     <div class="centerInfo">
         <div class="logo-wrap">
             <div class="item logo">
-                <img src="../../../../assets/images/lufei-logo.jpg" alt="">
+                <img :src="imgUrl" alt="">
             </div>
             <div class="item name-div">
-                <p class="user-name">用户名： <span>唧唧复唧唧</span></p>
-                <p class="register-date">注册时间：2017-01-22 19:19</p>
+                <p class="user-name">用户名： <span>{{username}}</span></p>
+                <p class="register-date">注册时间：{{time}}</p>
             </div>
         </div>
         <div class="summary-wrap">
@@ -285,6 +285,9 @@
                 showOne:[],
                 showTwo:[],
                 showThree:[],
+                imgUrl:"",
+                username:"",
+                time:"",
                 param: {
                     pageSize:　10,
                     pageNum: 0
@@ -315,9 +318,7 @@
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
             viewDetail(params){
-
                 console.log(params.id)
-
                 this.$http.get("/apis/packageManage/getPackageOrderById.json/" + params.id).then((res)=>{
                     console.log(res)
                     if(res.data.success){
@@ -361,7 +362,7 @@
             getDataList(){
                 this.$http.post("/apis/packageManage/getPackageOrderList.json", this.param).then((res)=>{
                     if(res.data.success){
-                        console.log(res);   
+                        //console.log(res);   
                         this.total = res.data.data.totalElements;
                         this.tableData = res.data.data.content;
                     }
@@ -369,7 +370,27 @@
                     console.log(err);
                 });
             },
-
+            getUserData(){
+                 this.$http.post("/apis/user/getMemberInfo.json").then((res)=>{
+                    console.log(res);
+                     let date = new Date();
+                    if(res.data.success){
+                      this.imgUrl = res.data.data.userImg;
+                      this.username = res.data.data.realName;
+                     let newTime = new Date(res.data.data.createDate);
+                     let year = newTime.getFullYear();
+                     let month = newTime.getMonth()+1;
+                     let date = newTime.getDate();
+                     let hours = newTime.getHours();
+                     let minutes = newTime.getMinutes();
+                     let seconds = newTime.getSeconds(); 
+                     this.time = year +"-"+ month +"-" + date +" "+ hours +":"+ minutes + ":" +seconds;
+                    }
+                   
+                 },(err)=>{
+                    console.log(err);
+                 })
+            },
             formatSubmitDate(row, col){
                 return new Date(row.submitDate).format('yyyy-MM-dd');
             },
@@ -383,6 +404,7 @@
         },
         mounted(){
             this.getDataList();
+            this.getUserData();
         },
         created(){
             this.setBreadCrumb();
