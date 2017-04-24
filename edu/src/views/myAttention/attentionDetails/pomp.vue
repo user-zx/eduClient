@@ -99,9 +99,11 @@
                     this.$http.post('/apis/concerns/getOpinionData.json',this.param).then(
                         (response) => {
                             if (response.data.success) {
-                                this.articleData = response.data.data.page.content;
+                                if(response.data.data.message!=null){
+                                     this.articleData = response.data.data.page.content;
                                 // 最多允许翻10000页
                                 this.total = response.data.data.page.totalElements > 10000 ? 10000 : response.data.data.page.totalElements;
+                                }
                                  this.loading = false;
                             } else {
                                 console.error(response.data.message);

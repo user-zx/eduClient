@@ -264,7 +264,6 @@
             }
         }
     }
-
 </style>
 <style lang="scss">
     .centerInfo{
@@ -362,6 +361,7 @@
             getDataList(){
                 this.$http.post("/apis/packageManage/getPackageOrderList.json", this.param).then((res)=>{
                     if(res.data.success){
+                        console.log(res);   
                         this.total = res.data.data.totalElements;
                         this.tableData = res.data.data.content;
                     }

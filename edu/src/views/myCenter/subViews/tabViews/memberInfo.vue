@@ -6,19 +6,19 @@
        <div class="form-wrap">
            <el-form :model="memberForm" :rules="rules" ref="memberForm" label-width="100px" class="member-form dark">
                <el-form-item label="用户名" prop="name">
-                   <el-input v-model="memberForm.name" :disabled="true">{{memberForm.name}}</el-input>
+                   <el-input v-model="memberForm.name" :disabled="true"></el-input>
                </el-form-item>
                <el-form-item label="注册时间" prop="registDate">
-                   <el-input v-model="memberForm.registDate" :disabled="true">2017-01-01 12:12</el-input>
+                   <el-input v-model="memberForm.registDate" :disabled="true"></el-input>
                </el-form-item>
                <el-form-item label="高校">
-                   <el-input v-model="memberForm.college" :disabled="true">火星理工大学</el-input>
+                   <el-input v-model="memberForm.college" :disabled="true"></el-input>
                </el-form-item>
                <el-form-item label="部门" prop="job">
-                   <el-input v-model="memberForm.job" placeholder="请输入您的职务">挖掘机师傅</el-input>
+                   <el-input v-model="memberForm.job" placeholder="请输入您的职务"></el-input>
                </el-form-item>
                <el-form-item label="手机" prop="phone">
-                   <el-input v-model="memberForm.phone" placeholder="请输入手机号码">15115111511</el-input>
+                   <el-input v-model="memberForm.phone" placeholder="请输入手机号码"></el-input>
                </el-form-item>
                <el-form-item label="邮箱" prop="email">
                    <el-input v-model="memberForm.email" placeholder="请输入邮箱"></el-input>
@@ -101,8 +101,8 @@
                     email: ''
                 },
                 rules: {
-                    job: [{required: true, message: '请输入您的职务'}],
-                    phone: [{required: true, message: '请输入您的手机号码'}],
+                    job: [{required: true, message: '请输入您的职务',trigger: 'blur'}],
+                    phone: [{required: true, message: '请输入您的手机号码',trigger: 'blur'}],
                     email: [{type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}]
                 },
                 imageUrl: '',
@@ -181,6 +181,7 @@
                   this.memberForm.phone = res.data.data.userPhone;
                   this.memberForm.email = res.data.data.userEmail;
                   this.memberForm.job = res.data.data.userDepartment;
+                  this.imageUrl = res.data.data.userImg;
                   //this.selectedOptions[0] = "北京"; 
                 }
               },(err)=>{
