@@ -66,7 +66,7 @@
                 <el-table-column label="产品类型" prop="packageType" align="center"></el-table-column>
                 <el-table-column label="提交时间" prop="submitDate" align="center" :formatter="formatSubmitDate"></el-table-column>
                 <el-table-column label="期限" prop="timeLimit" align="center"></el-table-column>
-                <el-table-column label="到期时间"  align="center" prop="endDate"></el-table-column>
+                <el-table-column label="到期时间"  align="center" prop="expireDate" :formatter="formatExpireDate"></el-table-column>
                 <el-table-column label="支付金额" prop="totalPrice" align="center"></el-table-column>
                 <el-table-column label="查看详情" align="center">
                     <template scope="scope">
@@ -372,6 +372,13 @@
 
             formatSubmitDate(row, col){
                 return new Date(row.submitDate).format('yyyy-MM-dd');
+            },
+
+            formatExpireDate(row, col){
+                if(row.expireDate != null){
+                    return new Date(row.expireDate).format('yyyy-MM-dd');
+                }
+                return '';
             }
         },
         mounted(){
