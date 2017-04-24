@@ -32,3 +32,9 @@
         props: ['userAccount']
     }
 </script>
+<style scope>
+    .el-menu--horizontal .el-menu-item a, .el-menu--horizontal .el-menu-item a:hover{
+        line-height: 65px;
+        display: inline-block;
+    }
+</style>
