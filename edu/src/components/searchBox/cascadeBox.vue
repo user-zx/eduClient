@@ -103,7 +103,7 @@
                     }
                 },
                 param: {
-                    reportPersonage: "",
+                    reportPersonage: null,
                     area: "",
                     startDate: new Date(Date.now() - 8.64e7 * 30).format("yyyy-MM-dd") + " 00:00:00",
                     endDate: new Date(Date.now() - 8.64e7).format("yyyy-MM-dd") + " 23:59:59",
@@ -123,6 +123,10 @@
             handleClick(tab, event) {
                 this.reportPersonage = '';
                 this.param.area = '';
+                if (tab.label == '全部') {
+                    this.param.reportPersonage = null;
+                    this.$emit('onSearchChange', this.param);
+                }
             },
             /**获取国家领导*/
             getLeader() {

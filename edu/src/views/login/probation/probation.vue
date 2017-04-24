@@ -32,9 +32,6 @@
             <el-form-item label="" prop="userEmail">
                 <el-input v-model="form.userEmail" placeholder="请输入邮箱"></el-input>
             </el-form-item>
-           <!--  <el-form-item label="" prop="userPosition">
-               <el-input v-model="form.userPosition" placeholder="请输入您的所在地"></el-input>
-           </el-form-item> --> 
             <el-form-item label="" prop="position">
                  <el-col :span="24">
                    <el-cascader size="large" :options="options" v-model="position" @change="handleChange" class="edu-cascader"  placeholder="请输入您的所在地">
@@ -86,10 +83,6 @@
                         {required:true,message:"请输入邮箱",trigger: 'blur' },
                         {type: 'email', message: "请输入正确的邮箱",trigger: 'blur' }
                     ],
-                  /*  position:[ 
-                        {required:true, message:"请输入地区", trigger: 'blur' },
-                        {min:2, max:10, message: "长度在 2 到 10 个字符", trigger: 'blur' },
-                    ],*/
                     captcha:[
                         {required:true, message:"请输入验证码", trigger: 'blur' },
                         {min:4,max:4,message: "长度在 4 个字符",trigger: 'blur' },
@@ -105,7 +98,7 @@
                         this.$http.post('/apis/addTrial.json', this.form).then((response) => {
                                 if (response.data.success) {
                                     this.$message({
-                                        message: '申请成功, 我们回尽快处理',
+                                        message: '申请成功, 我们会尽快处理',
                                         type: 'success'
                                     });
                                     this.resetForm(formName);
