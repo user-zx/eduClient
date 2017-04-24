@@ -10,6 +10,7 @@
         <div class="table-wrap">
             <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
                       :resizable="false" >
+                <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column label="编号" prop="number" align="center" width="100"></el-table-column>
                 <el-table-column label="子账号" prop="subCount" align="center"></el-table-column>
                 <el-table-column label="开通时间" prop="createdDate" align="center" :show-overflow-tooltip=true></el-table-column>
