@@ -11,56 +11,56 @@
             <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
                       :resizable="false" >
                 <el-table-column type="selection" width="55"></el-table-column>
-                <el-table-column label="编号" prop="number" align="center" width="100"></el-table-column>
-                <el-table-column label="子账号" prop="subCount" align="center"></el-table-column>
-                <el-table-column label="开通时间" prop="createdDate" align="center" :show-overflow-tooltip=true></el-table-column>
-                <el-table-column label="到期时间" prop="deadline" align="center"></el-table-column>
+                <el-table-column label="编号" prop="id" align="center" width="100"></el-table-column>
+                <el-table-column label="子账号" prop="userAccount" align="center"></el-table-column>
+                <el-table-column label="开通时间" prop="createDate" align="center" :formatter="formatCreateDate"></el-table-column>
+                <el-table-column label="到期时间" prop="expireDate" align="center" :formatter="formatExpireDate"></el-table-column>
                 <el-table-column label="设置权限" prop="permission" align="center">
                     <template scope="scope">
-                        <span @click="setPermission(scope.row)">
-                            {{scope.row.permission}}
+                        <span @click="setPermission(scope.row)" class="pointer">
+                            设置
                         </span>
                     </template>
                 </el-table-column>
-                <el-table-column label="最后登录时间" prop="lastLogOnDate"></el-table-column>
+                <el-table-column label="最后登录时间">--</el-table-column>
                 <el-table-column label="开关" align="center">
                     <template scope="scope">
-                        <el-switch on-text="" off-text="" v-model="scope.row.switchBtn" @change="changeStatus(scope.row)"></el-switch>
+                        <el-switch v-model="scope.row.switchBtn" @change="changeStatus(scope.row)"></el-switch>
                     </template>
                 </el-table-column>
             </el-table>
         </div>
 
        <div>
-           <el-dialog title="添加子账号" v-model="dialogFormVisible" class="dialog-center">
-               <el-form :model="form" :rules="rules" ref="form" :label-width="formLabelWidth">
+           <el-dialog title="添加子账号" v-model="dialogFormVisible" class="dialog-center" @close="closeDialog('form')">
+               <el-form :model="form" :rules="rules" ref="form" :label-width="formLabelWidth" name="addForm">
                    <el-form-item label="主账号">
                        <el-input v-model="form.mainCount" auto-complete="off" :disabled="true"></el-input>
                    </el-form-item>
-                   <el-form-item label="子账号"  prop="childCount">
-                       <el-input v-model="form.childCount">
+                   <el-form-item label="子账号"  prop="userAccount">
+                       <el-input v-model="form.userAccount">
                            <template slot="prepend">{{form.mainCount}} + </template>
                        </el-input>
                    </el-form-item> 
                    <el-form-item label="子账号密码" prop="password">
                        <el-input type="password" auto-complete="off" v-model="form.password"></el-input>
                    </el-form-item>
-                   <el-form-item label="开通时间" prop="dateStart">
-                       <el-date-picker type="date"  v-model="form.dateStart">
+                   <el-form-item label="开通时间" prop="createDate">
+                       <el-date-picker type="date"  v-model="form.createDate">
                        </el-date-picker>
                    </el-form-item>
-                   <el-form-item label="到期时间" prop="dateEnd">
-                       <el-date-picker type="date" v-model="form.dateEnd">
+                   <el-form-item label="到期时间" prop="expireDate">
+                       <el-date-picker type="date" v-model="form.expireDate">
                        </el-date-picker>
                    </el-form-item>
-                   <el-form-item label="姓名" prop="name">
-                       <el-input v-model="form.name"></el-input>
+                   <el-form-item label="姓名" prop="realName">
+                       <el-input v-model="form.realName"></el-input>
                    </el-form-item>
-                   <el-form-item label="职称" prop="job">
-                       <el-input v-model="form.job"></el-input>
+                   <el-form-item label="职称" prop="userDepartment">
+                       <el-input v-model="form.userDepartment"></el-input>
                    </el-form-item>
-                   <el-form-item label="联系电话" prop="phone">
-                       <el-input v-model="form.phone"></el-input>
+                   <el-form-item label="联系电话" prop="userPhone">
+                       <el-input v-model="form.userPhone"></el-input>
                    </el-form-item>
                    <el-form-item label="权限" >
                        <el-checkbox v-model="checkAll" @change="handleCheckAll0" :indeterminate="isIndeterminate">
@@ -72,8 +72,8 @@
                    </el-form-item>
                </el-form>
                <div slot="footer" class="dialog-footer">
-                   <el-button type="primary" @click="saveSubCount()">确 定</el-button>
                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                   <el-button type="primary" @click="saveSubCount()">确 定</el-button>
                </div>
            </el-dialog>
        </div>
@@ -131,10 +131,14 @@
                 tableData: [],
                 dialogFormVisible: false,
                 form: {
-                    mainCount:'HMS-19291',
-                    dateStart: '',
-                    dateEnd: '',
+                    mainCount:'',
+                    userAccount: '',
+                    createDate: '',
+                    expireDate: '',
                     password:'',
+                    realName: '',
+                    userDepartment: '',
+                    userPhone: ''
                 },
                 formLabelWidth: "100px",
                 checkAll: true,
@@ -148,13 +152,13 @@
                   password: [
                       { validator: validatePass, trigger: 'blur' }
                     ],
-                  name: [
+                  realName: [
                       { required: true, message: '请输入姓名', trigger: 'blur' },
                     ],  
-                   job: [
+                   userDepartment: [
                       { required: true, message: '请输入职称', trigger: 'blur' },
                     ],
-                  phone:[
+                  userPhone:[
                     { validator: testPhone, trigger: 'blur' }
                   ]  
                 },
@@ -165,13 +169,6 @@
               console.log(row);
             },
             isShow(){
-              this.form.childCount = ""; 
-              this.form.password = "";
-              this.form.dateStart = "";
-              this.form.dateEnd = "";
-              this.form.name = "";
-              this.form.job = "";
-              this.form.phone = "";
               this.dialogFormVisible = true;
             },
             changeStatus(row){
@@ -203,11 +200,11 @@
                                  params.password = encrypedPwd;
                               }
                               params.userAccount = this.form.childCount;
-                              params.createDate = this.form.dateStart;
-                              params.expireDate = this.form.dateEnd;
-                              params.realName = this.form.name;
-                              params.userDepartment = this.form.job;
-                              params.userPhone = this.form.phone;
+                              params.createDate = this.form.createDate;
+                              params.expireDate = this.form.expireDate;
+                              params.realName = this.form.realName;
+                              params.userDepartment = this.form.userDepartment;
+                              params.userPhone = this.form.userPhone;
                               this.$http.post("/apis/user/addSubAccount.json",params).then((res)=>{
                                   if(res.data.success){
                                     this.$message(res.data.data);
@@ -238,40 +235,31 @@
             },
             getChildAccount(){
               this.$http.post("/apis/user/findAllSubAccount.json").then((res)=>{
-                  //console.log(res);
-                  let arr = res.data.data;
                   if(res.data.success){
-                    for (let i in arr) {
-                       if(arr[i].accountType=='未开通'){
-                          this.tableData.push({
-                          id:arr[i].id,
-                          number: arr[i].id,
-                          subCount: arr[i].userAccount,
-                          createdDate: arr[i].createDate,
-                          deadline: arr[i].expireDate,
-                          permission: '设置',
-                          lastLogOnDate: '----',
-                          switchBtn: false,
-                        })
-                       }else{
-                        this.tableData.push({
-                          id:arr[i].id,
-                          number: arr[i].id,
-                          subCount: arr[i].userAccount,
-                          createdDate: arr[i].createDate,
-                          deadline: arr[i].expireDate,
-                          permission: '设置',
-                          lastLogOnDate: '----',
-                          switchBtn: true,
-                        })
-                       }
-                        
-                    }
+                      this.tableData = res.data.data;
+                      console.log(this.tableData)
                   }
               },(err)=>{
                   console.log(err);
               })
-            }
+            },
+
+            closeDialog(formName){
+                //关闭添加窗口后 清空表单信息
+                this.$refs[formName].resetFields();
+            },
+
+            formatCreateDate(row, col){
+                return new Date(row.createDate).format('yyyy-MM-dd');
+            },
+
+            formatExpireDate(row, col){
+                if(row.expireDate != null){
+                    return new Date(row.expireDate).format('yyyy-MM-dd');
+                }
+
+                return '';
+            },
         },
         mounted(){
           this.getChildAccount();

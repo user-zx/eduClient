@@ -132,16 +132,16 @@
                 this.$refs[formName].resetFields();
             },
             handleChange(val){
-              let str = "";
-             for (var i = 0; i < val.length; i++) {
-                if(i==val.length-1){
-                    str += val[i];
-                }else{
-                     str += val[i] + ","
+                let str = "";
+                for (var i = 0; i < val.length; i++) {
+                    if(i == val.length-1){
+                        str += val[i];
+                    }else{
+                         str += val[i] + ","
+                    }
                 }
-             }
-             this.form.areaCode = str;
-             this.form.area = CodeToText[this.position[0]];
+                this.form.areaCode = str;
+                this.form.area = CodeToText[this.position[0]].replace("省", "").replace("市", "");
             }
         },
         mounted(){
