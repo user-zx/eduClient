@@ -37,7 +37,7 @@
                     (response) => {
                         if (response.data.success) {
                             this.user = response.data.data;
-                          //  console.log(this.user);
+                            console.log(this.user);
                             var left = this.$refs.left;
                             console.log(left);
                             left.onPermissionsLoad(this.user.permissions);
