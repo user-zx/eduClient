@@ -32,18 +32,12 @@
                 </el-form-item>
                 <el-form-item label="头像">
                     <div class="img-wrap">
-                        <img :src="userImg" alt="" >
-                        <!-- <img src="../../../../assets/images/lufei-logo.jpg" alt="" v-else> -->
+                        <canvas id="canvas" style="display: none;"></canvas>
+                        <img :src="memberForm.userImg" alt="" id="userImg">
                     </div>
                     <div class="btn-wrap">
-                        <el-upload
-                                class="upload-demo"
-                                action="/"
-                                :show-file-list="false"
-                                :before-upload="beforeAvatarUpload"
-                                :on-success="handleAvatarSuccess">
-                            <el-button type="text">修改头像</el-button>
-                        </el-upload>
+                        <el-button type="text" @click="triggerUpload">修改头像</el-button>
+                        <input type="file" class="el-upload__input" id="uploadInput" @change="uploadFileChange" accept="image/png,image/jpg,image/jpeg">
                     </div>
                 </el-form-item>
                 <el-form-item>
@@ -58,32 +52,32 @@
         background: #21273d;
         overflow: hidden;
 
-        .form-wrap{
-            width: 60%;
-            margin: 67px auto 134px auto;
+    .form-wrap{
+        width: 60%;
+        margin: 67px auto 134px auto;
 
-            .img-wrap{
-                width: 100px;
-                max-height: 100px;
-                overflow: hidden;
-                display: inline-block;
+    .img-wrap{
+        width: 100px;
+        max-height: 100px;
+        overflow: hidden;
+        display: inline-block;
 
-                img{
-                    width: 100px;
-                }
-            }
+    img{
+        width: 100px;
+    }
+    }
 
-            .btn-wrap{
-                display: inline-block;
-                margin-left: 10px;
-                vertical-align: top;
-                line-height: 100px;
-            }
-        }
+    .btn-wrap{
+        display: inline-block;
+        margin-left: 10px;
+        vertical-align: top;
+        line-height: 100px;
+    }
+    }
 
-        .save-btn{
-            width: 100%;
-        }
+    .save-btn{
+        width: 100%;
+    }
     }
 </style>
 
@@ -101,21 +95,21 @@
                     userEmail: '',
                     createDateFormat: '',
                     area: '',
-                    areaCode: ''
+                    areaCode: '',
+                    userImg: '',
                 },
                 rules: {
                     userDepartment: [{required: true, message: '请输入您的职务',trigger: 'blur'}],
                     userPhone: [{required: true, message: '请输入您的手机号码',trigger: 'blur'}],
                     userEmail: [{type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}]
                 },
-                userImg: '',
                 options: regionData,
                 selectedOptions: []
             }
         },
         methods: {
-            submitForm(){
 
+            submitForm(){
                 if(this.memberForm.userPhone == "" || this.memberForm.userDepartment == ""){
                     this.$message('手机号或部门不能为空');
                 }else{
@@ -130,6 +124,7 @@
                     })
                 }
             },
+
             handleChange(val){
                 let str = "";
                 for (var i = 0; i < val.length; i++) {
@@ -142,6 +137,7 @@
                 this.memberForm.areaCode = str;
                 this.memberForm.area = CodeToText[this.selectedOptions[0]].replace("省", "").replace("市", "");
             },
+
             setBreadCrumb(){
                 let breadcrumb=[
                     {
@@ -153,28 +149,7 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
-            handleAvatarSuccess(res, file) {
-                this.userImg = URL.createObjectURL(file.raw);
-            },
 
-            beforeAvatarUpload(file) {
-                let vm = this;
-                if(!/image\/\w+/.test(file.type)){
-                    alert("请确保文件为图像类型");
-                    return false;
-                }
-                let isLt1M = file.size / 1024 / 1024 < 1;
-                if(!isLt1M){
-                    this.$message.error('上传头像照片大小不能超过1MB!');
-                    return isLt1M;
-                }else{
-                    var reader = new FileReader();
-                    reader.onload = function(){
-                        vm.userImg = this.result;
-                    }
-                    reader.readAsDataURL(file);
-                }
-            },
             getUserData(){
                 this.$http.post("/apis/user/getMemberInfo.json").then((res)=>{
                     if(res.data.success){
@@ -189,6 +164,59 @@
                 },(err)=>{
                     console.log(err);
                 });
+            },
+
+            triggerUpload(){
+                $('#uploadInput').click();
+            },
+
+            uploadFileChange(e){
+                let vm = this;
+
+                let fileEle = document.getElementById('uploadInput');
+                let file = null;
+
+                if(fileEle.files){
+                    file = fileEle.files[0];
+                }else {
+                    let fso = new ActiveXObject("Scripting.FileSystemObject");
+                    fileEle.select();
+                    fileEle.blur();
+                    let filePath = document.selection.createRange().text;
+                    if(fso.FileExists(filePath)){
+                        file = fso.GetFile(filePath);
+                    }
+                }
+
+                if(!file){
+                    this.$message.error('上传图片失败');
+                    return false;
+                }
+
+                if(!/image\/\w+/.test(file.type)){
+                    this.$message.error('请上传图片类型的文件');
+                    return false;
+                }
+                let isLt1M = file.size / 1024 / 1024 < 1;
+                if(!isLt1M){
+                    this.$message.error('上传头像照片大小不能超过1MB!');
+                    return isLt1M;
+                }
+
+                let _URL = window.URL || Window.webkitURL;
+
+                let img = new Image();
+                img.onload = function () {
+                    vm.handleImgWidthHeight(this);
+                }
+                img.src = _URL.createObjectURL(file);
+            },
+
+            //按照图片宽高比例压缩
+            handleImgWidthHeight(img){
+                let canvas = document.getElementById('canvas');
+                let dataUrl = this.$compressImg(canvas, img, 200, 200, 0.5);
+                this.memberForm.userImg = dataUrl;
             }
         },
         mounted(){

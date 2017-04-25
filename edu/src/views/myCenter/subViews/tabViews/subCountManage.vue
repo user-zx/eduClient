@@ -131,7 +131,7 @@
                 tableData: [],
                 dialogFormVisible: false,
                 form: {
-                    mainCount:'',
+                    mainCount: this.$parent.$parent.$parent.user.userAccount,
                     userAccount: '',
                     createDate: '',
                     expireDate: '',
@@ -199,12 +199,13 @@
                                  let encrypedPwd = RSAUtils.encryptedString(key,this.form.password);
                                  params.password = encrypedPwd;
                               }
-                              params.userAccount = this.form.childCount;
+                              params.userAccount = this.form.mainCount + this.form.userAccount;
                               params.createDate = this.form.createDate;
                               params.expireDate = this.form.expireDate;
                               params.realName = this.form.realName;
                               params.userDepartment = this.form.userDepartment;
                               params.userPhone = this.form.userPhone;
+
                               this.$http.post("/apis/user/addSubAccount.json",params).then((res)=>{
                                   if(res.data.success){
                                     this.$message(res.data.data);

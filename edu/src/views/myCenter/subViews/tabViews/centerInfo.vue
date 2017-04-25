@@ -139,16 +139,21 @@
             .logo{
                 width: 100px;
                 height: 100px;
-                display: inline-block;
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
+
                 img{
                     max-height:100px;
+                    max-width: 100px;
                 }
+
             }
             .name-div{
                 width: calc(100% - 140px);
                 height:inherit;
-                display: inline-block;
-                margin-left: 28px;
+                display: table-cell;
+                padding-left: 28px;
                 vertical-align: top;
 
                 p{

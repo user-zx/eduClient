@@ -15,7 +15,7 @@
                         <div class="el-upload el-upload--text" @click="uploadImg">
                             <i class="el-icon-plus avatar-uploader-icon" v-if="weiboInfo.microblogAvatar == ''"></i>
                             <img :src="weiboInfo.microblogAvatar" alt="" v-else="" class="avatar">
-                            <input type="file" class="el-upload__input" id="uploadImg" @change="turnBaseFormat">
+                            <input type="file" class="el-upload__input" id="uploadImg" @change="imgFileChange">
                         </div>
                     </div>
                 </el-col>
@@ -183,12 +183,13 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
+
             submitInfo(){
                 var info = this.verifyData();
                 if(info === false){
                     return ;
                 }
-
+                console.log(this.weiboInfo)
                 this.$http.post('/apis/businessTool/saveMicroblog.json', this.weiboInfo).then(
                     (response) => {
                         console.log(response.data);
@@ -347,58 +348,57 @@
                 return true;
             },
 
-            convertImgToBase64(targetEle, callback){
-               if(typeof(FileReader) == 'undefined'){
-                   this.$message({
-                       message: '抱歉，您的浏览器不能将图片转换成相应格式',
-                       type: 'error'
-                   });
-               }else{
-                   try {
-                       let file = targetEle.files[0];
-
-                       if(!/image\/\w+/.test(file.type)){
-                            this.$message({
-                                message: '请上传图片格式',
-                                type: 'error'
-                            });
-                            return false;
-                       }
-
-                       if(file.size / 1024 / 1024 > 1){
-                           this.$message({
-                               message: '图片大小不能超过1M',
-                               type: 'error'
-                           });
-                           return false;
-                       }
-
-                       let reader = new FileReader();
-                       reader.onload = function () {
-                           let result = this.result;
-                           callback(result);
-                       }
-                       reader.readAsDataURL(file);
-                   }catch (e){
-                       this.$message({
-                           message: '图片格式转换错误，请稍后再试',
-                           type: 'error'
-                       });
-                       console.info(e)
-                   }
-               }
-            },
-
             uploadImg(){
                $('#uploadImg').click();
             },
 
-            turnBaseFormat(e){
-                let weiboInfo = this.weiboInfo;
-                let callback = function (result) {
-                    weiboInfo.microblogAvatar = result;
+            imgFileChange(e){
+                let vm = this;
+
+                let fileEle = document.getElementById('uploadImg');
+                let file = null;
+
+                if(fileEle.files){
+                    file = fileEle.files[0];
+                }else {
+                    let fso = new ActiveXObject("Scripting.FileSystemObject");
+                    fileEle.select();
+                    fileEle.blur();
+                    let filePath = document.selection.createRange().text;
+                    if(fso.FileExists(filePath)){
+                        file = fso.GetFile(filePath);
+                    }
                 }
-                this.convertImgToBase64(e.target, callback);
+
+                if(!file){
+                    this.$message.error('上传图片失败');
+                    return false;
+                }
+
+                if(!/image\/\w+/.test(file.type)){
+                    this.$message.error('请上传图片类型的文件');
+                    return false;
+                }
+                let isLt1M = file.size / 1024 / 1024 < 1;
+                if(!isLt1M){
+                    this.$message.error('上传图片大小不能超过1MB!');
+                    return isLt1M;
+                }
+
+                let _URL = window.URL || Window.webkitURL;
+
+                let img = new Image();
+                img.onload = function () {
+                    vm.handleImgWidthHeight(this);
+                }
+                img.src = _URL.createObjectURL(file);
+            },
+
+            //按照图片宽高比例压缩
+            handleImgWidthHeight(img){
+                let canvas = document.createElement('canvas');
+                let dataUrl = this.$compressImg(canvas, img, 200, 200, 0.5);
+                this.weiboInfo.microblogAvatar = dataUrl;
             },
 
             resetInfo(){
