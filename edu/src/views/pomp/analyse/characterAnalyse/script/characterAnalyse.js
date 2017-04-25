@@ -9,8 +9,6 @@ export default{
     data(){
         return {
             characterInfo: [{
-                name: '习总',
-                date: '2月22日',
                 college: '清华大学',
                 department: '电子生物',
                 job: '教授',
@@ -48,15 +46,11 @@ export default{
             this.$store.commit("setBreadCrumb", breadcrumb);
         },
         /**获取活动轨迹echart图*/
-        getActionTrail(startDate, endDate){
+        getActionTrail(){
             let chart = echarts.init(document.getElementById('character_activity_graph'));
             chart.showLoading();
-
-            let tmpParam = this.param;
-            tmpParam.startDate = startDate;
-            tmpParam.endDate = endDate;
             let vm = this;
-            this.$http.post('/apis/opinionMonitor/getActionTrail.json', tmpParam).then(
+            this.$http.post('/apis/opinionMonitor/getActionTrail.json', this.param).then(
                 (response) => {
                     if (response.data.success) {
                         chart.setOption(response.data.data);
@@ -78,10 +72,9 @@ export default{
         getPersonageArticle(date) {
             this.time_loading = true;
             this.selectDate = date;
-            let tmpParam = this.param;
-            tmpParam.startDate = date + " 00:00:00";
-            tmpParam.endDate =  date + " 23:59:59";
-
+            let tmpParam = jQuery.extend({}, this.param);
+            tmpParam.startDate = date + ' 00:00:00';
+            tmpParam.endDate = date + ' 23:59:59';
             this.$http.post('/apis/opinionMonitor/getPersonageArticle.json', tmpParam).then(
                 (response) => {
                     if (response.data.success) {
@@ -95,16 +88,12 @@ export default{
                 }
             );
         },
-        getEmotionTrend(startDate, endDate) {
+        getEmotionTrend() {
 
             let chart = echarts.init(document.getElementById('trend_graph'));
             chart.showLoading();
 
-            let tmpParam = this.param;
-            tmpParam.startDate = startDate;
-            tmpParam.endDate = endDate;
-
-            this.$http.post('/apis/opinionMonitor/getEmotionTrend.json', tmpParam).then(
+            this.$http.post('/apis/opinionMonitor/getEmotionTrend.json', this.param).then(
                 (response) => {
                     if (response.data.success) {
                         chart.setOption(response.data.data);
@@ -119,15 +108,11 @@ export default{
                 }
             );
         },
-        getEmotionVal(startDate, endDate) {
+        getEmotionVal() {
             let chart = echarts.init(document.getElementById('emotionIndex_graph'));
             chart.showLoading();
 
-            let tmpParam = this.param;
-            tmpParam.startDate = startDate;
-            tmpParam.endDate = endDate;
-
-            this.$http.post('/apis/opinionMonitor/getEmotionVal.json', tmpParam).then(
+            this.$http.post('/apis/opinionMonitor/getEmotionVal.json', this.param).then(
                 (response) => {
                     if (response.data.success) {
                         chart.setOption(response.data.data);
@@ -142,15 +127,11 @@ export default{
                 }
             );
         },
-        getMediaVolume(startDate, endDate) {
+        getMediaVolume() {
             let chart = echarts.init(document.getElementById('volume_graph'));
             chart.showLoading();
 
-            let tmpParam = this.param;
-            tmpParam.startDate = startDate;
-            tmpParam.endDate = endDate;
-
-            this.$http.post('/apis/opinionMonitor/getMediaVolume.json', tmpParam).then(
+            this.$http.post('/apis/opinionMonitor/getMediaVolume.json', this.param).then(
                 (response) => {
                     if (response.data.success) {
                         chart.setOption(response.data.data);
@@ -165,15 +146,11 @@ export default{
                 }
             );
         },
-        getMediaHot(startDate, endDate) {
+        getMediaHot() {
             let chart = echarts.init(document.getElementById('hot_graph'));
             chart.showLoading();
 
-            let tmpParam = this.param;
-            tmpParam.startDate = startDate;
-            tmpParam.endDate = endDate;
-
-            this.$http.post('/apis/opinionMonitor/getMediaHot.json', tmpParam).then(
+            this.$http.post('/apis/opinionMonitor/getMediaHot.json', this.param).then(
                 (response) => {
                     if (response.data.success) {
                         chart.setOption(response.data.data);
@@ -189,15 +166,11 @@ export default{
             );
         },
 
-        getVectorTrend(startDate, endDate){
+        getVectorTrend(){
             let chart = echarts.init(document.getElementById('vectorTrend_graph'));
             chart.showLoading();
 
-            let tmpParam = this.param;
-            tmpParam.startDate = startDate;
-            tmpParam.endDate = endDate;
-
-            this.$http.post('/apis/opinionMonitor/getVectorTrend.json', tmpParam).then(
+            this.$http.post('/apis/opinionMonitor/getVectorTrend.json', this.param).then(
                 (response) => {
                     if (response.data.success) {
                         chart.setOption(response.data.data);
@@ -220,15 +193,11 @@ export default{
                 }
             );
         },
-        getVectorDistribution(startDate, endDate) {
+        getVectorDistribution() {
             let chart = echarts.init(document.getElementById('carrierDis_graph'));
             chart.showLoading();
 
-            let tmpParam = this.param;
-            tmpParam.startDate = startDate;
-            tmpParam.endDate = endDate;
-
-            this.$http.post('/apis/opinionMonitor/getVectorDistribution.json', tmpParam).then(
+            this.$http.post('/apis/opinionMonitor/getVectorDistribution.json', this.param).then(
                 (response) => {
                     if (response.data.success) {
                         chart.setOption(response.data.data);
@@ -243,13 +212,9 @@ export default{
                 }
             );
         },
-        getVectorTable(startDate, endDate) {
+        getVectorTable() {
 
-            let tmpParam = this.param;
-            tmpParam.startDate = startDate;
-            tmpParam.endDate = endDate;
-
-            this.$http.post('/apis/opinionMonitor/getVectorTable.json', tmpParam).then(
+            this.$http.post('/apis/opinionMonitor/getVectorTable.json', this.param).then(
                 (response) => {
                     if (response.data.success) {
                         this.distributeData = response.data.data;
@@ -261,15 +226,11 @@ export default{
                 }
             );
         },
-        getKeyWordsData(startDate, endDate){
+        getKeyWordsData(){
             let chart = echarts.init(document.getElementById('keywords'));
             chart.showLoading();
 
-            let tmpParam = this.param;
-            tmpParam.startDate = startDate;
-            tmpParam.endDate = endDate;
-
-            this.$http.post('/apis/opinionMonitor/getWordCloud.json', tmpParam).then(
+            this.$http.post('/apis/opinionMonitor/getWordCloud.json', this.param).then(
                 (response) => {
                     if (response.data.success) {
                         chart.setOption(response.data.data);
@@ -284,11 +245,10 @@ export default{
                 }
             );
         },
-        getArticleByEmotion(startDate, endDate, emotion) {
+        getArticleByEmotion(emotion) {
 
-            let tmpParam = this.param;
-            tmpParam.startDate = startDate;
-            tmpParam.endDate =  endDate;
+            let tmpParam = jQuery.extend({}, this.param);
+
             if (emotion) {
                 tmpParam.emotion = emotion;
             }
@@ -325,18 +285,18 @@ export default{
 
     },
     mounted() {
-        this.getActionTrail('2016-12-01 00:00:00', '2016-12-31 00:00:00');
-        this.getPersonageArticle('2016-12-01');
-        this.getEmotionTrend('2016-12-01 00:00:00', '2016-12-31 00:00:00');
-        this.getEmotionVal('2016-12-01 00:00:00', '2016-12-31 00:00:00');
-        this.getMediaVolume('2016-12-01 00:00:00', '2016-12-31 00:00:00');
-        this.getMediaHot('2016-12-01 00:00:00', '2016-12-31 00:00:00');
-        this.getVectorTrend('2016-12-01 00:00:00', '2016-12-31 00:00:00');
-        this.getVectorDistribution('2016-12-01 00:00:00', '2016-12-31 00:00:00');
-        this.getVectorTable('2016-12-01 00:00:00', '2016-12-31 00:00:00');
-        this.getKeyWordsData('2016-12-01 00:00:00', '2016-12-31 00:00:00');
-        this.getArticleByEmotion('2016-12-01 00:00:00', '2016-12-31 00:00:00');
-        this.getArticleByEmotion('2016-12-01 00:00:00', '2016-12-31 00:00:00', 'positive');
-        this.getArticleByEmotion('2016-12-01 00:00:00', '2016-12-31 00:00:00', 'negative');
+        this.getActionTrail();
+        this.getPersonageArticle(this.param.startDate.split(' ')[0]);
+        this.getEmotionTrend();
+        this.getEmotionVal();
+        this.getMediaVolume();
+        this.getMediaHot();
+        this.getVectorTrend();
+        this.getVectorDistribution();
+        this.getVectorTable();
+        this.getKeyWordsData();
+        this.getArticleByEmotion();
+        this.getArticleByEmotion('positive');
+        this.getArticleByEmotion('negative');
     }
 }

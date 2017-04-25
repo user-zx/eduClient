@@ -6,10 +6,10 @@
         <div class="character-info">
             <div class="info-left">
                 <span class="characterName">
-                    {{characterInfo[0].name}}
+                    {{param.name}}
                 </span>
                 <span class="characterDate">
-                   {{characterInfo[0].date}}
+                   {{param.endDate ? param.endDate.split(' ')[0] : '' }}
                </span>
             </div>
             <div class="info-right">

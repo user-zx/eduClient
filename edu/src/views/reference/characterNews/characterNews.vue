@@ -36,7 +36,8 @@
                     </el-pagination>
                 </div>
             </div>
-            <el-table :data="tableData" class="dark" style="width: 100%" :resizable="false">
+            <el-table :data="tableData" class="tran-table white-table" border style="width: 100%"
+                      :resizable="false">
                 <el-table-column type="selection" width="50" align="center"></el-table-column>
                 <el-table-column label="全部" align="center" prop="all">
                     <template scope="scope">
@@ -54,7 +55,7 @@
                 </el-table-column>
                 <el-table-column label="人物" prop="name" align="center">
                     <template scope="scope">
-                        <span @click="toCharacterAnalyse(scope.row)" class="character-name">
+                        <span @click="toCharacterAnalyse(scope.row)" class="character-name" style="cursor: pointer;">
                             {{scope.row.name}}
                         </span>
                     </template>
@@ -150,7 +151,14 @@
                         }
                     );
                 });
-            }
+            },
+            //带参跳转到人物分析页面
+            toCharacterAnalyse(data) {
+                data.university = this.university;
+                data.startDate = this.param.startDate;
+                data.endDate = this.param.endDate;
+                this.$router.push({path:"/home/characterAnalyse", query: data});
+            },
         },
         mounted(){
            
