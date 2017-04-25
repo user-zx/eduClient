@@ -17,22 +17,31 @@
             <div class="box">
                 <el-row>
                     <el-col :span="2">已选：</el-col>
-                    <el-col :span="22">
-                        <ul>
-                            <li class="selected-college list">北京大学</li>
-                            <li class="selected-college list">清华大学</li>
-                            <li class="selected-college list">南京大学</li>
-                        </ul>
+                    <el-col :span="22" class="choose">
+                        <el-tag
+                          v-for="tag in tags"
+                          :key="tag"
+                          :type="tag.type"
+                        >
+                        {{tag.name}}
+                        </el-tag>
+                        <el-tag
+                          v-for="tag in addTags"
+                          :key="tag"
+                          :closable="true"
+                          :type="tag.type"
+                          @close="closeChooseAdd(tag)"
+                        >
+                        {{tag.name}}
+                        </el-tag>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="2" class="transition">选择省份：</el-col>
                     <el-col :span="22" class="transition">
                         <ul class="province-list">
-                            <li class="list" v-for="item in province">{{item}}</li>
-                            <li class="list">
-                                <i class="el-icon-arrow-down pointer" v-on:click="foldProvinceClick"></i>
-                            </li>
+                            <li class="list provinceActive" v-for="(item,index) in province" @click="selectProvince($event,'')" v-if="index==0">{{item}}</li>
+                             <li class="list" v-for="(item,index) in province" @click="selectProvince($event,'')" v-if="index!=0">{{item}}</li>
                         </ul>
                     </el-col>
                 </el-row>
@@ -40,22 +49,11 @@
                     <el-col :span="2" class="transition">选择大学：</el-col>
                     <el-col :span="22" class="transition">
                         <ul>
-                            <li class="list">中国海洋大学</li>
-                            <li class="list">中国海洋大学</li>
-                            <li class="list">中国海洋大学</li>
-                            <li class="list">中国海洋大学</li>
-                            <li class="list">中国海洋大学</li>
-                            <li class="list">中国海洋大学</li>
-                            <li class="list">中国海洋大学</li>
-                            <li class="list">中国海洋大学</li>
-                            <li class="list">中国海洋大学</li>
+                            <li class="list" v-for="item in collegeList"@click="addCollege(item)">{{item}}</li>
                         </ul>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="2" class="transition">&nbsp;</el-col>
-                    <el-col :span="22" class="transition">
-                        <el-button type="primary">保存</el-button>
+                    </el-col> 
+                    <el-col :span="3" :offset="21" class="transition">
+                        <el-button type="primary" @click="getSelected" >保存</el-button>
                     </el-col>
                 </el-row>
             </div>
@@ -85,12 +83,12 @@
         }
 
         .el-row{
-
+            border-bottom: 1px solid #2e4064;
             .el-col{
-                height: 50px;
+                //height: 50px;
                 line-height: 50px;
-                border-bottom: 1px solid #2e4064;
-                overflow: hidden;
+               // border-bottom: 1px solid #2e4064;
+               // overflow: hidden;
 
                 .province-list{
                     position: relative;
@@ -117,7 +115,7 @@
 
             .el-col-2{
                 text-align: center;
-                background: #1b1f31;
+               // background: #1b1f31;
             }
         }
     }
@@ -135,7 +133,14 @@
         -webkit-transition: 0.5s; /* Safari 和 Chrome */
         -o-transition: 0.5s; /* Opera */
     }
-
+    .choose{
+        >span{
+            margin-left: 10px; 
+        }
+    }
+    .provinceActive{
+        color: #20a0ff; 
+     }
     }
 </style>
 <script>
@@ -144,12 +149,13 @@
             return {
                 tableData: [
                     {name: '王小二', college: '清华大学', department: '哲学系', keyword: '时间相对论', count:　'2929292929'},
-                    {name: '王小二', college: '清华大学', department: '哲学系', keyword: '时间相对论', count:　'2929292929'},
-                    {name: '王小二', college: '清华大学', department: '哲学系', keyword: '时间相对论', count:　'2929292929'},
-                    {name: '王小二', college: '清华大学', department: '哲学系', keyword: '时间相对论', count:　'2929292929'},
-                    {name: '王小二', college: '清华大学', department: '哲学系', keyword: '时间相对论', count:　'2929292929'},
                 ],
                 province:["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","香港","澳门","台湾"],
+                selected:[],
+                collegeList:[],
+                collegeArr:[],
+                tags:[],
+                addTags:[],
             }
         },
         methods: {
@@ -164,26 +170,76 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
-
-            foldProvinceClick(){
-                if ($('.province-list .el-icon-arrow-down').hasClass('el-icon-arrow-up')) {
-                    $('.el-icon-arrow-down').removeClass('el-icon-arrow-up');
-                    $('.province-list').closest('div.el-row').children().each(function (index) {
-                        $(this).height(50);
-                    });
-                } else {
-                    $('.province-list .el-icon-arrow-down').addClass('el-icon-arrow-up');
-                    var height = $('.province-list').height();
-                    $('.province-list').closest('div.el-row').children().each(function (index) {
-                        $(this).height(height);
-                    });
+            //获取不同省份的大学
+            selectProvince(event,province){
+                $(event.target).addClass('provinceActive').siblings().removeClass('provinceActive');
+                if(event!=""){
+                     province = event.target.innerText;
                 }
+                this.$http.post("/apis/user/getCollegeByArea.json",{area:province}).then((res)=>{
+                    if(res.data.success){
+                        this.collegeList = res.data.data;
+                    }
+                },(err)=>{
+                    console.log(err);
+                })
+            },
+            //提交选好的大学
+            getSelected(){
+                let str = "";
+                if(this.tags.length>10||this.addTags.length>10||this.tags.length+this.addTags.length>10){
+                    this.$message("已添加"+this.tags.length+"可添加"+(10-this.tags.length)+"所高校")
+                }else{
+                    for (let j in this.addTags) {
+                        if(j==this.addTags.length-1){
+                            str += this.addTags[j].name
+                        }else{
+                            str += this.addTags[j].name + ","
+                        }
+                    }
+                        this.$http.post("/apis/user/setColleges.json",{colleges:str}).then((res)=>{
+                        if(res.data.success){
+                            this.selected = res.data.data;
+                            this.$message("保存成功")
+                        }
+                    },(err)=>{
+                        console.log(err);
+                    })
+                }
+                 
+            },
+            //删除选中的大学
+            closeChooseAdd(tag){
+               this.addTags.splice(this.addTags.indexOf(tag), 1);
+            },
+            //添加大学
+            addCollege(item){
+               if(this.collegeArr.indexOf(item) == -1){
+                    this.addTags.push({name:item,type: 'primary'})
+               }
+            },
+             /**获取用户设置信息*/
+            getUserParams() {
+                this.$http.post('/apis/user/getUnivsAndPersonage.json').then((res)=>{
+                    if(res.data.success){
+                        let arr = res.data.data.univs;
+                        //es6数组去重
+                         this.collegeArr = Array.from(new Set(arr));
+                       for (let i in this.collegeArr) {
+                         this.tags.push({name:this.collegeArr[i],type: 'primary'})
+                       }
+                    }
+                 },(err)=>{
+                    console.log(err);
+                })
             }
+             
         },
         mounted(){
-
+            this.selectProvince("","北京");
+            this.getUserParams();
         },
-        created(){
+        created(){  
             this.setBreadCrumb();
         }
     }

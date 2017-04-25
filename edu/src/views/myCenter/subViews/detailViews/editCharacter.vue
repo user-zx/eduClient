@@ -175,7 +175,6 @@
                             })
                     }
                 })
-               
             },
             getPerson(){
                 this.$http.post("/apis/concernPerson/concernPersonPageList.json").then((res)=>{

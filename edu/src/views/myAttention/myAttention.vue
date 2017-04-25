@@ -3,16 +3,18 @@
         <bread-crumb></bread-crumb>
         <div class="attend-tabs">
             <el-row :gutter="10">
-                <el-col :span="6" class="active"><div class="tab-item" @click="currentFun('pomp')">舆情</div></el-col>
-                <el-col :span="6"><div class="tab-item" @click="currentFun('character')">人物</div></el-col>
-                <el-col :span="6"><div class="tab-item" @click="currentFun('wechat')">微信</div></el-col>
-                <el-col :span="6"><div class="tab-item" @click="currentFun('weibo')">微博</div></el-col>
+                <el-col :span="6" class="active"><div class="tab-item" @click="currentFun('pomp')"><span class="opinion"></span>舆情</div></el-col>
+                <el-col :span="6"><div class="tab-item" @click="currentFun('character')"><span class="people"></span>人物</div></el-col>
+                <el-col :span="6"><div class="tab-item" @click="currentFun('wechat')"><span class="WeChat"></span>微信</div></el-col>
+                <el-col :span="6"><div class="tab-item" @click="currentFun('weibo')"><span class="weibo"></span>微博</div></el-col> 
             </el-row>
         </div>
         <components :is="currentTabs.currentTab"></components>
     </div>
 </template>
 <style lang="scss" scoped>
+    $url-img2: url("../../assets/images/guanzhu2@1x.png") no-repeat;
+    $url-img1: url("../../assets/images/guanzhu1@1x.png") no-repeat;
     .attend-tabs{
         background-color: #21273d;
         margin-top: 10px;
@@ -29,13 +31,64 @@
                 transition: all .25s;
                 cursor: pointer;
                 border:1px solid #273451;
+                >span{
+                    display: inline-block;
+                    
+                    margin-right: 10px; 
+                    vertical-align:middle;   
+                }
+                >span.opinion{
+                    width: 48px;
+                    height: 48px;
+                    background:  $url-img2 -7px -1px;
+                }
+                >span.people{
+                    width: 45px;
+                    height: 50px;
+                    background:  $url-img2 -62px 0px;
+                }
+                >span.WeChat{
+                     width: 59px;
+                    height: 50px;
+                    background:  $url-img2 -114px -1px;
+                }
+                >span.weibo{
+                    width: 62px; 
+                    height: 50px;
+                    background:  $url-img2 -180px -1px;
+                }
+
             &:hover{
-                 color:#60a3ff;
+                 color:#60a3ff; 
+                span.opinion{ 
+                    background: $url-img1 -7px -1px;
+                } 
+                span.people{
+                    background:  $url-img1 -62px 0px;
+                }
+                span.WeChat{
+                    background:  $url-img1 -114px -1px;
+                }
+                span.weibo{
+                    background:  $url-img1 -180px -1px;
+                }
              }
             }
             &.active{
                 .tab-item{
                     color:#60a3ff;
+                }
+                 span.opinion{ 
+                    background: $url-img1 -7px -1px;
+                } 
+                span.people{
+                    background:  $url-img1 -62px 0px;
+                }
+                span.WeChat{
+                    background:  $url-img1 -114px -1px;
+                }
+                span.weibo{
+                    background:  $url-img1 -180px -1px;
                 }
             }
         }

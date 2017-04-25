@@ -154,12 +154,14 @@
                 this.$http.post("/apis/user/getMemberInfo.json").then((res)=>{
                     if(res.data.success){
                         this.memberForm = res.data.data;
+                       console.log(res);
                         if(res.data.data.createDate != null){
                             this.memberForm.createDateFormat = new Date(res.data.data.createDate).format('yyyy-MM-dd');
                         }
                         if(this.memberForm.areaCode != null){
                             this.selectedOptions = this.memberForm.areaCode.split(',');
                         }
+                        this.userImg = res.data.data.userImg;
                     }
                 },(err)=>{
                     console.log(err);

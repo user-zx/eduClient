@@ -21,6 +21,10 @@
                         <el-date-picker type="date" placeholder="选择日期" v-model="exactDate" @change="exactDateChange">
                         </el-date-picker>
                     </li>
+                    <li class="search-list date-span" v-for="item in data.searchList" v-else-if="item.dateBox == 'selectDate'">
+                        <el-date-picker type="date" placeholder="选择日期" v-model="selectDate" @change="selectDateChange" :picker-options="pickerOptions">
+                        </el-date-picker>
+                    </li>
                 </ul>
             </el-col>
             <el-col :span="20" v-else class="transition">
@@ -222,12 +226,23 @@
                         'title': '日期',
                         'searchList': [{id: 0, text: '', dateBox: 'exact'}]
                     },
+                    {
+                        'name': 'selectDate',
+                        'title': '选择日期',
+                        'searchList': [{id: 0, text: '', dateBox: 'selectDate'}]
+                    }
                 ],
                 msg: "",
                 show: false,
                 publishDate: [],
                 foldSchool: false,
-                exactDate: ''
+                exactDate: '',
+                selectDate: new Date(Date.now() - 8.64e7),
+                pickerOptions: {
+                    disabledDate(time) {
+                        return time.getTime() > Date.now() - 8.64e7;
+                    }
+                }
             }
         },
         components: {},
@@ -350,7 +365,7 @@
                 let result = {};
                 let searchData = this.searchData;
                 let searchNames = this.searchNames;
-                //console.log(searchNames);
+
                 loop: for (var i = 0; i < searchNames.length; i++) {
                     var name = searchNames[i];
                     for (var j = 0; j < searchData.length; j++) {
@@ -410,6 +425,14 @@
                                         result['endDate'] = publishDateTime.endDate;
                                         break;
                                     }
+                                    if (name === 'emotion') {
+                                        if ('正面' == text) {
+                                            result[name] = 'positive';
+                                        } else if ('负面' == text) {
+                                            result[name] = 'negative';
+                                        }
+                                        break;
+                                    }
                                     result[name] = text;
                                     break;
                                 }
@@ -420,10 +443,21 @@
                                     var format = 'yyyy-MM-dd';
                                     result.startDate = this.exactDate.format(format) + startSuffix;
                                     result.endDate = this.exactDate.format(format) + endSuffix;
-                                }else{
-                                    //FIXME 这个地方不能默认为空字符串 created by yuwei on 2017-04-10
-                                    //result.startDate = '';
-                                    //result.endDate = '';
+                                }
+
+                                if(this.selectDate && searchList[k].dateBox == 'selectDate'){
+                                    var startSuffix = " 00:00:00";
+                                    var endSuffix = " 23:59:59";
+                                    var format = 'yyyy-MM-dd';
+                                    result.startDate = new Date(this.selectDate.getTime() - 8.64e7 * 30).format(format) + startSuffix;
+                                    result.endDate = this.selectDate.format(format) + endSuffix;
+                                } else if (searchList[k].dateBox == 'selectDate') {
+                                    this.selectDate = new Date(Date.now() - 8.64e7);
+                                    var startSuffix = " 00:00:00";
+                                    var endSuffix = " 23:59:59";
+                                    var format = 'yyyy-MM-dd';
+                                    result.startDate = new Date(this.selectDate.getTime() - 8.64e7 * 30).format(format) + startSuffix;
+                                    result.endDate = this.selectDate.format(format) + endSuffix;
                                 }
                             }
                             continue loop;
@@ -435,9 +469,15 @@
             /**
              * 精确搜索某天的日期控件改变
              */
-            exactDateChange(){
+            exactDateChange() {
                 this.$emit('searchDataChange', this.buildParam());
             },
+            selectDateChange() {
+                if (this.selectDate) {
+                    this.$emit('searchDataChange', this.buildParam());
+                }
+
+            }
         },
         mounted() {
             this.add();

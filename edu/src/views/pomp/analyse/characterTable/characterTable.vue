@@ -3,7 +3,9 @@
 */
 <template>
     <div class="characterTable article-wrap" v-loading="loading" element-loading-text="加载中……">
-        <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" @onload="onSearchLoad"></search-box>
+        <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" @onload="onSearchLoad">
+        </search-box>
+
         <div class="content">
             <div class="content-bar">
                 <ul class="content-bar-list">
@@ -88,7 +90,7 @@
         data(){
             return {
                 loading: false,
-                searchNames: ['university', 'dimension'],
+                searchNames: ['university', 'dimension', 'selectDate'],
                 total: 0,
                 param: {
                     pageSize: 10,
@@ -109,6 +111,8 @@
             //带参跳转到人物分析页面
             toCharacterAnalyse(data) {
                 data.university = this.university;
+                data.startDate = this.param.startDate;
+                data.endDate = this.param.endDate;
                 this.$router.push({path:"/home/characterAnalyse", query: data});
             },
             setBreadCrumb() {
