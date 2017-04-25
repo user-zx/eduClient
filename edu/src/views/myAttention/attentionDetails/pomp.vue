@@ -98,6 +98,7 @@
                 this.loading = true;
                     this.$http.post('/apis/concerns/getOpinionData.json',this.param).then(
                         (response) => {
+                            console.log(response);
                             if (response.data.success) {
                                 if(response.data.data.message!=null){
                                      this.articleData = response.data.data.page.content;

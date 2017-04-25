@@ -23,7 +23,7 @@ exports.install = function (Vue, options) {
         containerWidth = containerWidth || 100;
         containerHeight = containerHeight || 100;
         quality = quality || 0.5;
-
+        
         let compressWidth, compressHeight;
 
         if(oWidth / containerWidth >= oHeight / containerHeight){

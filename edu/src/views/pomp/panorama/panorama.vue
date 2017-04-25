@@ -1,6 +1,3 @@
-/**
-* Created by zhangxin on 2017/3/16.
-*/
 <template>
     <div class="panorama">
         <overview></overview>
@@ -8,7 +5,7 @@
             <el-col :span="12">
                 <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart"></span><span>舆情数据统计</span>
+                        <span class="icons icons-chart1"></span><span>舆情数据统计</span>
                     </div>
                     <div class="text item">
                         <el-table :data="opinionData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table">
@@ -24,7 +21,7 @@
             <el-col :span="12">
                 <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart"></span><span>舆情数据锥形图</span>
+                        <span class="icons icons-chart2"></span><span>舆情数据锥形图</span>
                     </div>
                     <div class="text item" id="opinionFunnel">
                     </div>
@@ -33,7 +30,7 @@
             <el-col :span="12">
                 <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart"></span><span>载体分布统计</span>
+                        <span class="icons icons-chart3"></span><span>载体分布统计</span>
                     </div>
                     <div class="text item" id="vectorDistribute">
                     </div>
@@ -42,7 +39,7 @@
             <el-col :span="12">
                 <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart"></span><span>人物统计</span>
+                        <span class="icons icons-chart4"></span><span>人物统计</span>
                     </div>
                     <div class="text item" id="personageCount">
                         
@@ -52,7 +49,7 @@
             <el-col :span="24">
                 <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart"></span><span>载体趋势分析</span>
+                        <span class="icons icons-chart5"></span><span>载体趋势分析</span>
                     </div>
                     <div class="text item" id="vectorTrend">
 
@@ -62,7 +59,7 @@
             <el-col :span="12">
                 <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart"></span><span>热点舆情</span>
+                        <span class="icons icons-chart6"></span><span>热点舆情</span>
                     </div>
                     <div class="text item">
                         <el-tabs v-model="activeName" class="custom-tabs" @tab-click="handleClick">
@@ -103,7 +100,7 @@
             <el-col :span="12">
                 <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart"></span><span>人物热点</span>
+                        <span class="icons icons-chart6"></span><span>人物热点</span>
                     </div>
                     <div class="text item">
                         <el-tabs v-model="activeName2" class="custom-tabs" @tab-click="handleClick">
@@ -145,7 +142,7 @@
             <el-col :span="12">
                 <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart"></span><span>微信热点</span>
+                        <span class="icons icons-chart6"></span><span>微信热点</span>
                     </div>
                     <div class="text item">
                         <el-card class="box-card">
@@ -163,7 +160,7 @@
             <el-col :span="12">
                 <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart"></span><span>微博热点</span>
+                        <span class="icons icons-chart6"></span><span>微博热点</span>
                     </div>
                     <div class="text item">
                         <el-card class="box-card">
@@ -181,18 +178,41 @@
     </div>
 </template>
 <style lang="scss" scoped>
-    /* .el-row {
-        .el-col {
-            margin-top: 10px;
-            >div {
-                 height: 520px;
-                 background-color: #21273d;
-                >div>.item{
-                     height: 440px;
-                }
-             }
-        }
-    } */ 
+    $img-url:url("../../../assets/images/zhongtubiao@1x.png") no-repeat;
+    .icons{
+        margin-right: 10px; 
+        vertical-align: text-bottom;
+    }
+   .icons-chart1{
+        height: 18px;
+        width: 21px;
+        background:  $img-url -14px 0px;
+   }
+   .icons-chart2{
+        height: 18px;
+        width: 21px;
+        background:  $img-url -46px 0px;
+   }
+    .icons-chart3{
+        height: 22px;
+        width: 21px;
+        background:  $img-url -14px -27px;
+   }
+    .icons-chart4{
+        height: 22px;
+        width: 21px;
+        background:  $img-url -46px -26px;
+   }
+   .icons-chart5{
+        height: 22px;
+        width: 21px;
+        background:  $img-url -14px -56px;
+   }
+   .icons-chart6{
+        width: 21px;
+        height: 26px;
+        background:  $img-url -47px -82px;
+   }
 </style>
 <script src="./script/panorama.js">
 </script>
