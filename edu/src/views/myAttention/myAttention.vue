@@ -13,6 +13,8 @@
     </div>
 </template>
 <style lang="scss" scoped>
+    $url-img2: url("../../assets/images/guanzhu2@1x.png") no-repeat;
+    $url-img1: url("../../assets/images/guanzhu1@1x.png") no-repeat;
     .attend-tabs{
         background-color: #21273d;
         margin-top: 10px;
@@ -38,34 +40,55 @@
                 >span.opinion{
                     width: 48px;
                     height: 48px;
-                    background: url("../../assets/images/guanzhu2@1x.png") no-repeat -7px -1px;
+                    background:  $url-img2 -7px -1px;
                 }
                 >span.people{
                     width: 45px;
                     height: 50px;
-                    background: url("../../assets/images/guanzhu2@1x.png") no-repeat -62px 0px;
+                    background:  $url-img2 -62px 0px;
                 }
                 >span.WeChat{
                      width: 59px;
                     height: 50px;
-                    background: url("../../assets/images/guanzhu2@1x.png") no-repeat -114px -1px;
+                    background:  $url-img2 -114px -1px;
                 }
                 >span.weibo{
-                    width: 62px;
+                    width: 62px; 
                     height: 50px;
-                    background: url("../../assets/images/guanzhu2@1x.png") no-repeat -180px -1px;
+                    background:  $url-img2 -180px -1px;
                 }
 
             &:hover{
-                 color:#60a3ff;
-                 >span.weibo{
-                    background: url("../../assets/images/guanzhu2@1x.png") no-repeat -180px -1px;
+                 color:#60a3ff; 
+                span.opinion{ 
+                    background: $url-img1 -7px -1px;
                 } 
+                span.people{
+                    background:  $url-img1 -62px 0px;
+                }
+                span.WeChat{
+                    background:  $url-img1 -114px -1px;
+                }
+                span.weibo{
+                    background:  $url-img1 -180px -1px;
+                }
              }
             }
             &.active{
                 .tab-item{
                     color:#60a3ff;
+                }
+                 span.opinion{ 
+                    background: $url-img1 -7px -1px;
+                } 
+                span.people{
+                    background:  $url-img1 -62px 0px;
+                }
+                span.WeChat{
+                    background:  $url-img1 -114px -1px;
+                }
+                span.weibo{
+                    background:  $url-img1 -180px -1px;
                 }
             }
         }
