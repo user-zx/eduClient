@@ -36,7 +36,6 @@ import industryNewsList from "./views/reference/industryNews/newsList/industryNe
 import industryDetailNews from "./views/reference/industryNews/newsDetail/industryDetailNews.vue";
 import myCenter from "./views/myCenter/myCenter1.vue";
 import centerList from "./views/myCenter/subViews/centerList.vue";
-import centerSystemDetail from "./views/myCenter/subViews/detailViews/systemDetail.vue";
 import centerPackageConfirm from "./views/myCenter/subViews/detailViews/packageConfirm.vue";
 import centerPackageResult from "./views/myCenter/subViews/detailViews/packageResult.vue";
 import centerCharacter from "./views/myCenter/subViews/detailViews/editCharacter.vue";
@@ -278,16 +277,6 @@ export default {
                         {
                             path: "",
                             component: centerList
-                        }
-                    ]
-                },
-                {
-                    path: "centerSystemDetail",
-                    component: myCenter,
-                    children: [
-                        {
-                            path: "",
-                            component: centerSystemDetail
                         }
                     ]
                 },
