@@ -1,3 +1,6 @@
+/**
+* Created by zhangxin on 2017/3/22.
+*/
 <template>
     <div class="reportDetails" id="reportDetails">
         <div class="title-box">
@@ -16,7 +19,7 @@
                 <el-col :span="24">
                     <el-card class="box-card">
                         <div slot="header" class="clearfix">
-                            <span class="icons icons-chart1"></span><span>行业内参概要</span>
+                            <span class="icons icons-chart"></span><span>行业内参概要</span>
                         </div>
                         <div class="text item">
                             <el-table :data="internalRefSummary" :resizable="false" style="width: 100%" border class="tran-table">
@@ -34,7 +37,7 @@
                 <el-col :span="24">
                     <el-card class="box-card">
                         <div slot="header" class="clearfix">
-                            <span class="icons icons-chart2"></span><span>人物TOP(前十)</span>
+                            <span class="icons icons-chart"></span><span>人物TOP(前十)</span>
                         </div>
                         <div class="text item">
                             <el-table :data="personageTop10" class="tran-table" border style="width: 100%"
@@ -90,7 +93,7 @@
                 <el-col :span="24">
                     <el-card class="box-card">
                         <div slot="header" class="clearfix">
-                            <span class="icons icons-chart3"></span><span>载体分布</span>
+                            <span class="icons icons-chart"></span><span>载体分布</span>
                         </div>
                         <div class="col-item item-left">
                             <div class="charts" id="vectorDistributionChart" style="height: 400px;"></div>
@@ -109,7 +112,7 @@
                 <el-col :span="24">
                     <el-card class="box-card">
                         <div slot="header" class="clearfix">
-                            <span class="icons icons-chart4"></span><span>重点高校关注度</span>
+                            <span class="icons icons-chart"></span><span>重点高校关注度</span>
                         </div>
                         <div class="text item">
                             <div class="charts" id="univsChart" style="height: 400px;"></div>
@@ -122,7 +125,7 @@
                 <el-col :span="24">
                     <el-card class="box-card"  v-loading="twoVSeeLoading" element-loading-text="加载中……">
                         <div slot="header" class="clearfix">
-                            <span class="icons icons-chart5"></span><span>两微洞察</span>
+                            <span class="icons icons-chart"></span><span>两微洞察</span>
                         </div>
                         <div class="text item">
                             <el-table :data="webo" :resizable="false" style="width: 100%" border class="tran-table">
@@ -189,7 +192,7 @@
                 <el-col :span="12">
                     <el-card class="box-card educationBox" style="margin-top: 0px">
                         <div slot="header" class="clearfix">
-                            <span class="icons icons-chart6"></span><span>微信热点</span>
+                            <span class="icons icons-chart"></span><span>微信热点</span>
                         </div>
                         <div class="text item">
                             <el-card class="box-card educationBox">
@@ -206,7 +209,7 @@
                 <el-col :span="12">
                     <el-card class="box-card educationBox" style="margin-top: 0px">
                         <div slot="header" class="clearfix">
-                            <span class="icons icons-chart7"></span><span>微博热点</span>
+                            <span class="icons icons-chart"></span><span>微博热点</span>
                         </div>
                         <div class="text item">
                             <el-card class="box-card educationBox">
@@ -225,7 +228,6 @@
     </div>
 </template>
 <style lang="scss" scoped>
- $img-url:url("../../../../assets/images/zhongtubiao@1x.png") no-repeat;
     .el-row{
         &+.el-row{
             margin-top: 10px;
@@ -287,41 +289,6 @@
                 }
             }
         }
-    }
-    .icons-chart1{
-        width: 21px;
-        height: 20px;
-        background:  $img-url -14px -362px;
-    }
-    .icons-chart2{
-        width: 21px;
-        height: 17px;
-        background:  $img-url -15px -398px;
-    }
-    .icons-chart3{
-        width: 21px;
-        height: 21px;
-        background:  $img-url -14px -27px;
-    }
-    .icons-chart4{
-        width: 24px;
-        height: 18px;
-        background:  $img-url -14px -424px;
-    }
-    .icons-chart5{
-        width: 20px;
-        height: 19px;
-        background:  $img-url -50px -425px;
-    }
-    .icons-chart6{
-        width: 24px;
-        height: 20px;
-        background:  $img-url -14px -117px;
-    }
-    .icons-chart7{
-        width: 24px;
-        height: 19px;
-        background:  $img-url -48px -119px;
     }
 </style>
 <script>
