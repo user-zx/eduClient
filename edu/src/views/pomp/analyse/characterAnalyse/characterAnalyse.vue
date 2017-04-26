@@ -270,11 +270,7 @@
     </div>
 </template>
 <style lang="scss" scoped>
-      $img-url:url("../../../../assets/images/zhongtubiao@1x.png") no-repeat;
-      .icons{
-        margin-right: 10px; 
-        vertical-align: text-bottom;
-    }
+    $img-url:url("../../../../assets/images/zhongtubiao@1x.png") no-repeat;
     .icons-chart1{
         width: 22px;
         height: 23px;

@@ -1,6 +1,3 @@
-/**
-* Created by yu-bing on 2017/3/17.
-*/
 <template>
     <div class="seeClearly">
        <bread-crumb></bread-crumb>
@@ -11,7 +8,7 @@
                   <el-col :span="24">
                        <el-card class="box-card educationBox">
                             <div slot="header" class="clearfix">
-                                <span class="icons icons-chart"></span>
+                                <span class="icons icons-chart1"></span>
                                 <span>载体趋势分析</span>
                             </div>
                             <div class="text item" id="vectorTrend">
@@ -22,7 +19,8 @@
                   <el-col :span="12">
                       <el-card class="educationBox box-card">
                            <div slot="header" class="clearfix">
-                              <span class="icons icons-chart"></span><span>信息热点</span>
+                              <span class="icons icons-chart"></span>
+                              <span>信息热点</span>
                           </div>
                           <div class="text item">
                               <el-tabs v-model="together" @tab-click="hotspot">
@@ -92,10 +90,16 @@
     </div>
 </template>
 <style lang="scss">
+  $img-url:url("../../../assets/images/zhongtubiao@1x.png") no-repeat;
 	.seeClearly{ 
 		.custom-tabs>.el-tabs__header>.el-tabs__nav-wrap>.el-tabs__nav-scroll>.el-tabs__nav{
             margin: 0;         
         }
 	}
+  .icons-chart1{
+        width: 22px;
+        height: 18px;
+        background:  $img-url -14px -57px;
+  }
 </style> 
 <script src="./js/seeClearly.js"></script>
