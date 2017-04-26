@@ -100,7 +100,7 @@
             <el-col :span="12">
                 <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart6"></span><span>人物热点</span>
+                        <span class="icons icons-chart7"></span><span>人物热点</span>
                     </div>
                     <div class="text item">
                         <el-tabs v-model="activeName2" class="custom-tabs" @tab-click="handleClick">
@@ -138,11 +138,10 @@
                     </div>
                 </el-card>
             </el-col>
-
             <el-col :span="12">
                 <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart6"></span><span>微信热点</span>
+                        <span class="icons icons-chart8"></span><span>微信热点</span>
                     </div>
                     <div class="text item">
                         <el-card class="box-card">
@@ -160,7 +159,7 @@
             <el-col :span="12">
                 <el-card class="box-card educationBox">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart6"></span><span>微博热点</span>
+                        <span class="icons icons-chart9"></span><span>微博热点</span>
                     </div>
                     <div class="text item">
                         <el-card class="box-card">
@@ -210,8 +209,23 @@
    }
    .icons-chart6{
         width: 21px;
+        height: 25px;
+        background:  $img-url -13px -84px;
+   }
+   .icons-chart7{
+        width: 21px;
         height: 26px;
         background:  $img-url -47px -82px;
+   }
+   .icons-chart8{
+        width: 26px;
+        height: 25px;
+        background:  $img-url -13px -113px;
+   }
+   .icons-chart9{
+        width: 26px;
+        height: 20px;
+        background:  $img-url -46px -118px;
    }
 </style>
 <script src="./script/panorama.js">
