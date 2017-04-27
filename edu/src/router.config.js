@@ -43,6 +43,8 @@ import centerCollege from "./views/myCenter/subViews/detailViews/editCollege.vue
 import loginBox from './views/login/loginBox/loginBox.vue';
 import probation from './views/login/probation/probation.vue';
 import forget from './views/login/forget/forget.vue';
+import notPage from './views/accident/404.vue';
+import serverError from './views/accident/500.vue';
 export default {
     mode:'history',
     base:__dirname,
@@ -352,5 +354,12 @@ export default {
                 }
             ]
         },
+        {
+            path:"/500",
+            component:serverError,
+        },
+        {
+            path:"*",component:notPage,
+        }
     ]
 }

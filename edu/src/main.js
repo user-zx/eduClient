@@ -18,14 +18,15 @@ Vue.use(vueResource);
 Vue.use(Vuex);
 Vue.use(ElementUI);
 Vue.use(imgUtils);
-
+console.log(Vue);
 const router =new vueRouter(routerConfig);
 const store = new Vuex.Store(vueConfig);
 Vue.http.interceptors.push((request, next) => {
     next((response) => {
         if (response.status == 403) {
-            //to login
             window.location.href="/login";
+        }else if(response.status >=500){
+             window.location.href="/500";
         }
     });
 });
