@@ -4,7 +4,7 @@
 <template>
     <div class="article-detail-news">
         <h2 class="article-title">
-            清华研究生参加毕业典礼要抽签
+            {{article.title}}
         </h2>
 
         <div class="detail-left">
@@ -32,15 +32,20 @@
                 </div>
                 <div class="info-item">
                 <span class="item source">
-                    来源： 北京青年社
+                    来源： {{article.source}}
                 </span>
                     <span class="item type">
-                    情感类型：正面
+                    情感类型：
+                    {{#if article.emotion == 'positive'}}
+                        正面
+                    {{#else}}
+                        负面
+                    {{/if}}
                 </span>
                 </div>
                 <div class="info-item">
                 <span class="item author">
-                    作者：疯狂的蜗牛
+                    作者：{{article.author}}
                 </span>
                     <span class="item relatedPeople">
                     相关人物：美少女战士
@@ -48,35 +53,35 @@
                 </div>
                 <div class="info-item">
                 <span class="item date">
-                    日期： 2019-01-01 12:12
+                    日期： {{article.publishDate}}
                 </span>
                     <span class="item relatedCollege">
-                    相关高校： 火星理工大  火星文学院
+                    相关高校： <span v-for="item in article.university">{{item}}</span>
                 </span>
                 </div>
                 <div class="info-item">
                 <span class="item from">
-                    来源站点： https://www.taobao.com
+                    来源站点： {{article.sourceLink}}
                 </span>
                 </div>
             </div>
             <div class="article-content">
-                我是文章内容，脑子是个好东西，可是我没有。哈哈哈哈
+                {{article.content}}
             </div>
         </div>
         <div class="detail-right">
             <div class="top-box">
                 <p class="item readNum">
-                    阅读量： 1212
+                    阅读量： {{article.hitCount}}
                 </p>
                 <p class="item commentNum">
-                    评论量： 1212
+                    评论量： {{article.replyCount}}
                 </p>
                 <p class="item repostNum">
-                    转发量： 1212
+                    转发量： 1212(死数据)
                 </p>
                 <p class="item likeNum">
-                    点赞量： 1212
+                    点赞量： {{article.supportCount}}
                 </p>
                 <div class="btn-wrap">
                     <el-button type="primary" class="focus-btn" icon="plus">
@@ -129,126 +134,129 @@
         background: #fff;
         color: #000;
 
-    .article-title{
-        height: 110px;
-        color: #60a3ff;
-        line-height: 110px;
-        border-bottom:1px solid #dbe9fb;
-        text-align: center;
-    }
+        .article-title{
+            height: 110px;
+            color: #60a3ff;
+            line-height: 110px;
+            border-bottom:1px solid #dbe9fb;
+            text-align: center;
+        }
 
-    .detail-left{
-        width: calc(70% - 90px);
-        display: inline-block;
-        vertical-align: top;
-        margin-left: 70px;
-        border-left: 1px solid #dbe9fb;
-        border-right: 1px solid #dbe9fb;
+        .detail-left{
+            width: calc(70% - 90px);
+            display: inline-block;
+            vertical-align: top;
+            margin-left: 70px;
+            border-left: 1px solid #dbe9fb;
+            border-right: 1px solid #dbe9fb;
 
-    .article-info{
-        margin-top: 20px;
-        border-bottom:1px solid #dbe9fb;
+            .article-info{
+                margin-top: 20px;
+                border-bottom:1px solid #dbe9fb;
 
-    .info-item{
-        margin: 0px 20px 10px 30px;
+                .info-item{
+                    margin: 0px 20px 10px 30px;
 
-    .btn-wrap{
-        width: 50%;
-        display: inline-block;
-        vertical-align: top;
-    }
-    .share{
-        width: calc(50% - 10px);
-        display: inline-block;
-        vertical-align: top;
-        text-align: right;
+                    .btn-wrap{
+                        width: 50%;
+                        display: inline-block;
+                        vertical-align: top;
+                    }
+                    .share{
+                        width: calc(50% - 10px);
+                        display: inline-block;
+                        vertical-align: top;
+                        text-align: right;
 
-    .icon{
-        margin-left:10px;
-    }
-    }
-    .item{
-        display: inline-block;
-        width: 45%;
-    }
-    }
+                        .icon{
+                            margin-left:10px;
+                        }
+                    }
+                    .item{
+                        display: inline-block;
+                        width: 45%;
+                    }
+                }
 
-    .info-item:first-child{
-        margin-bottom: 30px;
-    }
+                .info-item:first-child{
+                    margin-bottom: 30px;
+                }
 
-    .info-item:last-child{
-        margin-bottom: 30px;
-    }
-    }
+                .info-item:last-child{
+                    margin-bottom: 30px;
+                }
+            }
 
-    .article-content{
-        margin: 28px 20px 0 20px;
-        min-height: 500px;
-    }
-    }
+            .article-content{
+                margin: 28px 20px 0 20px;
+                min-height: 500px;
+            }
+        }
 
-    .detail-right{
-        width: calc(30% - 10px);
-        display: inline-block;
-        vertical-align: top;
+        .detail-right{
+            width: calc(30% - 10px);
+            display: inline-block;
+            vertical-align: top;
 
-    .top-box{
-        margin: 18px 0px 18px 20px;
-        border:1px solid #dbe9fb;
+            .top-box{
+                margin: 18px 0px 18px 20px;
+                border:1px solid #dbe9fb;
 
-    .item{
-        width: calc(50% - 2px);
-        vertical-align: top;
-        display: inline-block;
-        text-align: center;
-        margin-top: 30px;
-        color: #60a3ff;
-    }
+                .item{
+                    width: calc(50% - 2px);
+                    vertical-align: top;
+                    display: inline-block;
+                    text-align: center;
+                    margin-top: 30px;
+                    color: #60a3ff;
+                }
 
-    .btn-wrap{
-        margin-top: 30px;
-        margin-bottom: 30px;
-        text-align: center;
-    }
-    }
+                .btn-wrap{
+                    margin-top: 30px;
+                    margin-bottom: 30px;
+                    text-align: center;
+                }
+            }
 
-    .bottom-box{
-        margin: 18px 0px 18px 20px;
-        border:1px solid #dbe9fb;
+            .bottom-box{
+                margin: 18px 0px 18px 20px;
+                border:1px solid #dbe9fb;
 
-    .title{
-        height:40px;
-        line-height:40px;
-        color: #60a3ff;
-        background: #efefef;
-        padding-left:14px;
-    }
+                .title{
+                    height:40px;
+                    line-height:40px;
+                    color: #60a3ff;
+                    background: #efefef;
+                    padding-left:14px;
+                }
 
-    .related-title{
-        margin:10px 20px 20px 20px;
-        width: calc(100% - 40px);
-        overflow: hidden;
-        -ms-text-overflow: ellipsis;
-        -o-text-overflow: ellipsis;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    .related-title:first-child{
-        margin-top:30px;
-    }
-    .related-title:last-child{
-        margin-bottom: 30px;
-    }
-    }
-    }
+                .related-title{
+                    margin:10px 20px 20px 20px;
+                    width: calc(100% - 40px);
+                    overflow: hidden;
+                    -ms-text-overflow: ellipsis;
+                    -o-text-overflow: ellipsis;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                .related-title:first-child{
+                    margin-top:30px;
+                }
+                .related-title:last-child{
+                    margin-bottom: 30px;
+                }
+            }
+        }
     }
 </style>
 <script>
     export default{
         data(){
             return {
-
+                article: {
+                    title: '',
+                    content: ''
+                }
             }
         },
         components:{} ,

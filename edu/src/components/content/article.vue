@@ -12,7 +12,7 @@
             </div>
             <div class="article-right">
                 <div class="article-title-box">
-                    <p class="article-title">
+                    <p class="article-title pointer" @click="toDetail(item)">
                         <span>{{item.title}}</span>
                         <i class="title-icon positive-icon" v-if="item.emotion == 'positive'"></i>
                         <i class="title-icon negative-icon" v-else></i>
@@ -201,7 +201,7 @@
         methods: {
             alertBtnClick(item){
                 item.loading = true;
-                console.log(item);
+
                 this.$nextTick(function () {
                     var tmp = {};
                     tmp.id = item.id;
@@ -240,6 +240,10 @@
                         }
                     );
                 });
+            },
+
+            toDetail(data){
+                console.log(data)
             }
         },
         props: ["articleData"]
