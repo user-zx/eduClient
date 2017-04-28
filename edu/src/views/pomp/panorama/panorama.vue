@@ -32,7 +32,21 @@
                     <div slot="header" class="clearfix">
                         <span class="icons icons-chart3"></span><span>载体分布统计</span>
                     </div>
-                    <div class="text item" id="vectorDistribute">
+                    <div class="text item">
+                        <el-tabs v-model="activeName3" class="custom-tabs" @tab-click="vectorDistributeClick">
+                            <el-tab-pane label="今日" name="TODAY" id="TAB_TODAY">
+                                <div class="text item" style="height: 400px;"></div>
+                            </el-tab-pane>
+                            <el-tab-pane label="昨日" name="YESTERDAY">
+                                <div class="text item" style="height: 400px;"></div>
+                            </el-tab-pane>
+                            <el-tab-pane label="近7天" name="LASTWEEK">
+                                <div class="text item" style="height: 400px;"></div>
+                            </el-tab-pane>
+                            <el-tab-pane label="近30天" name="LASTMONTH">
+                                <div class="text item" style="height: 400px;"></div>
+                            </el-tab-pane>
+                        </el-tabs>
                     </div>
                 </el-card>
             </el-col>
@@ -42,7 +56,7 @@
                         <span class="icons icons-chart4"></span><span>人物统计</span>
                     </div>
                     <div class="text item" id="personageCount">
-                        
+
                     </div>
                 </el-card>
             </el-col>
@@ -52,7 +66,20 @@
                         <span class="icons icons-chart5"></span><span>载体趋势分析</span>
                     </div>
                     <div class="text item" id="vectorTrend">
-
+                        <el-tabs v-model="activeName4" class="custom-tabs" @tab-click="vectorTrendClick">
+                            <el-tab-pane label="今日" name="TODAY" id="TREND_TODAY">
+                                <div class="text item" style="height: 400px;"></div>
+                            </el-tab-pane>
+                            <el-tab-pane label="昨日" name="YESTERDAY">
+                                <div class="text item" style="height: 400px;"></div>
+                            </el-tab-pane>
+                            <el-tab-pane label="近7天" name="LASTWEEK">
+                                <div class="text item" style="height: 400px;"></div>
+                            </el-tab-pane>
+                            <el-tab-pane label="近30天" name="LASTMONTH">
+                                <div class="text item" style="height: 400px;"></div>
+                            </el-tab-pane>
+                        </el-tabs>
                     </div>
                 </el-card>
             </el-col>
