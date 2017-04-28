@@ -14,10 +14,26 @@ export default{
             weboHot: [],
             activeName: 'todayHot',
             activeName2:'todayHot',
+            activeName3:'TODAY',
+            activeName4:'TODAY',
         }
     },
     components:{overview},
     methods:{
+        vectorDistributeClick(tab, event) {
+            let vm = this;
+            let dom = $(tab.$el).children()[0];
+            setTimeout(() => {
+                vm.getVectorDistribute(dom, tab.name);
+            }, 10);
+        },
+        vectorTrendClick(tab, event) {
+            let vm = this;
+            let dom = $(tab.$el).children()[0];
+            setTimeout(() => {
+                vm.getVectorTrend(dom, tab.name);
+            }, 10);
+        },
         /**获取舆情数据*/
         getOpinionData() {
             this.$http.post('/apis/allViewOpinion/getOpinionData.json').then(
@@ -52,10 +68,10 @@ export default{
             );
         },
         /**获取载体分布*/
-        getVectorDistribute(startDate, endDate) {
-            let chart = echarts.init(document.getElementById('vectorDistribute'));
+        getVectorDistribute(dom, type) {
+            let chart = echarts.init(dom);
             chart.showLoading();
-            this.$http.post('/apis/allViewOpinion/getVectorDistribute.json',{startDate: startDate, endDate: endDate}).then(
+            this.$http.post('/apis/allViewOpinion/getVectorDistribute.json', {type: type}).then(
                 (response) => {
                     if (response.data.success) {
                         chart.setOption(response.data.data);
@@ -90,10 +106,10 @@ export default{
             );
         },
         /**获取载体走势*/
-        getVectorTrend(startDate, endDate) {
-            let chart = echarts.init(document.getElementById('vectorTrend'));
+        getVectorTrend(dom, type) {
+            let chart = echarts.init(dom);
             chart.showLoading();
-            this.$http.post('/apis/allViewOpinion/getVectorTrend.json',{startDate: startDate, endDate: endDate}).then(
+            this.$http.post('/apis/allViewOpinion/getVectorTrend.json', {type: type}).then(
                 (response) => {
                     if (response.data.success) {
                         chart.setOption(response.data.data);
@@ -187,9 +203,9 @@ export default{
     mounted(){
         this.getOpinionData();
         this.getOpinionFunnel();
-        this.getVectorDistribute('2016-03-01', '2017-03-24');
+        this.getVectorDistribute($('#TAB_TODAY>.text')[0], 'TODAY');
         this.getPersonageCount();
-        this.getVectorTrend('2016-12-21 00:00:00', '2017-03-24 00:00:00');
+        this.getVectorTrend($('#TREND_TODAY>.text')[0], 'TODAY');
         this.getHotOpinion('TODAY');
         this.getHotOpinion('LASTWEEK'); 
         this.getHotOpinion('LASTMONTH');

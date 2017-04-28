@@ -6,6 +6,7 @@
         <bread-crumb></bread-crumb>
         <cascadeBox  @onSearchLoad="onSearchLoad" @onSearchChange="onSearchChange"></cascadeBox>
         <div class="content dark">
+
             <div class="content-bar">
                 <ul class="content-bar-list">
                     <li class="pointer" @click="sort(0)">

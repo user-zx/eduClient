@@ -24,7 +24,7 @@ Vue.http.interceptors.push((request, next) => {
     next((response) => {
         if (response.status == 403) {
             window.location.href="/login";
-        }else if(response.status >=500){
+        } else if(response.status >= 500) {
              window.location.href="/500";
         }
     });

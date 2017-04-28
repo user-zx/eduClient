@@ -60,6 +60,15 @@
                 <el-form-item label="关键词" prop="eventKeyword">
                     <el-input v-model="addEventForm.eventKeyword" auto-complete="off" placeholder="请输入事件关键字，多个用，隔开"></el-input>
                 </el-form-item>
+                <el-form-item label="相关人物">
+                    <el-input v-model="addEventForm.personages" auto-complete="off" placeholder="请输入相关人物，多个用，隔开"></el-input>
+                </el-form-item>
+                <el-form-item label="相关微信号">
+                    <el-input v-model="addEventForm.webchatNum" auto-complete="off" placeholder="请输入相关微信号，多个用，隔开"></el-input>
+                </el-form-item>
+                <el-form-item label="相关微博号">
+                    <el-input v-model="addEventForm.weboNum" auto-complete="off" placeholder="请输入相关微博号，多个用，隔开"></el-input>
+                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -94,6 +103,9 @@
                     title: '',
                     monitorStartDate: '',
                     monitorEndDate: '',
+                    personages: '',
+                    webchatNum: '',
+                    weboNum: '',
                     startDate: '',
                     endDate: '',
                     eventKeyword: ''

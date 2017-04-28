@@ -93,7 +93,6 @@
                 this.getArticleList();
             },
             onEventLoad() {
-                console.log("eventArticle load")
                 this.getArticleList();
             },
             getArticleList() {
