@@ -7,7 +7,7 @@
             <el-col :span="24">
                 <el-card class="box-card">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart"></span><span>载体趋势统计图</span>
+                        <span class="icons icons-chart1"></span><span>载体趋势统计图</span>
                     </div>
                     <div class="text item" id="vectorTrendsChart" style="height: 400px;">
                     </div>
@@ -26,7 +26,7 @@
             <el-col :span="24">
                 <el-card class="box-card">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart"></span><span>载体分布统计图</span>
+                        <span class="icons icons-chart2"></span><span>载体分布统计图</span>
                     </div>
                     <div class="col-item item-left">
                         <div class="charts" id="vectorDistributionChart" style="height: 400px;"></div>
@@ -45,7 +45,7 @@
             <el-col :span="24">
                 <el-card class="box-card">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart"></span><span>站点分布TOP10</span>
+                        <span class="icons icons-chart3"></span><span>站点分布TOP10</span>
                     </div>
                     <div class="col-item item-left">
                         <div class="charts" id="sourceTop10" style="height: 400px;"></div>
@@ -66,7 +66,7 @@
             <el-col :span="24">
                 <el-card class="box-card">
                     <div slot="header" class="clearfix">
-                        <span class="icons icons-chart"></span><span>人物活跃度TOP10</span>
+                        <span class="icons icons-chart4"></span><span>人物活跃度TOP10</span>
                     </div>
                     <div class="col-item item-left">
                         <div class="charts" id="personageTop10" style="height: 400px;"></div>
@@ -86,9 +86,35 @@
     </div>
 </template>
 <style lang="scss" scoped>
+    $img-url:url("../../../../../assets/images/zhongtubiao@1x.png") no-repeat;
     .el-row{
         &+.el-row{
               margin-top: 10px;
+        }
+        
+        .icons{
+        margin-right: 10px; 
+        vertical-align: text-bottom;
+        }
+        .icons-chart1{
+        width: 22px;
+        height: 18px;
+        background:  $img-url -14px -57px;
+        }
+        .icons-chart2{
+        width: 21px;
+        height: 21px;
+        background:  $img-url -14px -27px;
+        }
+        .icons-chart3{
+        width: 21px;
+        height: 21px;
+        background:  $img-url -15px -267px;
+        }
+        .icons-chart4{
+        width: 19px;
+        height: 23px;
+        background:  $img-url -50px -267px;
         }
     }
 </style>

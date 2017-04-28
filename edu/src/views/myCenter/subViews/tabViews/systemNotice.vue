@@ -14,11 +14,14 @@
                     </template>
                 </el-table-column>
                 <el-table-column label="date" prop="createDate" align="center" width="150" :formatter="formatDate"></el-table-column>
+
             </el-table>
             <div class="content-bar-pagination">
                 <el-pagination class="edu-pagination"
                                @current-change="handleCurrentChange"
+
                                :page-size="param.pageSize"
+
                                layout="prev, next, jumper, total"
                                :total="total">
                 </el-pagination>
@@ -40,6 +43,7 @@
             </span>
         </el-dialog>
 
+
     </div>
 </template>
 <style lang="scss" scoped>
@@ -50,6 +54,7 @@
         .content-wrap{
             margin: 55px 50px 134px 50px;
         }
+
 
         .notice-dialog{
 
@@ -69,12 +74,14 @@
                 text-indent: 2em;
             }
         }
+
     }
 </style>
 <script>
     export default{
         data(){
             return {
+
                 total: 0,
                 tableData: [],
                 param: {
@@ -88,6 +95,7 @@
                     createDateFormat: ''
                 },
                 dialogVisible: false
+
             }
         },
         methods: {
@@ -102,7 +110,6 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
-
             handleCurrentChange(pageNumber){
                 this.param.pageNumber = pageNumber - 1;
                 this.getSysNoticeList();

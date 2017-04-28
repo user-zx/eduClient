@@ -82,11 +82,6 @@
     }
 </style>
 <script>
-     /*
-    * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
-    * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
-    * import loginButton from './components/loginButton.vue';
-    */
      import eventArticle from './tabContent/eventArticle.vue';
      import eventCharts from './tabContent/eventCharts.vue';
      import eventAnalyse from './tabContent/eventAnalyse.vue';

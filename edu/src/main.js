@@ -8,7 +8,7 @@ import Vuex from 'vuex';
 import routerConfig from './router.config';
 import './utils';
 import vueConfig from './store.config';
-import imgUtils from './imgUtil';
+import imgUtils from './imgUtil'; 
 import "vue-style-loader!css-loader!sass-loader!./assets/css/style.scss";
 import 'vue-style-loader!css-loader!sass-loader!element-ui/lib/theme-default/index.css'
 
@@ -18,14 +18,14 @@ Vue.use(vueResource);
 Vue.use(Vuex);
 Vue.use(ElementUI);
 Vue.use(imgUtils);
-
 const router =new vueRouter(routerConfig);
 const store = new Vuex.Store(vueConfig);
 Vue.http.interceptors.push((request, next) => {
     next((response) => {
         if (response.status == 403) {
-            //to login
             window.location.href="/login";
+        }else if(response.status >=500){
+             window.location.href="/500";
         }
     });
 });
