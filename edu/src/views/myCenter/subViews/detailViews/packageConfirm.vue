@@ -283,28 +283,27 @@
                 }
             },
             submitOrder(){
+                if(this.ruleForm.phone == ''){
+                    this.$message.error('请输入手机号');
+                    return ;
+                }
+                if(this.ruleForm.email == ''){
+                    this.$message.error('请输入邮箱');
+                    return ;
+                }
+
                 let obj = {};
                 if(this.sign){
-                    obj.userAccount = "";
                     obj.packageType = this.data[0].setMeal;
                     obj.packageItem = this.data[0].itemNum;
                     obj.concernCollegeNum = this.data[0].concernCollegeNum;
                     obj.concernPersonNum = this.data[0].concernPersonNum;
                     obj.totalPrice = this.data[0].price;
                     obj.timeLimit = this.data[0].time;
-                    obj.childMemberNum = "",
                     obj.phone = this.ruleForm.phone;
                     obj.email = this.ruleForm.email;
-                    obj.consultHotline = "";
-                    obj.isPay = "";
-                    obj.signedDate = "";
-                    obj.createDate = "";
-                    obj.createUser = "";
-                    obj.updateDate = "";
-                    obj.updateUser = "";
                 }
-                
-             
+
                 this.$http.post("/apis/packageBuy/packageBuy.json",obj).then((res)=>{
                     console.log(res);
                     if(res.ok){

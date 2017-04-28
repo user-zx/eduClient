@@ -25,7 +25,7 @@
                 <el-table-column label="最后登录时间">--</el-table-column>
                 <el-table-column label="开关" align="center">
                     <template scope="scope">
-                        <el-switch v-model="scope.row.switchBtn" @change="changeStatus(scope.row)"></el-switch>
+                        <el-switch v-model="scope.row.switchStatus " @change="changeStatus(scope.row)"></el-switch>
                     </template>
                 </el-table-column>
             </el-table>
@@ -171,8 +171,27 @@
             isShow(){
               this.dialogFormVisible = true;
             },
+
             changeStatus(row){
-              console.log(row.switchBtn);
+                let param = {
+                    id: row.id,
+                    status: row.status == 0 ? 1 : 0
+                }
+
+                this.$http.post('/apis/user/updateSubAcountStatus', param).then(
+                    function (response) {
+                        if(response.data.success){
+                            row.status = param.status;
+                            row.switchStatus = param.status == 1 ? false : true;
+                            this.$message({
+                                message: '修改成功',
+                                type: 'success'
+                            })
+                        }else {
+                            console.error(response.data)
+                        }
+                    }
+                )
             },
             setBreadCrumb(){
                 let breadcrumb=[
@@ -210,6 +229,7 @@
                                   if(res.data.success){
                                     this.$message(res.data.data);
                                     this.dialogFormVisible = false;
+                                    this.getChildAccount();
                                   }else{
                                      this.$message(res.data.message);
                                   }
@@ -234,11 +254,18 @@
                 this.checkAll = checkedNum === this.subCheckOptions.length;
                 this.isIndeterminate = checkedNum > 0 && checkedNum < this.subCheckOptions.length;
             },
+
             getChildAccount(){
               this.$http.post("/apis/user/findAllSubAccount.json").then((res)=>{
                   if(res.data.success){
                       this.tableData = res.data.data;
-                      console.log(this.tableData)
+                      for(var i in this.tableData){
+                          if(this.tableData[i].status == 0){
+                              this.tableData[i].switchStatus = true;
+                          }else{
+                              this.tableData[i].switchStatus = false;
+                          }
+                      }
                   }
               },(err)=>{
                   console.log(err);
