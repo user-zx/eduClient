@@ -6,7 +6,7 @@
         <div id="search_container">
             <search-box :searchNames="searchNames" @searchDataChange="onSearchDataChange" class="dark"></search-box>
         </div>
-        <articleContainer :articleData="articleData" :total="total" :eventBtn="true" :concernBtn="true" @onchange="pageChange" class="dark"></articleContainer>
+        <articleContainer :articleData="articleData" :total="total" :concernBtn="true" @onchange="pageChange" class="dark"></articleContainer>
     </div>
 </template>
 <script>
@@ -44,14 +44,6 @@
         },
         components:{ searchBox, articleContainer,} ,
         methods:{
-            follows() {
-                //TODO
-            },
-            handleCurrentChange(pageNumber) {
-                //后台是从0开始
-                this.param.pageNumber = pageNumber - 1;
-                this.getArticleList();
-            },
             onSearchDataChange(data) {
                 if(data.dimension == "人物聚焦"){
                     this.$router.push({path: "/home/characterTableAnalyse", query: {dimension: '人物聚焦', university: data.university}});
@@ -74,9 +66,7 @@
             getArticleList() {
                 this.loading = true;
                 this.$nextTick(function() {
-                    this.param.startDate = this.eventDetail[0].monitorStartDateStr;
-                    this.param.endDate = this.eventDetail[0].monitorEndDateStr;
-                    this.param.keywords = this.eventDetail[0].eventKeyword.split(',');
+                    this.param.eventId = this.eventId;
                     this.$http.post('/apis/eventAnalysis/getEventArticleList.json', this.param).then(
                         (response) => {
                             if (response.data.success) {
@@ -98,8 +88,8 @@
             }
         },
         mounted(){
-
+            this.onEventLoad();
         },
-        props: ['eventDetail']
+        props: ['eventId']
     }
 </script>

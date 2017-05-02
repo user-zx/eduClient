@@ -17,14 +17,12 @@
                 </li>
             </ul>
             <div class="content-bar-button">
-                <el-dropdown class="event-store-box" trigger="click" v-if="eventBtn">
+                <el-dropdown class="event-store-box" trigger="click" v-if="eventBtn" @command="saveEvent">
                     <el-button type="primary" icon="plus" class="button-icon">
                         事件库
                     </el-button>
                     <el-dropdown-menu slot="dropdown" class="event-store-item">
-                        <el-dropdown-item>事件1</el-dropdown-item>
-                        <el-dropdown-item>事件2</el-dropdown-item>
-                        <el-dropdown-item>事件3</el-dropdown-item>
+                        <el-dropdown-item v-for="event in events" :command="'' + event.id">{{event.title}}</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
 
@@ -106,11 +104,25 @@
                             direction: 'DESC'
                         }
                     ]
-                }
+                },
+                events: []
             }
         },
         components: {},
         methods: {
+            getAllEvent() {
+                this.$http.post('/apis/eventAnalysis/getEventList.json', {pageSize: 5, pageNumber: 0}).then(
+                    (response) => {
+                        if (response.data.success) {
+                            this.events = response.data.data.content;
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            },
             handleCheckAllChange(event) {
                 if (event.target.checked) {
                     $('#articleContainer').find("input[type='checkbox']").prop('checked', true);
@@ -218,6 +230,39 @@
                 this.param.pageNumber = pageNumber - 1;
                 this.$emit('onchange', this.param);
             },
+            saveEvent(eventId) {
+                let ids = [];
+                $('#articleContainer').find("input[type='checkbox']").each(function() {
+                    if ($(this).prop('checked')) {
+                        ids.push($(this).next().val());
+                    }
+                });
+                if (ids.length > 0) {
+                    let param = {
+                        eventId: eventId,
+                        esIds: ids
+                    };
+                    this.$http.post('/apis/eventAnalysis/saveEventArticle.json', param).then(
+                        (response) => {
+                            if (response.data.success) {
+                                this.$notify({
+                                    title: '成功',
+                                    message: '添加成功',
+                                    type: 'success',
+                                    duration: 2000
+                                });
+                            } else {
+                                console.error(response.data.message);
+                            }
+                        }, (response) => {
+                            console.error(response);
+                        }
+                    );
+                }
+            }
+        },
+        mounted() {
+            this.getAllEvent()
         },
         props: ["articleData", "eventBtn", "concernBtn", "total"]
     }

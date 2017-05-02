@@ -141,9 +141,7 @@
         components:{} ,
         methods:{
             onEventLoad() {
-                this.param.startDate = this.eventDetail[0].monitorStartDateStr;
-                this.param.endDate = this.eventDetail[0].monitorEndDateStr;
-                this.param.keywords = this.eventDetail[0].eventKeyword.split(',');
+                this.param.eventId = this.eventId;
                 this.getVectorTrend();
                 this.getVectorDistribution();
                 this.getVectorTable();
@@ -277,8 +275,8 @@
             },
         },
         mounted(){
-            
+            this.onEventLoad();
         },
-        props: ['eventDetail']
+        props: ['eventId']
     }
 </script>

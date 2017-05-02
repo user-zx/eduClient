@@ -23,7 +23,7 @@
                         <label>阅读量：</label><span>{{item.hitCount}}</span>
                     </p>
                     <p class="intro">
-                        <label>关键词：</label><span>{{param.keywords.join(',')}}</span>
+                        <label>关键词：</label><span>{{keywords}}</span>
                     </p>
                 </div>
             </div>
@@ -199,33 +199,43 @@
                             direction: 'DESC'
                         }
                     ]
-                }
+                },
             }
         },
         components:{} ,
         methods:{
-            handleScroll: function () {
-                this.scrollPos = document.body.scrollHeight - window.innerHeight - document.body.scrollTop;
-                if (document.body.scrollHeight - window.innerHeight - document.body.scrollTop == 0) {
+            handleScroll() {
+                var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+                var viewHeight = document[document.compatMode == 'CSS1Compat'?'documentElement':'body'].clientHeight;
+                var scrollHeight = document.body.scrollHeight;
+                if (scrollTop + viewHeight >= scrollHeight) {
                     if (this.param.pageNumber < this.total/this.param.pageSize) {
                         this.param.pageNumber = this.param.pageNumber + 1;
-                        this.getArticleList();
+                        this.getArticleList(true);
                     }
                 }
             },
+            removeHandleScroll() {
+                window.removeEventListener('scroll', this.handleScroll)
+            },
             onEventLoad() {
-                this.param.startDate = this.eventDetail[0].monitorStartDateStr;
-                this.param.endDate = this.eventDetail[0].monitorEndDateStr;
-                this.param.keywords = this.eventDetail[0].eventKeyword.split(',');
+                this.param.eventId = this.eventId;
                 this.getArticleList();
             },
-            getArticleList() {
+            getArticleList(isAppend) {
                 this.loading = true;
                 this.$nextTick(function() {
                     this.$http.post('/apis/eventAnalysis/getEventArticleList.json', this.param).then(
                         (response) => {
                             if (response.data.success) {
-                                this.articleData = this.articleData.concat(response.data.data.content);
+                                if (isAppend) {
+                                    this.articleData = this.articleData.concat(response.data.data.content);
+                                } else {
+                                    this.articleData = response.data.data.content;
+                                }
+                                if (response.data.data.content < 5) {
+                                    this.removeHandleScroll();
+                                }
                                 // 最多允许翻1000页
                                 this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
                             } else {
@@ -242,9 +252,13 @@
                 });
             }
         },
-        created: function () {
+        created() {
             window.addEventListener('scroll', this.handleScroll);
         },
-        props: ['eventDetail']
+
+        mounted(){
+            this.onEventLoad();
+        },
+        props: ['eventId', 'keywords']
     }
 </script>

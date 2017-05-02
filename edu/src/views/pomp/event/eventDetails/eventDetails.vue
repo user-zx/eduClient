@@ -29,7 +29,7 @@
                 <el-col :span="8"><div class="tab-item" @click="currentFun('eventAnalyse')">演化分析</div></el-col>
             </el-row>
         </div>
-        <components ref="comp" :is="currentTabs.currentTab" :eventDetail="eventDetail"></components>
+        <components ref="comp" :is="currentTabs.currentTab" :eventId="eventId" :keywords="keywords"></components>
     </div>
 </template>
 <style lang="scss" scoped>
@@ -91,6 +91,7 @@
                 msg:"事件详情",
                 eventDetail:[],
                 title: '',
+                keywords: '',
                 currentTabs:{
                     eventArticle:"eventArticle",
                     eventCharts:"eventCharts",
@@ -118,11 +119,6 @@
             },
             currentFun(params){
                 this.currentTabs.currentTab=params;
-
-                this.$nextTick(()=>{
-                    //当事件详情加载完毕调用子组件方法
-                    this.$refs.comp.onEventLoad();
-                });
             },
             getEventDetail() {
                 this.$http.post('/apis/eventAnalysis/findDetailById.json/' + this.eventId).then(
@@ -130,9 +126,7 @@
                         if (response.data.success) {
                             this.eventDetail.push(response.data.data);
                             this.title = response.data.data.title;
-
-                            //当事件详情加载完毕调用子组件方法
-                            this.$refs.comp.onEventLoad();
+                            this.keywords = response.data.data.eventKeyword;
                         } else {
                             console.error(response.data.message);
                         }
