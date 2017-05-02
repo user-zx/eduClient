@@ -4,29 +4,7 @@
 <template>
     <div class="article-wrap myAttention-pomp">
         <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
-        <div class="content dark">
-            <div class="content-bar clearfix">
-                <ul class="content-bar-list">
-                    <li class="pointer">全部</li>
-                    <li class="pointer" @click="sort(0)" >
-                        阅读量<i class="arrow" :class="orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
-                    </li> 
-                    <li class="pointer" @click="sort(1)">
-                        时间<i class="arrow" :class="orders[1].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
-                    </li> 
-                </ul>
-                <div class="content-bar-pagination">
-                    <el-pagination class="edu-pagination"
-                                   @current-change="handleCurrentChange"
-                                   :current-page="currentPage"
-                                   :page-size="5"
-                                   layout="prev, next, jumper, total"
-                                   :total="total">
-                    </el-pagination>
-                </div>
-            </div>
-            <articleView :articleData="articleData" class="dark"></articleView>
-        </div>
+        <articleView :articleData="articleData" class="dark" :total="total" :eventBtn="true" @onchange="pageChange"></articleView>
     </div>
 </template>
 <style>
@@ -70,11 +48,6 @@
         },
         components: {searchBox, articleView},
         methods:{
-            handleCurrentChange(pageNumber) {
-                //后台是从0开始
-                this.param.pageNumber = pageNumber - 1;
-                this.getArticleList();
-            },
             onSearchDataChange(data) {
                 console.log(data);
                 this.param.university.push  = data.university;
@@ -84,14 +57,9 @@
                 this.param.endDate = data.endDate;
                 this.getArticleList();
             },
-            sort(index) { 
-                this.orders[index].direction = this.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
-                if(index==0){
-                    this.param.sortField = "阅读量"
-                }else{
-                     this.param.sortField = "时间"
-                }
-                this.param.sortType  = this.orders[index].direction;
+            pageChange(param) {
+                this.param.pageNumber = param.pageNumber;
+                this.param.orders = param.orders;
                 this.getArticleList();
             },
             getArticleList() {

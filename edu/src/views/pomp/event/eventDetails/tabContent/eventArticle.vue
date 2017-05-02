@@ -6,32 +6,7 @@
         <div id="search_container">
             <search-box :searchNames="searchNames" @searchDataChange="onSearchDataChange" class="dark"></search-box>
         </div>
-        <div class="content dark">
-            <div class="content-bar">
-                <ul class="content-bar-list">
-                    <li class="pointer">全部</li>
-                    <li class="pointer" @click="sort(0)">
-                        阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
-                    </li>
-                    <li class="pointer" @click="sort(1)">
-                        时间<i class="arrow" :class="param.orders[1].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
-                    </li>
-                </ul>
-                <div class="content-bar-button">
-                    <el-button type="primary" icon="plus" class="button-icon" @click="follows()">批量关注</el-button>
-                </div>
-                <div class="content-bar-pagination">
-                    <el-pagination class="edu-pagination"
-                                   @current-change="handleCurrentChange"
-                                   :current-page="param.pageNumber + 1"
-                                   :page-size="5"
-                                   layout="prev, next, jumper, total"
-                                   :total="total">
-                    </el-pagination>
-                </div>
-            </div>
-            <articleContainer :articleData="articleData" class="dark"></articleContainer>
-        </div>
+        <articleContainer :articleData="articleData" :total="total" :eventBtn="true" :concernBtn="true" @onchange="pageChange" class="dark"></articleContainer>
     </div>
 </template>
 <script>
@@ -88,11 +63,12 @@
                 this.param = data;
                 this.getArticleList();
             },
-            sort(index) {
-                this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
+            onEventLoad() {
                 this.getArticleList();
             },
-            onEventLoad() {
+            pageChange(param) {
+                this.param.pageNumber = param.pageNumber;
+                this.param.orders = param.orders;
                 this.getArticleList();
             },
             getArticleList() {

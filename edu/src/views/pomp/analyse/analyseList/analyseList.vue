@@ -4,43 +4,7 @@
 <template>
     <div v-loading="loading" element-loading-text="加载中……">
         <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" @onload="onSearchLoad"></search-box>
-        <div class="content">
-            <div class="content-bar">
-                <ul class="content-bar-list">
-                    <li class="pointer">全部</li>
-                    <li class="pointer" @click="sort(0)">
-                        阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
-                    </li>
-                    <li class="pointer" @click="sort(1)">
-                        时间<i class="arrow" :class="param.orders[1].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
-                    </li>
-                </ul>
-                <div class="content-bar-button">
-                    <el-dropdown class="event-store-box" trigger="click">
-                        <el-button type="primary" icon="plus" class="button-icon">
-                            事件库
-                        </el-button>
-                        <el-dropdown-menu slot="dropdown" class="event-store-item">
-                            <el-dropdown-item>事件1</el-dropdown-item>
-                            <el-dropdown-item>事件2</el-dropdown-item>
-                            <el-dropdown-item>事件3</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
-
-                    <el-button type="primary" icon="plus" class="button-icon">批量关注</el-button>
-                </div>
-                <div class="content-bar-page">
-                    <el-pagination class="edu-pagination"
-                                   @current-change="handleCurrentChange"
-                                   :current-page="param.pageNumber + 1"
-                                   :page-size="5"
-                                   layout="prev, next, jumper, total"
-                                   :total="total">
-                    </el-pagination>
-                </div>
-            </div>
-            <articleView :articleData="articleData"></articleView>
-        </div>
+        <articleView :articleData="articleData" :total="total" :eventBtn="true" :concernBtn="true" @onchange="pageChange"></articleView>
     </div>
 </template>
 <script>
@@ -84,11 +48,6 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
-            handleCurrentChange(pageNumber) {
-                //后台是从0开始
-                this.param.pageNumber = pageNumber - 1;
-                this.getArticleList();
-            },
             onSearchDataChange(data) {
                 if(data.dimension == "人物聚焦"){
                     this.$router.push({path: "/home/characterTableAnalyse", query: {dimension: '人物聚焦', university: data.university}});
@@ -107,8 +66,9 @@
                 this.param = data;
                 this.getArticleList();
             },
-            sort(index) {
-                this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
+            pageChange(param) {
+                this.param.pageNumber = param.pageNumber;
+                this.param.orders = param.orders;
                 this.getArticleList();
             },
             getArticleList() {
@@ -132,7 +92,7 @@
                         }
                     );
                 });
-            }
+            },
 
         },
         created(){

@@ -41,11 +41,6 @@ export default{
             ];
             this.$store.commit("setBreadCrumb",breadcrumb);
         },
-        handleCurrentChange(pageNumber) {
-            //后台是从0开始
-            this.param.pageNumber = pageNumber - 1;
-            this.getArticleList();
-        },
         onSearchDataChange(data) {
             data.pageSize = 5;
             data.pageNumber = 0;
@@ -53,8 +48,9 @@ export default{
             this.param = data;
             this.getArticleList();
         },
-        sort(index) {
-            this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
+        pageChange(param) {
+            this.param.pageNumber = param.pageNumber;
+            this.param.orders = param.orders;
             this.getArticleList();
         },
         getArticleList() {

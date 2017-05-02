@@ -3,48 +3,84 @@
 */
 
 <template>
-    <div class="article-container" id="articleContainer" :data="articleData">
-        <div class="article" v-for="(item, index) in articleData">
-            <div class="article-left">
-                <div class="checkbox-div">
-                    <el-checkbox></el-checkbox>
-                </div>
+    <div class="content">
+        <div class="content-bar">
+            <ul class="content-bar-list">
+                <li class="pointer">全部</li>
+                <li class="pointer" @click="sort(0)">
+                    阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
+                </li>
+                <li class="pointer" @click="sort(1)">
+                    时间<i class="arrow" :class="param.orders[1].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
+                </li>
+            </ul>
+            <div class="content-bar-button">
+                <el-dropdown class="event-store-box" trigger="click" v-if="eventBtn">
+                    <el-button type="primary" icon="plus" class="button-icon">
+                        事件库
+                    </el-button>
+                    <el-dropdown-menu slot="dropdown" class="event-store-item">
+                        <el-dropdown-item>事件1</el-dropdown-item>
+                        <el-dropdown-item>事件2</el-dropdown-item>
+                        <el-dropdown-item>事件3</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+
+                <el-button type="primary" icon="plus" class="button-icon" v-if="concernBtn">批量关注</el-button>
             </div>
-            <div class="article-right">
-                <div class="article-title-box">
-                    <p class="article-title pointer" @click="toDetail(item)">
-                        <span>{{item.title}}</span>
-                        <i class="title-icon positive-icon" v-if="item.emotion == 'positive'"></i>
-                        <i class="title-icon negative-icon" v-else></i>
+            <div class="content-bar-page">
+                <el-pagination class="edu-pagination"
+                               @current-change="handleCurrentChange"
+                               :current-page="param.pageNumber + 1"
+                               :page-size="5"
+                               layout="prev, next, jumper, total"
+                               :total="total">
+                </el-pagination>
+            </div>
+        </div>
+        <div class="article-container" id="articleContainer" :data="articleData">
+            <div class="article" v-for="(item, index) in articleData">
+                <div class="article-left">
+                    <div class="checkbox-div">
+                        <el-checkbox></el-checkbox>
+                    </div>
+                </div>
+                <div class="article-right">
+                    <div class="article-title-box">
+                        <p class="article-title pointer" @click="toDetail(item)">
+                            <span>{{item.title}}</span>
+                            <i class="title-icon positive-icon" v-if="item.emotion == 'positive'"></i>
+                            <i class="title-icon negative-icon" v-else></i>
+                        </p>
+                        <p class="button-box">
+                            <el-button type="warning" class="article-danger-button" v-if="item.hasWarn"
+                                       @click="alertBtnClick(item)" :loading="item.loading">
+                                取消预警
+                            </el-button>
+                            <el-button type="info" class="article-danger-button" v-else
+                                       @click="alertBtnClick(item)" :loading="item.loading">
+                                添加预警
+                            </el-button>
+                        </p>
+                    </div>
+                    <p class="article-main">
+                        {{item.content}}
                     </p>
-                    <p class="button-box">
-                        <el-button type="warning" class="article-danger-button" v-if="item.hasWarn"
-                                   @click="alertBtnClick(item)" :loading="item.loading">
-                            取消预警
-                        </el-button>
-                        <el-button type="info" class="article-danger-button" v-else
-                                   @click="alertBtnClick(item)" :loading="item.loading">
-                            添加预警
-                        </el-button>
+                    <p class="article-describe">
+                        <span class="article-source">
+                            来源： {{item.source}}
+                        </span>
+                        <span class="article-author">
+                            作者： {{item.author}}
+                        </span>
+                        <span class="article-clickNum blue">
+                            阅读量： {{item.hitCount}}
+                        </span>
+                        <span class="article-publishDate blue">
+                            发布时间：{{item.publishDateTime}}
+                        </span>
                     </p>
                 </div>
-                <p class="article-main">
-                    {{item.content}}
-                </p>
-                <p class="article-describe">
-                    <span class="article-source">
-                        来源： {{item.source}}
-                    </span>
-                    <span class="article-author">
-                        作者： {{item.author}}
-                    </span>
-                    <span class="article-clickNum blue">
-                        阅读量： {{item.hitCount}}
-                    </span>
-                    <span class="article-publishDate blue">
-                        发布时间：{{item.publishDateTime}}
-                    </span>
-                </p>
             </div>
         </div>
     </div>
@@ -194,14 +230,28 @@
     export default{
         data(){
             return {
-                msg: ""
+                msg: "",
+                param: {
+                    total: 0,
+                    pageSize: 5,
+                    pageNumber: 0,
+                    orders: [
+                        {
+                            property: 'hitCount',
+                            direction: 'DESC'
+                        },
+                        {
+                            property: 'publishDateTime',
+                            direction: 'DESC'
+                        }
+                    ]
+                }
             }
         },
         components: {},
         methods: {
-            alertBtnClick(item){
+            alertBtnClick(item) {
                 item.loading = true;
-
                 this.$nextTick(function () {
                     var tmp = {};
                     tmp.id = item.id;
@@ -244,8 +294,17 @@
 
             toDetail(data){
                 console.log(data)
-            }
+            },
+            sort(index) {
+                this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
+                this.$emit('onchange', this.param);
+            },
+            handleCurrentChange(pageNumber) {
+                //后台是从0开始
+                this.param.pageNumber = pageNumber - 1;
+                this.$emit('onchange', this.param);
+            },
         },
-        props: ["articleData"]
+        props: ["articleData", "eventBtn", "concernBtn", "total"]
     }
 </script>
