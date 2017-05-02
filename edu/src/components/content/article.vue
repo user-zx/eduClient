@@ -6,7 +6,9 @@
     <div class="content">
         <div class="content-bar">
             <ul class="content-bar-list">
-                <li class="pointer">全部</li>
+                <li class="pointer">
+                    <input type="checkbox" @click="handleCheckAllChange"/>
+                </li>
                 <li class="pointer" @click="sort(0)">
                     阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
                 </li>
@@ -26,7 +28,7 @@
                     </el-dropdown-menu>
                 </el-dropdown>
 
-                <el-button type="primary" icon="plus" class="button-icon" v-if="concernBtn">批量关注</el-button>
+                <el-button type="primary" icon="plus" class="button-icon" v-if="concernBtn" @click="concernBtnClick">批量关注</el-button>
             </div>
             <div class="content-bar-page">
                 <el-pagination class="edu-pagination"
@@ -42,7 +44,8 @@
             <div class="article" v-for="(item, index) in articleData">
                 <div class="article-left">
                     <div class="checkbox-div">
-                        <el-checkbox></el-checkbox>
+                        <input type="checkbox" @click="handleCheckChange"/>
+                        <input type="hidden" :value="item.id"/>
                     </div>
                 </div>
                 <div class="article-right">
@@ -54,11 +57,11 @@
                         </p>
                         <p class="button-box">
                             <el-button type="warning" class="article-danger-button" v-if="item.hasWarn"
-                                       @click="alertBtnClick(item)" :loading="item.loading">
+                                       @click="warnBtnClick(item)" :loading="item.loading">
                                 取消预警
                             </el-button>
                             <el-button type="info" class="article-danger-button" v-else
-                                       @click="alertBtnClick(item)" :loading="item.loading">
+                                       @click="warnBtnClick(item)" :loading="item.loading">
                                 添加预警
                             </el-button>
                         </p>
@@ -85,8 +88,147 @@
         </div>
     </div>
 </template>
+<script>
+    export default{
+        data(){
+            return {
+                msg: "",
+                param: {
+                    pageSize: 5,
+                    pageNumber: 0,
+                    orders: [
+                        {
+                            property: 'hitCount',
+                            direction: 'DESC'
+                        },
+                        {
+                            property: 'publishDateTime',
+                            direction: 'DESC'
+                        }
+                    ]
+                }
+            }
+        },
+        components: {},
+        methods: {
+            handleCheckAllChange(event) {
+                if (event.target.checked) {
+                    $('#articleContainer').find("input[type='checkbox']").prop('checked', true);
+                } else {
+                    $('#articleContainer').find("input[type='checkbox']").prop('checked', false);
+                }
+            },
+            handleCheckChange(event) {
+                if (event.target.checked) {
+                    let allCheck = true;
+                    $('#articleContainer').find("input[type='checkbox']").each(function() {
+                        if (!$(this).prop('checked')) {
+                            allCheck = false;
+                            return false;
+                        }
+                    });
+                    if (allCheck) {
+                        $('.pointer').find("input[type='checkbox']").prop('checked', true);
+                    }
+                } else {
+                    $('.pointer').find("input[type='checkbox']").prop('checked', false);
+                }
+            },
+            warnBtnClick(item) {
+                item.loading = true;
+                this.$nextTick(function () {
+                    var tmp = {};
+                    tmp.id = item.id;
+                    tmp.hasWarn = !item.hasWarn;
+                    tmp.emotion = item.emotion;
+                    tmp.vector = item.vector;
+                    tmp.hitCount = item.hitCount;
+                    tmp.publishDateTime = item.publishDateTime;
+
+                    this.$http.post('/apis/opinionWarn/warnOrCancel.json', tmp).then(
+                        (response) => {
+                            if (response.data.success) {
+                                if (!item.hasWarn) {
+                                    item.hasWarn = true;
+                                    this.$notify({
+                                        title: '成功',
+                                        message: '添加预警成功',
+                                        type: 'success',
+                                        duration: 2000
+                                    });
+                                } else {
+                                    item.hasWarn = false;
+                                    this.$notify({
+                                        title: '成功',
+                                        message: '取消预警成功',
+                                        type: 'success',
+                                        duration: 2000
+                                    })
+                                }
+                                item.loading = false;
+                            } else {
+                                console.error(response.data.message);
+                            }
+                        }, (response) => {
+                            console.error(response);
+                        }
+                    );
+                });
+            },
+            concernBtnClick() {
+                let ids = [];
+                $('#articleContainer').find("input[type='checkbox']").each(function() {
+                    if ($(this).prop('checked')) {
+                        ids.push($(this).next().val());
+                    }
+                });
+                if (ids.length > 0) {
+                    let param = {
+                        concernsContent: ids,
+                        concernsType: 1
+                    };
+                    this.$http.post('/apis/concerns/saveConcernsMore.json', param).then(
+                        (response) => {
+                            if (response.data.success) {
+                                this.$notify({
+                                    title: '成功',
+                                    message: '关注成功',
+                                    type: 'success',
+                                    duration: 2000
+                                });
+                            } else {
+                                console.error(response.data.message);
+                            }
+                        }, (response) => {
+                            console.error(response);
+                        }
+                    );
+
+                }
+            },
+            toDetail(data){
+                console.log(data)
+            },
+            sort(index) {
+                this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
+                this.$emit('onchange', this.param);
+            },
+            handleCurrentChange(pageNumber) {
+                //后台是从0开始
+                this.param.pageNumber = pageNumber - 1;
+                this.$emit('onchange', this.param);
+            },
+        },
+        props: ["articleData", "eventBtn", "concernBtn", "total"]
+    }
+</script>
 
 <style lang="scss" scoped>
+    input[type='checkbox'] {
+        cursor: pointer;
+        width: 16px;
+        height: 16px;
+    }
     .article-container{
         background: #ffffff;
         .article{
@@ -121,42 +263,42 @@
                         display: inline-block;
                         position: relative;
 
-                            span:first-child{
-                                display: inline-block;
-                                height:100%;
-                                max-width: 680px;
-                                overflow: hidden;
-                                margin-right: 10px;
-                                text-overflow: ellipsis;
-                                white-space: nowrap;
-                            }
-                            .title-icon{
-                                position: absolute;
-                                display: inline-block;
-                                width: 46px;
-                                font-size: 14px;
-                                text-align: center;
-                                border-radius: 3px;
-                                top: 3px;
-                            }
+                        span:first-child{
+                            display: inline-block;
+                            height:100%;
+                            max-width: 680px;
+                            overflow: hidden;
+                            margin-right: 10px;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        }
+                        .title-icon{
+                            position: absolute;
+                            display: inline-block;
+                            width: 46px;
+                            font-size: 14px;
+                            text-align: center;
+                            border-radius: 3px;
+                            top: 3px;
+                        }
 
-                            .positive-icon{
-                                color: #22ac38;
-                                border: 1px solid #22ac38;
-                            }
+                        .positive-icon{
+                            color: #22ac38;
+                            border: 1px solid #22ac38;
+                        }
 
-                            .positive-icon::before{
-                                content: '正面';
-                            }
+                        .positive-icon::before{
+                            content: '正面';
+                        }
 
-                            .negative-icon{
-                                color: #e60012;
-                                border: 1px solid #e60012;
-                            }
+                        .negative-icon{
+                            color: #e60012;
+                            border: 1px solid #e60012;
+                        }
 
-                            .negative-icon::before{
-                                content: '负面';
-                            }
+                        .negative-icon::before{
+                            content: '负面';
+                        }
                     }
                     .button-box{
                         width: 20%;
@@ -201,13 +343,9 @@
                 -o-transition: width 0.5s; /* Opera */
             }
 
-            /*.article-danger-button-width{*/
-                /*width: 88px;*/
-            /*}*/
-
         }
         &.dark{
-             background-color: #21273d;
+            background-color: #21273d;
             .article{
                 border-bottom-color: rgba(96,163,255,.1);
             }
@@ -226,85 +364,3 @@
         }
     }
 </style>
-<script>
-    export default{
-        data(){
-            return {
-                msg: "",
-                param: {
-                    total: 0,
-                    pageSize: 5,
-                    pageNumber: 0,
-                    orders: [
-                        {
-                            property: 'hitCount',
-                            direction: 'DESC'
-                        },
-                        {
-                            property: 'publishDateTime',
-                            direction: 'DESC'
-                        }
-                    ]
-                }
-            }
-        },
-        components: {},
-        methods: {
-            alertBtnClick(item) {
-                item.loading = true;
-                this.$nextTick(function () {
-                    var tmp = {};
-                    tmp.id = item.id;
-                    tmp.hasWarn = !item.hasWarn;
-                    tmp.emotion = item.emotion;
-                    tmp.vector = item.vector;
-                    tmp.hitCount = item.hitCount;
-                    tmp.publishDateTime = item.publishDateTime;
-
-                    this.$http.post('/apis/opinionWarn/warnOrCancel.json', tmp).then(
-                        (response) => {
-                            if (response.data.success) {
-                                if (!item.hasWarn) {
-                                    item.hasWarn = true;
-                                    this.$notify({
-                                        title: '成功',
-                                        message: '添加预警成功',
-                                        type: 'success',
-                                        duration: 2000
-                                    });
-                                } else {
-                                    item.hasWarn = false;
-                                    this.$notify({
-                                        title: '成功',
-                                        message: '取消预警成功',
-                                        type: 'success',
-                                        duration: 2000
-                                    })
-                                }
-                                item.loading = false;
-                            } else {
-                                console.error(response.data.message);
-                            }
-                        }, (response) => {
-                            console.error(response);
-                        }
-                    );
-                });
-            },
-
-            toDetail(data){
-                console.log(data)
-            },
-            sort(index) {
-                this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
-                this.$emit('onchange', this.param);
-            },
-            handleCurrentChange(pageNumber) {
-                //后台是从0开始
-                this.param.pageNumber = pageNumber - 1;
-                this.$emit('onchange', this.param);
-            },
-        },
-        props: ["articleData", "eventBtn", "concernBtn", "total"]
-    }
-</script>
