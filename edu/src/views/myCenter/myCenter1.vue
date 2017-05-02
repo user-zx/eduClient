@@ -7,7 +7,6 @@
         <router-view></router-view>
     </div>
 </template>
-
 <script>
     import breadCrumb from "../../components/breadCrumb/breadCrumb.vue"
     export default{
@@ -27,9 +26,15 @@
             }
         },
         mounted(){
+
         },
         created(){
             this.setBreadCrumb();
         }
     }
 </script>
+<style lang="scss">
+    #top-title li:nth-child(3){
+        color: #365a8b; 
+    }
+</style>
