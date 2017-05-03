@@ -32,7 +32,7 @@
                   <el-col :span="12">
                       <el-card class="educationBox box-card">
                            <div slot="header" class="clearfix">
-                              <span class="icons icons-chart"></span>
+                              <span class="icons icons-chart2"></span>
                               <span>两微热点</span>
                           </div>
                           <div class="text item" style="position: relative;">
@@ -65,7 +65,7 @@
                   <el-col :span="12">
                       <el-card class="educationBox box-card">
                            <div slot="header" class="clearfix">
-                              <span class="icons icons-chart"></span><span>两微舆情</span>
+                              <span class="icons icons-chart3"></span><span>两微舆情</span>
                           </div>
                           <div class="text item" style="position: relative;">
                               <el-tabs v-model="tab2">
@@ -112,6 +112,16 @@
         width: 22px;
         height: 18px;
         background:  $img-url -14px -57px;
+  }
+  .icons-chart2{
+       width: 19px;
+       height: 27px;
+       background:  $img-url -48px -82px;
+  }
+  .icons-chart3{
+       width: 22px;
+       height: 18px;
+       background:  $img-url -46px -202px;
   }
   .custom-tabs {
       .el-tabs__nav {
