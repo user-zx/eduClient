@@ -1,6 +1,4 @@
-/**
-* Created by zhangxin on 2017/3/24.
-*/
+
 <template>
     <div class="event-time-line" id="event_time_line" v-loading="loading" element-loading-text="加载中……">
         <div class="time-line" id="time_line">
@@ -178,11 +176,6 @@
     }
 </style>
 <script>
-     /*
-    * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
-    * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
-    * import loginButton from './components/loginButton.vue';
-    */
     export default{
         data(){
             return {
