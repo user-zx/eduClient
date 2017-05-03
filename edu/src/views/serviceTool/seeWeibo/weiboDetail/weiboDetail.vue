@@ -121,7 +121,7 @@
                             一周热门
                         </li>
                     </ul>
-                    <div class="content-bar-pagination">
+                    <!-- <div class="content-bar-pagination">
                         <el-pagination class="edu-pagination"
                                        @current-change="handleCurrentChange"
                                        :current-page="articleParam.pageNumber + 1"
@@ -129,7 +129,7 @@
                                        layout="prev, next, jumper, total"
                                        :total="total">
                         </el-pagination>
-                    </div>
+                    </div> --> 
                 </div>
                 <articleView :articleData="articleData"></articleView>
             </div>

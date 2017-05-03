@@ -41,7 +41,7 @@
                 </div>
                 <div class="btn-box clearfix">
                     <div class="pull-left">
-                        <el-button type="primary">批量关注</el-button>
+                        <el-button type="primary" @click="batchConcerned">批量关注</el-button>
                     </div>
                     <div class="pull-right">
                         <el-button type="primary" @click="verifyWeibo">微博认证</el-button>
@@ -49,7 +49,7 @@
                 </div>
                 <el-card class="box-card">
                     <el-table :data="tableData" class="tran-table no-col-title yellow-table" stripe border style="width: 100%"
-                              :resizable="false">
+                              :resizable="false" @selection-change="handleSelectionChange">
                         <el-table-column type="selection" width="50px" align="center"></el-table-column>
                         <el-table-column label="排名" align="center" width="110px">
                             <template scope="scope">
@@ -110,11 +110,6 @@
     }
 </style>
 <script>
-    /*
-     * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
-     * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
-     * import loginButton from './components/loginButton.vue';
-     */
     import searchBox from  './../../../../components/searchBox/searchBox.vue';
     import "vue-style-loader!css-loader!sass-loader!../../../../assets/css/tabs/tabs.scss";
     export default{
@@ -136,6 +131,7 @@
                     authcStatus: ''
                 },
                 loading:true,
+                multipleSelection:{},
             }
         },
         components:{searchBox} ,
@@ -152,7 +148,6 @@
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
             handleClick(event) {
-//                this.loading = true;
                 if(event.index == 0){
                     //微博统计tab页，请求对应数据
                     this.getWeiboStatisticsData();
@@ -186,10 +181,8 @@
             toVerified(data){
                 this.$router.push({path: "/home/weiboVerify", query: data});
             },
-
             //微博指数数据获取
             getWeiboHotArticleList(){
-//                console.log(this.hotParam)
                 this.$http.post('/apis/businessTool/getMicroblogIndexData.json', this.hotParam).then(
                     (response) => {
                         if(response.data.success){
@@ -203,24 +196,54 @@
                     }
                 )
             },
-
             //微博统计数据获取
             getWeiboStatisticsData(){
-//                console.log(this.statisticsParam)
                 this.$http.post('/apis/businessTool/getMicroblogData.json', this.statisticsParam).then(
                     (response) => {
                         this.loading = false;
-//                        console.log(response.data)
                         if(response.data.success){
                             this.weiboStatisticsData = response.data.data.page.content;
                         }
                     }
                 )
             },
-
             verifyWeibo(){
                 this.$router.push({path: "/home/weiboVerify"});
-            }
+            },
+            batchConcerned(){
+                if(this.multipleSelection.concernsContent.length>0){
+                   this.$http.post("/apis/concerns/saveConcernsMore.json",this.multipleSelection).then(res => {
+                    console.log(res);
+                    if(res.data.success){
+                        this.open3();
+                    }else{
+                        this.open6();
+                    }
+                   },(err)=>{
+
+                   })
+                }
+            },
+             handleSelectionChange(val) {
+               this.multipleSelection.concernsType = 4; 
+               this.multipleSelection.concernsContent = [];
+               for (var i = 0; i < val.length; i++) {
+                   this.multipleSelection.concernsContent.push(val[i].microblogName)
+               }
+            },
+            open3() {
+                this.$notify({
+                  title: '添加成功',
+                  message: '这是一条成功的提示消息',
+                  type: 'success'
+                });
+            },
+              open6() {
+                this.$notify.error({
+                  title: '添加失败',
+                  message: '这是一条失败的提示消息'
+                });
+          }
         },
         created(){
             this.setBreadCrumb();
