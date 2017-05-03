@@ -121,15 +121,15 @@
                             一周热门
                         </li>
                     </ul>
-                    <!--<div class="content-bar-pagination">-->
-                        <!--<el-pagination class="edu-pagination"-->
-                                       <!--@current-change="handleCurrentChange"-->
-                                       <!--:current-page="articleParam.pageNumber + 1"-->
-                                       <!--:page-size="5"-->
-                                       <!--layout="prev, next, jumper, total"-->
-                                       <!--:total="total">-->
-                        <!--</el-pagination>-->
-                    <!--</div>-->
+                    <!-- <div class="content-bar-pagination">
+                        <el-pagination class="edu-pagination"
+                                       @current-change="handleCurrentChange"
+                                       :current-page="articleParam.pageNumber + 1"
+                                       :page-size="5"
+                                       layout="prev, next, jumper, total"
+                                       :total="total">
+                        </el-pagination>
+                    </div> -->
                 </div>
                 <articleView :articleData="articleData"></articleView>
             </div>

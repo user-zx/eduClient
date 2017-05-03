@@ -7,7 +7,7 @@
         <search-box :searchNames=searchNames @onload="onSearchLoad" @searchDataChange="onSearchDataChange"></search-box>
         <articleView :articleData="articleData" :total="total" :eventBtn="true" :concernBtn="true" @onchange="pageChange"></articleView>
     </div>
-</template>
+</template> 
 <script>
     /*
      * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
