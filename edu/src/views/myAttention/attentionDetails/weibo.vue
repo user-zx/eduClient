@@ -50,21 +50,18 @@
                     <el-table-column label="微博号" prop="name" align="center">
                         <template scope="scope">
                             <span @click="toCharacterAnalyse(scope.row)" class="character-name">
-                                {{scope.row.name}}
+                                {{scope.row.microblogName}}
                             </span>
-                            <!--<router-link to="/home/characterAnalyse">-->
-                            <!--{{scope.row.name}}-->
-                            <!--</router-link>-->
                         </template>
                     </el-table-column>
-                    <el-table-column label="发博量" prop="voiceNum" align="center"></el-table-column>
-                    <el-table-column label="关注量" prop="readNum" align="center"></el-table-column>
-                    <el-table-column label="粉丝量" prop="readNum" align="center"></el-table-column>
-                    <el-table-column label="转发量" prop="readNum" align="center"></el-table-column>
-                    <el-table-column label="评论数" prop="readNum" align="center"></el-table-column>
-                    <el-table-column label="点赞总数" prop="readNum" align="center"></el-table-column>
-                    <el-table-column label="平均点赞量" prop="hot" align="center"></el-table-column>
-                    <el-table-column label="认证状态" prop="state" align="center" width="140px">
+                    <el-table-column label="发博量" prop="sendCount" align="center"></el-table-column>
+                    <el-table-column label="关注量" prop="" align="center"></el-table-column>
+                    <el-table-column label="粉丝量" prop="fansCount" align="center"></el-table-column>
+                    <el-table-column label="转发量" prop="" align="center"></el-table-column>
+                    <el-table-column label="评论数" prop="" align="center"></el-table-column>
+                    <el-table-column label="点赞总数" prop="" align="center"></el-table-column>
+                    <el-table-column label="平均点赞量" prop="" align="center"></el-table-column>
+                    <el-table-column label="认证状态" prop="" align="center" width="140px">
                         <template scope="scope">
                             <span v-if="scope.row.state == true">已认证</span>
                             <span v-if="scope.row.state == false">
@@ -95,7 +92,7 @@
                 currentPage: 1,
                 total: 0,
                 param: {
-                    pageSize: 15,
+                    pageSize: 5,
                     pageNumber: 0,
                     vector:[],
                     authcStatus:"",
@@ -111,42 +108,6 @@
                     {
                         'id': 1,
                         'all': 1,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'state': true
-                    },
-                    {
-                        'id': 2,
-                        'all': 2,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'state': false
-                    },
-                    {
-                        'id': 3,
-                        'all': 3,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'state': true
-                    },
-                    {
-                        'id': 4,
-                        'all': 4,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'state': false
-                    },
-                    {
-                        'id': 5,
-                        'all': 5,
                         'name': '习总',
                         'voiceNum': 888,
                         'readNum': 1024,

@@ -5,18 +5,18 @@
     <el-table :data="getTableData" class="tran-table" border style="width: 100%"
               :resizable="false">
         <el-table-column type="selection" width="50" align="center"></el-table-column>
-        <el-table-column label="全部" align="center" prop="all">
+        <el-table-column label="全部" align="center" prop="rank">
             <template scope="scope">
-                <span v-if="scope.row.all == 1">
+                <span v-if="scope.row.rank == 1">
                      <i class="icon-rank icon-gold"></i>
                 </span>
-               <span v-else-if="scope.row.all == 2">
+               <span v-else-if="scope.row.rank == 2">
                     <i class="icon-rank icon-silver"></i>
                </span>
-                <span v-else-if="scope.row.all == 3">
+                <span v-else-if="scope.row.rank == 3">
                      <i class="icon-rank icon-copper"></i>
                 </span>
-                {{scope.row.all}}
+                {{scope.row.rank}}
             </template>
         </el-table-column>
         <el-table-column label="人物" prop="name" align="center">
@@ -26,10 +26,10 @@
                 </span>
             </template>
         </el-table-column>
-        <el-table-column label="声量" prop="voiceNum" align="center"></el-table-column>
-        <el-table-column label="总阅读量" prop="readNum" align="center"></el-table-column>
+        <el-table-column label="声量" prop="volume" align="center"></el-table-column>
+        <el-table-column label="总阅读量" prop="totalHitCount" align="center"></el-table-column>
         <el-table-column label="热度" prop="hot" align="center"></el-table-column>
-        <el-table-column label="情感" prop="emotion" align="center"></el-table-column>
+        <el-table-column label="情感" prop="emotionVal" align="center"></el-table-column>
     </el-table>
 </template>
 
@@ -55,13 +55,15 @@
             toCharacterAnalyse(data){
                 console.log(data);
                 this.$router.push({path:"/home/characterAnalyse"});
-            }
+            },
+            getData(){
+                console.log('test');
+            },
         },
-        mounted(){ 
-            this.$nextTick(function(){
-                //console.log(this.tableData);
-                this.getTableData = this.tableData;
-            })
+        mounted(){   
+            this.$nextTick(function(){  
+                this.getTableData = this.tableData; 
+            }) 
         },
         props:["tableData"],
     }
