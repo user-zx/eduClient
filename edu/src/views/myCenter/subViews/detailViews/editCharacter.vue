@@ -22,10 +22,10 @@
                 <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
                           :resizable="false">
                     <el-table-column label="姓名" prop="name" align="center"></el-table-column>
-                    <el-table-column label="所在高校" prop="college" align="center"></el-table-column>
+                    <el-table-column label="所在高校" prop="collegeName" align="center"></el-table-column>
                     <el-table-column label="所在院系" prop="department" align="center"></el-table-column>
-                    <el-table-column label="昵称/关键字" prop="keyword" align="center"></el-table-column>
-                    <el-table-column label="社交账号" prop="count" align="center"></el-table-column>
+                    <el-table-column label="昵称/关键字" prop="nickname" align="center"></el-table-column>
+                    <el-table-column label="社交账号" prop="socialAccount" align="center"></el-table-column>
                 </el-table>
             </div>
         </div>
@@ -179,10 +179,7 @@
             getPerson(){
                 this.$http.post("/apis/concernPerson/concernPersonPageList.json").then((res)=>{
                     if(res.data.success){
-                        let arr = res.data.data;
-                        for (let i in arr) {
-                            this.tableData.push({name: arr[i].name, college: arr[i].collegeName, department: arr[i].department, keyword: arr[i].nickname, count:　arr[i].socialAccount})
-                        }
+                        this.tableData = res.data.data;
                     }
                 },(err)=>{
                     console.log(err);
