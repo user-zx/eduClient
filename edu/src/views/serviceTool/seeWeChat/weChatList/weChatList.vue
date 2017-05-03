@@ -1,6 +1,4 @@
-/**
-* Created by zhangxin on 2017/3/17.
-*/
+
 <template>
     <div class="seeWeChat" id="seeWeChat" v-loading="loading" element-loading-text="加载中……">
         <el-tabs v-model="activeName" class="custom-tabs left-tabs" @tab-click="handleClick">
@@ -13,8 +11,8 @@
                         <el-button type="primary" @click="verifyWechat">微信认证</el-button>
                     </div>
                 </div>
-                <el-card class="box-card">
-                    <el-table :data="wechatStatisticsData" :resizable="false" stripe style="width: 100%" border class="tran-table no-col-title yellow-table">
+                <el-card class="box-card"> 
+                    <el-table :data="wechatStatisticsData" :resizable="false" stripe style="width: 100%" border class="tran-table no-col-title yellow-table">  
                         <el-table-column type="index" width="70" label="序号"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="author" label="公众号" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="university" label="所属" align="center"></el-table-column>
@@ -41,7 +39,7 @@
                 </div>
                 <div class="btn-box clearfix">
                     <div class="pull-left">
-                        <el-button type="primary">批量关注</el-button>
+                        <el-button type="primary" @click="batchConcerned">批量关注</el-button>
                     </div>
                     <div class="pull-right">
                         <el-button type="primary" @click="verifyWechat">微信认证</el-button>
@@ -49,7 +47,7 @@
                 </div>
                 <el-card class="box-card">
                     <el-table :data="wechatExponentData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
-                              :resizable="false">
+                              :resizable="false" @selection-change="handleSelectionChange">
                         <el-table-column type="selection" width="50" align="center"></el-table-column>
                         <el-table-column label="排名" align="center" prop="rank">
                             <template scope="scope">
@@ -101,11 +99,6 @@
     }
 </style>
 <script>
-    /*
-     * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
-     * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
-     * import loginButton from './components/loginButton.vue';
-     */
     import searchBox from  './../../../../components/searchBox/searchBox.vue';
     import "vue-style-loader!css-loader!sass-loader!../../../../assets/css/tabs/tabs.scss";
     export default{
@@ -130,7 +123,8 @@
                 wechatExponentData: [],
                 searchNames: ['verified', 'exactDate'],
                 searchNames1: ['exactDate'],
-                loading: true
+                loading: true,
+                multipleSelection:{},
             }
         },
         components:{searchBox} ,
@@ -208,7 +202,42 @@
 
             verifyWechat(){
                 this.$router.push({path: "/home/weChatVerify"});
-            }
+            },
+            handleSelectionChange(val){
+                  this.multipleSelection.concernsContent = [];
+               for (var i = 0; i < val.length; i++) {
+                   this.multipleSelection.concernsContent.push(val[i].wechatNumber)
+               }
+            },
+            batchConcerned(){ 
+               this.multipleSelection.concernsType = 3; 
+               console.log(this.multipleSelection);
+               if(this.multipleSelection.concernsContent.length>0){
+                    this.$http.post("/apis/concerns/saveConcernsMore.json",this.multipleSelection).then(res=>{
+                        //console.log(res);
+                        if(res.data.success){
+                            this.open3();
+                        }else{
+                            this.open6();
+                        }
+                    },err=>{
+                        console.log(err);
+                    })
+               }
+            },
+            open3() {
+                this.$notify({
+                  title: '添加成功',
+                  message: '这是一条成功的提示消息',
+                  type: 'success'
+                });
+            },
+              open6() {
+                this.$notify.error({
+                  title: '添加失败',
+                  message: '这是一条失败的提示消息'
+             });
+          }
         },
         created(){
             this.setBreadCrumb();

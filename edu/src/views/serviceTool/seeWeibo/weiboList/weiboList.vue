@@ -48,8 +48,7 @@
                     </div>
                 </div>
                 <el-card class="box-card">
-                    <el-table :data="tableData" class="tran-table no-col-title yellow-table" stripe border style="width: 100%"
-                              :resizable="false" @selection-change="handleSelectionChange">
+                    <el-table :data="tableData" class="tran-table no-col-title yellow-table" stripe border style="width: 100%" :resizable="false" @selection-change="handleSelectionChange"> 
                         <el-table-column type="selection" width="50px" align="center"></el-table-column>
                         <el-table-column label="排名" align="center" width="110px">
                             <template scope="scope">
@@ -213,14 +212,13 @@
             batchConcerned(){
                 if(this.multipleSelection.concernsContent.length>0){
                    this.$http.post("/apis/concerns/saveConcernsMore.json",this.multipleSelection).then(res => {
-                    console.log(res);
                     if(res.data.success){
                         this.open3();
                     }else{
                         this.open6();
                     }
                    },(err)=>{
-
+                        console.log(err);
                    })
                 }
             },
@@ -242,7 +240,7 @@
                 this.$notify.error({
                   title: '添加失败',
                   message: '这是一条失败的提示消息'
-                });
+             });
           }
         },
         created(){

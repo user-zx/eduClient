@@ -1,6 +1,4 @@
-/**
-* Created by yu-bing on 2017/3/17.
-*/
+
 <template>
     <div class="characterNews article-wrap" v-loading="loading" element-loading-text="加载中……">
         <bread-crumb></bread-crumb>
@@ -25,7 +23,7 @@
                         </el-dropdown-menu>
                     </el-dropdown>
 
-                    <el-button type="primary" icon="plus" class="button-icon">批量关注</el-button>
+                    <el-button type="primary" icon="plus" class="button-icon" @click="batchConcerned">批量关注</el-button>
                 </div>
                 <div class="content-bar-page">
                     <el-pagination class="edu-pagination"
@@ -36,9 +34,9 @@
                                    :total="total">
                     </el-pagination>
                 </div>
-            </div>
+            </div> 
             <el-table :data="tableData" class="tran-table white-table" border style="width: 100%"
-                      :resizable="false">
+                      :resizable="false" @selection-change="handleSelectionChange"> 
                 <el-table-column type="selection" width="50" align="center"></el-table-column>
                 <el-table-column label="全部" align="center" prop="all">
                     <template scope="scope">
@@ -89,7 +87,8 @@
                     ]
                 },
                 university: '',
-                tableData: []
+                tableData: [],
+                multipleSelection:{},
             }
         },
         components:{breadCrumb, cascadeBox, characterTable} ,
@@ -160,6 +159,39 @@
                 data.endDate = this.param.endDate;
                 this.$router.push({path:"/home/characterAnalyse", query: data});
             },
+            batchConcerned(){
+              this.multipleSelection.concernsType = 2; 
+                if(this.multipleSelection.concernsContent.length>0){
+                    this.$http.post("/apis/concerns/saveConcernsMore.json",this.multipleSelection).then(res=>{
+                       if(res.data.success){
+                            this.open3();
+                       }else{
+                           this.open6(); 
+                       }
+                    },err=>{
+                        console.log(err);
+                    })
+                }
+            },
+            handleSelectionChange(val){
+                 this.multipleSelection.concernsContent = [];
+               for (var i = 0; i < val.length; i++) {
+                   this.multipleSelection.concernsContent.push(val[i].name)
+               }
+            },
+            open3() {
+                this.$notify({
+                  title: '添加成功',
+                  message: '这是一条成功的提示消息',
+                  type: 'success'
+                });
+            },
+              open6() {
+                this.$notify.error({
+                  title: '添加失败',
+                  message: '这是一条失败的提示消息'
+             });
+          }
         },
         mounted(){
            
