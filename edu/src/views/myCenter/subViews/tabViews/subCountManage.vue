@@ -5,11 +5,11 @@
     <div class="subCountManage">
         <div class="btn-wrap">
             <el-button type="primary" @click="isShow">添加</el-button>
-            <el-button type="primary">删除</el-button>
+            <el-button type="primary" @click="deleteAccounts">删除</el-button>
         </div>
         <div class="table-wrap">
             <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
-                      :resizable="false" >
+                      :resizable="false" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column label="编号" prop="id" align="center" width="100"></el-table-column>
                 <el-table-column label="子账号" prop="userAccount" align="center"></el-table-column>
@@ -165,6 +165,7 @@
                         { validator: testPhone, trigger: 'blur' }
                     ]
                 },
+                multipleSelection: []
             }
         },
         methods: {
@@ -290,6 +291,23 @@
                 }
 
                 return '';
+            },
+
+            handleSelectionChange(val){
+                this.multipleSelection = val;
+            },
+
+            deleteAccounts(){
+                this.$http.post('/apis/user/deleteSubAccounts', this.multipleSelection).then(
+                    function (response) {
+                        if(response.data.success){
+                            this.getChildAccount();
+                        }else {
+                            this.$message.error('删除失败，请稍后再试');
+                            console.error(response.data);
+                        }
+                    }
+                )
             },
         },
         mounted(){
