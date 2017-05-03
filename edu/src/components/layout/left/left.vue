@@ -61,6 +61,11 @@
             '$route.path': {
                 immediate: true,
                 handler(val) {
+                    if(val=="/home/myCenter"){
+                        $("#top-title .topCenter").css("color","#365a8b")
+                    }else{
+                         $("#top-title .topCenter").css("color","#fefefe")
+                    }
                     if(val){
                         let url=val.split('/')[2],nowNav=null;
 

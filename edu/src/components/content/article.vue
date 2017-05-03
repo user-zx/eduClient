@@ -262,7 +262,7 @@
             }
         },
         mounted() {
-            this.getAllEvent()
+            this.getAllEvent();
         },
         props: ["articleData", "eventBtn", "concernBtn", "total"]
     }

@@ -33,8 +33,3 @@
         }
     }
 </script>
-<style lang="scss">
-    #top-title li:nth-child(3){
-        color: #365a8b; 
-    }
-</style>
