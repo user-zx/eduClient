@@ -41,7 +41,7 @@
                         }
                     ],
                 searchNames: ['university', 'vector', 'emotion', 'publishDateTime'],
-                articleData: [],
+                articleData: "",
                 loading:true,
                 curContent: this.$store.state.curContent,
             }
@@ -68,11 +68,9 @@
                         (response) => {
                             console.log(response);
                             if (response.data.success) {
-                                if(response.data.data.message!=null){
                                      this.articleData = response.data.data.page.content;
                                 // 最多允许翻10000页
                                 this.total = response.data.data.page.totalElements > 10000 ? 10000 : response.data.data.page.totalElements;
-                                }
                                  this.loading = false;
                             } else {
                                 console.error(response.data.message);
