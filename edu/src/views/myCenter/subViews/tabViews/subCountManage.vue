@@ -146,21 +146,24 @@
                 subCheckedOne: ['舆情预警','全景舆情','舆情监测'],
                 subCheckOptions: ['舆情预警','全景舆情','舆情监测'],
                 rules:{
-                  childCount: [
-                      { required: true, message: '请输入子账号', trigger: 'blur' },
+                    userAccount: [
+                        { required: true, message: '请输入子账号', trigger: 'blur' },
+                        { min: 1, max: 3, message: '长度在 1 到 3 个字符', trigger: 'blur' }
                     ],
-                  password: [
-                      { validator: validatePass, trigger: 'blur' }
+                    password: [
+                        { required: true, message: '请输入密码', trigger: 'blur'},
+                        { validator: validatePass, trigger: 'blur' }
                     ],
-                  realName: [
-                      { required: true, message: '请输入姓名', trigger: 'blur' },
+                    realName: [
+                        { required: true, message: '请输入姓名', trigger: 'blur' },
                     ],  
-                   userDepartment: [
-                      { required: true, message: '请输入职称', trigger: 'blur' },
+                    userDepartment: [
+                        { required: true, message: '请输入职称', trigger: 'blur' },
                     ],
-                  userPhone:[
-                    { validator: testPhone, trigger: 'blur' }
-                  ]  
+                    userPhone:[
+                        { required: true, message: '请输入联系电话', trigger: 'blur' },
+                        { validator: testPhone, trigger: 'blur' }
+                    ]
                 },
             }
         },
