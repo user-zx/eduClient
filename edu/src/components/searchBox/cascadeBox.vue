@@ -74,7 +74,7 @@
                 </el-row>
             </el-tab-pane>
         </el-tabs>
-        <el-button type="primary" class="addPerson"><router-link to="/home/myCenter">添加人物</router-link></el-button>
+        <!--<el-button type="primary" class="addPerson"><router-link to="/home/myCenter">添加人物</router-link></el-button>-->
         <el-row  type="flex" class="row-bg row-time">
             <el-col :span="2">
                 <span class="chooseTime">选择时间</span>

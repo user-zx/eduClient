@@ -33,27 +33,27 @@
                 <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
                           :resizable="false">
                     <el-table-column type="selection" width="50" align="center"></el-table-column>
-                    <el-table-column label="排名" align="center" prop="all">
+                    <el-table-column label="排名" align="center" prop="index">
                         <template scope="scope">
-                            <span v-if="scope.row.all == 1">
+                            <span v-if="scope.row.index == 1">
                                  <i class="icon-rank icon-gold"></i>
                             </span>
-                            <span v-else-if="scope.row.all == 2">
+                            <span v-else-if="scope.row.index == 2">
                                 <i class="icon-rank icon-silver"></i>
                            </span>
-                            <span v-else-if="scope.row.all == 3">
+                            <span v-else-if="scope.row.index == 3">
                                  <i class="icon-rank icon-copper"></i>
                             </span>
-                            {{scope.row.all}}
+                            {{scope.row.index}}
                         </template>
                     </el-table-column>
-                    <el-table-column label="公众号" prop="name" align="center"></el-table-column>
-                    <el-table-column label="文章数" prop="voiceNum" align="center"></el-table-column>
-                    <el-table-column label="总点赞量" prop="readNum" align="center"></el-table-column>
-                    <el-table-column label="总阅读量" prop="readNum" align="center"></el-table-column>
-                    <el-table-column label="平均阅读量" prop="readNum" align="center"></el-table-column>
-                    <el-table-column label="平均点赞量" prop="readNum" align="center"></el-table-column>
-                    <el-table-column label="活跃指数" prop="readNum" align="center"></el-table-column>
+                    <el-table-column label="公众号" prop="wechatNumber" align="center"></el-table-column>
+                    <el-table-column label="文章数" prop="articleCount" align="center"></el-table-column>
+                    <el-table-column label="总点赞量" prop="supportSum" align="center"></el-table-column>
+                     <el-table-column label="平均点赞量" prop="supportAvg" align="center"></el-table-column>
+                    <el-table-column label="总阅读量" prop="hitSum" align="center"></el-table-column>
+                    <el-table-column label="平均阅读量" prop="hitAvg" align="center"></el-table-column>
+                    <el-table-column label="活跃指数" prop="activityIndex" align="center"></el-table-column>
                 </el-table>
             </el-card>
         </div>
@@ -74,7 +74,7 @@
                 currentPage: 1,
                 total: 0,
                 param: {
-                    pageSize: 15,
+                    pageSize: 5,
                     pageNumber: 0,
                     vector:[],
                     authcStatus:"",
@@ -84,55 +84,9 @@
                 },
                 searchNames: ['university', 'type', 'verified', 'exactDate'],
                 articleData: [],
-                loading:true,
+                loading:true, 
                 curContent: this.$store.state.curContent,
-                tableData: [
-                    {
-                        'id': 1,
-                        'all': 1,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    },
-                    {
-                        'id': 2,
-                        'all': 2,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    },
-                    {
-                        'id': 3,
-                        'all': 3,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    },
-                    {
-                        'id': 4,
-                        'all': 4,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    },
-                    {
-                        'id': 5,
-                        'all': 5,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': '已认证'
-                    },
-                ]
+                tableData: [],
             }
         },
         components: {searchBox},
@@ -140,6 +94,7 @@
             handleCurrentChange(pageNumber) {
                 //后台是从0开始
                 this.param.pageNumber = pageNumber - 1;
+                this.getWechatData();
             },
             onSearchDataChange(data) {
                 this.param.vector = [];
@@ -150,9 +105,17 @@
                 this.getWechatData();
             },
             getWechatData(){
-                console.log(this.param);
+                this.tableData = [];
                 this.$http.post("/apis/concerns/getWechatData.json", this.param).then((res)=>{
+                   // console.log(this.param);
                     console.log(res);
+                    if(res.data.success){
+                        this.total = res.data.data.page.totalElements> 10000 ? 10000 : res.data.data.page.totalElements;
+                        for (var i = 0; i < res.data.data.page.content.length; i++) {
+                            res.data.data.page.content[i].index = i+1;
+                            this.tableData.push(res.data.data.page.content[i])
+                        }
+                    }
                 },(err)=>{
                     console.log(err);
                 })

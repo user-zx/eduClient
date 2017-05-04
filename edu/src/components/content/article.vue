@@ -84,6 +84,7 @@
                 </div>
             </div>
         </div>
+        <div v-if="articleData.length == 0" class="no-data">暂无数据</div>
     </div>
 </template>
 <script>
@@ -216,6 +217,11 @@
                         }
                     );
 
+                } else {
+                    this.$message({
+                        type: 'info',
+                        message: '未选择文章'
+                    });
                 }
             },
             toDetail(data){
@@ -258,6 +264,11 @@
                             console.error(response);
                         }
                     );
+                } else {
+                    this.$message({
+                        type: 'info',
+                        message: '未选择文章'
+                    });
                 }
             }
         },
@@ -407,5 +418,11 @@
                 }
             }
         }
+    }
+    .no-data {
+        color: #66a3ff;
+        text-align: center;
+        font-size: 14px;
+        margin-top: 30px;
     }
 </style>

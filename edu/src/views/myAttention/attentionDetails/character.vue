@@ -29,17 +29,17 @@
                                    :current-page="currentPage"
                                    :page-size="5"
                                    layout="prev, next, jumper, total"
-                                   :total="100">
+                                   :total="total">
                     </el-pagination>
                 </div>
             </div> 
-            <character-table class="dark" :tableData="getTableList"></character-table>
-        </div>
+            <character-table class="dark" :tableData="getPersonList"></character-table>
+        </div> 
     </div>
-</template>
-<script>
-    import characterTable from '../../../components/content/characterTable.vue';
+</template> 
+<script> 
     import cascadeBox from '../../../components/searchBox/cascadeBox.vue';
+    import characterTable from '../../../components/content/characterTable.vue';
     export default{
         data(){
             return {
@@ -51,39 +51,28 @@
                     pageSize:10,
                     pageNumber:0,
                 },
+                total:1,
                 labelPosition: 'left',
-                getTableList: [
-                    {
-                        'id': 1,
-                        'all': 1,
-                        'name': '习总',
-                        'voiceNum': 888,
-                        'readNum': 1024,
-                        'hot': 5,
-                        'emotion': 1
-                    }
-                ],
+                getPersonList: [],
                 params:{},
             }
         },
         components:{characterTable,cascadeBox},
         methods:{
-            onSubmit() {
-                console.log('submit!');
-            },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
-                this.currentPage = val;
-                console.log(`当前页: ${val}`);
+                 this.params.pageNumber = val;
+                 console.log(this.params.pageNumber);
+                this.getDataList();
             },
            getParams(params){
               this.params.personageType = [];
               this.params.reportPersonage.push(params.reportPersonage);
               this.params.startDate = params.startDate;
               this.params.endDate = params.endDate;
-              this.getDataList();
+              this.getDataList()
            },  
            loadData(params){
               this.params.personageType = [];
@@ -91,27 +80,31 @@
               this.params.startDate = params.startDate;
               this.params.endDate = params.endDate;
               this.params.pageSize = 10;
-              this.params.pageNumber = 1;
+              this.params.pageNumber = 0;
               this.getDataList();
            },
            getDataList(){
-              console.log(this.params);
+              this.getPersonList = [];
               this.$http.post("/apis/concerns/getPersonData.json",this.params).then((res)=>{
-                  console.log(res);
-                  if(res.data.success){
-                    
+                  if(res.data.success){ 
+                      for (var i = 0; i < res.data.data.page.content.length; i++) {
+                        this.getPersonList.push(res.data.data.page.content[i])
+                      }
+                     this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
                   }
               },(err)=>{
                  console.log(err);
               })
-           }
+           },
         },
+
         mounted(){
-            this.$nextTick(function(){
-              
-            });
+
         },
-        watch:{ 
+        created(){
+         
+        },
+        watch:{  
           
         }    
     }

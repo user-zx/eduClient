@@ -117,22 +117,22 @@
                         'title' :  '选择高校:',
                         'searchList': [
                             {id: 0, text: '全部', selected: true},
-                        ],
+                        ],/*
                         'hasMore': true,
                         'buttons': [
                             {'buttonText': '添加高校', 'id': 'add-college-btn'}
-                        ]
+                        ]*/
                     },
                     {
                         'name': 'reportPersonage',
                         'title' :  '选择人物:',
                         'searchList': [
                             {id: 0, text: '全部', selected: true},
-                        ],
+                        ],/*
                         'hasMore': true,
                         'buttons': [
                             {'buttonText': '添加人物', 'id': 'add-person-btn'}
-                        ]
+                        ]*/
                     },
                     {
                         'name': 'dimension',
@@ -217,7 +217,7 @@
                         'title': '认证情况',
                         'searchList': [
                             {id: 0, text: '全部', selected: true},
-                            {id: 1, text: '官方认证', selected: false},
+                            {id: 1, text: '已认证', selected: false},
                             {id: 2, text: '未认证', selected: false}
                         ],
                     },

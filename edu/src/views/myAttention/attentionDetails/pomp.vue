@@ -66,7 +66,7 @@
                 this.loading = true;
                     this.$http.post('/apis/concerns/getOpinionData.json',this.param).then(
                         (response) => {
-                            console.log(response);
+                          //  console.log(response);
                             if (response.data.success) {
                                      this.articleData = response.data.data.page.content;
                                 // 最多允许翻10000页
