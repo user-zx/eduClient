@@ -36,7 +36,7 @@
                         </el-row>
                         <el-row class="service-phone">
                             <el-col :span="7" :offset="2">客户咨询热线：</el-col>
-                            <el-col :span="13">400-0617-8888</el-col>
+                            <el-col :span="13">{{consultHotLine}}</el-col>
                         </el-row>
                     </div>
                 </div>
@@ -234,6 +234,7 @@
                 email_empty:false,    
                 ruleForm:{phone:"",email:""},
                 sign:false,
+                consultHotLine: '400-0617-8888'
             }
         },
         methods: {  
@@ -302,10 +303,10 @@
                     obj.timeLimit = this.data[0].time;
                     obj.phone = this.ruleForm.phone;
                     obj.email = this.ruleForm.email;
+                    obj.consultHotline = this.consultHotLine;
                 }
 
                 this.$http.post("/apis/packageBuy/packageBuy.json",obj).then((res)=>{
-                    console.log(res);
                     if(res.ok){
                         if(res.data.success){
                             this.$message(res.data.data)
