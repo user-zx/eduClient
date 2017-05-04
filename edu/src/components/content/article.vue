@@ -226,6 +226,7 @@
             },
             toDetail(data){
                 console.log(data)
+                this.$router.push({path: '/home/articleDetail', query: data});
             },
             sort(index) {
                 this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';

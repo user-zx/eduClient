@@ -31,38 +31,38 @@
                     </div>
                 </div>
                 <div class="info-item">
-                <span class="item source">
-                    来源： {{article.source}}
-                </span>
+                    <span class="item source">
+                        来源： {{article.source}}
+                    </span>
                     <span class="item type">
                     情感类型：
-                    {{#if article.emotion == 'positive'}}
-                        正面
-                    {{#else}}
-                        负面
-                    {{/if}}
-                </span>
+                    <!--{{#if article.emotion == 'positive'}}-->
+                        <!--正面-->
+                    <!--{{#else}}-->
+                        <!--负面-->
+                    <!--{{/if}}-->
+                    </span>
                 </div>
                 <div class="info-item">
-                <span class="item author">
-                    作者：{{article.author}}
-                </span>
+                    <span class="item author">
+                        作者：{{article.author}}
+                    </span>
                     <span class="item relatedPeople">
-                    相关人物：美少女战士
-                </span>
+                        相关人物：美少女战士
+                    </span>
                 </div>
                 <div class="info-item">
-                <span class="item date">
-                    日期： {{article.publishDate}}
-                </span>
+                    <span class="item date">
+                        日期： {{article.publishDate}}
+                    </span>
                     <span class="item relatedCollege">
-                    相关高校： <span v-for="item in article.university">{{item}}</span>
-                </span>
+                        相关高校： <span v-for="item in article.university">{{item}}</span>
+                    </span>
                 </div>
                 <div class="info-item">
-                <span class="item from">
-                    来源站点： {{article.sourceLink}}
-                </span>
+                    <span class="item sourceLink">
+                        来源站点： {{article.sourceLink}}
+                    </span>
                 </div>
             </div>
             <div class="article-content">
@@ -147,8 +147,10 @@
             display: inline-block;
             vertical-align: top;
             margin-left: 70px;
+            margin-bottom: 20px;
             border-left: 1px solid #dbe9fb;
             border-right: 1px solid #dbe9fb;
+            border-bottom: 1px solid #dbe9fb;
 
             .article-info{
                 margin-top: 20px;
@@ -176,6 +178,9 @@
                         display: inline-block;
                         width: 45%;
                     }
+                    .sourceLink{
+                        width: 100%;
+                    }
                 }
 
                 .info-item:first-child{
@@ -190,6 +195,7 @@
             .article-content{
                 margin: 28px 20px 0 20px;
                 min-height: 500px;
+                line-height: 30px;
             }
         }
 
@@ -265,7 +271,7 @@
         mounted(){
         },
         created(){
-
+            this.article = this.$route.query;
         }
     }
 </script>

@@ -42,9 +42,11 @@ import centerCharacter from "./views/myCenter/subViews/detailViews/editCharacter
 import centerCollege from "./views/myCenter/subViews/detailViews/editCollege.vue";
 import loginBox from './views/login/loginBox/loginBox.vue';
 import probation from './views/login/probation/probation.vue';
+import articleDetail from './views/content/articleDetail.vue';
 import forget from './views/login/forget/forget.vue';
 import notPage from './views/accident/404.vue';
 import serverError from './views/accident/500.vue';
+
 export default {
     mode:'history',
     base:__dirname,
@@ -321,6 +323,11 @@ export default {
                             component: centerCollege
                         }
                     ]
+                },
+                {
+                    name: '文章详情',
+                    path: "articleDetail",
+                    component: articleDetail
                 },
             ]
         },
