@@ -276,13 +276,12 @@ export default{
     created(){
         this.setBreadCrumb();
         this.tableData.push(this.$route.query);
-        this.param = this.$route.query;
         var univs = [];
-        if (this.param.university) {
-            univs.push(this.param.university);
+        if (this.$route.query.university && typeof this.$route.query.university == 'string') {
+            univs.push(this.$route.query.university);
         }
-        this.param.university = univs;
-
+        this.$route.query.university = univs;
+        this.param = this.$route.query;
     },
     mounted() {
         this.getActionTrail();
