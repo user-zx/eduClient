@@ -122,7 +122,7 @@
                         <!--</el-pagination>-->
                     <!--</div>-->
                 </div>
-                <articleView :articleData="articleData" :total="total" @onchange="pageChange">
+                <articleView :articleData="articleData" :total="total" @onchange="pageChange"></articleView>
             </div>
         </div>
     </div>
