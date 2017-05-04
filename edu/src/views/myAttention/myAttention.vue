@@ -100,8 +100,7 @@
      import character from "./attentionDetails/character.vue";
      import weibo from "./attentionDetails/weibo.vue";
      import wechat from "./attentionDetails/wechat.vue";
-
-    export default{
+     export default{
         data(){
             return {
                 currentTabs:{
