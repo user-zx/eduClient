@@ -126,12 +126,11 @@
                     if(res.data.success){
                         this.total = res.data.data.page.totalElements>10000?10000:res.data.data.page.totalElements;
                         for (var i = 0; i < res.data.data.page.content.length; i++) {
-                           
                             this.tableData.push(res.data.data.page.content[i])
                         }
                     }
                 },(err)=>{
-
+                    
                 })
             },
             toVerified(data){

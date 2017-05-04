@@ -154,6 +154,7 @@
                 collegeArr:[],
                 tags:[],
                 addTags:[],
+                arr:[],
             }
         },
         methods: {
@@ -213,7 +214,10 @@
             //添加大学
             addCollege(item){
                if(this.collegeArr.indexOf(item) == -1){
-                    this.addTags.push({name:item,type: 'primary'})
+                    if(this.arr.indexOf(item)==-1){
+                          this.arr.push(item);
+                          this.addTags.push({name:item,type: 'primary'})
+                    }
                }
             },
              /**获取用户设置信息*/
