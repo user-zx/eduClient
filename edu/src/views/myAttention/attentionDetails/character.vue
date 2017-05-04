@@ -80,7 +80,7 @@
               this.params.startDate = params.startDate;
               this.params.endDate = params.endDate;
               this.params.pageSize = 10;
-              this.params.pageNumber = 1;
+              this.params.pageNumber = 0;
               this.getDataList();
            },
            getDataList(){
