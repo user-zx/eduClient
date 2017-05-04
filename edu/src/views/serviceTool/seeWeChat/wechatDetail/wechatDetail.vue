@@ -122,7 +122,7 @@
                         <!--</el-pagination>-->
                     <!--</div>-->
                 </div>
-                <articleView :articleData="articleData"></articleView>
+                <articleView :articleData="articleData" :total="total" @onchange="pageChange">
             </div>
         </div>
     </div>
@@ -534,6 +534,12 @@
                     }
                 )
             },
+
+            pageChange(param){
+                this.articleParam.pageNumber = param.pageNumber;
+                this.articleParam.orders = param.orders;
+                this.getWechatArticleList();
+            }
         },
         created(){
             let data = this.$route.query;

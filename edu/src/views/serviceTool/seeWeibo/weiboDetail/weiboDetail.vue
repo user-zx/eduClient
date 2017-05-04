@@ -131,7 +131,7 @@
                         </el-pagination>
                     </div> -->
                 </div>
-                <articleView :articleData="articleData"></articleView>
+                <articleView :articleData="articleData" :total="total" @onchange="pageChange"></articleView>
             </div>
         </div>
     </div>
@@ -544,6 +544,12 @@
 
             attentionClick(){
 
+            },
+
+            pageChange(param){
+                this.articleParam.pageNumber = param.pageNumber;
+                this.articleParam.orders = param.orders;
+                this.getBlogArticleData();
             }
         },
         created(){
