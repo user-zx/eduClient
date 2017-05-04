@@ -307,10 +307,11 @@
 
                 this.$http.post('/apis/businessTool/saveWechat.json', this.wechatInfo).then(
                     (response) => {
-                        console.log(response.data);
                         if(response.data.success){
                             this.$message({message: '微信认证成功'});
-                        }
+                        }else{
+                            this.$message.error(response.data.message);
+                }
                     }
                 )
 

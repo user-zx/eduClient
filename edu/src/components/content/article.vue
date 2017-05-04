@@ -4,7 +4,7 @@
 
 <template>
     <div class="content">
-        <div class="content-bar">
+        <div class="content-bar clearfix">
             <ul class="content-bar-list">
                 <li class="pointer">
                     <input type="checkbox" @click="handleCheckAllChange"/>
@@ -388,6 +388,22 @@
                 .article-main{
                     line-height: 24px;
                     margin-top:13px;
+                    max-height: 100px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 3;
+                    overflow: hidden;
+                    position: relative;
+                }
+
+                .article-main:after{
+                    content: '...';
+                    position: absolute;
+                    bottom:0;
+                    right:0;
+                    padding-left: 25px;;
                 }
             }
 

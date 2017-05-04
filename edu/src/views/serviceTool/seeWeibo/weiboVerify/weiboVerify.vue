@@ -188,13 +188,13 @@
                 if(info === false){
                     return ;
                 }
-                console.log(this.weiboInfo)
                 this.$http.post('/apis/businessTool/saveMicroblog.json', this.weiboInfo).then(
                     (response) => {
-                        console.log(response.data);
                         if(response.data.success){
                             this.$message({message: '微博认证成功'});
-                        }
+                        }else{
+                            this.$message.error(response.data.message);
+                }
                     }
                 )
             },

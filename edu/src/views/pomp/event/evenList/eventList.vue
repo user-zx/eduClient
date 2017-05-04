@@ -37,7 +37,7 @@
                        layout="prev, next, jumper, total"
                        :total="total">
         </el-pagination>
-        <el-dialog :title="formTitle + '事件'" v-model="dialogFormVisible">
+        <el-dialog :title="formTitle + '事件'" v-model="dialogFormVisible" @close="closeDialog('addEventForm')">
             <el-form :model="addEventForm" :rules="rules" ref="addEventForm" label-width="150px">
                 <input type="hidden" name="id" :value="addEventForm.id"/>
                 <el-form-item label="事件名称" prop="title">
@@ -267,6 +267,10 @@
                     if (new RegExp("(" + k + ")").test(fmt))
                         fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
                 return fmt;
+            },
+
+            closeDialog(formName){
+                this.$refs[formName].resetFields();
             }
         },
         created(){
