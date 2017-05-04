@@ -51,7 +51,7 @@
                         <p class="article-title pointer" @click="toDetail(item)">
                             <span>{{item.title}}</span>
                             <i class="title-icon positive-icon" v-if="item.emotion == 'positive'"></i>
-                            <i class="title-icon negative-icon" v-else></i>
+                            <i class="title-icon negative-icon" v-else-if="item.emotion == 'negative'"></i>
                         </p>
                         <p class="button-box">
                             <el-button type="warning" class="article-danger-button" v-if="item.hasWarn"

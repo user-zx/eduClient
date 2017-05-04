@@ -4,10 +4,12 @@
 <template>
     <div class="packageResult">
         <div class="content">
-            <div class="title">恭喜您，预定成功</div>
+            <div class="title"><i class="el-icon-check"></i> 恭喜您，预定成功</div>
             <div class="text">我们将尽快与您取得联系！</div>
             <div class="btn-wrap">
-                <el-button type="primary">查看订单</el-button>
+                <router-link tag="li" to="/home/myCenter">
+                    <el-button type="primary">查看订单</el-button>
+                </router-link>
             </div>
         </div>
     </div>
