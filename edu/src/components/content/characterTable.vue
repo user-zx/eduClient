@@ -52,6 +52,7 @@
         components: {},
         methods: {
             handleSelectionChange(val){
+                console.log(val);
                 this.$emit('select',val) 
             },
             //带参跳转到人物分析页面
@@ -64,6 +65,7 @@
             },
             getTableDataEvent(){
                 this.getTableData = this.tableData; 
+                console.log(this.tableData);
             }
         },
         mounted(){   

@@ -109,8 +109,8 @@
                   if(res.data.success){ 
                       for (var i = 0; i < res.data.data.page.content.length; i++) {
                         this.getPersonList.push(res.data.data.page.content[i])
-                         this.$refs.table.getTableDataEvent()
                       }
+                      this.$refs.table.getTableDataEvent()
                      this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
                   }
               },(err)=>{
