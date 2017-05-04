@@ -6,8 +6,6 @@
                 <span class="yellow">高校</span>
             </div>
             <div class="item">
-                您购买的
-                <span class="yellow">C套餐</span>，
                 最多可添加
                 <span class="yellow">10</span>
                 所高校

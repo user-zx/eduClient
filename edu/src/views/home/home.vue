@@ -46,11 +46,35 @@
                         console.error(response);
                     }
                 );
-            }
+            },
+            getUserParams() {
+                this.$http.post('/apis/user/getUnivsAndPersonage.json').then(
+                    (response) => {
+
+                        if (response.data.success) {
+                            let univs = response.data.data.univs;
+                            if (univs.length == 0) {
+                                this.$alert('您还没有设置大学，前往设置?', '温馨提示', {
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        this.$router.push({path:"/home/centerCollege"});
+                                    }
+                                });
+                            }
+                        } else {
+                            console.error(response.data.message);
+                        }
+
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            },
         },
         mounted() {
             this.getUserInfo();
-            //this.$router.push({path:"/home/panorama"});
+            this.getUserParams()
         }
     }
+
 </script>
