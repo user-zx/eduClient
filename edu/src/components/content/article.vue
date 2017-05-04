@@ -390,20 +390,9 @@
                     margin-top:13px;
                     max-height: 100px;
                     overflow: hidden;
-                    text-overflow: ellipsis;
                     display: -webkit-box;
                     -webkit-box-orient: vertical;
                     -webkit-line-clamp: 3;
-                    overflow: hidden;
-                    position: relative;
-                }
-
-                .article-main:after{
-                    content: '...';
-                    position: absolute;
-                    bottom:0;
-                    right:0;
-                    padding-left: 25px;;
                 }
             }
 

@@ -380,16 +380,9 @@
                     console.log(res);
                      let date = new Date();
                     if(res.data.success){
-                      this.imgUrl = res.data.data.userImg;
-                      this.username = res.data.data.realName;
-                     let newTime = new Date(res.data.data.createDate);
-                     let year = newTime.getFullYear();
-                     let month = newTime.getMonth()+1;
-                     let date = newTime.getDate();
-                     let hours = newTime.getHours();
-                     let minutes = newTime.getMinutes();
-                     let seconds = newTime.getSeconds(); 
-                     this.time = year +"-"+ month +"-" + date +" "+ hours +":"+ minutes + ":" +seconds;
+                        this.imgUrl = res.data.data.userImg;
+                        this.username = res.data.data.realName;
+                        this.time = new Date(res.data.data.createDate).format('yyyy-MM-dd hh:mm');
                     }
                    
                  },(err)=>{

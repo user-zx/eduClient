@@ -22,7 +22,7 @@
                 </el-col>
             </el-form-item>
             <el-form-item class="btn-box">
-                <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
             </el-form-item>
             <el-form-item class="btn-box ">
                 <el-button type="primary white-primary" @click="probation()">申请试用</el-button>

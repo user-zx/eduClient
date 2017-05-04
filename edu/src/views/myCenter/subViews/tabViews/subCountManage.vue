@@ -231,7 +231,10 @@
 
                               this.$http.post("/apis/user/addSubAccount.json",params).then((res)=>{
                                   if(res.data.success){
-                                    this.$message(res.data.data);
+                                    this.$message({
+                                        type: 'success',
+                                        message:　res.data.data
+                                    });
                                     this.dialogFormVisible = false;
                                     this.getChildAccount();
                                   }else{
@@ -298,16 +301,37 @@
             },
 
             deleteAccounts(){
-                this.$http.post('/apis/user/deleteSubAccounts', this.multipleSelection).then(
-                    function (response) {
-                        if(response.data.success){
-                            this.getChildAccount();
-                        }else {
-                            this.$message.error('删除失败，请稍后再试');
-                            console.error(response.data);
+
+                if(this.multipleSelection.length == 0){
+                    this.$message('未选择子账号');
+                    return ;
+                }
+
+                this.$confirm('是否删除选择的子账号', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$http.post('/apis/user/deleteSubAccounts', this.multipleSelection).then(
+                        function (response) {
+                            if(response.data.success){
+                                this.$message({
+                                    type: 'success',
+                                    message: '删除成功'
+                                })
+                                this.getChildAccount();
+                            }else {
+                                this.$message.error('删除失败，请稍后再试');
+                                console.error(response.data);
+                            }
                         }
-                    }
-                )
+                    )
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
             },
         },
         mounted(){

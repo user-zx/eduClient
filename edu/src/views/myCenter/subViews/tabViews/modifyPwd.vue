@@ -86,6 +86,7 @@
                 },
                 rules2: {
                     pass: [
+                        { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur'},
                         {validator: validNewOldPass, trigger: 'blur'},
                         { validator: validatePass, trigger: 'blur' }
                     ],
@@ -158,14 +159,19 @@
                 }
                 this.$http.post('/apis/user/updatePassword.json', param).then(
                     (res) => {
-                        console.log(res.data)
                         if(res.data.success){
                             //console.log();
+                            this.$message({
+                                type: 'success',
+                                message: '密码修改成功'
+                            });
+                            this.$refs['ruleForm2'].resetFields();
                         }else {
-                            alert(res.data.message)
+                            this.$message.error(res.data.message);
                             this.ruleForm2.oldPwd = "";
                             this.ruleForm2.pass = "";
                             this.ruleForm2.checkPass = "";
+                            this.$refs['ruleForm2'].resetFields();
                             return false;
                         }
                     }
