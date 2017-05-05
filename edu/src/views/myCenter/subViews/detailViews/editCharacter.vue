@@ -16,11 +16,12 @@
         <div class="bottom">
             <div class="btn-wrap">
                 <el-button type="primary" @click="addPerson">添加</el-button>
-                <el-button type="primary">删除</el-button>
+                <el-button type="primary" @click="deletePerson">删除</el-button>
             </div>
             <div class="table-wrap">
                 <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
-                          :resizable="false">
+                          :resizable="false" @selection-change="handleSelectionChange">
+                    <el-table-column type="selection" width="50" align="center"></el-table-column>
                     <el-table-column label="姓名" prop="name" align="center"></el-table-column>
                     <el-table-column label="所在高校" prop="collegeName" align="center"></el-table-column>
                     <el-table-column label="所在院系" prop="department" align="center"></el-table-column>
@@ -32,7 +33,7 @@
         <el-dialog title="提示" v-model="dialogVisible" size="tiny">
           <h3 class="text-center addPersonDetails">添加人物详细信息</h3>
           <el-form :model="ruleForm" :rules="rules"  ref="ruleForm" label-width="100px" class="demo-ruleForm"> 
-                 <el-form-item label="活动名称" prop="name">
+                 <el-form-item label="姓名" prop="name">
                     <el-input v-model="ruleForm.name"></el-input>
                  </el-form-item>
                 <el-form-item label="所在高校" prop="colleges">
@@ -116,7 +117,7 @@
                 },
                 rules:{
                     name: [
-                        { required: true, message: '请输入活动名称', trigger: 'blur' },
+                        { required: true, message: '请输入姓名', trigger: 'blur' },
                     ],
                     colleges: [
                         { required: true, message: '请输入所在高校', trigger: 'blur' },
@@ -130,7 +131,8 @@
                     account: [
                        { required: true, message: '请输入昵称/关键字', trigger: 'blur' }, 
                     ],
-                }
+                },
+                deletePersonSelection: []
             }
         },
         methods: {
@@ -185,6 +187,30 @@
                     console.log(err);
                 })
             },
+            
+            handleSelectionChange(val){
+                this.deletePersonSelection = val;
+            },
+
+            deletePerson(){
+                if(this.deletePersonSelection.length == 0){
+                    this.$message('没有选中的人物');
+                }
+
+                this.$http.post('/apis/concernPerson/deleteConcernPerson', this.deletePersonSelection).then(
+                    function (response) {
+                        if(response.data.success){
+                            this.$message({
+                                type: 'success',
+                                message: '删除成功'
+                            })
+                        }else {
+                            this.$message.error('删除失败，请稍后再试');
+                        }
+                        this.getPerson();
+                    }
+                )
+            }
         },
 
         mounted(){

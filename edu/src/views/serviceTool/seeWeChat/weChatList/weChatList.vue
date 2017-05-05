@@ -211,7 +211,7 @@
             },
             batchConcerned(){ 
                this.multipleSelection.concernsType = 3; 
-               
+				
                if(this.multipleSelection.concernsContent.length>0){
                     this.$http.post("/apis/concerns/saveConcernsMore.json",this.multipleSelection).then(res=>{
                         //console.log(res);
