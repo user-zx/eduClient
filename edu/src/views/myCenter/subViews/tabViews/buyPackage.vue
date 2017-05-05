@@ -566,12 +566,21 @@
             getPrice(event){ 
                 let sum = 0,vm = this,arrC_Item = []; 
                 vm.$nextTick(function(){
+
                     $(".price").each(function(index, el) {
                       sum+= parseInt($(el).attr("data-price"))
                       $(el).on("change",function(){
                         let sumPrice = "";
                          let oldData = $(el).attr("data-price");
-                         if($(this).children('.el-checkbox__input').hasClass('is-checked')){
+                        // console.log(oldData);
+                       let state =  $(this).children('.el-checkbox__input').hasClass('is-checked');
+                             if(!!window.ActiveXObject || "ActiveXObject" in window){//判断是否是ie浏览器
+                              // alert("IE")
+                              state = !state
+                            }else{
+                              state = state
+                            }
+                         if(state){ 
                             sum = sum + parseInt(oldData);
                              sumPrice = sum + 500 * vm.addition + vm.attention * 500;
                              switch(vm.time_c_vla) {
