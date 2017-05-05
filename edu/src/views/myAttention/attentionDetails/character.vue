@@ -106,7 +106,7 @@
            getDataList(){ 
               this.getPersonList = [];
               this.$http.post("/apis/concerns/getPersonData.json",this.params).then((res)=>{
-                  if(res.data.success){ 
+                  if(res.data.success){
                       for (var i = 0; i < res.data.data.page.content.length; i++) {
                         this.getPersonList.push(res.data.data.page.content[i])
                       }

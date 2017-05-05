@@ -151,7 +151,7 @@
 
             .info{
                 display: inline-block;
-                width: calc(100% - 642px);
+                width: calc(100% - 650px);
                 height: 100%;
                 vertical-align: top;
                 border-right: 1px solid #383451;
@@ -175,7 +175,8 @@
                 display: inline-block;
                 height: 100%;
                 vertical-align: top;
-                margin-left: 49px;
+                width: 120px;
+                padding: 20px;
 
                 .btn{
                     margin-top: 40px;
@@ -217,8 +218,7 @@
                 .data-area{
                     display: inline-block;
                     width: calc(100% / 6);
-                    height: 58px;
-                    margin-top: 30px;
+                    height: 100%;
 
                     .data{
                         text-align: center;
@@ -226,12 +226,12 @@
 
                     .bigSize{
                         font-size: 26px;
-                        height: 33px;
-                        line-height: 33px;
+                        height: 57px;
+                        line-height: 77px;
                     }
                     .smallSize{
-                        height: 25px;
-                        line-height: 25px;
+                        height: 57px;
+                        line-height: 37px;
                     }
                 }
             }
