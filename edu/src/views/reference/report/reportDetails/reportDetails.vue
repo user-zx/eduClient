@@ -326,6 +326,7 @@
 </style>
 <script>
     import echarts from 'echarts';
+    import vintage from '../../../../vintage.json';
     export default{
         data(){
             return {
@@ -373,7 +374,8 @@
             },
             getPersonageRank() {
                 this.loading = true;
-                let chart = echarts.init(document.getElementById('personageTop10Chart'));
+                 echarts.registerTheme('vintage', vintage);
+                let chart = echarts.init(document.getElementById('personageTop10Chart'),'vintage');
                 chart.showLoading();
                 this.$nextTick(function() {
                     this.$http.get('/apis/internalRefReport/findInternalRefPersonTOP10.json/' + this.param.id).then(
@@ -401,7 +403,8 @@
             },
             /**获取载体分布图*/
             getVectorDistribution() {
-                let chart = echarts.init(document.getElementById('vectorDistributionChart'));
+                echarts.registerTheme('vintage', vintage);
+                let chart = echarts.init(document.getElementById('vectorDistributionChart'),'vintage');
                 chart.showLoading();
                 this.$http.get('/apis/internalRefReport/findPersonNewsVectorDistributionByVector.json/' + this.param.id).then(
                     (response) => {
@@ -434,7 +437,8 @@
             },
             /**获取高校关注度*/
             getUnivsMediaFocus() {
-                let chart = echarts.init(document.getElementById('univsChart'));
+                echarts.registerTheme('vintage', vintage);
+                let chart = echarts.init(document.getElementById('univsChart'),'vintage');
                 chart.showLoading();
                 this.$http.get('/apis/internalRefReport/findUniversityMediaAttention.json/' + this.param.id).then(
                     (response) => {

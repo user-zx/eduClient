@@ -119,12 +119,8 @@
     }
 </style>
 <script>
-     /*
-    * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
-    * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
-    * import loginButton from './components/loginButton.vue';
-    */
     import echarts from 'echarts';
+    import vintage from "../../../../../vintage.json";
     export default{
         data(){
             return {
@@ -150,7 +146,8 @@
             },
             /**获取载体走势图*/
             getVectorTrend() {
-                let chart = echarts.init(document.getElementById('vectorTrendsChart'));
+                 echarts.registerTheme('vintage', vintage);
+                let chart = echarts.init(document.getElementById('vectorTrendsChart'),'vintage');
                 chart.showLoading();
                 this.$http.post('/apis/eventAnalysis/getVectorTrend.json', this.param).then(
                     (response) => {
@@ -179,7 +176,8 @@
             },
             /**获取载体分布图*/
             getVectorDistribution() {
-                let chart = echarts.init(document.getElementById('vectorDistributionChart'));
+                echarts.registerTheme('vintage', vintage);
+                let chart = echarts.init(document.getElementById('vectorDistributionChart'),"vintage");
                 chart.showLoading();
                 this.$http.post('/apis/eventAnalysis/getVectorDistribution.json', this.param).then(
                     (response) => {
@@ -212,7 +210,8 @@
             },
             /**获取站点分布top10*/
             getSourceDistributionTop10() {
-                let chart = echarts.init(document.getElementById('sourceTop10'));
+                echarts.registerTheme('vintage', vintage);
+                let chart = echarts.init(document.getElementById('sourceTop10'),"vintage");
                 chart.showLoading();
                 this.$http.post('/apis/eventAnalysis/getSourceDistributionTop10.json', this.param).then(
                     (response) => {
