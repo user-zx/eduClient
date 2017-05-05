@@ -1,6 +1,3 @@
-/**
-* Created by zhangxin on 2017/4/5.
-*/
 <template>
     <div class="right-form probation">
         <h1 class="login-title">
@@ -34,11 +31,6 @@
     </div>
 </template>
 <script>
-     /*
-    * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
-    * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
-    * import loginButton from './components/loginButton.vue';
-    */
     export default{
         data(){
             return {

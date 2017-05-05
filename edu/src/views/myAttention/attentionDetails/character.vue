@@ -48,7 +48,7 @@
                 getBodyData:{
                     personageType:[],
                     reportPersonage : [],
-                    pageSize:10,
+                    pageSize:5,
                     pageNumber:0,
                 },
                 total:1,
@@ -83,8 +83,8 @@
                 console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
-                 this.params.pageNumber = val;
-                 console.log(this.params.pageNumber);
+                 this.params.pageNumber = val - 1;
+                // console.log(this.params.pageNumber);
                 this.getDataList();
             },
            getParams(params){
@@ -99,7 +99,7 @@
               this.params.reportPersonage = [];
               this.params.startDate = params.startDate;
               this.params.endDate = params.endDate;
-              this.params.pageSize = 10;
+              this.params.pageSize = 5;
               this.params.pageNumber = 0;
               this.getDataList();
            },
