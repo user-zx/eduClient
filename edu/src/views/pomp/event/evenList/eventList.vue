@@ -202,7 +202,7 @@
                                     this.dialogFormVisible = false;
                                     this.getEventList();
                                 } else {
-                                    console.error(response.data.message);
+                                    this.$message.error(response.data.message);
                                     return false;
                                 }
                             }, (response) => {
