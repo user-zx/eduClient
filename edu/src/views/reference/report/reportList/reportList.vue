@@ -81,6 +81,34 @@
      */
     export default{
         data(){
+            var validEndDate = (rule, value, callback) =>{
+                if(value == ''){
+                    callback(new Error('请选择结束时间'));
+                }
+
+                let startDate = this.addReportForm.startDate;
+                if(startDate == ''){
+                    callback();
+                }else if(startDate >　value){
+                    callback(new Error('结束时间不能小于开始时间'));
+                }
+
+                callback();
+            };
+            var validStartDate = (rule, value, callback) =>{
+                if(value == ''){
+                    callback(new Error('请选择开始时间'));
+                }
+
+                let endDate = this.addReportForm.endDate;
+                if(endDate == ''){
+                    return callback();
+                }else if(endDate <　value){
+                    callback(new Error('开始时间不能大于结束时间'));
+                }
+
+                callback();
+            };
             return {
                 tableData: [],
                 loading:true,
@@ -103,10 +131,12 @@
                         {min:4,max:16,message:"长度在 4 到 16 个字符",trigger: 'blur' },
                     ],
                     startDate:[
-                        {type: 'object',required:true,message:"请选择开始时间",trigger:'blur'}
+                        {type: 'object',required:true,message:"请选择开始时间",trigger:'blur'},
+                        {validator: validStartDate, trigger: 'blur'}
                     ],
                     endDate:[
-                        {type: 'object',required:true,message:"请选择结束时间",trigger:'blur'}
+                        {type: 'object',required:true,message:"请选择结束时间",trigger:'blur'},
+                        {validator: validEndDate, trigger: 'blur'}
                     ]
                 }
             }
@@ -185,9 +215,16 @@
             dialogSubmit(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.addReportForm.startDate = this.addReportForm.startDate.format('yyyy-MM-dd hh:mm:ss');
-                        this.addReportForm.endDate = this.addReportForm.endDate.format('yyyy-MM-dd hh:mm:ss');
-                        this.$http.post('/apis/internalRefReport/saveOrUpdateReport.json', this.addReportForm).then((response) => {
+                        //改变了form表单的日期格式 从而表单校验日期失败
+//                        this.addReportForm.startDate = this.addReportForm.startDate.format('yyyy-MM-dd hh:mm:ss');
+//                        this.addReportForm.endDate = this.addReportForm.endDate.format('yyyy-MM-dd hh:mm:ss');
+                        let param = {
+                            id: this.addReportForm.id,
+                            title: this.addReportForm.title,
+                            startDate: this.addReportForm.startDate.format('yyyy-MM-dd hh:mm:ss'),
+                            endDate: this.addReportForm.endDate.format('yyyy-MM-dd hh:mm:ss')
+                        }
+                        this.$http.post('/apis/internalRefReport/saveOrUpdateReport.json', param).then((response) => {
                                 if (response.data.success) {
                                     this.$message({
                                         message: this.formTitle + '成功',
@@ -196,7 +233,7 @@
                                     this.dialogFormVisible = false;
                                     this.getReportList();
                                 } else {
-                                    console.error(response.data.message);
+                                    this.$message.error(response.data.message);
                                     return false;
                                 }
                             }, (response) => {
