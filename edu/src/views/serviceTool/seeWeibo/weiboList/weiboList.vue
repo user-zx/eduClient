@@ -200,6 +200,7 @@
             },
             //微博指数数据获取
             getWeiboHotArticleList(){
+                this.loading = true;
                 this.$http.post('/apis/businessTool/getMicroblogIndexData.json', this.hotParam).then(
                     (response) => {
                         if(response.data.success){
@@ -216,6 +217,7 @@
             },
             //微博统计数据获取
             getWeiboStatisticsData(){
+                this.loading = true;
                 this.$http.post('/apis/businessTool/getMicroblogData.json', this.statisticsParam).then(
                     (response) => {
                         this.loading = false;
@@ -255,12 +257,10 @@
 
             handleCurrentChange1(pageNumber){
                 this.statisticsParam.pageNumber = pageNumber - 1;
-                this.loading = true;
                 this.getWeiboStatisticsData();
             },
             handleCurrentChange2(pageNumber){
                 this.hotParam.pageNumber = pageNumber - 1;
-                this.loading = true;
                 this.getWeiboHotArticleList();
             },
         },

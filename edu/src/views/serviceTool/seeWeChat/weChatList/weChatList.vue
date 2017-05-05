@@ -195,6 +195,7 @@
             },
 
             getWechatStatisticsData: function () {
+                this.loading = true;
                 this.$http.post('/apis/businessTool/getWechatData.json', this.statisticsParam).then(
                     (response) => {
                         this.loading = false;
@@ -207,6 +208,7 @@
             },
 
             getWechatExponentData(){
+                this.loading = true;
                 this.$http.post('/apis/businessTool/getWechatIndexData.json', this.exponentParam).then(
                     (response) => {
                         let content = response.data.data.page.content;
@@ -257,13 +259,11 @@
 
             handleCurrentChange1(pageNumber){
                 this.statisticsParam.pageNumber = pageNumber - 1;
-                this.loading = true;
                 this.getWechatStatisticsData();
             },
 
             handleCurrentChange2(pageNumber){
                 this.exponentParam.pageNumber = pageNumber - 1;
-                this.loading = true;
                 this.getWechatExponentData();
             }
         },

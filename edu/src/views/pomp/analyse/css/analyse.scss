@@ -56,11 +56,12 @@
       }
       .arrow {
         display: inline-block;
-        width: 12px;
-        height: 15px;
+        width: 8px;
+        height: 11px;
         vertical-align: middle;
-        background-position: -5px -5px;
         background-repeat: no-repeat;
+        margin-left: 10px;
+        margin-bottom: 5px;
       }
       .arrow-up{
         background-image: url(../../../../assets/images/arrow-blue-up.png);

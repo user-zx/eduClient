@@ -30,7 +30,7 @@
                        :total="total">
         </el-pagination>
 
-        <el-dialog :title="formTitle + '报告'" v-model="dialogFormVisible" class="createReport-dialog" @click="closeDialog('addReportForm')">
+        <el-dialog :title="formTitle + '报告'" v-model="dialogFormVisible" class="createReport-dialog" @close="closeDialog('addReportForm')">
             <el-form :model="addReportForm" :rules="rules" ref="addReportForm" label-width="150px">
                 <input type="hidden" name="id" :value="addReportForm.id"/>
                 <el-form-item label="开始时间" prop="startDate">

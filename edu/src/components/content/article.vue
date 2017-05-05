@@ -291,6 +291,7 @@
         .article{
             border-bottom: 1px solid #E3EDFB;
             display: table;
+            width: 100%;
 
             .article-left{
                 width: 5%;
