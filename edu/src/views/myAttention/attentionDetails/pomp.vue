@@ -49,12 +49,32 @@
         components: {searchBox, articleView},
         methods:{
             onSearchDataChange(data) {
-                console.log(data);
-                this.param.university.push  = data.university;
-                this.param.vector.push(data.vector);
-                this.param.emotion = data.emotion;
-                this.param.startDate = data.startDate;
-                this.param.endDate = data.endDate;
+               if(data.university.length>0){
+                 this.param.university = data.university;
+               }else{
+                this.param.university = [];
+               }
+               if(data.vector!=undefined){
+                  this.param.vector = [];
+                  this.param.vector.push(data.vector);   
+               }else{
+                 this.param.vector = [];
+               }
+               if(data.emotion!=undefined){
+                     this.param.emotion = data.emotion;
+               }else{
+                    this.param.emotion = "";
+               }
+               if(data.startDate!=undefined){
+                    this.param.startDate = data.startDate;
+               }else{
+                    this.param.startDate = "";
+               }
+                if(data.endDate!=undefined){
+                    this.param.endDate = data.endDate;
+                }else{
+                    this.param.endDate = "";
+                }
                 this.getArticleList();
             },
             pageChange(param) {
