@@ -2,7 +2,6 @@ import "vue-style-loader!css-loader!sass-loader!../../../../assets/css/table/tra
 import "vue-style-loader!css-loader!sass-loader!../../../../assets/css/tabs/tabs.scss";
 import overview from '../overview/overview.vue';
 import echarts from 'echarts';
-//import wonderland from "../../../../wonderland";
 import vintage from "../../../../vintage.json";
 export default {
     data() {

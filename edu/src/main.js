@@ -9,10 +9,8 @@ import routerConfig from './router.config';
 import './utils';
 import vueConfig from './store.config';
 import imgUtils from './imgUtil'; 
-import vintage from "./vintage.json";
 import "vue-style-loader!css-loader!sass-loader!./assets/css/style.scss";
 import 'vue-style-loader!css-loader!sass-loader!element-ui/lib/theme-default/index.css'
-
 Vue.config.debug=true;
 Vue.use(vueRouter);
 Vue.use(vueResource);
