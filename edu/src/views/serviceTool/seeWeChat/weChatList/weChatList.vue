@@ -211,33 +211,23 @@
             },
             batchConcerned(){ 
                this.multipleSelection.concernsType = 3; 
-               console.log(this.multipleSelection);
+               
                if(this.multipleSelection.concernsContent.length>0){
                     this.$http.post("/apis/concerns/saveConcernsMore.json",this.multipleSelection).then(res=>{
                         //console.log(res);
                         if(res.data.success){
-                            this.open3();
+                            this.$message({
+                                type: 'success',
+                                message: '关注成功'
+                            })
                         }else{
-                            this.open6();
+                            this.$message.error('关注失败');
                         }
                     },err=>{
                         console.log(err);
                     })
                }
             },
-            open3() {
-                this.$notify({
-                  title: '添加成功',
-                  message: '这是一条成功的提示消息',
-                  type: 'success'
-                });
-            },
-              open6() {
-                this.$notify.error({
-                  title: '添加失败',
-                  message: '这是一条失败的提示消息'
-             });
-          }
         },
         created(){
             this.setBreadCrumb();

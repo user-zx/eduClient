@@ -30,7 +30,7 @@
                        :total="total">
         </el-pagination>
 
-        <el-dialog :title="formTitle + '报告'" v-model="dialogFormVisible" class="createReport-dialog">
+        <el-dialog :title="formTitle + '报告'" v-model="dialogFormVisible" class="createReport-dialog" @click="closeDialog('addReportForm')">
             <el-form :model="addReportForm" :rules="rules" ref="addReportForm" label-width="150px">
                 <input type="hidden" name="id" :value="addReportForm.id"/>
                 <el-form-item label="开始时间" prop="startDate">
@@ -64,6 +64,7 @@
         .content-wrap{
             padding: 20px;
             background: #21273d;
+            min-height: 526px;
 
             .btn-container{
                 margin-bottom: 10px;
@@ -102,10 +103,10 @@
                         {min:4,max:16,message:"长度在 4 到 16 个字符",trigger: 'blur' },
                     ],
                     startDate:[
-                        {type: 'object',required:true,message:"请选择开始时间",trigger:'change'}
+                        {type: 'object',required:true,message:"请选择开始时间",trigger:'blur'}
                     ],
                     endDate:[
-                        {type: 'object',required:true,message:"请选择结束时间",trigger:'change'}
+                        {type: 'object',required:true,message:"请选择结束时间",trigger:'blur'}
                     ]
                 }
             }
@@ -214,7 +215,8 @@
             },
             handleCurrentChange(val) {
                 this.currentPage = val;
-                this.getEventList();
+                this.param.pageNumber = val - 1;
+                this.getReportList();
             },
             getReportList() {
                 this.loading = true;
@@ -237,6 +239,10 @@
                         }
                     );
                 });
+            },
+
+            closeDialog(formName){
+                this.$refs[formName].resetFields();
             }
         },
         created(){

@@ -38,7 +38,7 @@
                     </div>
                 </el-col>
                 <el-col :span="3">
-                    <div class="tab-item" @click="currentFun('systemNotice')">
+                    <div class="tab-item systemNotice" @click="currentFun('systemNotice')">
                         <i class="icon icon-7"></i> 系统通知
                     </div>
                 </el-col>
@@ -183,6 +183,14 @@
             $(".attend-tabs").on("click",".tab-item",function () {
                 $(this).parent().addClass("active").siblings().removeClass("active");
             });
+            if(this.$route.query != undefined && this.$route.query.defaultActive != undefined){
+                let defaultActive = this.$route.query.defaultActive;
+                if(defaultActive == 'sysNotice'){
+                    $(".tab-item").parent().removeClass('active');
+                    $('.systemNotice').parent().addClass('active');
+                    this.currentFun('systemNotice');
+                }
+            }
         },
         created(){
             this.setBreadCrumb();
