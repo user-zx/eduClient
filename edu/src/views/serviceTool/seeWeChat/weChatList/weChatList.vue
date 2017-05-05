@@ -7,8 +7,17 @@
                     <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
                 </div>
                 <div class="clearfix btn-box">
-                    <div class="pull-right">
+                    <div class="pull-left">
                         <el-button type="primary" @click="verifyWechat">微信认证</el-button>
+                    </div>
+                    <div class="pull-right content-bar-page">
+                        <el-pagination class="edu-pagination"
+                                       @current-change="handleCurrentChange1"
+                                       :current-page="statisticsParam.pageNumber + 1"
+                                       :page-size="15"
+                                       layout="prev, next, jumper, total"
+                                       :total="total1">
+                        </el-pagination>
                     </div>
                 </div>
                 <el-card class="box-card"> 
@@ -40,13 +49,20 @@
                 <div class="btn-box clearfix">
                     <div class="pull-left">
                         <el-button type="primary" @click="batchConcerned">批量关注</el-button>
-                    </div>
-                    <div class="pull-right">
                         <el-button type="primary" @click="verifyWechat">微信认证</el-button>
+                    </div>
+                    <div class="pull-right content-bar-page">
+                        <el-pagination class="edu-pagination"
+                                       @current-change="handleCurrentChange2"
+                                       :current-page="exponentParam.pageNumber + 1"
+                                       :page-size="15"
+                                       layout="prev, next, jumper, total"
+                                       :total="total2">
+                        </el-pagination>
                     </div>
                 </div>
                 <el-card class="box-card">
-                    <el-table :data="wechatExponentData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
+                    <el-table :data="wechatExponentData" class="tran-table no-col-title yellow-table" stripe border style="width: 100%"
                               :resizable="false" @selection-change="handleSelectionChange">
                         <el-table-column type="selection" width="50" align="center"></el-table-column>
                         <el-table-column label="排名" align="center" prop="rank">
@@ -88,9 +104,14 @@
         background-color: #141725;
     }
     .btn-box{
-        padding:20px 20px 0;
+        .pull-left{
+            .el-button{
+                margin-top: 25px;
+                margin-left: 20px;
+            }
+        }
     }
-    .mt20{margin-top: 20px;}
+
     .character-name{
         cursor: pointer;
     }
@@ -125,6 +146,8 @@
                 searchNames1: ['exactDate'],
                 loading: true,
                 multipleSelection:{},
+                total1: 0,
+                total2: 0
             }
         },
         components:{searchBox} ,
@@ -177,6 +200,7 @@
                         this.loading = false;
                         if(response.data.success){
                             this.wechatStatisticsData = response.data.data.page.content;
+                            this.total1 = response.data.data.page.totalElements;
                         }
                     }
                 )
@@ -189,7 +213,9 @@
                         for(let i = 0; i < content.length; i++){
                             content[i].rank = i + 1;
                         }
+                        this.total2 = response.data.data.page.totalElements;
                         this.wechatExponentData = content;
+                        this.loading = false;
                     }
                 )
             },
@@ -228,6 +254,18 @@
                     })
                }
             },
+
+            handleCurrentChange1(pageNumber){
+                this.statisticsParam.pageNumber = pageNumber - 1;
+                this.loading = true;
+                this.getWechatStatisticsData();
+            },
+
+            handleCurrentChange2(pageNumber){
+                this.exponentParam.pageNumber = pageNumber - 1;
+                this.loading = true;
+                this.getWechatExponentData();
+            }
         },
         created(){
             this.setBreadCrumb();

@@ -9,8 +9,17 @@
                     <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
                 </div>
                 <div class="clearfix btn-box">
-                    <div class="pull-right">
+                    <div class="pull-left">
                         <el-button type="primary" @click="verifyWeibo">微博认证</el-button>
+                    </div>
+                    <div class="pull-right content-bar-page">
+                        <el-pagination class="edu-pagination"
+                                       @current-change="handleCurrentChange1"
+                                       :current-page="statisticsParam.pageNumber + 1"
+                                       :page-size="15"
+                                       layout="prev, next, jumper, total"
+                                       :total="total1">
+                        </el-pagination>
                     </div>
                 </div>
                 <el-card class="box-card">
@@ -42,9 +51,16 @@
                 <div class="btn-box clearfix">
                     <div class="pull-left">
                         <el-button type="primary" @click="batchConcerned">批量关注</el-button>
-                    </div>
-                    <div class="pull-right">
                         <el-button type="primary" @click="verifyWeibo">微博认证</el-button>
+                    </div>
+                    <div class="pull-right content-bar-page">
+                        <el-pagination class="edu-pagination"
+                                       @current-change="handleCurrentChange2"
+                                       :current-page="hotParam.pageNumber + 1"
+                                       :page-size="15"
+                                       layout="prev, next, jumper, total"
+                                       :total="total2">
+                        </el-pagination>
                     </div>
                 </div>
                 <el-card class="box-card">
@@ -131,6 +147,8 @@
                 },
                 loading:true,
                 multipleSelection:{},
+                total1: 0,
+                total2: 0
             }
         },
         components:{searchBox} ,
@@ -191,6 +209,7 @@
                                 content[i].rank = i + 1;
                             }
                             this.tableData = content;
+                            this.total2 = response.data.data.page.totalElements;
                         }
                     }
                 )
@@ -202,6 +221,7 @@
                         this.loading = false;
                         if(response.data.success){
                             this.weiboStatisticsData = response.data.data.page.content;
+                            this.total1 = response.data.data.page.totalElements;
                         }
                     }
                 )
@@ -231,6 +251,17 @@
                for (var i = 0; i < val.length; i++) {
                    this.multipleSelection.concernsContent.push(val[i].microblogName)
                }
+            },
+
+            handleCurrentChange1(pageNumber){
+                this.statisticsParam.pageNumber = pageNumber - 1;
+                this.loading = true;
+                this.getWeiboStatisticsData();
+            },
+            handleCurrentChange2(pageNumber){
+                this.hotParam.pageNumber = pageNumber - 1;
+                this.loading = true;
+                this.getWeiboHotArticleList();
             },
         },
         created(){
