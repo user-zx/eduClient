@@ -35,14 +35,16 @@
                 <input type="hidden" name="id" :value="addReportForm.id"/>
                 <el-form-item label="开始时间" prop="startDate">
                     <el-date-picker
-                            v-model="addReportForm.startDate"
+                            :editable="editable"
+                            v-model="startDate"
                             type="datetime"
                             placeholder="选择开始时间">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="结束时间" prop="endDate">
                     <el-date-picker
-                            v-model="addReportForm.endDate"
+                            :editable="editable"
+                            v-model="endDate"
                             type="datetime"
                             placeholder="选择结束时间">
                     </el-date-picker>
@@ -90,6 +92,9 @@
                     pageNumber: 0,
                 },
                 dialogFormVisible: false,
+                startDate: '',
+                endDate: '',
+                editable: false,
                 formTitle: '',
                 addReportForm: {
                     id: '',
@@ -154,6 +159,8 @@
             },
             addReport() {
                 this.formTitle = '添加';
+                this.startDate = '';
+                this.endDate = '';
                 this.addReportForm = {
                     id: '',
                     title: '',
@@ -165,8 +172,8 @@
             editReport(form) {
                 this.formTitle = '编辑';
                 this.addReportForm = jQuery.extend({}, form);
-                this.addReportForm.startDate = new Date(this.addReportForm.startDate);
-                this.addReportForm.endDate = new Date(this.addReportForm.endDate);
+                this.startDate = new Date(this.addReportForm.startDate);
+                this.endDate = new Date(this.addReportForm.endDate);
                 this.dialogFormVisible = true;
             },
             formatCreateDate(row, col) {
@@ -185,6 +192,33 @@
             dialogSubmit(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        if (this.addReportForm.startDate > this.addReportForm.endDate) {
+                            this.$message({
+                                message: '开始时间不能大于结束时间',
+                                type: 'error'
+                            });
+                            return;
+                        }
+                        this.addReportForm.startDate = this.addReportForm.startDate.format('yyyy-MM-dd hh:mm:ss');
+                        this.addReportForm.endDate = this.addReportForm.endDate.format('yyyy-MM-dd hh:mm:ss');
+
+                        let sameCount = 0;
+                        if (this.tableData.length > 0) {
+                            for (let i = 0; i < this.tableData.length; i++) {
+                                if (this.tableData[i].title == this.addReportForm.title && this.tableData[i].id != this.addReportForm.id) {
+                                    sameCount++;
+                                }
+                            }
+                        }
+
+                        if (sameCount > 0) {
+                            this.$message({
+                                message: '标题不能重复',
+                                type: 'error'
+                            });
+                            return;
+                        }
+
                         this.addReportForm.startDate = this.addReportForm.startDate.format('yyyy-MM-dd hh:mm:ss');
                         this.addReportForm.endDate = this.addReportForm.endDate.format('yyyy-MM-dd hh:mm:ss');
                         this.$http.post('/apis/internalRefReport/saveOrUpdateReport.json', this.addReportForm).then((response) => {
@@ -250,6 +284,14 @@
             this.getReportList();
         },
         mounted(){
+        },
+        watch: {
+            startDate(val) {
+                this.addReportForm.startDate = val;
+            },
+            endDate(val) {
+                this.addReportForm.endDate = val;
+            }
         }
     }
 </script>
