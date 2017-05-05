@@ -199,7 +199,7 @@
                     },
                     {
                         'name': 'type',
-                        'title': '类型',
+                        'title': '类型:',
                         'searchList': [
                             {id:0, text: '全部', selected: true},
                             {id:1, text: '生活服务', selected: false},
@@ -214,7 +214,7 @@
                     },
                     {
                         'name': 'verified',
-                        'title': '认证情况',
+                        'title': '认证情况:',
                         'searchList': [
                             {id: 0, text: '全部', selected: true},
                             {id: 1, text: '已认证', selected: false},
@@ -223,12 +223,12 @@
                     },
                     {
                         'name': 'exactDate',
-                        'title': '日期',
+                        'title': '日期:',
                         'searchList': [{id: 0, text: '', dateBox: 'exact'}]
                     },
                     {
                         'name': 'selectDate',
-                        'title': '选择日期',
+                        'title': '选择日期:',
                         'searchList': [{id: 0, text: '', dateBox: 'selectDate'}]
                     }
                 ],
