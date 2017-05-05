@@ -17,7 +17,7 @@
                             <el-dropdown-item>事件3</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
-                    <el-button type="primary" icon="plus">取消关注</el-button>
+                    <el-button type="primary" icon="plus" @click="cancelAttention">取消关注</el-button>
                 </div>
                 <div class="content-bar-pagination">
                     <el-pagination class="edu-pagination"
@@ -30,8 +30,7 @@
                 </div>
             </div>
             <el-card class="box-card">
-                <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
-                          :resizable="false">
+                <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%" :resizable="false" @selection-change="handleSelectionChange">
                     <el-table-column type="selection" width="50" align="center"></el-table-column>
                     <el-table-column label="排名" align="center" prop="all">
                         <template scope="scope">
@@ -105,13 +104,35 @@
                 loading:true,
                 curContent: this.$store.state.curContent,
                 tableData: [],
+                removeParams:{concernsContent:[]},
             }
         },
         components: {searchBox},
         methods:{
+            cancelAttention(){
+                this.removeParams.concernsType = 4;
+               this.$http.post("/apis/concerns/removeConcernsMore.json",this.removeParams).then(res=>{
+                  if(res.data.success){
+                    this.$message("取消关注成功");
+                    this.getWeiboData();
+                  }else{
+                    this.$message(res.data.message);
+                  }
+               },err=>{
+                  console.log(err);
+               })
+            },
+            handleSelectionChange(val){
+                console.log(val);
+                 this.removeParams.concernsContent = [];
+               for (let i = 0; i < val.length; i++) {
+                 this.removeParams.concernsContent.push(val[i].microblogName);
+               }
+            },
             handleCurrentChange(pageNumber) {
                 //后台是从0开始
                 this.param.pageNumber = pageNumber - 1;
+                this.getWeiboData();
             },
             onSearchDataChange(data) {
                  this.param.vector = [];
@@ -122,6 +143,7 @@
                 this.getWeiboData();
             },
             getWeiboData(){
+                this.tableData = [];
                 this.$http.post("/apis/concerns/getMicroblogData.json",this.param).then((res)=>{
                     if(res.data.success){
                         this.total = res.data.data.page.totalElements>10000?10000:res.data.data.page.totalElements;
@@ -130,7 +152,7 @@
                         }
                     }
                 },(err)=>{
-                    
+                    console.log(err);
                 })
             },
             toVerified(data){

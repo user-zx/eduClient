@@ -20,7 +20,7 @@
                             <el-dropdown-item>事件3</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
-                    <el-button type="primary" icon="plus">取消关注</el-button>
+                    <el-button type="primary" icon="plus" @click="cancelAttention">取消关注</el-button>
                 </div>
                 <div class="content-bar-pagination">
                     <el-pagination class="edu-pagination"
@@ -32,8 +32,8 @@
                                    :total="total">
                     </el-pagination>
                 </div>
-            </div> 
-            <character-table class="dark" :tableData="getPersonList"></character-table>
+            </div>  
+            <character-table class="dark" ref="table" :tableData="getPersonList" @select="removeData"></character-table>
         </div> 
     </div>
 </template> 
@@ -48,23 +48,43 @@
                 getBodyData:{
                     personageType:[],
                     reportPersonage : [],
-                    pageSize:10,
+                    pageSize:5,
                     pageNumber:0,
                 },
                 total:1,
                 labelPosition: 'left',
                 getPersonList: [],
                 params:{},
+                removeParams:{concernsContent:[]},
             }
         },
         components:{characterTable,cascadeBox},
         methods:{
+            removeData(val){
+              this.removeParams.concernsContent = [];
+               for (let i = 0; i < val.length; i++) {
+                 this.removeParams.concernsContent.push(val[i].name);
+               }
+            },
+            cancelAttention(){
+              this.removeParams.concernsType = 2;
+               this.$http.post("/apis/concerns/removeConcernsMore.json",this.removeParams).then(res=>{
+                  if(res.data.success){
+                    this.$message("取消关注成功");
+                    this.getDataList();
+                  }else{
+                    this.$message(res.data.message);
+                  }
+               },err=>{
+                  console.log(err);
+               })
+            },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
-                 this.params.pageNumber = val;
-                 console.log(this.params.pageNumber);
+                 this.params.pageNumber = val - 1;
+                // console.log(this.params.pageNumber);
                 this.getDataList();
             },
            getParams(params){
@@ -79,17 +99,18 @@
               this.params.reportPersonage = [];
               this.params.startDate = params.startDate;
               this.params.endDate = params.endDate;
-              this.params.pageSize = 10;
+              this.params.pageSize = 5;
               this.params.pageNumber = 0;
               this.getDataList();
            },
-           getDataList(){
+           getDataList(){ 
               this.getPersonList = [];
               this.$http.post("/apis/concerns/getPersonData.json",this.params).then((res)=>{
                   if(res.data.success){ 
                       for (var i = 0; i < res.data.data.page.content.length; i++) {
                         this.getPersonList.push(res.data.data.page.content[i])
                       }
+                      this.$refs.table.getTableDataEvent()
                      this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
                   }
               },(err)=>{

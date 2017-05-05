@@ -3,7 +3,7 @@
 */
 <template>
     <el-table :data="getTableData" class="tran-table" border style="width: 100%"
-              :resizable="false">
+              :resizable="false" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column label="全部" align="center" prop="rank">
             <template scope="scope">
@@ -51,6 +51,10 @@
         },
         components: {},
         methods: {
+            handleSelectionChange(val){
+                console.log(val);
+                this.$emit('select',val) 
+            },
             //带参跳转到人物分析页面
             toCharacterAnalyse(data){
                 console.log(data);
@@ -59,10 +63,14 @@
             getData(){
                 console.log('test');
             },
+            getTableDataEvent(){
+                this.getTableData = this.tableData; 
+                console.log(this.tableData);
+            }
         },
         mounted(){   
             this.$nextTick(function(){  
-                this.getTableData = this.tableData; 
+                this.getTableDataEvent();
             }) 
         },
         props:["tableData"],

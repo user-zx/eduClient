@@ -17,7 +17,7 @@
                             <el-dropdown-item>事件3</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
-                    <el-button type="primary" icon="plus">取消关注</el-button>
+                    <el-button type="primary" icon="plus" @click="cancelAttention">取消关注</el-button>
                 </div>
                 <div class="content-bar-pagination">
                     <el-pagination class="edu-pagination"
@@ -30,8 +30,7 @@
                 </div>
             </div>
             <el-card class="box-card">
-                <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
-                          :resizable="false">
+                <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%" :resizable="false" @selection-change="handleSelectionChange">
                     <el-table-column type="selection" width="50" align="center"></el-table-column>
                     <el-table-column label="排名" align="center" prop="index">
                         <template scope="scope">
@@ -87,12 +86,19 @@
                 loading:true, 
                 curContent: this.$store.state.curContent,
                 tableData: [],
+                removeParams:{concernsContent:[]},
             }
         },
         components: {searchBox},
         methods:{
+            handleSelectionChange(val){
+                this.removeParams.concernsContent = [];
+               for (let i = 0; i < val.length; i++) {
+                 this.removeParams.concernsContent.push(val[i].wechatNumber);
+               }
+            },
             handleCurrentChange(pageNumber) {
-                //后台是从0开始
+                //后台是从0开始 
                 this.param.pageNumber = pageNumber - 1;
                 this.getWechatData();
             },
@@ -107,19 +113,31 @@
             getWechatData(){
                 this.tableData = [];
                 this.$http.post("/apis/concerns/getWechatData.json", this.param).then((res)=>{
-                   // console.log(this.param);
-                    console.log(res);
                     if(res.data.success){
                         this.total = res.data.data.page.totalElements> 10000 ? 10000 : res.data.data.page.totalElements;
+                       
                         for (var i = 0; i < res.data.data.page.content.length; i++) {
                             res.data.data.page.content[i].index = i+1;
-                            this.tableData.push(res.data.data.page.content[i])
+                            this.tableData.push(res.data.data.page.content[i]);
                         }
                     }
                 },(err)=>{
                     console.log(err);
                 })
-            }
+            },
+             cancelAttention(){
+              this.removeParams.concernsType = 3;
+               this.$http.post("/apis/concerns/removeConcernsMore.json",this.removeParams).then(res=>{
+                  if(res.data.success){
+                    this.$message("取消关注成功");
+                    this.getWechatData();
+                  }else{
+                    this.$message(res.data.message);
+                  }
+               },err=>{
+                  console.log(err);
+               })
+            },
         },
         created(){
 
