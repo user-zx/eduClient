@@ -2,10 +2,30 @@
   import breadCrumb from '../../../../components/breadCrumb/breadCrumb.vue';
   import overview from '../overview.vue';
   import echarts from 'echarts';
+  import searchBox from "../../../../components/searchBox/searchBox.vue";
 
   export default{
         data(){
             return {
+                loading1: true,
+                total1: 0,
+                param1: {
+                    pageSize: 15,
+                    pageNumber: 0
+                },
+                tableData1: [],
+                searchNames1: ['university', 'exactDate'],
+
+                loading2: true,
+                total2: 0,
+                param2: {
+                    pageSize: 15,
+                    pageNumber: 0
+                },
+                tableData2: [],
+                searchNames2: ['university', 'officialAcctType', 'exactDate'],
+
+                university: '',
                 activeName2: 'TODAY',
                 msg:"两微洞察",
                 activeName: 'informationAggregation',
@@ -17,9 +37,12 @@
                 weboOpinion: [],
                 radio1: '',
                 radio2: '',
+                weChatDistribute: {},
+                weBoDistribute: {},
+                distributeData: [],
             }
         },
-        components:{breadCrumb,overview},
+        components:{breadCrumb,overview,searchBox},
         methods:{
             setBreadCrumb(){
                  /*设置面包屑*/
@@ -62,6 +85,29 @@
                         console.error(response);
                     }
                 );
+            },
+            /**获取两微分布*/
+            get2VDistribute(vector) {
+                this.$http.post('/apis/twoMicroInsight/findTwoMicroInsightDistributedAll.json', {vector: vector}).then(
+                    (response) => {
+                        if (response.data.success) {
+                            if (vector == "微信") {
+                                this.weChatDistribute = response.data.data;
+                                this.initDistribute(this.weChatDistribute)
+                            } else {
+                                this.weBoDistribute = response.data.data;
+                            }
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            },
+            initDistribute(option) {
+                let chart = echarts.init(document.getElementById("carrierDis_graph"));
+                chart.setOption(option);
             },
             get2VHot(vector, emotion) {
                 let param = {
@@ -112,7 +158,6 @@
                 this.$http.post('/apis/twoMicroInsight/findTwoMicroInsightInfo.json', param).then(
                     (response) => {
                         if (response.data.success) {
-                            console.log(response.data.data);
                             if ('微信' == vector) {
                                 this.wechatOpinion = response.data.data.content;
                             } else {
@@ -126,13 +171,110 @@
                     }
                 );
             },
+            getTableData(vector) {
+                let param;
+                let apiUrl;
+                if ("微博" == vector) {
+                    this.loading1 = true;
+                    param = this.param1;
+                    apiUrl = '/apis/businessTool/getMicroblogIndexData.json';
+                } else {
+                    this.loading2 = true;
+                    param = this.param2;
+                    apiUrl = '/apis/businessTool/getWechatIndexData.json';
+                }
+                this.$http.post(apiUrl, param).then(
+                    (response) => {
+                        if (response.data.success) {
+                            let page = response.data.data.page
+                            let content = page.content;
+                            for (var i = 0; i < content.length; i++) {
+                                content[i].rank = i + 1;
+                            }
+                            if (vector == "微博") {
+                                this.tableData1 = content;
+                                this.total1 = page.totalElements;
+                                this.loading1 = false;
+                            } else {
+                                this.tableData2 = content;
+                                this.total2 = page.totalElements;
+                                this.loading2 = false;
+                            }
+
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            },
+
+            handleCurrentChange1(val) {
+                this.param1.pageNumber = val - 1;
+                this.getTableData("微博");
+            },
+            onSearchDataChange1(data) {
+                data.pageNumber = 0;
+                this.param1 = data;
+                this.getTableData("微博");
+            },
+            onSearchLoad1(data) {
+                data.pageNumber = 0;
+                this.param1 = data;
+                this.getTableData("微信");
+            },
+
+            handleCurrentChange2(val) {
+                this.param2.pageNumber = val - 1;
+                this.getTableData("微信");
+            },
+            onSearchDataChange2(data) {
+                data.pageNumber = 0;
+                this.param2 = data;
+                if (data.officialAcctType) {
+                    let types = [];
+                    types.push(data.officialAcctType);
+                    data.officialAcctType = types;
+                }
+                this.getTableData("微信");
+            },
+            onSearchLoad2(data) {
+                data.pageNumber = 0;
+                this.param2 = data;
+            },
+            toWeiboDetail(data){
+                data.startDate = this.param1.startDate;
+                data.endDate = this.param1.endDate;
+                this.$router.push({path:"/home/weiboDetail", query: data});
+            },
+            toWechatDetail(data){
+                data.startDate = this.param2.startDate;
+                data.endDate = this.param2.endDate;
+                this.$router.push({path:"/home/weChatDetail", query: data});
+            },
+            batchConcerned() {
+
+            },
+            handleSelectionChange() {
+
+            }
         },
         mounted(){
+
+            $.get('../../../../node_modules/echarts/map/json/china.json', function (chinaJson) {
+                echarts.registerMap('china', chinaJson);
+            });
+
             this.getVectorTrend($('#TREND_TODAY>.text')[0], 'TODAY');
             this.get2VHot('微信');
             this.get2VHot('微博');
             this.get2VOpinion('微信');
             this.get2VOpinion('微博');
+            this.get2VDistribute("微信");
+            this.get2VDistribute("微博");
+            this.getTableData("微信");
+            this.getTableData("微博");
         },
         created(){
             this.setBreadCrumb();
