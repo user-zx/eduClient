@@ -2,6 +2,7 @@
   import breadCrumb from '../../../../components/breadCrumb/breadCrumb.vue';
   import overview from '../overview.vue';
   import echarts from 'echarts';
+  import vintage from "../../../../vintage.json";
   import searchBox from "../../../../components/searchBox/searchBox.vue";
 
   export default{
@@ -69,7 +70,8 @@
             },
             /**获取载体走势*/
             getVectorTrend(dom, type) {
-                let chart = echarts.init(dom);
+                 echarts.registerTheme('vintage', vintage);
+                let chart = echarts.init(dom,'vintage');
                 chart.showLoading();
                 this.$http.post('/apis/twoMicroInsight/findTwoMicroInsightVectorTrend.json', {type: type}).then(
                     (response) => {
@@ -106,7 +108,8 @@
                 );
             },
             initDistribute(option) {
-                let chart = echarts.init(document.getElementById("carrierDis_graph"));
+                 echarts.registerTheme('vintage', vintage);
+                let chart = echarts.init(document.getElementById("carrierDis_graph"),'vintage');
                 chart.setOption(option);
             },
             get2VHot(vector, emotion) {
