@@ -35,7 +35,6 @@
                 <input type="hidden" name="id" :value="addReportForm.id"/>
                 <el-form-item label="开始时间" prop="startDate">
                     <el-date-picker
-                            v-model="addReportForm.startDate"
                             :editable="editable"
                             v-model="startDate"
                             type="datetime"
@@ -44,7 +43,6 @@
                 </el-form-item>
                 <el-form-item label="结束时间" prop="endDate">
                     <el-date-picker
-                            v-model="addReportForm.endDate"
                             :editable="editable"
                             v-model="endDate"
                             type="datetime"
@@ -65,16 +63,16 @@
 <style lang="scss" scoped>
     .report{
 
-        .content-wrap{
-            padding: 20px;
-            background: #21273d;
-            min-height: 526px;
+    .content-wrap{
+        padding: 20px;
+        background: #21273d;
+        min-height: 526px;
 
-            .btn-container{
-                margin-bottom: 10px;
-                text-align: right;
-            }
-        }
+    .btn-container{
+        margin-bottom: 10px;
+        text-align: right;
+    }
+    }
     }
 </style>
 <script>
@@ -174,8 +172,6 @@
             editReport(form) {
                 this.formTitle = '编辑';
                 this.addReportForm = jQuery.extend({}, form);
-                this.addReportForm.startDate = new Date(this.addReportForm.startDate);
-                this.addReportForm.endDate = new Date(this.addReportForm.endDate);
                 this.startDate = new Date(this.addReportForm.startDate);
                 this.endDate = new Date(this.addReportForm.endDate);
                 this.dialogFormVisible = true;
@@ -196,12 +192,6 @@
             dialogSubmit(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.addReportForm.startDate = this.addReportForm.startDate.format('yyyy-MM-dd hh:mm:ss');
-                        this.addReportForm.endDate = this.addReportForm.endDate.format('yyyy-MM-dd hh:mm:ss');
-                        this.$http.post('/apis/internalRefReport/saveOrUpdateReport.json', this.addReportForm).then((response) => {
-
-
-
                         if (this.addReportForm.startDate > this.addReportForm.endDate) {
                             this.$message({
                                 message: '开始时间不能大于结束时间',
