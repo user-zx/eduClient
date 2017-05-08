@@ -30,8 +30,7 @@
                        :total="total">
         </el-pagination>
 
-        <el-dialog :title="formTitle + '报告'" v-model="dialogFormVisible"
-                   class="createReport-dialog" @close="resetForm('addReportForm')">
+        <el-dialog :title="formTitle + '报告'" v-model="dialogFormVisible" class="createReport-dialog">
             <el-form :model="addReportForm" :rules="rules" ref="addReportForm" label-width="150px">
                 <input type="hidden" name="id" :value="addReportForm.id"/>
                 <el-form-item label="开始时间" prop="startDate">
@@ -108,10 +107,10 @@
                         {min:4,max:16,message:"长度在 4 到 16 个字符",trigger: 'blur' },
                     ],
                     startDate:[
-                        {type: 'object',required:true,message:"请选择开始时间",trigger:'blur'}
+                        {type: 'object',required:true,message:"请选择开始时间",trigger:'change'}
                     ],
                     endDate:[
-                        {type: 'object',required:true,message:"请选择结束时间",trigger:'blur'}
+                        {type: 'object',required:true,message:"请选择结束时间",trigger:'change'}
                     ]
                 }
             }
@@ -129,7 +128,7 @@
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
             deleteRow(id) {
-                this.$confirm('是否删除该事件', '提示', {
+                this.$confirm('是否删除该报告', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
@@ -199,8 +198,6 @@
                             });
                             return;
                         }
-                        this.addReportForm.startDate = this.addReportForm.startDate.format('yyyy-MM-dd hh:mm:ss');
-                        this.addReportForm.endDate = this.addReportForm.endDate.format('yyyy-MM-dd hh:mm:ss');
 
                         let sameCount = 0;
                         if (this.tableData.length > 0) {
@@ -218,6 +215,9 @@
                             });
                             return;
                         }
+
+                        this.addReportForm.startDate = this.addReportForm.startDate.format('yyyy-MM-dd hh:mm:ss');
+                        this.addReportForm.endDate = this.addReportForm.endDate.format('yyyy-MM-dd hh:mm:ss');
 
                         this.$http.post('/apis/opinionReport/saveOrUpdateReport.json', this.addReportForm).then((response) => {
                                 if (response.data.success) {
@@ -246,8 +246,8 @@
                 console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
-                this.param.pageNumber = val - 1;
-                this.getReportList();
+                this.currentPage = val;
+                this.getEventList();
             },
             watchDetails(id){
                 this.$router.push({path:"/home/eventDetails", query: {id: id}});
@@ -273,10 +273,6 @@
                         }
                     );
                 });
-            },
-
-            resetForm(formName){
-                this.$refs[formName].resetFields();
             }
         },
         created(){
