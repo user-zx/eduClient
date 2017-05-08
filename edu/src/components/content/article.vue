@@ -7,7 +7,7 @@
         <div class="content-bar clearfix">
             <ul class="content-bar-list">
                 <li class="pointer">
-                    <input type="checkbox" @click="handleCheckAllChange"/>
+                    <el-checkbox v-model="allSelect"  @change="handleCheckAllChange"></el-checkbox>
                 </li>
                 <li class="pointer" @click="sort(0)">
                     阅读量<i class="arrow" :class="order0 == 'DESC' ? 'arrow-down' : 'arrow-up'"></i>
@@ -27,6 +27,7 @@
                 </el-dropdown>
 
                 <el-button type="primary" icon="plus" class="button-icon" v-if="concernBtn" @click="concernBtnClick">批量关注</el-button>
+                <el-button type="primary" icon="plus" class="button-icon" v-else @click="unfollow">取消关注</el-button>
             </div>
             <div class="content-bar-page">
                 <el-pagination class="edu-pagination"
@@ -38,54 +39,57 @@
                 </el-pagination>
             </div>
         </div>
-        <div class="article-container" id="articleContainer" :data="articleData">
-            <div class="article" v-for="(item, index) in articleData">
-                <div class="article-left">
-                    <div class="checkbox-div">
-                        <input type="checkbox" @click="handleCheckChange"/>
-                        <input type="hidden" :value="item.id"/>
+        <div class="article-container" id="articleContainer" :data="articleDataNew">
+            <el-checkbox-group v-model="checked" @change="handleCheckedCitiesChange">
+                <div class="article" v-for="(item, index) in articleDataNew">
+                    <div class="article-left">
+                        <div class="checkbox-div">
+                           <!--  <input type="checkbox" @click="handleCheckChange"/> -->
+                            <el-checkbox :label="item.id" ></el-checkbox>
+                            <input type="hidden" :value="item.id"/>
+                        </div>
+                    </div>
+                    <div class="article-right">
+                        <div class="article-title-box">
+                            <p class="article-title pointer" @click="toDetail(item)">
+                                <span>{{item.title}}</span>
+                                <i class="title-icon positive-icon" v-if="item.emotion == 'positive'"></i>
+                                <i class="title-icon negative-icon" v-else-if="item.emotion == 'negative'"></i>
+                                <i class="title-icon neutral-icon" v-else></i>
+                            </p>
+                            <p class="button-box">
+                                <el-button type="danger" class="article-danger-button" v-if="item.hasWarn"
+                                           @click="warnBtnClick(item)" :loading="item.loading">
+                                    取消预警
+                                </el-button>
+                                <el-button type="info" class="article-danger-button" v-else
+                                           @click="warnBtnClick(item)" :loading="item.loading">
+                                    添加预警
+                                </el-button>
+                            </p>
+                        </div>
+                        <p class="article-main">
+                            {{item.content}}
+                        </p>
+                        <p class="article-describe">
+                            <span class="article-source">
+                                来源： {{item.source}}
+                            </span>
+                            <span class="article-author">
+                                作者： {{item.author}}
+                            </span>
+                            <span class="article-clickNum blue">
+                                阅读量： {{item.hitCount}}
+                            </span>
+                            <span class="article-publishDate blue">
+                                发布时间：{{item.publishDateTime}}
+                            </span>
+                        </p>
                     </div>
                 </div>
-                <div class="article-right">
-                    <div class="article-title-box">
-                        <p class="article-title pointer" @click="toDetail(item)">
-                            <span>{{item.title}}</span>
-                            <i class="title-icon positive-icon" v-if="item.emotion == 'positive'"></i>
-                            <i class="title-icon negative-icon" v-else-if="item.emotion == 'negative'"></i>
-                            <i class="title-icon neutral-icon" v-else></i>
-                        </p>
-                        <p class="button-box">
-                            <el-button type="danger" class="article-danger-button" v-if="item.hasWarn"
-                                       @click="warnBtnClick(item)" :loading="item.loading">
-                                取消预警
-                            </el-button>
-                            <el-button type="info" class="article-danger-button" v-else
-                                       @click="warnBtnClick(item)" :loading="item.loading">
-                                添加预警
-                            </el-button>
-                        </p>
-                    </div>
-                    <p class="article-main">
-                        {{item.content}}
-                    </p>
-                    <p class="article-describe">
-                        <span class="article-source">
-                            来源： {{item.source}}
-                        </span>
-                        <span class="article-author">
-                            作者： {{item.author}}
-                        </span>
-                        <span class="article-clickNum blue">
-                            阅读量： {{item.hitCount}}
-                        </span>
-                        <span class="article-publishDate blue">
-                            发布时间：{{item.publishDateTime}}
-                        </span>
-                    </p>
-                </div>
-            </div>
+            </el-checkbox-group>
         </div>
-        <div v-if="articleData.length == 0" class="no-data">暂无数据</div>
+        <div v-if="articleDataNew.length == 0" class="no-data">暂无数据</div>
     </div>
 </template>
 <script>
@@ -109,14 +113,41 @@
                         }
                     ]
                 },
-                events: []
+                events: [],
+                checked: [],
+                articleDataNew: "",
+                allSelect:false,
+                unfollowParam:{concernsContent:[]},
+                followParam:{concernsContent:[]},
             }
         },
         components: {},
         methods: {
+            unfollow(){
+                this.unfollowParam.concernsType = 1;
+                if(this.unfollowParam.concernsContent.length>0){
+                     this.$http.post("/apis/concerns/removeConcernsMore.json",this.unfollowParam).then(res=>{
+                    if(res.data.success){
+                        if(res.data.data.message==null){
+                            this.$message("取消关注成功")
+                           this.$emit('onchange',"");
+                           this.unfollowParam.concernsContent = [];
+                        }else{
+                            this.$message(res.data.data.message)
+                         }
+                        } 
+                   },err=>{
+                        console.log(err);
+                   })
+                }else{
+                    this.$message("未选择文章")
+                }
+              
+            },
             getAllEvent() {
                 this.$http.post('/apis/eventAnalysis/getEventList.json', {pageSize: 5, pageNumber: 0}).then(
                     (response) => {
+                       // console.log(response);
                         if (response.data.success) {
                             this.events = response.data.data.content;
                         } else {
@@ -128,27 +159,14 @@
                 );
             },
             handleCheckAllChange(event) {
-                if (event.target.checked) {
-                    $('#articleContainer').find("input[type='checkbox']").prop('checked', true);
-                } else {
-                    $('#articleContainer').find("input[type='checkbox']").prop('checked', false);
-                }
+               this.checked = event.target.checked ? this.articleDataNew.map(v=>{return v.id}) : [];
+               this.unfollowParam.concernsContent = this.checked;
+                this.followParam.concernsContent = this.checked;
             },
-            handleCheckChange(event) {
-                if (event.target.checked) {
-                    let allCheck = true;
-                    $('#articleContainer').find("input[type='checkbox']").each(function() {
-                        if (!$(this).prop('checked')) {
-                            allCheck = false;
-                            return false;
-                        }
-                    });
-                    if (allCheck) {
-                        $('.pointer').find("input[type='checkbox']").prop('checked', true);
-                    }
-                } else {
-                    $('.pointer').find("input[type='checkbox']").prop('checked', false);
-                }
+            handleCheckedCitiesChange(value) {
+                this.unfollowParam.concernsContent = value;
+                this.followParam.concernsContent = value;
+                console.log(value);
             },
             warnBtnClick(item) {
                 item.loading = true;
@@ -160,7 +178,6 @@
                     tmp.vector = item.vector;
                     tmp.hitCount = item.hitCount;
                     tmp.publishDateTime = item.publishDateTime;
-
                     this.$http.post('/apis/opinionWarn/warnOrCancel.json', tmp).then(
                         (response) => {
                             if (response.data.success) {
@@ -192,26 +209,19 @@
                 });
             },
             concernBtnClick() {
-                let ids = [];
-                $('#articleContainer').find("input[type='checkbox']").each(function() {
-                    if ($(this).prop('checked')) {
-                        ids.push($(this).next().val());
-                    }
-                });
-                if (ids.length > 0) {
-                    let param = {
-                        concernsContent: ids,
-                        concernsType: 1
-                    };
-                    this.$http.post('/apis/concerns/saveConcernsMore.json', param).then(
+                if (this.followParam.concernsContent.length > 0) {
+                    this.followParam.concernsType = 1;
+                   
+                    this.$http.post('/apis/concerns/saveConcernsMore.json',this.followParam).then(
                         (response) => {
                             if (response.data.success) {
-                                this.$notify({
+                               /* this.$notify({
                                     title: '成功',
                                     message: '关注成功',
                                     type: 'success',
                                     duration: 2000
-                                });
+                                }); */
+                                this.$message("添加成功")
                             } else {
                                 console.error(response.data.message);
                             }
@@ -219,7 +229,6 @@
                             console.error(response);
                         }
                     );
-
                 } else {
                     this.$message({
                         type: 'info',
@@ -246,6 +255,7 @@
                 this.param.orders.pop();
                 this.param.orders.push(order);
                 this.$emit('onchange', this.param);
+
             },
             handleCurrentChange(pageNumber) {
                 //后台是从0开始
@@ -290,6 +300,11 @@
         },
         mounted() {
             this.getAllEvent();
+        },
+        watch:{
+            articleData:function(val,oldval){
+                this.articleDataNew = val;
+            }, 
         },
         props: ["articleData", "eventBtn", "concernBtn", "total"]
     }
@@ -456,4 +471,12 @@
         font-size: 14px;
         margin-top: 30px;
     }
+</style>
+<style lang="scss">
+    .article-left{
+        .el-checkbox__label{
+            display: none;
+        }
+    }
+    
 </style>
