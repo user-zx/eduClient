@@ -45,14 +45,16 @@
                 </el-form-item>
                 <el-form-item label="开始时间" prop="startDate">
                     <el-date-picker
-                            v-model="addEventForm.startDate"
+                            :editable="editable"
+                            v-model="startDate"
                             type="datetime"
                             placeholder="选择开始时间">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="结束时间" prop="endDate">
                     <el-date-picker
-                            v-model="addEventForm.endDate"
+                            :editable="editable"
+                            v-model="endDate"
                             type="datetime"
                             placeholder="选择结束时间">
                     </el-date-picker>
@@ -89,6 +91,7 @@
      export default{
         data(){
             return {
+                editable: false,
                 tableData: [],
                 loading:true,
                 total: 0,
@@ -98,6 +101,8 @@
                 },
                 dialogFormVisible: false,
                 formTitle: '',
+                startDate: '',
+                endDate: '',
                 addEventForm: {
                     id: '',
                     title: '',
@@ -170,6 +175,8 @@
             },
             addEvent() {
                 this.formTitle = '添加';
+                this.startDate = '';
+                this.endDate = '';
                 this.addEventForm = {
                     id: '',
                     title: '',
@@ -184,13 +191,38 @@
             editEvent(form) {
                 this.formTitle = '编辑';
                 this.addEventForm = jQuery.extend({}, form);
-                this.addEventForm.startDate = new Date(this.addEventForm.monitorStartDate);
-                this.addEventForm.endDate = new Date(this.addEventForm.monitorEndDate);
+                this.startDate = new Date(this.addEventForm.monitorStartDate);
+                this.endDate = new Date(this.addEventForm.monitorEndDate);
                 this.dialogFormVisible = true;
             },
             dialogSubmit(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        if (this.addEventForm.startDate > this.addEventForm.endDate) {
+                            this.$message({
+                                message: '开始时间不能大于结束时间',
+                                type: 'error'
+                            });
+                            return;
+                        }
+
+                        let sameCount = 0;
+                        if (this.tableData.length > 0) {
+                            for (let i = 0; i < this.tableData.length; i++) {
+                                if (this.tableData[i].title == this.addEventForm.title && this.tableData[i].id != this.addEventForm.id) {
+                                    sameCount++;
+                                }
+                            }
+                        }
+
+                        if (sameCount > 0) {
+                            this.$message({
+                                message: '标题不能重复',
+                                type: 'error'
+                            });
+                            return;
+                        }
+
                         this.addEventForm.monitorStartDate = this.formatDate(this.addEventForm.startDate, 'yyyy-MM-dd hh:mm:ss');
                         this.addEventForm.monitorEndDate = this.formatDate(this.addEventForm.endDate, 'yyyy-MM-dd hh:mm:ss');
                         this.$http.post('/apis/eventAnalysis/saveOrUpdateEvent.json', this.addEventForm).then((response) => {
@@ -278,6 +310,14 @@
             this.getEventList();
         },
         mounted(){
-        }
+        },
+         watch: {
+            startDate(val) {
+                this.addEventForm.startDate = val;
+            },
+            endDate(val) {
+                this.addEventForm.endDate = val;
+            }
+         }
     }
 </script>

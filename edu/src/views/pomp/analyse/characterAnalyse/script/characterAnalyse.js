@@ -285,7 +285,7 @@ export default{
     },
     mounted() {
         this.getActionTrail();
-        this.getPersonageArticle(this.param.startDate.split(' ')[0]);
+        this.getPersonageArticle(this.param.endDate.split(' ')[0]);
         this.getEmotionTrend();
         this.getEmotionVal();
         this.getMediaVolume();

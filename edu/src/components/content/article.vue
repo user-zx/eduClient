@@ -10,10 +10,10 @@
                     <input type="checkbox" @click="handleCheckAllChange"/>
                 </li>
                 <li class="pointer" @click="sort(0)">
-                    阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
+                    阅读量<i class="arrow" :class="order0 == 'DESC' ? 'arrow-down' : 'arrow-up'"></i>
                 </li>
                 <li class="pointer" @click="sort(1)">
-                    时间<i class="arrow" :class="param.orders[1].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
+                    时间<i class="arrow" :class="order1 == 'DESC' ? 'arrow-down' : 'arrow-up'"></i>
                 </li>
             </ul>
             <div class="content-bar-button">
@@ -52,9 +52,10 @@
                             <span>{{item.title}}</span>
                             <i class="title-icon positive-icon" v-if="item.emotion == 'positive'"></i>
                             <i class="title-icon negative-icon" v-else-if="item.emotion == 'negative'"></i>
+                            <i class="title-icon neutral-icon" v-else></i>
                         </p>
                         <p class="button-box">
-                            <el-button type="warning" class="article-danger-button" v-if="item.hasWarn"
+                            <el-button type="danger" class="article-danger-button" v-if="item.hasWarn"
                                        @click="warnBtnClick(item)" :loading="item.loading">
                                 取消预警
                             </el-button>
@@ -92,6 +93,8 @@
         data(){
             return {
                 msg: "",
+                order0: "DESC",
+                order1: "DESC",
                 param: {
                     pageSize: 5,
                     pageNumber: 0,
@@ -229,7 +232,19 @@
                 this.$router.push({path: '/home/articleDetail', query: data});
             },
             sort(index) {
-                this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
+                let order = {};
+                if (index == 0) {
+                    order.property = 'hitCount';
+                    order.direction = this.order0 == 'DESC' ? 'ASC' : 'DESC';
+                    this.order0 = order.direction;
+                } else {
+                    order.property = 'publishDateTime';
+                    order.direction = this.order1 = this.order1 == 'DESC' ? 'ASC' : 'DESC';
+                    this.order1 = order.direction;
+                }
+                this.param.orders.pop();
+                this.param.orders.pop();
+                this.param.orders.push(order);
                 this.$emit('onchange', this.param);
             },
             handleCurrentChange(pageNumber) {
@@ -356,6 +371,15 @@
 
                         .negative-icon::before{
                             content: '负面';
+                        }
+
+                        .neutral-icon{
+                            color: #20a0ff;
+                            border: 1px solid #20a0ff;
+                        }
+
+                        .neutral-icon::before{
+                            content: '中性';
                         }
                     }
                     .button-box{
