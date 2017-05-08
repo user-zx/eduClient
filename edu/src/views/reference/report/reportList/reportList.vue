@@ -199,8 +199,6 @@
                             });
                             return;
                         }
-                        this.addReportForm.startDate = this.addReportForm.startDate.format('yyyy-MM-dd hh:mm:ss');
-                        this.addReportForm.endDate = this.addReportForm.endDate.format('yyyy-MM-dd hh:mm:ss');
 
                         let sameCount = 0;
                         if (this.tableData.length > 0) {

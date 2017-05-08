@@ -461,8 +461,12 @@
                 this.$http.get('/apis/internalRefReport/findTwoMicroInsightIndexRanking.json/' + this.param.id).then(
                     (response) => {
                         if (response.data.success) {
-                            this.wechat = response.data.data.wechat.content;
-                            this.webo = response.data.data.webo.content;
+                            if (response.data.data.wechat) {
+                                this.wechat = response.data.data.wechat.content;
+                            }
+                            if (response.data.data.webo) {
+                                this.webo = response.data.data.webo.content;
+                            }
                             this.twoVSeeLoading = false;
                         } else {
                             console.error(response.data.message);
