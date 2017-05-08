@@ -228,8 +228,8 @@
                 }
             },
             toDetail(data){
-                console.log(data)
-                this.$router.push({path: '/home/articleDetail', query: data});
+                console.log(data.id)
+                this.$router.push({path: '/home/articleDetail', query: data.id});
             },
             sort(index) {
                 let order = {};

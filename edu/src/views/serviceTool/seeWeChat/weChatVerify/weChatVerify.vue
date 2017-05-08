@@ -27,15 +27,16 @@
                 </el-col>
             </el-row>
             <el-row :gutter="20">
+                <!--后台传参账号主体和院系参数名颠倒-->
                 <el-col :span="4" class="text-right">账号主体</el-col>
                 <el-col :span="6">
-                    <el-input :maxlength=30 v-model="wechatInfo.wechatSubject"></el-input>
+                    <el-input :maxlength=30 v-model="wechatInfo.belongColleage"></el-input>
                 </el-col>
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="4" class="text-right">所属院系</el-col>
                 <el-col :span="6">
-                    <el-input :maxlength=60 v-model="wechatInfo.belongColleage"></el-input>
+                    <el-input :maxlength=60 v-model="wechatInfo.wechatSubject"></el-input>
                 </el-col>
             </el-row>
             <el-row :gutter="20">
@@ -409,27 +410,44 @@
             resetInfo(){
                this.wechatInfo = {
                     wechatNumber: '',
-                        wechatName: '',
-                        wechatSubject: '',
-                        belongColleage: '',
-                        instruction: '',
-                        accountSign: '',
-                        qrCode: '',
-                        responsibleUser: '',
-                        responsibleEmail:'',
-                        responsibleTel: '',
-                        publishUser: '',
-                        publishEmail: '',
-                        publishTel: ''
+                    wechatName: '',
+                    wechatSubject: '',
+                    belongColleage: '',
+                    instruction: '',
+                    accountSign: '',
+                    qrCode: '',
+                    responsibleUser: '',
+                    responsibleEmail:'',
+                    responsibleTel: '',
+                    publishUser: '',
+                    publishEmail: '',
+                    publishTel: ''
                 }
-            }
+            },
+
+            getWechatInfoData(){
+                let param = {
+                    author: this.$route.query.author
+                }
+
+                this.$http.post('/apis/businessTool/getWechatNumberInfo.json', param).then(
+                    (response) => {
+                        console.log(response.data)
+                        if(response.data.success && response.data.data != null){
+                            this.wechatInfo = response.data.data;
+                        }else if(response.data.message != null){
+                            console.error(response.data.message)
+                        }
+                    }
+                )
+            },
         },
         created(){
             this.setBreadCrumb();
             this.wechatInfo.belongColleage = this.$route.query.university;
         },
         mounted(){
-
+            this.getWechatInfoData();
         }
     }
 </script>

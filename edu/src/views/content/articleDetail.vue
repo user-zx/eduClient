@@ -36,11 +36,15 @@
                     </span>
                     <span class="item type">
                     情感类型：
-                    <!--{{#if article.emotion == 'positive'}}-->
-                        <!--正面-->
-                    <!--{{#else}}-->
-                        <!--负面-->
-                    <!--{{/if}}-->
+                        <span v-if="article.emotion == 'positive'">
+                            正面
+                        </span>
+                        <span v-else-if="article.emotion == 'neutral'">
+                            中性
+                        </span>
+                        <span v-else>
+                            负面
+                        </span>
                     </span>
                 </div>
                 <div class="info-item">
@@ -48,7 +52,10 @@
                         作者：{{article.author}}
                     </span>
                     <span class="item relatedPeople">
-                        相关人物：美少女战士
+                        相关人物：
+                        <span v-if="article.reportPersonage != null" v-for="item in article.reportPersonage">
+                            {{item}}
+                        </span>
                     </span>
                 </div>
                 <div class="info-item">
@@ -56,7 +63,7 @@
                         日期： {{article.publishDate}}
                     </span>
                     <span class="item relatedCollege">
-                        相关高校： <span v-for="item in article.university">{{item}}</span>
+                        相关高校： <span v-for="item in article.university">{{item}} &nbsp;</span>
                     </span>
                 </div>
                 <div class="info-item">
@@ -72,16 +79,18 @@
         <div class="detail-right">
             <div class="top-box">
                 <p class="item readNum">
-                    阅读量： {{article.hitCount}}
+                    <span class="describe">阅读量： </span> {{article.hitCount}}
                 </p>
                 <p class="item commentNum">
-                    评论量： {{article.replyCount}}
+                    <span class="describe">评论量： </span>
+                    {{article.replyCount}}
                 </p>
                 <p class="item repostNum">
-                    转发量： 1212(死数据)
+                   <span class="describe">转发量：</span>
                 </p>
                 <p class="item likeNum">
-                    点赞量： {{article.supportCount}}
+                    <span class="describe">点赞量： </span>
+                    {{article.supportCount}}
                 </p>
                 <div class="btn-wrap">
                     <el-button type="primary" class="focus-btn" icon="plus">
@@ -215,6 +224,11 @@
                     text-align: center;
                     margin-top: 30px;
                     color: #60a3ff;
+
+                    .describe{
+                        display: inline-block;
+                        width: 100px;
+                    }
                 }
 
                 .btn-wrap{
@@ -260,18 +274,35 @@
         data(){
             return {
                 article: {
-                    title: '',
-                    content: ''
+                    id: ''
                 }
             }
         },
         components:{} ,
         methods:{
+            getArticleDetailsById(){
+                if(this.article.id == ''){
+                    this.$message.error('参数错误');
+                    return
+                }
+
+                this.$http.post('/apis/lib/getArticleDetailsById.json', {id: this.article.id}).then(
+                    function (response) {
+                        if(response.data.success){
+                            this.article = response.data.data;
+                            console.log(this.article)
+                        }else{
+                            this.$message.error('出错了， 请稍后再试');
+                        }
+                    }
+                );
+            }
         },
         mounted(){
+            this.getArticleDetailsById();
         },
         created(){
-            this.article = this.$route.query;
+            this.article.id = this.$route.query;
         }
     }
 </script>

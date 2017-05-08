@@ -415,7 +415,21 @@
                     publishEmail: '',
                     publishTel: ''
                 };
-            }
+            },
+
+            getBlogInfoData(){
+                let param = {
+                    author: this.$route.query.author
+                }
+
+                this.$http.post('/apis/businessTool/getMicroblogInfo.json', param).then(
+                    (response) => {
+                        if(response.data.success){
+                            this.weiboInfo = response.data.data;
+                        }
+                    }
+                )
+            },
         },
         created(){
             this.setBreadCrumb();
@@ -424,7 +438,7 @@
             this.weiboInfo.blogColleage = data.university;
         },
         mounted(){
-
+            this.getBlogInfoData();
         },
     }
 </script>
