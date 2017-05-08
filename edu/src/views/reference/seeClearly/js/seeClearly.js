@@ -38,6 +38,7 @@
                 weboOpinion: [],
                 radio1: '',
                 radio2: '',
+                radio3: '微信',
                 weChatDistribute: {},
                 weBoDistribute: {},
                 distributeData: [],
@@ -93,11 +94,49 @@
                 this.$http.post('/apis/twoMicroInsight/findTwoMicroInsightDistributedAll.json', {vector: vector}).then(
                     (response) => {
                         if (response.data.success) {
+                            response.data.data.visualMap = {
+                                min: 0,
+                                max: 20,
+                                left: 'left',
+                                top: 'bottom',
+                                text: ['高','低'],
+                                calculable: true
+                            }
+                            response.data.data.tooltip = {
+                                trigger: 'item'
+                            }
+                            let data = response.data.data.series[0].data;
                             if (vector == "微信") {
                                 this.weChatDistribute = response.data.data;
-                                this.initDistribute(this.weChatDistribute)
+                                for (let i  = 0; i < data.length; i++) {
+                                    let area = data[i].name;
+                                    let index = this.distributeData.indexOf(area);
+                                    if (index != -1) {
+                                        this.distributeData[index].wechat = data[i].value;
+                                    } else {
+                                        this.distributeData.push({
+                                            area: area,
+                                            wechat: data[i].value,
+                                            webo: 0
+                                        });
+                                    }
+                                }
+                                this.initDistribute(this.weChatDistribute);
                             } else {
                                 this.weBoDistribute = response.data.data;
+                                for (let i  = 0; i < data.length; i++) {
+                                    let area = data[i].name;
+                                    let index = this.distributeData.indexOf(area);
+                                    if (index != -1) {
+                                        this.distributeData[index].webo = data[i].value;
+                                    } else {
+                                        this.distributeData.push({
+                                            area: area,
+                                            wechat: 0,
+                                            webo: data[i].value
+                                        });
+                                    }
+                                }
                             }
                         } else {
                             console.error(response.data.message);
@@ -108,7 +147,7 @@
                 );
             },
             initDistribute(option) {
-                 echarts.registerTheme('vintage', vintage);
+                echarts.registerTheme('vintage', vintage);
                 let chart = echarts.init(document.getElementById("carrierDis_graph"),'vintage');
                 chart.setOption(option);
             },
@@ -290,6 +329,13 @@
             radio2: function(val, oldVal) {
                 this.get2VOpinion('微信', val);
                 this.get2VOpinion('微博', val);
+            },
+            radio3: function(val, oldVal) {
+                if ('微信' == val) {
+                    this.initDistribute(this.weChatDistribute)
+                } else {
+                    this.initDistribute(this.weBoDistribute);
+                }
             }
         }
   }

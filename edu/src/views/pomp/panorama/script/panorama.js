@@ -82,7 +82,6 @@ export default {
                                     }
                                 }
                             }
-                            console.log("OpinionFunnel", this.opinionFunnel);
                             chart.setOption(response.data.data);
                             this.$nextTick(function() {
                                 chart.hideLoading();
