@@ -54,11 +54,12 @@
                         if (response.data.success) {
                             let univs = response.data.data.univs;
                             if (univs.length == 0) {
-                                this.$alert('您还没有设置大学，前往设置?', '温馨提示', {
+                                this.$confirm('您还没有设置大学，前往设置?', '提示', {
                                     confirmButtonText: '确定',
-                                    callback: action => {
-                                        this.$router.push({path:"/home/centerCollege"});
-                                    }
+                                    cancelButtonText: '取消',
+                                    type: 'warning'
+                                }).then(() => {
+                                    this.$router.push({path:"/home/centerCollege"});
                                 });
                             }
                         } else {

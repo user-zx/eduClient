@@ -201,6 +201,7 @@
                         this.loading = false;
                         if(response.data.success){
                             this.wechatStatisticsData = response.data.data.page.content;
+                            console.log(this.wechatStatisticsData)
                             this.total1 = response.data.data.page.totalElements;
                         }
                     }

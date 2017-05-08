@@ -90,7 +90,7 @@
             <el-row>
                 <el-col class="text-center" :offset="9" :span="6">
                     <el-button type="primary" @click="submitInfo">确认并提交</el-button>
-                    <el-button type="primary">清空</el-button>
+                    <el-button type="primary" @click="resetInfo">清空</el-button>
                 </el-col>
             </el-row>
         </div>
@@ -405,6 +405,24 @@
                 }
                 return true;
             },
+
+            resetInfo(){
+               this.wechatInfo = {
+                    wechatNumber: '',
+                        wechatName: '',
+                        wechatSubject: '',
+                        belongColleage: '',
+                        instruction: '',
+                        accountSign: '',
+                        qrCode: '',
+                        responsibleUser: '',
+                        responsibleEmail:'',
+                        responsibleTel: '',
+                        publishUser: '',
+                        publishEmail: '',
+                        publishTel: ''
+                }
+            }
         },
         created(){
             this.setBreadCrumb();
