@@ -8,15 +8,18 @@ export default {
             return {
                 msg: "全景舆情",
                 opinionData: [],
-                hotOpinion: { todayHot: [], weekHot: [], monthHot: [] },
-                hotPersonage: { todayHot: [], weekHot: [], monthHot: [] },
+                hotOpinion: {todayHot: [], weekHot: [], monthHot: []},
+                hotPersonage: {todayHot: [], weekHot: [], monthHot: []},
                 wechatHot: [],
                 weboHot: [],
                 activeName: 'todayHot',
                 activeName2: 'todayHot',
                 activeName3: 'TODAY',
                 activeName4: 'TODAY',
+                opinionFunnel: []
+
             }
+
         },
         components: { overview },
         methods: {
@@ -53,9 +56,33 @@ export default {
                 echarts.registerTheme('vintage', vintage);
                 let chart = echarts.init(document.getElementById('opinionFunnel'), 'vintage');
                 chart.showLoading();
+                let vm = this;
                 this.$http.post('/apis/allViewOpinion/getOpinionFunnel.json').then(
                     (response) => {
                         if (response.data.success) {
+                            let formatData = [
+                                {value: 20, name: '预警'},
+                                {value: 40, name: '负面'},
+                                {value: 60, name: '正面'},
+                                {value: 80, name: '相关'},
+                                {value: 100, name: '舆情'}
+                                ];
+                            this.opinionFunnel = response.data.data.series[0].data;
+                            response.data.data.series[0].data = formatData;
+                            response.data.data.tooltip = {
+                                trigger: 'item',
+                                formatter: function (params, ticket, callback) {
+                                    let name = params.name;
+                                    for (let i = 0; i < vm.opinionFunnel.length; i++) {
+
+                                        if (vm.opinionFunnel[i].name == name) {
+                                            let val = vm.opinionFunnel[i].value;
+                                            return "锥形图<br/>" + name + ":" + val;
+                                        }
+                                    }
+                                }
+                            }
+                            console.log("OpinionFunnel", this.opinionFunnel);
                             chart.setOption(response.data.data);
                             this.$nextTick(function() {
                                 chart.hideLoading();
@@ -76,8 +103,6 @@ export default {
                 this.$http.post('/apis/allViewOpinion/getVectorDistribute.json', { type: type }).then(
                     (response) => {
                         if (response.data.success) {
-
-                            console.log(JSON.stringify(response.data.data));
                             chart.setOption(response.data.data);
                             this.$nextTick(function() {
                                 chart.hideLoading();
