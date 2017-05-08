@@ -394,8 +394,12 @@
                                         var format = 'yyyy-MM-dd';
 
                                         if (text === '自定义时间') {
-                                            publishDateTime.startDate = this.publishDate[0].format(format) + startSuffix;
-                                            publishDateTime.endDate = this.publishDate[1].format(format) + endSuffix;
+                                            if (this.publishDate[0]) {
+                                                publishDateTime.startDate = this.publishDate[0].format(format) + startSuffix;
+                                            }
+                                            if (this.publishDate[1]) {
+                                                publishDateTime.endDate = this.publishDate[1].format(format) + endSuffix;
+                                            }
                                         } else {
                                             var now = new Date();
                                             var nowDate = now.format(format);

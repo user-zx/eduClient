@@ -95,24 +95,31 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        if (!this.form.area) {
+                            this.$message({
+                                message: "所在地不能为空",
+                                type: 'error'
+                            });
+                            return false;
+                        }
                         this.$http.post('/apis/addTrial.json', this.form).then((response) => {
-                                if (response.data.success) {
-                                    this.$message({
-                                        message: '申请成功, 我们会尽快处理',
-                                        type: 'success'
-                                    });
-                                    this.resetForm(formName);
-                                } else {
-                                    this.$message({
-                                        message: response.data.message,
-                                        type: 'error'
-                                    });
-                                    $('#captcha').attr('src', $('#captcha').attr('src') + '?' + Math.random());
-                                }
-                            }, (response) => {
-                                console.error(response);
-                                return false;
+                            if (response.data.success) {
+                                this.$message({
+                                    message: '申请成功, 我们会尽快处理',
+                                    type: 'success'
+                                });
+                                this.resetForm(formName);
+                            } else {
+                                this.$message({
+                                    message: response.data.message,
+                                    type: 'error'
+                                });
+                                $('#captcha').attr('src', $('#captcha').attr('src') + '?' + Math.random());
                             }
+                        }, (response) => {
+                            console.error(response);
+                            return false;
+                        }
                         );
                     } else {
                         this.$message({message:'校验失败!',type:"error"});
@@ -138,7 +145,7 @@
             }
         },
         mounted(){
-            
+            console.log($(".edu-cascader").html());
         }
     }
 </script>
