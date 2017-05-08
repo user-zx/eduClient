@@ -25,7 +25,7 @@
                     <el-menu-item v-if="permissions.indexOf(15) != -1" index="industryNews">行业动态</el-menu-item>
                     <el-menu-item v-if="permissions.indexOf(16) != -1" index="characterNews">人物动态</el-menu-item>
                     <el-menu-item v-if="permissions.indexOf(17) != -1" index="seeClearly">两微洞察</el-menu-item>
-                    <el-menu-item v-if="permissions.indexOf(18) != -1" index="mediaCoverage">媒体声量</el-menu-item>
+                    <el-menu-item v-if="permissions.indexOf(18) != -1" index="mediaCoverage">媒体声誉</el-menu-item>
                     <el-menu-item v-if="permissions.indexOf(19) != -1" index="report">内参报告</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>

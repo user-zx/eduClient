@@ -77,6 +77,29 @@
                </div>
            </el-dialog>
        </div>
+
+        <div>
+            <el-dialog title="权限查询设置" v-model="limitsDialogVisible" class="dialog-center" @close="closeDialog('limitForm')">
+                <el-form :model="limitForm"  ref="limitForm" :label-width="formLabelWidth" name="limitForm">
+                    <el-form-item label="主账号">
+                        <span>{{limitForm.mainAccount}}</span>
+                    </el-form-item>
+                    <el-form-item label="子账号"  prop="userAccount">
+                        <span>{{limitForm.userAccount}}</span>
+                    </el-form-item>
+                    <el-form-item label="子账号密码" prop="password">
+                        <el-input type="password" auto-complete="off" v-model="limitForm.password"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="权限" >
+
+                    </el-form-item>
+                    <el-form-item label="开通时间">
+                        <span>{{limitForm.createDate}}</span>
+                    </el-form-item>
+                </el-form>
+            </el-dialog>
+        </div>
     </div>
 </template>
 <style lang="scss" scoped>
@@ -165,7 +188,14 @@
                         { validator: testPhone, trigger: 'blur' }
                     ]
                 },
-                multipleSelection: []
+                multipleSelection: [],
+                limitsDialogVisible: false,
+                limitForm: {
+                    mainAccount: this.$parent.$parent.$parent.user.userAccount,
+                    userAccount: '',
+                    password: '',
+                    createDate: ''
+                }
             }
         },
         methods: {
@@ -333,12 +363,27 @@
                     });
                 });
             },
+
+            getMainAccountLimits() {
+                this.$http.post('/apis/userMgrt/getUserPermission.json', {type: 'user'}).then(
+                    (response) => {
+                        if (response.data.success) {
+                            console.log(response.data.data)
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            },
         },
         mounted(){
           this.getChildAccount();
         },
         created(){
             this.setBreadCrumb();
+            this.getMainAccountLimits();
         }
     }
 </script>
