@@ -15,7 +15,7 @@
                     <el-input v-model="memberForm.collegeName" :disabled="true"></el-input>
                 </el-form-item>
                 <el-form-item label="部门" prop="userDepartment">
-                    <el-input v-model="memberForm.userDepartment" placeholder="请输入您的职务"></el-input>
+                    <el-input v-model="memberForm.userDepartment" placeholder="请输入您的部门"></el-input>
                 </el-form-item>
                 <el-form-item label="手机" prop="userPhone">
                     <el-input v-model="memberForm.userPhone" placeholder="请输入手机号码"></el-input>
@@ -41,7 +41,7 @@
                     </div>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm()" class="save-btn">保存</el-button>
+                    <el-button type="primary" @click="submitForm('memberForm')" class="save-btn">保存</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -52,32 +52,32 @@
         background: #21273d;
         overflow: hidden;
 
-    .form-wrap{
-        width: 60%;
-        margin: 67px auto 134px auto;
+        .form-wrap{
+            width: 60%;
+            margin: 67px auto 134px auto;
 
-    .img-wrap{
-        width: 100px;
-        max-height: 100px;
-        overflow: hidden;
-        display: inline-block;
+            .img-wrap{
+                width: 100px;
+                max-height: 100px;
+                overflow: hidden;
+                display: inline-block;
 
-    img{
-        width: 100px;
-    }
-    }
+                img{
+                    max-width: 100px;
+                }
+            }
 
-    .btn-wrap{
-        display: inline-block;
-        margin-left: 10px;
-        vertical-align: top;
-        line-height: 100px;
-    }
-    }
+            .btn-wrap{
+                display: inline-block;
+                margin-left: 10px;
+                vertical-align: top;
+                line-height: 100px;
+            }
+        }
 
-    .save-btn{
-        width: 100%;
-    }
+        .save-btn{
+            width: 100%;
+        }
     }
 </style>
 
@@ -85,6 +85,16 @@
     import {regionData,CodeToText} from "element-china-area-data"
     export default{
         data(){
+            var validPhone = (rule, value, callback) => {
+                if(value == ''){
+                    return callback(new Error('请输入手机号码'));
+                }
+                let phoneReg =  /^1(3|4|5|7|8)\d{9}$/;
+                if(!phoneReg.test(value)){
+                    return callback(new Error('手机号码格式不正确'));
+                }
+                callback();
+            };
             return {
                 memberForm: {
                     realName: '',
@@ -99,9 +109,17 @@
                     userImg: '',
                 },
                 rules: {
-                    userDepartment: [{required: true, message: '请输入您的职务',trigger: 'blur'}],
-                    userPhone: [{required: true, message: '请输入您的手机号码',trigger: 'blur'}],
-                    userEmail: [{type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}]
+                    userDepartment: [
+                        {required: true, message: '请输入您的部门',trigger: 'blur'}
+                    ],
+                    userPhone: [
+                        {required: true, message: '请输入您的手机号码',trigger: 'blur'},
+                        { validator: validPhone, trigger: 'blur' }
+                    ],
+                    userEmail: [
+                        {required: true, message: '请输入邮箱地址',trigger: 'blur'},
+                        {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
+                    ]
                 },
                 options: regionData,
                 selectedOptions: []
@@ -109,20 +127,25 @@
         },
         methods: {
 
-            submitForm(){
-                if(this.memberForm.userPhone == "" || this.memberForm.userDepartment == ""){
-                    this.$message('手机号或部门不能为空');
-                }else{
-                    this.$http.post("/apis/user/updateMemberInfo.json",this.memberForm).then((res)=>{
-                        if(res.data.success){
-                            this.$message(res.data.data);
+            submitForm(formName){
+                this.$refs[formName].validate(
+                    (valid) => {
+                        if(valid){
+                            this.$http.post("/apis/user/updateMemberInfo.json",this.memberForm).then((res)=>{
+                                if(res.data.success){
+                                     this.$message(res.data.data);
+                                 }else{
+                                     this.$message(res.data.message);
+                                 }
+                            },(err)=>{
+                                console.log(err);
+                             });
                         }else{
-                            this.$message(res.data.message);
+                            console.error('fail');
+                            return false;
                         }
-                    },(err)=>{
-                        console.log(err);
-                    })
-                }
+                    }
+                )
             },
 
             handleChange(val){

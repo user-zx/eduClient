@@ -415,13 +415,6 @@
                     publishEmail: '',
                     publishTel: ''
                 };
-
-                let  fileInput = document.getElementById('uploadImg');
-                if(fileInput.outerHTML){
-                    fileInput.outerHTML = fileInput.outerHTML;
-                }else{
-                    fileInput.value = '';
-                }
             }
         },
         created(){

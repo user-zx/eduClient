@@ -21,7 +21,7 @@
                                 联系电话：
                             </el-col> 
                             <el-col :span="13" class="verify_input" :class="{isShow_phone:phone_empty}">
-                              <el-input class="dark input-small" placeholder="请输入手机号" v-model="ruleForm.phone" @blur="onBlurPhone()" @change="onChangePhone"></el-input> 
+                              <el-input class="dark input-small" placeholder="请输入手机号" v-model="ruleForm.phone" @change="onChangePhone"></el-input>
                               <p v-html="hintPhone"></p>
                             </el-col>
                         </el-row>
@@ -30,7 +30,7 @@
                                 电子邮箱：
                             </el-col>
                             <el-col :span="13" class="verify_input">
-                                <el-input class="dark input-small" placeholder="请输入邮箱" v-model="ruleForm.email" :class="{isShow_email:email_empty}" @blur="onBlurEmail($event)" @change="onChangeEmail"></el-input>
+                                <el-input class="dark input-small" placeholder="请输入邮箱" v-model="ruleForm.email" :class="{isShow_email:email_empty}" @change="onChangeEmail"></el-input>
                                 <p v-html="hintEmail"></p>
                             </el-col>
                         </el-row>
@@ -276,7 +276,7 @@
                     this.phone_empty = true;
                     this.sign = false;
                 }else if(!/^1(3|4|5|7|8)\d{9}$/.test(this.ruleForm.phone)){
-                    this.hintPhone = "手机号个格式不正确!";
+                    this.hintPhone = "手机号码格式不正确!";
                     this.phone_empty = true;
                     this.sign = false;
                 }else{
@@ -285,26 +285,39 @@
             },
             submitOrder(){
                 if(this.ruleForm.phone == ''){
+                    this.phone_empty = true;
                     this.$message.error('请输入手机号');
                     return ;
+                }else{
+                    let reg = /^1(3|4|5|7|8)\d{9}$/;
+                    if(!reg.test(this.ruleForm.phone)){
+                        this.phone_empty = true;
+                        this.$message.error('手机号码格式不正确');
+                        return ;
+                    }
                 }
                 if(this.ruleForm.email == ''){
+                    this.email_empty = true;
                     this.$message.error('请输入邮箱');
                     return ;
+                }else{
+                    let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+                    if(!reg.test(this.ruleForm.email)){
+                        this.email_empty = true;
+                        this.$message.error('邮箱格式不正确');
+                    }
                 }
 
                 let obj = {};
-                if(this.sign){
-                    obj.packageType = this.data[0].setMeal;
-                    obj.packageItem = this.data[0].itemNum;
-                    obj.concernCollegeNum = this.data[0].concernCollegeNum;
-                    obj.concernPersonNum = this.data[0].concernPersonNum;
-                    obj.totalPrice = this.data[0].price;
-                    obj.timeLimit = this.data[0].time;
-                    obj.phone = this.ruleForm.phone;
-                    obj.email = this.ruleForm.email;
-                    obj.consultHotline = this.consultHotLine;
-                }
+                obj.packageType = this.data[0].setMeal;
+                obj.packageItem = this.data[0].itemNum;
+                obj.concernCollegeNum = this.data[0].concernCollegeNum;
+                obj.concernPersonNum = this.data[0].concernPersonNum;
+                obj.totalPrice = this.data[0].price;
+                obj.timeLimit = this.data[0].time;
+                obj.phone = this.ruleForm.phone;
+                obj.email = this.ruleForm.email;
+                obj.consultHotline = this.consultHotLine;
 
                 this.$http.post("/apis/packageBuy/packageBuy.json",obj).then((res)=>{
                     if(res.ok){
