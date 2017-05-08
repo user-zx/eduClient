@@ -195,6 +195,7 @@
             deletePerson(){
                 if(this.deletePersonSelection.length == 0){
                     this.$message('没有选中的人物');
+                    return ;
                 }
 
                 this.$http.post('/apis/concernPerson/deleteConcernPerson', this.deletePersonSelection).then(

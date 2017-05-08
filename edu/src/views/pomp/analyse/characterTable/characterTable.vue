@@ -79,7 +79,7 @@
     }
     .characterTable{
         .content-bar-list{
-            width: 100px;
+            width: 120px;
         }
     }
 </style>
