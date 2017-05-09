@@ -47,7 +47,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
   min-width: 1200px;
   height:100%;
   >.page-left{
-     width: 185px;
+     width: 155px;
      position: relative;
     background-color: #191c2d;
     z-index: 6;
@@ -237,20 +237,18 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
     overflow-y: auto;
     >.page-header{
       position: fixed;
-      left:185px;
-      right:0;
+      left:175px;
+      right:20px;
       top:0;
       z-index: 999;
       padding-left:20px;
       padding-right:20px;
+      
       background-color: #60a3ff;
-
       .nav{
-
         .el-menu--horizontal{
           background-color: #60a3ff;
           float: right;
-
           >.el-menu-item{
             float: right;
             line-height: 65px;
@@ -540,6 +538,7 @@ margin: 0;
   margin-right: 10px; 
   vertical-align: text-bottom;
 } 
+
 .edu-form{
   .el-select{
     width: 100%;

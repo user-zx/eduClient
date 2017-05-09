@@ -6,6 +6,7 @@
   &.el-table{
     background-color:transparent;
     border-color:rgba(96,163,255,.1);
+    border: 0; 
     &.yellow-table{
       tr{
         td:first-child{
