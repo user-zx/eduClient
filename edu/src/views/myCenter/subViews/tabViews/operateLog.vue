@@ -7,7 +7,7 @@
             <el-pagination class="edu-pagination"
                            @current-change="handleCurrentChange"
                            :page-size= "param.pageSize"
-                           layout="total, prev, next, jumper"
+                           layout="prev, next, jumper, total"
                            :total="total">
             </el-pagination>
         </div>
@@ -28,6 +28,7 @@
 
         .table-wrap{
             margin: 50px 50px 134px 50px;
+            min-height: 400px;
         }
     }
 </style>

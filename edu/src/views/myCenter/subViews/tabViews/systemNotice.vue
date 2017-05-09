@@ -3,6 +3,14 @@
 */
 <template>
     <div class="systemNotice">
+        <div class="content-bar-pagination">
+            <el-pagination class="edu-pagination"
+                           @current-change="handleCurrentChange"
+                           :page-size="param.pageSize"
+                           layout="prev, next, jumper, total"
+                           :total="total">
+            </el-pagination>
+        </div>
         <div class="content-wrap">
             <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
                       :resizable="false" :show-header="false">
@@ -16,16 +24,6 @@
                 <el-table-column label="date" prop="createDate" align="center" width="150" :formatter="formatDate"></el-table-column>
 
             </el-table>
-            <div class="content-bar-pagination">
-                <el-pagination class="edu-pagination"
-                               @current-change="handleCurrentChange"
-
-                               :page-size="param.pageSize"
-
-                               layout="prev, next, jumper, total"
-                               :total="total">
-                </el-pagination>
-            </div>
         </div>
 
         <el-dialog  v-model="dialogVisible" size="tiny" class="notice-dialog" @close="closeDialog">
@@ -53,6 +51,7 @@
 
         .content-wrap{
             margin: 55px 50px 134px 50px;
+            min-height: 400px;
         }
 
 

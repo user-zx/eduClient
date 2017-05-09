@@ -5,39 +5,54 @@
     <div class="myCenter">
         <div class="attend-tabs">
             <el-row :gutter="10">
-                <el-col :span="3" class="active">
+                <el-col :span="3" class="active" v-show="isPrimaryAccount">
                     <div class="tab-item" @click="currentFun('centerInfo')">
                         <i class="icon icon-1"></i>
                         会员中心
                     </div>
                 </el-col>
-                <el-col :span="3">
+                <el-col :span="3" v-show="isPrimaryAccount">
                     <div class="tab-item" @click="currentFun('memberInfo')">
                        <i class="icon icon-2"></i>
                         会员资料
                     </div>
                 </el-col>
-                <el-col :span="3" class="el-col-subCount">
+                <el-col :span="3" class="el-col-subCount" v-show="isPrimaryAccount">
                     <div class="tab-item" @click="currentFun('subCount')">
                        <i class="icon icon-3"></i> 子账号管理
                     </div>
                 </el-col>
-                <el-col :span="3">
+                <el-col :span="3" v-if="isPrimaryAccount == true">
                     <div class="tab-item" @click="currentFun('modifyPwd')">
                        <i class="icon icon-4"></i> 修改密码
                     </div>
                 </el-col>
-                <el-col :span="3">
+                <el-col :span="8" v-else-if="isPrimaryAccount == false" class="active">
+                    <div class="tab-item" @click="currentFun('modifyPwd')">
+                        <i class="icon icon-4"></i> 修改密码
+                    </div>
+                </el-col>
+                <el-col :span="3" v-if="isPrimaryAccount == true">
+                    <div class="tab-item" @click="currentFun('operateLog')">
+                        <i class="icon icon-5"></i> 操作日志
+                    </div>
+                </el-col>
+                <el-col :span="8" v-else-if="isPrimaryAccount == false">
                     <div class="tab-item" @click="currentFun('operateLog')">
                         <i class="icon icon-5"></i> 操作日志
                     </div>
                 </el-col>
                 <el-col :span="3">
-                    <div class="tab-item" @click="currentFun('buyPackage')">
+                    <div class="tab-item" @click="currentFun('buyPackage')" v-show="isPrimaryAccount">
                         <i class="icon icon-6"></i> 购买套餐
                     </div>
                 </el-col>
-                <el-col :span="3">
+                <el-col :span="3" v-if="isPrimaryAccount == true">
+                    <div class="tab-item systemNotice" @click="currentFun('systemNotice')">
+                        <i class="icon icon-7"></i> 系统通知
+                    </div>
+                </el-col>
+                <el-col :span="8" v-if="isPrimaryAccount == false">
                     <div class="tab-item systemNotice" @click="currentFun('systemNotice')">
                         <i class="icon icon-7"></i> 系统通知
                     </div>
@@ -159,7 +174,8 @@
                     buyPackage: 'buyPackage',
                     systemNotice: 'systemNotice',
                     currentTab: 'centerInfo'
-                }
+                },
+                isPrimaryAccount: false
             }
         },
         components:{centerInfo,memberInfo,subCount,modifyPwd,operateLog,buyPackage,systemNotice} ,
@@ -177,6 +193,30 @@
             },
             currentFun(params){
                 this.currentTabs.currentTab = params;
+            },
+
+            judgeAccountType(){
+                this.$http.post('/apis/userMgrt/getUserPermission.json', {type: 'user'}).then(
+                    (response) => {
+                        if (response.data.success) {
+                            if(response.data.data.primaryAccountId == null){
+                                this.isPrimaryAccount = true;
+                            }else {
+                                this.isPrimaryAccount = false;
+                                this.currentTabs = {
+                                        modifyPwd: 'modifyPwd',
+                                        operateLog: 'operateLog',
+                                        systemNotice: 'systemNotice',
+                                        currentTab: 'modifyPwd'
+                                };
+                            }
+                        } else {
+                             console.error(response.data.message);
+                        }
+                     }, (response) => {
+                        console.error(response);
+                     }
+                );
             }
         },
         mounted(){
@@ -194,6 +234,7 @@
         },
         created(){
             this.setBreadCrumb();
+            this.judgeAccountType();
         }
     }
 </script>
