@@ -22,7 +22,7 @@
                 <img :src="wechatInfo.qrCode" alt="">
             </div>
         </div>
-        <div class="summary-wrap space">
+        <div class="summary-wrap space clearfix">
             <div class="left">
                 <p>微信全量统计</p>
             </div>
@@ -202,7 +202,7 @@
             height: 114px;
 
             .left{
-                display: inline-block;
+                float: left;
                 width: 176px;
                 height: 100%;
                 line-height: 114px;
@@ -210,7 +210,7 @@
             }
 
             .right{
-                display: inline-block;
+                float: right;
                 width: calc(100% - 180px);
                 vertical-align: top;
                 height: 100%;

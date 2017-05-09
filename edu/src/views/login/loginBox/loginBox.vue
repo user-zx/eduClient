@@ -13,11 +13,13 @@
             <el-form-item label="密码：" prop="pass" class="login-input-box">
                 <el-input type="password" name="password" icon="password" v-model="ruleForm.pass" placeholder="请输入密码" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item class="login-text-color">
+            <el-form-item class="login-text-color clearfix">
                 <el-col :span="12">
+                    <!--
                     <el-checkbox v-model="ruleForm.rememberMe"  name="rememberMe" id="rememberMe">记住密码</el-checkbox>
+                    -->
                 </el-col>
-                <el-col :span="12" class="text-right">
+                <el-col :span="12" class="text-right" style="float: right">
                     <router-link to="/forget">忘记密码</router-link>
                 </el-col>
             </el-form-item>
