@@ -64,9 +64,8 @@
          }
         .el-row {
             .el-col {
-                height: 50px;
                 border-bottom: 1px solid #d6d6d6;
-                line-height: 50px;
+                line-height: 40px;
                 overflow: hidden;
                 .search-list {
                     display: inline-block;

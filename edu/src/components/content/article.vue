@@ -336,7 +336,7 @@
                 height: inherit;
                 width:94%;
                 display: table-cell;
-                padding: 30px 30px 30px 12px;
+                padding: 15px ;
                 color: #6a6a6a;
                 vertical-align: top;
 
@@ -478,5 +478,4 @@
             display: none;
         }
     }
-    
 </style>

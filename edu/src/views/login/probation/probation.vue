@@ -48,6 +48,17 @@
     import {regionData,CodeToText} from "element-china-area-data"
     export default{
         data(){
+            let userPhone = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入手机号'));
+                } else {
+                    let reg = /^1(3|4|5|7|8)\d{9}$/;
+                    if (!reg.test(value)) {
+                        callback(new Error('请输入正确的手机号'));
+                    }
+                    callback();
+                }
+            };
             return {
                 msg:"申请试用",
                 options: regionData,
@@ -76,8 +87,7 @@
                         {min:2,max:10,message: "长度在 2 到 10 个字符",trigger: 'blur' },
                     ],
                     userPhone:[
-                        {required:true,message:"请输入手机号",trigger: 'blur' },
-                        {min:11, max:11, message: "请输入正确手机号",trigger: 'blur' }
+                        {validator: userPhone,trigger: 'blur' },
                     ],
                     userEmail:[
                         {required:true,message:"请输入邮箱",trigger: 'blur' },

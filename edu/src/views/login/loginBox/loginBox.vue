@@ -61,7 +61,6 @@
                     if (valid) {
                         this.$http.post('/apis/security/generateKey.do').then((response) => {
                                 if (response.data.success) {
-                                    console.log(response.data);
                                     let exponent = response.data.data.publicKeyExponent;
                                     let modulus = response.data.data.publicKeyModulus;
                                     RSAUtils.setMaxDigits(200);
