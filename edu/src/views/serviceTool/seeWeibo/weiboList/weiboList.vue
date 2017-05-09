@@ -223,7 +223,6 @@
                         this.loading = false;
                         if(response.data.success){
                             this.weiboStatisticsData = response.data.data.page.content;
-                            console.log( this.weiboStatisticsData)
                             this.total1 = response.data.data.page.totalElements;
                         }
                     }
