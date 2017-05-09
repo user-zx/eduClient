@@ -79,19 +79,19 @@
                     if (valid) {
                         this.$http.post('/apis/security/generateKey.do').then((response) => {
                                 if (response.data.success) {
+                                    let vm = this;
                                     let exponent = response.data.data.publicKeyExponent;
                                     let modulus = response.data.data.publicKeyModulus;
                                     RSAUtils.setMaxDigits(200);
                                     let key = new RSAUtils.getKeyPair(exponent, "", modulus);
-                                    var password =  $('input[name=password]').val();
+                                    let password =  $('input[name=password]').val();
                                     this.form.newPassword = RSAUtils.encryptedString(key,password);
-
                                     this.$http.post('/apis/findPassword.json', this.form).then((response) => {
                                             if (response.data.success) {
                                                 this.$message({message:'修改密码成功，即将跳转到登录页面',type:"success"});
-                                                setInterval(() => {
+                                                setTimeout(() => {
                                                     vm.$router.push({path:"/login"})
-                                                });
+                                                }, 2000);
                                             } else {
                                                 this.$message({message:response.data.message,type:"error"});
                                                 return false;
@@ -160,7 +160,7 @@
             }
         },
         mounted(){
-            
+
         }
     }
 </script>
