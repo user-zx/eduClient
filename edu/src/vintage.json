@@ -258,7 +258,7 @@
             }
         },
         "splitLine": {
-            "show": true,
+            "show": false,
             "lineStyle": {
                 "color": [
                     "#eeeeee"
@@ -332,7 +332,7 @@
             }
         },
         "splitLine": {
-            "show": true,
+            "show": false,
             "lineStyle": {
                 "color": [
                     "#eeeeee"
@@ -369,7 +369,7 @@
             }
         },
         "splitLine": {
-            "show": true,
+            "show": false,
             "lineStyle": {
                 "color": [
                     "#eeeeee"

@@ -103,6 +103,7 @@ export default {
                 this.$http.post('/apis/allViewOpinion/getVectorDistribute.json', { type: type }).then(
                     (response) => {
                         if (response.data.success) {
+                            console.log(response);
                             chart.setOption(response.data.data);
                             this.$nextTick(function() {
                                 chart.hideLoading();
