@@ -8,7 +8,7 @@
             <div class="content-bar">
                 <ul class="content-bar-list">
                     <li class="pointer" @click="sort(0)">
-                        阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
+                        阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-down' : 'arrow-up'"></i>
                     </li>
                 </ul>
                 <div class="content-bar-button">

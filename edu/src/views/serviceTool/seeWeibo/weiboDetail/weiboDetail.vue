@@ -13,7 +13,10 @@
             </div>
             <div class="btn-area">
                 <div class="btn attention">
-                    <el-button type="primary" icon="plus" @click="attentionClick">关注</el-button>
+                    <el-button :type="concerned == true ? 'warning' : 'primary'" icon="plus" @click="attentionClick" id="attentionBtn">
+                        <span v-if="concerned == true">取消关注</span>
+                        <span v-else>关注</span>
+                    </el-button>
                 </div>
                 <div class="btn alert">
                     <el-button type="primary" icon="plus">预警</el-button>
@@ -300,7 +303,8 @@
                 forwardOption: [],
                 originalStartDate: '',
                 originalEndDate: '',
-                originalMonth: ''
+                originalMonth: '',
+                concerned:　false
             }
         },
         components:　{articleView},
@@ -543,13 +547,72 @@
             },
 
             attentionClick(){
+                let param = {
+                    content: this.blogData.author,
+                    type: 4
+                }
 
+                //取消关注
+                if(this.concerned){
+                    this.$http.post('/apis/concerns/deleteConcernByTypeAndContent.json', param).then(
+                        function (response) {
+                            if(response.data.success){
+                                this.$message({
+                                    type: 'success',
+                                    message: '取消关注成功'
+                                });
+                                this.concerned = false;
+                            }else {
+                                if(response.data.message != ''){
+                                    this.$message.error(response.data.message);
+                                }else {
+                                    this.$message.error('取消关注失败，请稍后再试');
+                                }
+                            }
+                        }
+                    )
+                }else {
+                    //关注
+                    this.$http.post('/apis/concerns/saveConcerns.json', param).then(
+                        function (response) {
+                            if(response.data.success){
+                                this.$message({
+                                    type: 'success',
+                                    message: '关注成功'
+                                });
+                                this.concerned = true;
+                            }else{
+                                if(response.data.message != ''){
+                                    this.$message(response.data.message);
+                                }else {
+                                    this.$message.error('关注失败，请稍后再试');
+                                }
+                            }
+                        }
+                    )
+                }
             },
 
             pageChange(param){
                 this.articleParam.pageNumber = param.pageNumber;
                 this.articleParam.orders = param.orders;
                 this.getBlogArticleData();
+            },
+
+            judgeConcerned(){
+                let param = {
+                    concernsContent: [this.blogData.author],
+                    concernsType: 4,
+                }
+
+                //判断当前微博是否已关注； true 已关注  false 未关注
+                this.$http.post('/apis/concerns/searchConcernsSingle.json', param).then(
+                    function (response) {
+                        if(response.data.success){
+                            this.concerned = response.data.data;
+                        }
+                    }
+                )
             }
         },
         created(){
@@ -583,6 +646,7 @@
             this.getConcernAndFansData();
             this.getForwardSupportHitData();
             this.getBlogArticleData();
+            this.judgeConcerned();
         }
     }
 </script>
