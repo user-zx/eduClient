@@ -64,7 +64,7 @@
               this.removeParams.concernsContent = [];
                for (let i = 0; i < val.length; i++) {
                  this.removeParams.concernsContent.push(val[i].name);
-               }
+               } 
                console.log(this.removeParams.concernsContent);
             },
             cancelAttention(){
