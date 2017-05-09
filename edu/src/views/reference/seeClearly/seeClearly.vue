@@ -99,14 +99,22 @@
                             <div slot="header" class="clearfix">
                                 <span class="icons icons-chart12"></span><span>两微分布</span>
                             </div>
-                            <div class="col-item item-left">
+                            <div class="col-item item-left" style="position: relative;">
+                                <div class="vector-radio">
+                                    <div>
+                                        <el-radio class="radio" v-model="radio3" label="微信">微信</el-radio>
+                                    </div>
+                                    <div>
+                                        <el-radio class="radio" v-model="radio3" label="微博">微博</el-radio>
+                                    </div>
+                                </div>
                                 <div class="charts" id="carrierDis_graph" style="height: 400px;"></div>
                             </div>
                             <div class="col-item item-right">
                                 <el-table :data="distributeData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title white-table-text">
-                                    <el-table-column prop="name" label="载体" width="150" align="center"></el-table-column>
-                                    <el-table-column prop="positive" label="正面文章数" align="center"></el-table-column>
-                                    <el-table-column prop="negative" label="负面文章数" align="center"></el-table-column>
+                                    <el-table-column prop="area" label="地域" width="150" align="center"></el-table-column>
+                                    <el-table-column prop="wechat" label="微信" align="center"></el-table-column>
+                                    <el-table-column prop="webo" label="微博" align="center"></el-table-column>
                                 </el-table>
                             </div>
                         </el-card>
@@ -273,6 +281,11 @@
        height: 18px;
        background:  $img-url -46px -202px;
   }
+  .icons-chart12{
+      width: 20px;
+      height: 21px;
+      background:  $img-url -15px -27px;
+  }
   .custom-tabs {
       .el-tabs__nav {
           float: left;
@@ -286,5 +299,17 @@
           color: #66a3ff;
       }
   }
+   .vector-radio {
+       position: absolute;
+       top: 10px;
+       left: 24px;
+       z-index: 100;
+       .el-radio__label {
+           color: #66a3ff;
+       }
+       >div:last-child {
+           margin-top: 10px;
+       }
+   }
 </style> 
 <script src="./js/seeClearly.js"></script>
