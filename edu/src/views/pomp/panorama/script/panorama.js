@@ -43,6 +43,7 @@ export default {
                     (response) => {
                         if (response.data.success) {
                             this.opinionData = response.data.data;
+                            console.log(this.opinionData);
                         } else {
                             console.error(response.data.message);
                         }
@@ -59,6 +60,7 @@ export default {
                 let vm = this;
                 this.$http.post('/apis/allViewOpinion/getOpinionFunnel.json').then(
                     (response) => {
+                         console.log(response.data.data);
                         if (response.data.success) {
                             let formatData = [
                                 {value: 20, name: '预警'},
@@ -82,7 +84,9 @@ export default {
                                     }
                                 }
                             }
-                            response.data.data.color = ["#fbff85","#60dab3","#60a3fe","#6076ff","#5356ed"]
+                            response.data.data.color = ["#fbff85","#60dab3","#60a3fe","#6076ff","#5356ed"];
+                            //console.log(response.data.data);
+                            response.data.data.textStyle = null;
                             chart.setOption(response.data.data);
                             this.$nextTick(function() {
                                 chart.hideLoading();
@@ -103,7 +107,8 @@ export default {
                 this.$http.post('/apis/allViewOpinion/getVectorDistribute.json', { type: type }).then(
                     (response) => {
                         if (response.data.success) {
-                            console.log(response);
+                           // console.log(response);
+                             response.data.data.textStyle = null;
                             chart.setOption(response.data.data);
                             this.$nextTick(function() {
                                 chart.hideLoading();
@@ -124,6 +129,7 @@ export default {
                 this.$http.post('/apis/allViewOpinion/getPersonageCount.json').then(
                     (response) => {
                         if (response.data.success) {
+                             response.data.data.textStyle = null;
                             chart.setOption(response.data.data);
                             this.$nextTick(function() {
                                 chart.hideLoading();

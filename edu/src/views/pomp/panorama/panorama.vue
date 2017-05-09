@@ -8,13 +8,13 @@
                         <span class="icons icons-chart1"></span><span>舆情数据统计</span>
                     </div>
                     <div class="text item">
-                        <el-table :data="opinionData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table">
-                            <el-table-column prop="col" label="" align="center"></el-table-column>
+                        <el-table :data="opinionData" :resizable="false" :show-overflow-tooltip="true"  class="tran-table" :show-header="true" style="width: 100%">
+                            <el-table-column prop="col" :show-overflow-tooltip="true" label="" align="center" width="80px"></el-table-column>
                             <el-table-column prop="today" label="今天" align="center"></el-table-column>
                             <el-table-column prop="yesterday" label="昨天" align="center"></el-table-column>
                             <el-table-column prop="week" label="近7天" align="center"></el-table-column>
                             <el-table-column prop="month" label="近30天" align="center"></el-table-column>
-                        </el-table>
+                        </el-table> 
                     </div>
                 </el-card>
             </el-col>
@@ -56,7 +56,7 @@
                         <span class="icons icons-chart4"></span><span>人物统计</span>
                     </div>
                     <div class="text item" id="personageCount">
-    
+
                     </div>
                 </el-card>
             </el-col>
@@ -92,8 +92,8 @@
                         <el-tabs v-model="activeName" class="custom-tabs" @tab-click="handleClick">
                             <el-tab-pane label="今日热点" name="todayHot">
                                 <el-card class="box-card">
-                                    <el-table :data="hotOpinion.todayHot" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                    <el-table :data="hotOpinion.todayHot" :resizable="false" :show-header="false" style="width: 100%"  class="tran-table">
+                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="180px"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
@@ -102,8 +102,8 @@
                             </el-tab-pane>
                             <el-tab-pane label="近7天热点" name="weekHot">
                                 <el-card class="box-card">
-                                    <el-table :data="hotOpinion.weekHot" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                    <el-table :data="hotOpinion.weekHot" :resizable="false" :show-header="false" style="width: 100%"  class="tran-table">
+                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="180px"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
@@ -112,8 +112,8 @@
                             </el-tab-pane>
                             <el-tab-pane label="近30天热点" name="monthHot">
                                 <el-card class="box-card">
-                                    <el-table :data="hotOpinion.monthHot" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                    <el-table :data="hotOpinion.monthHot" :resizable="false" :show-header="false" style="width: 100%"  class="tran-table">
+                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="180px"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
@@ -133,8 +133,8 @@
                         <el-tabs v-model="activeName2" class="custom-tabs" @tab-click="handleClick">
                             <el-tab-pane label="今日热点" name="todayHot">
                                 <el-card class="box-card">
-                                    <el-table :data="hotPersonage.todayHot" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                    <el-table :data="hotPersonage.todayHot" :resizable="false" :show-header="false" style="width: 100%"  class="tran-table">
+                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="180px"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
@@ -143,8 +143,8 @@
                             </el-tab-pane>
                             <el-tab-pane label="近7天热点" name="weekHot">
                                 <el-card class="box-card">
-                                    <el-table :data="hotPersonage.weekHot" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                    <el-table :data="hotPersonage.weekHot" :resizable="false" :show-header="false" style="width: 100%"  class="tran-table">
+                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="180px"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
@@ -153,8 +153,8 @@
                             </el-tab-pane>
                             <el-tab-pane label="近30天热点" name="monthHot">
                                 <el-card class="box-card">
-                                    <el-table :data="hotPersonage.monthHot" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                    <el-table :data="hotPersonage.monthHot" :resizable="false" :show-header="false" style="width: 100%"  class="tran-table">
+                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="180px"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
@@ -172,8 +172,8 @@
                     </div>
                     <div class="text item">
                         <el-card class="box-card">
-                            <el-table :data="wechatHot" :resizable="false" style="width: 100%" border class="tran-table">
-                                <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                            <el-table :data="wechatHot" :resizable="false" style="width: 100%"  class="tran-table">
+                                <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="180px"></el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
@@ -190,8 +190,8 @@
                     </div>
                     <div class="text item">
                         <el-card class="box-card">
-                            <el-table :data="weboHot" :resizable="false" style="width: 100%" border class="tran-table">
-                                <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                            <el-table :data="weboHot" :resizable="false" style="width: 100%"  class="tran-table">
+                                <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="180px"></el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
