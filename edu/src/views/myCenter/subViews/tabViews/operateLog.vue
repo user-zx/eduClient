@@ -3,11 +3,19 @@
 */
 <template>
     <div class="operateLog">
+        <div class="block content-bar-pagination">
+            <el-pagination class="edu-pagination"
+                           @current-change="handleCurrentChange"
+                           :page-size= "param.pageSize"
+                           layout="total, prev, next, jumper"
+                           :total="total">
+            </el-pagination>
+        </div>
         <div class="table-wrap">
             <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
                       :resizable="false" >
-                <el-table-column label="序号" prop="number" align="center"></el-table-column>
-                <el-table-column label="时间" prop="datetime" align="center"></el-table-column>
+                <el-table-column label="序号" type="index" align="center" width="100"></el-table-column>
+                <el-table-column label="时间" prop="createDate" align="center" :formatter="formatDate"></el-table-column>
                 <el-table-column label="IP" prop="ip" align="center"></el-table-column>
             </el-table>
         </div>
@@ -27,6 +35,11 @@
     export default{
         data(){
             return {
+                param: {
+                    pageSize: 10,
+                    pageNumber: 0
+                },
+                total: 0,
                 tableData: [
                     {
                         id:1,
@@ -73,8 +86,29 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
+
+            getOperateLogs(){
+                this.$http.post('/apis/user/getUserOperation.json', this.param).then(
+                    function (response) {
+                        if(response.data.success){
+                            this.tableData = response.data.data.content;
+                            this.total = response.data.data.totalElements;
+                        }
+                    }
+                )
+            },
+
+            handleCurrentChange(pageSize){
+                this.param.pageSize = pageSize - 1;
+                this.getOperateLogs();
+            },
+
+            formatDate(row, col){
+                return new Date(row.createDate).format('yyyy-MM-dd hh:ss');
+            }
         },
         mounted(){
+            this.getOperateLogs();
         },
         created(){
             this.setBreadCrumb();

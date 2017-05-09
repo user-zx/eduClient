@@ -25,7 +25,7 @@
                 <el-table-column label="最后登录时间">--</el-table-column>
                 <el-table-column label="开关" align="center">
                     <template scope="scope">
-                        <el-switch v-model="scope.row.switchStatus " @change="changeStatus(scope.row)"></el-switch>
+                        <el-switch v-model="scope.row.switchStatus" @change="changeStatus(scope.row)"></el-switch>
                     </template>
                 </el-table-column>
             </el-table>
@@ -33,7 +33,7 @@
 
        <div>
            <el-dialog title="添加子账号" v-model="dialogFormVisible" class="dialog-center" @close="closeDialog('form')">
-               <el-form :model="form" :rules="rules" ref="form" :label-width="formLabelWidth" name="addForm">
+               <el-form :model="form" :rules="rules" ref="form" :label-width="formLabelWidth" name="addForm" class="edu-form">
                    <el-form-item label="主账号">
                        <el-input v-model="form.mainCount" auto-complete="off" :disabled="true"></el-input>
                    </el-form-item>
@@ -62,13 +62,11 @@
                    <el-form-item label="联系电话" prop="userPhone">
                        <el-input v-model="form.userPhone"></el-input>
                    </el-form-item>
-                   <el-form-item label="权限" >
-                       <el-checkbox v-model="checkAll" @change="handleCheckAll0" :indeterminate="isIndeterminate">
-                           舆情管理
-                       </el-checkbox>
-                       <el-checkbox-group v-model="subCheckedOne" @change="handleSubCheckChange0">
-                           <el-checkbox v-for="item in subCheckOptions" :label="item">{{item}}</el-checkbox>
-                       </el-checkbox-group>
+                   <el-form-item label="设置权限" prop="permissions">
+                       <el-select v-model="form.permissions" multiple placeholder="请选择权限">
+                           <el-option v-for="item in limitOpts" :label="item.label" :value="item.value">
+                           </el-option>
+                       </el-select>
                    </el-form-item>
                </el-form>
                <div slot="footer" class="dialog-footer">
@@ -150,6 +148,12 @@
                callback();
             }
           };
+          var validPermission = (rule, value, callback) => {
+             if((value == '' || value.length == 0) && this.firstOpen != true){
+                 callback('请选择权限')
+             }
+             callback();
+          };
             return {
                 tableData: [],
                 dialogFormVisible: false,
@@ -161,13 +165,10 @@
                     password:'',
                     realName: '',
                     userDepartment: '',
-                    userPhone: ''
+                    userPhone: '',
+                    permissions: ''
                 },
                 formLabelWidth: "100px",
-                checkAll: true,
-                isIndeterminate: false,
-                subCheckedOne: ['舆情预警','全景舆情','舆情监测'],
-                subCheckOptions: ['舆情预警','全景舆情','舆情监测'],
                 rules:{
                     userAccount: [
                         { required: true, message: '请输入子账号', trigger: 'blur' },
@@ -186,6 +187,9 @@
                     userPhone:[
                         { required: true, message: '请输入联系电话', trigger: 'blur' },
                         { validator: testPhone, trigger: 'blur' }
+                    ],
+                    permissions: [
+                        { validator: validPermission, trigger: 'change' }
                     ]
                 },
                 multipleSelection: [],
@@ -195,7 +199,22 @@
                     userAccount: '',
                     password: '',
                     createDate: ''
-                }
+                },
+                allLimits: [
+                    {value: 22, label: '全景舆情'},
+                    {value: 12, label: '舆情监测'},
+                    {value: 21, label: '舆情预警'},
+                    {value: 13, label: '事件监测'},
+                    {value: 14, label: '舆情报告'},
+                    {value: 15, label: '行业动态'},
+                    {value: 16, label: '人物动态'},
+                    {value: 17, label: '两微洞察'},
+                    {value: 18, label: '媒体声誉'},
+                    {value: 19, label: '内参报告'},
+                    {value: 20, label: '业务平台'}
+                ],
+                limitOpts: [],
+                firstOpen : true,
             }
         },
         methods: {
@@ -220,7 +239,7 @@
                             this.$message({
                                 message: '修改成功',
                                 type: 'success'
-                            })
+                            });
                         }else {
                             console.error(response.data)
                         }
@@ -240,7 +259,8 @@
             },
 
             saveSubCount(){
-                let params = {}; 
+                this.firstOpen = false;
+                let params = {};
                  this.$refs['form'].validate((valid)=>{
                       if(valid){
                           this.$http.post("/apis/security/generateKey.do").then((res)=>{
@@ -258,6 +278,7 @@
                               params.realName = this.form.realName;
                               params.userDepartment = this.form.userDepartment;
                               params.userPhone = this.form.userPhone;
+                              params.permissions = this.form.permissions;
 
                               this.$http.post("/apis/user/addSubAccount.json",params).then((res)=>{
                                   if(res.data.success){
@@ -281,17 +302,6 @@
                 //this.dialogFormVisible = false;
             },
 
-            handleCheckAll0(event){
-                this.subCheckedOne = event.target.checked ? this.subCheckOptions : [];
-                this.isIndeterminate = false;
-            },
-
-            handleSubCheckChange0(value){
-                let checkedNum = value.length;
-                this.checkAll = checkedNum === this.subCheckOptions.length;
-                this.isIndeterminate = checkedNum > 0 && checkedNum < this.subCheckOptions.length;
-            },
-
             getChildAccount(){
               this.$http.post("/apis/user/findAllSubAccount.json").then((res)=>{
                   if(res.data.success){
@@ -312,6 +322,7 @@
             closeDialog(formName){
                 //关闭添加窗口后 清空表单信息
                 this.$refs[formName].resetFields();
+                this.firstOpen = false;
             },
 
             formatCreateDate(row, col){
@@ -366,17 +377,25 @@
 
             getMainAccountLimits() {
                 this.$http.post('/apis/userMgrt/getUserPermission.json', {type: 'user'}).then(
-                    (response) => {
+                    function (response) {
                         if (response.data.success) {
-                            console.log(response.data.data)
+                            let permissions = response.data.data.permissions;
+                            if(permissions != null){
+                                for(let i = 0; i < permissions.length; i++){
+                                    for(let j = 0; j < this.allLimits.length; j++){
+                                        if(this.allLimits[j].value == permissions[i]){
+                                            this.limitOpts.push({label: this.allLimits[j].label, value: permissions[i]})
+                                        }
+                                    }
+                                }
+                            }
                         } else {
                             console.error(response.data.message);
                         }
-                    }, (response) => {
-                        console.error(response);
                     }
-                );
+                )
             },
+
         },
         mounted(){
           this.getChildAccount();
