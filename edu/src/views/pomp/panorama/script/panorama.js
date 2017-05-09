@@ -82,6 +82,7 @@ export default {
                                     }
                                 }
                             }
+                            response.data.data.color = ["#fbff85","#60dab3","#60a3fe","#6076ff","#5356ed"]
                             chart.setOption(response.data.data);
                             this.$nextTick(function() {
                                 chart.hideLoading();

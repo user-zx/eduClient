@@ -55,7 +55,7 @@
                 labelPosition: 'left',
                 getPersonList: [],
                 params:{},
-                removeParams:{concernsContent:[]},
+                removeParams:{},
             }
         },
         components:{characterTable,cascadeBox},
@@ -65,9 +65,11 @@
                for (let i = 0; i < val.length; i++) {
                  this.removeParams.concernsContent.push(val[i].name);
                }
+               console.log(this.removeParams.concernsContent);
             },
             cancelAttention(){
               this.removeParams.concernsType = 2;
+              console.log(this.removeParams.concernsContent); 
                this.$http.post("/apis/concerns/removeConcernsMore.json",this.removeParams).then(res=>{
                   if(res.data.success){
                     this.$message("取消关注成功");
@@ -107,6 +109,7 @@
               this.getPersonList = [];
               this.$http.post("/apis/concerns/getPersonData.json",this.params).then((res)=>{
                   if(res.data.success){
+                     console.log(res);
                       for (var i = 0; i < res.data.data.page.content.length; i++) {
                         this.getPersonList.push(res.data.data.page.content[i])
                       }

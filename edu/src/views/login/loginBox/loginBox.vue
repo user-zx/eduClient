@@ -6,7 +6,7 @@
         <h1 class="login-title">
             <span>登录</span>
         </h1>
-        <el-form :model="ruleForm" action="/apis/login.do" method="post" :rules="rules" ref="ruleForm" label-width="70px" class="ruleForm">
+        <el-form :model="ruleForm" action="/apis/login.do" method="post" :rules="rules" ref="ruleForm" label-width="70px" class="ruleForm" autocomplete="off">
             <el-form-item label="账号：" prop="user" class="login-input-box">
                 <el-input type="text" name="username" icon="username" v-model="ruleForm.user" placeholder="请输入账号" auto-complete="off"></el-input>
             </el-form-item>

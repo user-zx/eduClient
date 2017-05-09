@@ -252,16 +252,31 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
 
           >.el-menu-item{
             float: right;
-            height:65px;
             line-height: 65px;
             font-size: 14px;
             color: #fefefe;
             border-bottom: none;
+            position: relative;
+             &::before{
+              content:"";
+              position: absolute;
+              right: 0;
+              top: 20px;
+              height: 25px;
+              width: 2px;
+              background-color: #7f9ecc;     
+            }
+            &:first-child::before{
+              content: "";
+              height: 0;
+              width: 0;  
+            }
             &:hover{
               border-bottom: none;
               background-color: #60a3ff;
               color:rgba(255,255,255,.6);
             }
+           
           }
           .is-active{
             color: #365a8b;
@@ -285,7 +300,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
       }
     }
     >.page-wrapper{
-      padding:25px 20px;
+      padding:20px;
     }
   }
 }
@@ -520,4 +535,5 @@ margin: 0;
   display: inline-block; 
   margin-right: 10px; 
   vertical-align: text-bottom;
-}
+} 
+

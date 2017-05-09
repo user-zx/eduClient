@@ -91,7 +91,6 @@
                             }
                             input{
                                 background-color: transparent;
-                                box-shadow: none;
                                 border:none;
                                 outline: none;
                                 height:70px;
@@ -156,9 +155,17 @@
             }
         }
     }
-    input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
-        background-color: transparent !important;
-    }
+  textarea,select,input{-webkit-appearance: none; -moz-appearance: none; -o-appearance: none; appearance: none;}
+    
+    input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px white inset;
+      -webkit-text-fill-color: #333;
+    }   
+    /* input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+        background-color: rgba(0, 0, 0,.5);
+        background-image: none;
+        color: rgb(0, 0, 0); 
+    } */
 </style>
 <style lang="scss" scoped>
     %border_bottom{
