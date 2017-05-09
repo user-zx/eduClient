@@ -22,7 +22,6 @@
                         </span>
                     </template>
                 </el-table-column>
-                <el-table-column label="最后登录时间">--</el-table-column>
                 <el-table-column label="开关" align="center">
                     <template scope="scope">
                         <el-switch v-model="scope.row.switchStatus" @change="changeStatus(scope.row)"></el-switch>
@@ -44,14 +43,6 @@
                    </el-form-item> 
                    <el-form-item label="子账号密码" prop="password">
                        <el-input type="password" auto-complete="off" v-model="form.password"></el-input>
-                   </el-form-item>
-                   <el-form-item label="开通时间" prop="createDate">
-                       <el-date-picker type="date"  v-model="form.createDate">
-                       </el-date-picker>
-                   </el-form-item>
-                   <el-form-item label="到期时间" prop="expireDate">
-                       <el-date-picker type="date" v-model="form.expireDate">
-                       </el-date-picker>
                    </el-form-item>
                    <el-form-item label="姓名" prop="realName">
                        <el-input v-model="form.realName"></el-input>
@@ -160,8 +151,6 @@
                 form: {
                     mainCount: this.$parent.$parent.$parent.user.userAccount,
                     userAccount: '',
-                    createDate: '',
-                    expireDate: '',
                     password:'',
                     realName: '',
                     userDepartment: '',
@@ -234,12 +223,11 @@
                 this.$http.post('/apis/user/updateSubAcountStatus', param).then(
                     function (response) {
                         if(response.data.success){
-                            row.status = param.status;
-                            row.switchStatus = param.status == 1 ? false : true;
                             this.$message({
                                 message: '修改成功',
                                 type: 'success'
                             });
+                            this.getChildAccount();
                         }else {
                             console.error(response.data)
                         }
@@ -273,8 +261,6 @@
                                  params.password = encrypedPwd;
                               }
                               params.userAccount = this.form.mainCount + this.form.userAccount;
-                              params.createDate = this.form.createDate;
-                              params.expireDate = this.form.expireDate;
                               params.realName = this.form.realName;
                               params.userDepartment = this.form.userDepartment;
                               params.userPhone = this.form.userPhone;
@@ -284,7 +270,7 @@
                                   if(res.data.success){
                                     this.$message({
                                         type: 'success',
-                                        message:　res.data.data
+                                        message: '添加成功'
                                     });
                                     this.dialogFormVisible = false;
                                     this.getChildAccount();
@@ -306,6 +292,7 @@
               this.$http.post("/apis/user/findAllSubAccount.json").then((res)=>{
                   if(res.data.success){
                       this.tableData = res.data.data;
+                      console.log(this.tableData)
                       for(var i in this.tableData){
                           if(this.tableData[i].status == 0){
                               this.tableData[i].switchStatus = true;

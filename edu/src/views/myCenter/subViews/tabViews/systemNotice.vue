@@ -86,7 +86,10 @@
                 tableData: [],
                 param: {
                     pageSize: 10,
-                    pageNumber: 0
+                    pageNumber: 0,
+                    orders: [
+                        {property: 'createDate', direction: 'DESC'}
+                    ]
                 },
                 notice: {
                     noticeTitle: '',
@@ -116,7 +119,6 @@
             },
 
             showDetail(data){
-                console.log(data)
                 this.notice = data;
                 this.notice.createDateFormat = new Date(data.createDate).format('yyyy-MM-dd');
                 this.dialogVisible = true;
