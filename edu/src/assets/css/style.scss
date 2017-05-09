@@ -29,6 +29,7 @@ fieldset, img { border: 0; }
 address, caption, cite, code, dfn, em, strong, th, var { font-style: normal; }
 em,i{font-style:normal;}
 :focus{outline:0 none;}
+
 :after,:before{
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -384,6 +385,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
 .el-breadcrumb__item:last-child .el-breadcrumb__item__inner a:hover,
 .el-breadcrumb__item:last-child .el-breadcrumb__item__inner:hover{
   color:#ffffff;
+}
+.el-table--enable-row-hover .el-table__body tr:hover>td{
+  background-color:transparent !important;
 }
 /** 小手光标 应该很多地方用到 */
 .pointer {

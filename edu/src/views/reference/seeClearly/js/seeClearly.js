@@ -3,6 +3,7 @@
   import overview from '../overview.vue';
   import echarts from 'echarts';
   import vintage from "../../../../vintage.json";
+  import china from "../../../../china.json";
   import searchBox from "../../../../components/searchBox/searchBox.vue";
 
   export default{
@@ -303,10 +304,7 @@
             }
         },
         mounted(){
-
-            $.get('../../../../node_modules/echarts/map/json/china.json', function (chinaJson) {
-                echarts.registerMap('china', chinaJson);
-            });
+            echarts.registerMap('china', china);
 
             this.getVectorTrend($('#TREND_TODAY>.text')[0], 'TODAY');
             this.get2VHot('微信');
