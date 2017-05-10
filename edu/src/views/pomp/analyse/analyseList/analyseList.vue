@@ -4,7 +4,7 @@
 <template>
     <div v-loading="loading" element-loading-text="加载中……">
         <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" @onload="onSearchLoad"></search-box>
-        <articleView :articleData="articleData" :total="total" :pageNumber="param.pageNumber" :eventBtn="true" :concernBtn="true" @onchange="pageChange"></articleView>
+        <articleView :articleData="articleData" :total="total" :pageNumber="param.pageNumber" :eventBtn="true" :concernBtn="true" @onchange="pageChange" ref="article"></articleView>
     </div>
 </template>
 <script>
@@ -57,6 +57,8 @@
                 data.pageNumber = 0;
                 data.orders = this.param.orders;
                 this.param = data;
+                  this.$refs.article.allSelect = false;
+                this.$refs.article.handleCheckAllChange(event)
                 this.getArticleList();
             },
             onSearchLoad(data) {

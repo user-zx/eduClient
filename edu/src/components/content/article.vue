@@ -159,9 +159,13 @@
                 );
             },
             handleCheckAllChange(event) {
+                if(event.target.checked==undefined){
+                    event.target.checked = false;
+                }
                this.checked = event.target.checked ? this.articleDataNew.map(v=>{return v.id}) : [];
                this.unfollowParam.concernsContent = this.checked;
-                this.followParam.concernsContent = this.checked;
+               this.followParam.concernsContent = this.checked;
+                console.log(this.checked);
             },
             handleCheckedCitiesChange(value) {
                 this.unfollowParam.concernsContent = value;
