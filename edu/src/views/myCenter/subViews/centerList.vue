@@ -17,6 +17,12 @@
                         会员资料
                     </div>
                 </el-col>
+                <el-col :span="6" v-show="isPrimaryAccount == false" class="active">
+                    <div class="tab-item" @click="currentFun('aboutMe')">
+                        <i class="icon icon-2"></i>
+                        个人资料
+                    </div>
+                </el-col>
                 <el-col :span="3" class="el-col-subCount" v-show="isPrimaryAccount">
                     <div class="tab-item" @click="currentFun('subCount')">
                        <i class="icon icon-3"></i> 子账号管理
@@ -27,7 +33,7 @@
                        <i class="icon icon-4"></i> 修改密码
                     </div>
                 </el-col>
-                <el-col :span="8" v-else-if="isPrimaryAccount == false" class="active">
+                <el-col :span="6" v-else-if="isPrimaryAccount == false">
                     <div class="tab-item" @click="currentFun('modifyPwd')">
                         <i class="icon icon-4"></i> 修改密码
                     </div>
@@ -37,7 +43,7 @@
                         <i class="icon icon-5"></i> 操作日志
                     </div>
                 </el-col>
-                <el-col :span="8" v-else-if="isPrimaryAccount == false">
+                <el-col :span="6" v-else-if="isPrimaryAccount == false">
                     <div class="tab-item" @click="currentFun('operateLog')">
                         <i class="icon icon-5"></i> 操作日志
                     </div>
@@ -52,7 +58,7 @@
                         <i class="icon icon-7"></i> 系统通知
                     </div>
                 </el-col>
-                <el-col :span="8" v-if="isPrimaryAccount == false">
+                <el-col :span="6" v-if="isPrimaryAccount == false">
                     <div class="tab-item systemNotice" @click="currentFun('systemNotice')">
                         <i class="icon icon-7"></i> 系统通知
                     </div>
@@ -156,6 +162,7 @@
      */
     import centerInfo from "./tabViews/centerInfo.vue";
     import memberInfo from "./tabViews/memberInfo.vue";
+    import aboutMe from "./tabViews/aboutMe.vue";
     import subCount from "./tabViews/subCountManage.vue";
     import modifyPwd from "./tabViews/modifyPwd.vue";
     import operateLog from "./tabViews/operateLog.vue";
@@ -168,6 +175,7 @@
                 currentTabs:{
                     centerInfo: 'centerInfo',
                     memberInfo: 'memberInfo',
+                    aboutMe: 'aboutMe',
                     subCount: 'subCount',
                     modifyPwd: 'modifyPwd',
                     operateLog: 'operateLog',
@@ -178,7 +186,7 @@
                 isPrimaryAccount: false
             }
         },
-        components:{centerInfo,memberInfo,subCount,modifyPwd,operateLog,buyPackage,systemNotice} ,
+        components:{centerInfo,memberInfo,aboutMe,subCount,modifyPwd,operateLog,buyPackage,systemNotice} ,
         methods:{
             setBreadCrumb(){
                 let breadcrumb=[
@@ -204,10 +212,11 @@
                             }else {
                                 this.isPrimaryAccount = false;
                                 this.currentTabs = {
-                                        modifyPwd: 'modifyPwd',
-                                        operateLog: 'operateLog',
-                                        systemNotice: 'systemNotice',
-                                        currentTab: 'modifyPwd'
+                                    aboutMe: 'aboutMe',
+                                    modifyPwd: 'modifyPwd',
+                                    operateLog: 'operateLog',
+                                    systemNotice: 'systemNotice',
+                                    currentTab: 'aboutMe'
                                 };
                             }
                         } else {

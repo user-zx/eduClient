@@ -229,7 +229,7 @@
                 this.$http.post('/apis/businessTool/getMicroblogData.json', this.statisticsParam).then(
                     (response) => {
                         this.loading = false;
-                        if(response.data.success){
+                        if(response.data.success && response.data.data != null){
                             this.weiboStatisticsData = response.data.data.page.content;
                             this.total1 = response.data.data.page.totalElements;
                         }
