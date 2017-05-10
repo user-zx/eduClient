@@ -5,8 +5,8 @@
             <div class="content-bar">
                 <ul class="content-bar-list">
                     <li class="pointer">全部</li>
-                    <li class="pointer">
-                        阅读量 <i class="arrow arrow-up"></i>
+                    <li class="pointer" @click="sort(0)">
+                        阅读量 <i class="arrow" :class="order0 == 'DESC' ? 'arrow-down' : 'arrow-up'"></i>
                     </li>
                 </ul>
                 <div class="content-bar-button">
@@ -45,6 +45,7 @@
             return {
                 searchNames: ['university', 'dimension', 'vector', 'emotion', 'publishDateTime'],
                 currentPage: 1,
+                order0: "DESC",
                 getBodyData:{
                     personageType:[],
                     reportPersonage : [],
@@ -60,6 +61,11 @@
         },
         components:{characterTable,cascadeBox},
         methods:{
+            sort(index){
+              let order = {};
+              console.log(index);
+               order.direction = this.order0 == 'DESC' ? 'ASC' : 'DESC';
+              },
             removeData(val){
               this.removeParams.concernsContent = [];
                for (let i = 0; i < val.length; i++) {

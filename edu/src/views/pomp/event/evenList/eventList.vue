@@ -234,8 +234,13 @@
                                     this.dialogFormVisible = false;
                                     this.getEventList();
                                 } else {
-                                    this.$message.error(response.data.message);
-                                    return false;
+                                    this.$message({
+                                        message: '标题不能重复',
+                                        type: 'error'
+                                    });
+                                    this.startDate = new Date(this.addReportForm.startDate);
+                                    this.endDate = new Date(this.addReportForm.endDate);
+                                    return;
                                 }
                             }, (response) => {
                                 console.error(response);
@@ -252,7 +257,7 @@
                 console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
-                this.currentPage = val;
+                this.param.pageNumber = val - 1;
                 this.getEventList();
             },
             watchDetails(id){

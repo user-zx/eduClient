@@ -30,7 +30,7 @@
                        :total="total">
         </el-pagination>
 
-        <el-dialog :title="formTitle + '报告'" v-model="dialogFormVisible" class="createReport-dialog">
+        <el-dialog :title="formTitle + '报告'" v-model="dialogFormVisible" class="createReport-dialog" @close="closeDialog('addReportForm')">
             <el-form :model="addReportForm" :rules="rules" ref="addReportForm" label-width="150px">
                 <input type="hidden" name="id" :value="addReportForm.id"/>
                 <el-form-item label="开始时间" prop="startDate">
@@ -107,10 +107,10 @@
                         {min:4,max:16,message:"长度在 4 到 16 个字符",trigger: 'blur' },
                     ],
                     startDate:[
-                        {type: 'object',required:true,message:"请选择开始时间",trigger:'change'}
+                        {type: 'object',required:true,message:"请选择开始时间",trigger:'blur'}
                     ],
                     endDate:[
-                        {type: 'object',required:true,message:"请选择结束时间",trigger:'change'}
+                        {type: 'object',required:true,message:"请选择结束时间",trigger:'blur'}
                     ]
                 }
             }
@@ -228,8 +228,13 @@
                                     this.dialogFormVisible = false;
                                     this.getReportList();
                                 } else {
-                                    console.error(response.data.message);
-                                    return false;
+                                    this.$message({
+                                        message: '标题不能重复',
+                                        type: 'error'
+                                    });
+                                    this.startDate = new Date(this.addReportForm.startDate);
+                                    this.endDate = new Date(this.addReportForm.endDate);
+                                    return;
                                 }
                             }, (response) => {
                                 console.error(response);
@@ -246,8 +251,8 @@
                 console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
-                this.currentPage = val;
-                this.getEventList();
+                this.param.pageNumber = val - 1;
+                this.getReportList();
             },
             watchDetails(id){
                 this.$router.push({path:"/home/eventDetails", query: {id: id}});
@@ -273,6 +278,9 @@
                         }
                     );
                 });
+            },
+            closeDialog(formName){
+                this.$refs[formName].resetFields();
             }
         },
         created(){

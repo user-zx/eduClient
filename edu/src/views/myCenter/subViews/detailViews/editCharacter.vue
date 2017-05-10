@@ -54,13 +54,19 @@
             <el-button type="primary" @click="addPersonSure">确 定</el-button>
           </span>
         </el-dialog>
+        <el-dialog title="提示" :visible.sync="isDelete" size="tiny" >
+          <span>确定删除吗?</span>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="isDelete = false">取 消</el-button>
+            <el-button type="primary" @click="isDeleteSure">确 定</el-button>
+          </span>
+        </el-dialog>
     </div>
 </template>
 <style lang="scss" scoped>
     .editCharacter{
         background: #21273d;
         overflow: hidden;
-
         .top{
             margin: 50px 50px 140px 50px;
             font-size: 16px;
@@ -108,6 +114,7 @@
             return {
                 tableData: [],
                 dialogVisible:false,
+                isDelete:false,
                 ruleForm:{
                     name:"",
                     colleges:"",
@@ -136,6 +143,23 @@
             }
         },
         methods: {
+           
+            isDeleteSure(){
+                 this.$http.post('/apis/concernPerson/deleteConcernPerson', this.deletePersonSelection).then(
+                        function (response) {
+                            if(response.data.success){
+                                this.$message({
+                                    type: 'success',
+                                    message: '删除成功'
+                                })
+                                this.isDelete = false;
+                            }else {
+                                this.$message.error('删除失败，请稍后再试');
+                            }
+                            this.getPerson();
+                        }
+                    )
+            },
             setBreadCrumb(){
                 let breadcrumb=[
                     {
@@ -195,22 +219,11 @@
             deletePerson(){
                 if(this.deletePersonSelection.length == 0){
                     this.$message('没有选中的人物');
-                    return ;
+                    return false;
+                }else{ 
+                    console.log('test');
+                    this.isDelete = true; 
                 }
-
-                this.$http.post('/apis/concernPerson/deleteConcernPerson', this.deletePersonSelection).then(
-                    function (response) {
-                        if(response.data.success){
-                            this.$message({
-                                type: 'success',
-                                message: '删除成功'
-                            })
-                        }else {
-                            this.$message.error('删除失败，请稍后再试');
-                        }
-                        this.getPerson();
-                    }
-                )
             }
         },
 
