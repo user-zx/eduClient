@@ -202,7 +202,7 @@
             }
 
             .article-content{
-                margin: 28px 20px 0 20px;
+                margin: 20px;
                 min-height: 500px;
                 line-height: 30px;
             }
@@ -302,7 +302,7 @@
             this.getArticleDetailsById();
         },
         created(){
-            this.article.id = this.$route.query;
+            this.article.id = this.$route.query.id;
         }
     }
 </script>

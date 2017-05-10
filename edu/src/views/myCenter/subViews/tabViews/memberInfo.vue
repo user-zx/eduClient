@@ -177,7 +177,6 @@
                 this.$http.post("/apis/user/getMemberInfo.json").then((res)=>{
                     if(res.data.success){
                         this.memberForm = res.data.data;
-                       console.log(res);
                         if(res.data.data.createDate != null){
                             this.memberForm.createDateFormat = new Date(res.data.data.createDate).format('yyyy-MM-dd');
                         }

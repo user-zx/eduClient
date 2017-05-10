@@ -3,10 +3,21 @@
 */
 <template>
     <div class="subCountManage">
-        <div class="btn-wrap">
-            <el-button type="primary" @click="isShow">添加</el-button>
-            <el-button type="primary" @click="deleteAccounts">删除</el-button>
+        <div class="clearfix">
+            <div class="btn-wrap pull-left">
+                <el-button type="primary" @click="isShow">添加</el-button>
+                <el-button type="primary" @click="deleteAccounts">删除</el-button>
+            </div>
+            <div class="content-bar-pagination">
+                <el-pagination class="edu-pagination"
+                               @current-change="handleCurrentChange"
+                               :page-size="param.pageSize"
+                               layout="prev, next, jumper, total"
+                               :total="total">
+                </el-pagination>
+            </div>
         </div>
+
         <div class="table-wrap">
             <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
                       :resizable="false" @selection-change="handleSelectionChange">
@@ -68,25 +79,28 @@
        </div>
 
         <div>
-            <el-dialog title="权限查询设置" v-model="limitsDialogVisible" class="dialog-center" @close="closeDialog('limitForm')">
-                <el-form :model="limitForm"  ref="limitForm" :label-width="formLabelWidth" name="limitForm">
+            <el-dialog title="权限设置" v-model="limitsDialogVisible" class="dialog-center" @close="closeDialog('limitForm')">
+                <el-form :model="limitForm"  ref="limitForm" :label-width="formLabelWidth" name="limitForm" class="edu-form">
                     <el-form-item label="主账号">
                         <span>{{limitForm.mainAccount}}</span>
                     </el-form-item>
                     <el-form-item label="子账号"  prop="userAccount">
                         <span>{{limitForm.userAccount}}</span>
                     </el-form-item>
-                    <el-form-item label="子账号密码" prop="password">
-                        <el-input type="password" auto-complete="off" v-model="limitForm.password"></el-input>
-                    </el-form-item>
-
                     <el-form-item label="权限" >
-
+                        <el-select v-model="limitForm.permissions" multiple placeholder="请选择权限">
+                            <el-option v-for="item in limitOpts" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
                     </el-form-item>
                     <el-form-item label="开通时间">
                         <span>{{limitForm.createDate}}</span>
                     </el-form-item>
                 </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="limitsDialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="updateSubCountLimits()">确 定</el-button>
+                </div>
             </el-dialog>
         </div>
     </div>
@@ -97,14 +111,13 @@
         overflow: hidden;
 
         .btn-wrap{
-            height: 35px;
-            margin: 53px 50px 26px 50px;
-            padding-right: 37px;
-            text-align: right;
+            margin-top: 25px;
+            margin-left: 20px;
         }
 
         .table-wrap{
-            margin: 0px 50px 134px 50px;
+            margin: 20px;
+            min-height: 400px;
         }
         .dialog-footer{
             text-align: center;
@@ -187,7 +200,8 @@
                     mainAccount: this.$parent.$parent.$parent.user.userAccount,
                     userAccount: '',
                     password: '',
-                    createDate: ''
+                    createDate: '',
+                    permissions: ''
                 },
                 allLimits: [
                     {value: 22, label: '全景舆情'},
@@ -204,12 +218,23 @@
                 ],
                 limitOpts: [],
                 firstOpen : true,
+                param:　{
+                    pageSize: 10,
+                    pageNumber: 0
+                },
+                total: 0,
             }
         },
         methods: {
+
             setPermission(row){
               console.log(row);
+              this.limitForm.userAccount = row.userAccount;
+              this.limitForm.createDate = new Date(row.createDate).format('yyyy-MM-dd');
+              this.limitForm.permissions = row.permissions;
+              this.limitsDialogVisible = true;
             },
+
             isShow(){
               this.dialogFormVisible = true;
             },
@@ -289,10 +314,11 @@
             },
 
             getChildAccount(){
-              this.$http.post("/apis/user/findAllSubAccount.json").then((res)=>{
+              this.$http.post("/apis/user/findAllSubAccount.json", this.param).then((res)=>{
                   if(res.data.success){
-                      this.tableData = res.data.data;
+                      this.tableData = res.data.data.content;
                       console.log(this.tableData)
+                      this.total = res.data.data.totalElements;
                       for(var i in this.tableData){
                           if(this.tableData[i].status == 0){
                               this.tableData[i].switchStatus = true;
@@ -383,6 +409,14 @@
                 )
             },
 
+            handleCurrentChange(pageNumber){
+                this.param.pageNumber = pageNumber - 1;
+                this.getChildAccount();
+            },
+
+            updateSubCountLimits(){
+                console.log(this.limitForm)
+            }
         },
         mounted(){
           this.getChildAccount();

@@ -85,10 +85,7 @@
                 tableData: [],
                 param: {
                     pageSize: 10,
-                    pageNumber: 0,
-                    orders: [
-                        {property: 'createDate', direction: 'DESC'}
-                    ]
+                    pageNumber: 0
                 },
                 notice: {
                     noticeTitle: '',

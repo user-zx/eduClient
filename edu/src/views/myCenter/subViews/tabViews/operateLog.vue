@@ -105,7 +105,7 @@
             },
 
             formatDate(row, col){
-                return new Date(row.createDate).format('yyyy-MM-dd hh:ss');
+                return new Date(row.createDate).format('yyyy-MM-dd hh:ss:mm');
             }
         },
         mounted(){

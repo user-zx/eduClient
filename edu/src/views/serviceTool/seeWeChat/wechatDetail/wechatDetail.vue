@@ -266,7 +266,8 @@
     }
 </style>
 <script>
-    import echarts from "echarts"
+    import echarts from "echarts";
+    import vintage from "../../../../vintage.json";
     import articleView from "../../../../components/content/article.vue";
 
     export default{
@@ -331,7 +332,7 @@
             },
 
             getBlogSupportAvgData(){
-                let chart = echarts.init(document.getElementById('activeIndexGraph'));
+                let chart = echarts.init(document.getElementById('activeIndexGraph'), 'vintage');
                 chart.showLoading();
                 this.$http.post('/apis/businessTool/getWechatActiveIndexData.json', this.requestParam).then(
                     (response) => {
@@ -349,7 +350,7 @@
 
             getRankAndArticleData(){
                 //因为存在tab页  只初始化默认显示的chart
-                let chart = echarts.init(document.getElementById('rankGraph'));
+                let chart = echarts.init(document.getElementById('rankGraph'), 'vintage');
                 chart.showLoading();
                 this.$http.post('/apis/businessTool/getWechatRankAndArticleNumData.json', this.requestParam).then(
                     (response) => {
@@ -384,10 +385,10 @@
             rankArticleTabClick(event){
                 this.$nextTick(function () {
                     if(event.index == 0){
-                        let chart = echarts.init(document.getElementById('rankGraph'));
+                        let chart = echarts.init(document.getElementById('rankGraph'), 'vintage');
                         chart.setOption(this.rankOption);
                     }else {
-                        let chart = echarts.init(document.getElementById('articleGraph'));
+                        let chart = echarts.init(document.getElementById('articleGraph'), 'vintage');
                         chart.setOption(this.articleOption);
                     }
                 });
@@ -395,7 +396,7 @@
 
             getSupportHitSumData(){
                 //因为存在tab页  只初始化默认显示的chart
-                let chart = echarts.init(document.getElementById('hitSumGraph'));
+                let chart = echarts.init(document.getElementById('hitSumGraph'), 'vintage');
                 chart.showLoading();
                 this.$http.post('/apis/businessTool/getWechatSupportAndHitSumData.json', this.requestParam).then(
                     (response) => {
@@ -429,18 +430,18 @@
                 this.$nextTick(function () {
                     if(event.index == 0){
                         //总阅读
-                        let chart = echarts.init(document.getElementById('hitSumGraph'));
+                        let chart = echarts.init(document.getElementById('hitSumGraph'), 'vintage');
                         chart.setOption(this.hitSumOption);
                     }else{
                         //总点赞
-                        let chart = echarts.init(document.getElementById('supportSumGraph'));
+                        let chart = echarts.init(document.getElementById('supportSumGraph'), 'vintage');
                         chart.setOption(this.supportSumOption);
                     }
                 });
             },
             
             getForwardSupportHitData(){
-                let chart = echarts.init(document.getElementById('hitAvgGraph'));
+                let chart = echarts.init(document.getElementById('hitAvgGraph'), 'vintage');
                 chart.showLoading();
                 this.$http.post('/apis/businessTool/getWechatSupportAndHitAvgData.json', this.requestParam).then(
                     (response) => {
@@ -474,11 +475,11 @@
                 this.$nextTick(function () {
                     if(event.index == 0){
                         //平均阅读
-                        let chart = echarts.init(document.getElementById('hitAvgGraph'));
+                        let chart = echarts.init(document.getElementById('hitAvgGraph'), 'vintage');
                         chart.setOption(this.hitAvgOption);
                     }else if(event.index == 1){
                         //平均点赞
-                        let chart = echarts.init(document.getElementById('supportAvgGraph'));
+                        let chart = echarts.init(document.getElementById('supportAvgGraph'), 'vintage');
                         chart.setOption(this.supportAvgOption);
                     }
                 });
@@ -635,6 +636,7 @@
             this.setBreadCrumb();
         },
         mounted(){
+            echarts.registerTheme('vintage', vintage);
             this.getWechatInfoData();
             this.getBlogSupportAvgData();
             this.getRankAndArticleData();

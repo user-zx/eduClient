@@ -263,7 +263,8 @@
     }
 </style>
 <script>
-    import echarts from "echarts"
+    import echarts from "echarts";
+    import vintage from "../../../../vintage.json";
     import articleView from "../../../../components/content/article.vue";
 
     export default{
@@ -344,7 +345,7 @@
             },
 
             getBlogSupportAvgData(){
-                let chart = echarts.init(document.getElementById('supportAvgGraph'));
+                let chart = echarts.init(document.getElementById('supportAvgGraph'), 'vintage');
                 chart.showLoading();
                 this.$http.post('/apis/businessTool/getMicroblogSupportAvgData.json', this.requestParam).then(
                     (response) => {
@@ -362,7 +363,7 @@
 
             getBlogRankAndSendData(){
                 //因为存在tab页  只初始化默认显示的chart
-                let chart = echarts.init(document.getElementById('rankGraph'));
+                let chart = echarts.init(document.getElementById('rankGraph'), 'vintage');
                 chart.showLoading();
                 this.$http.post('/apis/businessTool/getMicroblogRankAndSendNumData.json', this.requestParam).then(
                     (response) => {
@@ -397,10 +398,10 @@
             rankSendTabClick(event){
                 this.$nextTick(function () {
                     if(event.index == 0){
-                        let chart = echarts.init(document.getElementById('rankGraph'));
+                        let chart = echarts.init(document.getElementById('rankGraph'), 'vintage');
                         chart.setOption(this.rankOption);
                     }else {
-                        let chart = echarts.init(document.getElementById('sendGraph'));
+                        let chart = echarts.init(document.getElementById('sendGraph'), 'vintage');
                         chart.setOption(this.sendOption);
                     }
                 });
@@ -408,7 +409,7 @@
 
             getConcernAndFansData(){
                 //因为存在tab页  只初始化默认显示的chart
-                let chart = echarts.init(document.getElementById('concernGraph'));
+                let chart = echarts.init(document.getElementById('concernGraph'), 'vintage');
                 chart.showLoading();
                 this.$http.post('/apis/businessTool/getMicroblogConcersAndFansSumData.json', this.requestParam).then(
                     (response) => {
@@ -444,11 +445,11 @@
                 this.$nextTick(function () {
                     if(event.index == 0){
                         //关注量
-                        let chart = echarts.init(document.getElementById('concernGraph'));
+                        let chart = echarts.init(document.getElementById('concernGraph'), 'vintage');
                         chart.setOption(this.concernOption);
                     }else{
                         //粉丝量
-                        let chart = echarts.init(document.getElementById('fansGraph'));
+                        let chart = echarts.init(document.getElementById('fansGraph'), 'vintage');
                         chart.setOption(this.fansOption);
                     }
                 });
@@ -456,7 +457,7 @@
 
             //转发、评论、点赞后台请求
             getForwardSupportHitData(){
-                let chart = echarts.init(document.getElementById('forwardGraph'));
+                let chart = echarts.init(document.getElementById('forwardGraph'), 'vintage');
                 chart.showLoading();
                 this.$http.post('/apis/businessTool/getMicroblogForwardAndSupportAndHitSumData.json', this.requestParam).then(
                     (response) => {
@@ -495,15 +496,15 @@
                 this.$nextTick(function () {
                     if(event.index == 0){
                         //转发
-                        let chart = echarts.init(document.getElementById('forwardGraph'));
+                        let chart = echarts.init(document.getElementById('forwardGraph'), 'vintage');
                         chart.setOption(this.forwardOption);
                     }else if(event.index == 1){
                         //评论
-                        let chart = echarts.init(document.getElementById('hitGraph'));
+                        let chart = echarts.init(document.getElementById('hitGraph'), 'vintage');
                         chart.setOption(this.hitOption);
                     }else{
                         //点赞
-                        let chart = echarts.init(document.getElementById('supportGraph'));
+                        let chart = echarts.init(document.getElementById('supportGraph'), 'vintage');
                         chart.setOption(this.supportOption);
                     }
                 });
@@ -640,6 +641,7 @@
             this.setBreadCrumb();
         },
         mounted(){
+            echarts.registerTheme('vintage', vintage);
             this.getBlogInfoData();
             this.getBlogSupportAvgData();
             this.getBlogRankAndSendData();

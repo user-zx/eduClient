@@ -243,7 +243,7 @@
             },
             /**获取人物top10*/
             getPersonageTop10() {
-                let chart = echarts.init(document.getElementById('personageTop10'));
+                let chart = echarts.init(document.getElementById('personageTop10'), 'vintage');
                 chart.showLoading();
                 this.$http.post('/apis/eventAnalysis/getPersonageTop10.json', this.param).then(
                     (response) => {

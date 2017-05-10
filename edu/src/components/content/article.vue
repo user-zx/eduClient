@@ -237,8 +237,7 @@
                 }
             },
             toDetail(data){
-                console.log(data.id)
-                this.$router.push({path: '/home/articleDetail', query: data.id});
+                this.$router.push({path: '/home/articleDetail', query: {id: data.id}});
             },
             sort(index) {
                 let order = {};

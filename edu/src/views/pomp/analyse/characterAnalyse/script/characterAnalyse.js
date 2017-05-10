@@ -3,6 +3,7 @@
  */
 import "vue-style-loader!css-loader!sass-loader!../css/characterAnalyse.scss";
 import echarts from "echarts";
+import vintage from "../../../../../vintage.json";
 import "echarts-wordcloud";
 
 export default{
@@ -47,7 +48,7 @@ export default{
         },
         /**获取活动轨迹echart图*/
         getActionTrail(){
-            let chart = echarts.init(document.getElementById('character_activity_graph'));
+            let chart = echarts.init(document.getElementById('character_activity_graph'), 'vintage');
             chart.showLoading();
             let vm = this;
             this.$http.post('/apis/opinionMonitor/getActionTrail.json', this.param).then(
@@ -90,7 +91,7 @@ export default{
         },
         getEmotionTrend() {
 
-            let chart = echarts.init(document.getElementById('trend_graph'));
+            let chart = echarts.init(document.getElementById('trend_graph'), 'vintage');
             chart.showLoading();
 
             this.$http.post('/apis/opinionMonitor/getEmotionTrend.json', this.param).then(
@@ -109,7 +110,7 @@ export default{
             );
         },
         getEmotionVal() {
-            let chart = echarts.init(document.getElementById('emotionIndex_graph'));
+            let chart = echarts.init(document.getElementById('emotionIndex_graph'), 'vintage');
             chart.showLoading();
 
             this.$http.post('/apis/opinionMonitor/getEmotionVal.json', this.param).then(
@@ -128,7 +129,7 @@ export default{
             );
         },
         getMediaVolume() {
-            let chart = echarts.init(document.getElementById('volume_graph'));
+            let chart = echarts.init(document.getElementById('volume_graph'), 'vintage');
             chart.showLoading();
 
             this.$http.post('/apis/opinionMonitor/getMediaVolume.json', this.param).then(
@@ -147,7 +148,7 @@ export default{
             );
         },
         getMediaHot() {
-            let chart = echarts.init(document.getElementById('hot_graph'));
+            let chart = echarts.init(document.getElementById('hot_graph'), 'vintage');
             chart.showLoading();
 
             this.$http.post('/apis/opinionMonitor/getMediaHot.json', this.param).then(
@@ -167,7 +168,7 @@ export default{
         },
 
         getVectorTrend(){
-            let chart = echarts.init(document.getElementById('vectorTrend_graph'));
+            let chart = echarts.init(document.getElementById('vectorTrend_graph'), 'vintage');
             chart.showLoading();
 
             this.$http.post('/apis/opinionMonitor/getVectorTrend.json', this.param).then(
@@ -194,7 +195,7 @@ export default{
             );
         },
         getVectorDistribution() {
-            let chart = echarts.init(document.getElementById('carrierDis_graph'));
+            let chart = echarts.init(document.getElementById('carrierDis_graph'), 'vintage');
             chart.showLoading();
 
             this.$http.post('/apis/opinionMonitor/getVectorDistribution.json', this.param).then(
@@ -227,7 +228,7 @@ export default{
             );
         },
         getKeyWordsData(){
-            let chart = echarts.init(document.getElementById('keywords'));
+            let chart = echarts.init(document.getElementById('keywords'), 'vintage');
             chart.showLoading();
 
             this.$http.post('/apis/opinionMonitor/getWordCloud.json', this.param).then(
@@ -284,6 +285,7 @@ export default{
         this.param = this.$route.query;
     },
     mounted() {
+        echarts.registerTheme('vintage', vintage);
         this.getActionTrail();
         this.getPersonageArticle(this.param.endDate.split(' ')[0]);
         this.getEmotionTrend();
