@@ -6,7 +6,7 @@
         <div id="search_container">
             <search-box :searchNames="searchNames" @searchDataChange="onSearchDataChange" class="dark"></search-box>
         </div>
-        <articleContainer :articleData="articleData" :total="total" :concernBtn="true" @onchange="pageChange" class="dark"></articleContainer>
+        <articleContainer :articleData="articleData" :total="total" :pageNumber="param.pageNumber" :concernBtn="true" @onchange="pageChange" class="dark"></articleContainer>
     </div>
 </template>
 <script>
