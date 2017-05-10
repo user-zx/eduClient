@@ -153,13 +153,13 @@
                     <div class="info">
                         可添加高校：
                         <div class="input-wrap small">
-                             <input type="text" name="" class="member-input" v-model="attention" @keyup="check_count($event)" @blur="loseBlur">
+                             <input type="text" name="" class="member-input" v-model="attention" @keyup="check_count($event,'school')" @blur="loseBlur">
                         </div>
                         500元/所
                     </div>
                     <div class="info">
                         可添加人物： 
-                        <div class="input-wrap small"><input type="text" name="" class="member-input" v-model="addition" @keyup="check_count($event)" @blur="loseBlur"></div>
+                        <div class="input-wrap small"><input type="text" name="" class="member-input" v-model="addition" @keyup="check_count($event,'person')" @blur="loseBlur"></div>
                         500元/人
                     </div>
                      <div class="info">
@@ -432,13 +432,23 @@
                         break;
                 }
             },
-            check_count: function(event) {
-               var value = event.target.value;
-               if (!/^\+?[1-9][0-9]*$/.test(value)) {
-                     if(value!=""){
-                        alert('只能正整数');
-                       event.target.value = '';
-                    }
+            check_count: function(event,type) {
+               let value = event.target.value;
+                if( this.attention == 0 && this.addition ==0){
+                    this.price.c = 0;
+                    return false; 
+                  } 
+               if (!/^\d+$/.test(value)) {
+                        if(value==""){
+                            return false;
+                        }
+                       if(type=="school"){
+                             alert('只能正整数');
+                            this.attention = 0;
+                       }else if(type=='person'){
+                             alert('只能正整数');
+                              this.addition = 0;
+                       }
                }
              },
             setBreadCrumb(){
@@ -689,7 +699,12 @@
                 })
             },
             loseBlur(){
-                let vm = this;
+                 let vm = this;
+                   if( (this.attention == 0&& this.addition ==0)||(this.attention == ""&& this.addition =="")){
+                    this.price.c = 0;
+                    return false;
+                  }
+                 // console.log(this.changePrice.c);
                  let sumPrice = this.changePrice.c + 500 * this.addition + this.attention * 500;
                  switch(vm.time_c_vla) {
                             case "6个月":
@@ -722,11 +737,12 @@
             },
             attention:function(val,oldVal){
                 let vm = this;
+                if(val>1000){
+                    this.$message("最多可以添加1000所高校");
+                    this.attention = 1000;
+                    return false;
+                }
               if(!isNaN(val)){
-                if(val==0||val==""){
-                 vm.price.c = vm.changePrice.c * 0; 
-                 vm.change_Price.c = vm.changePrice.c * 0;
-                }else{
                      let sumPrice = vm.changePrice.c + 500 * val + vm.addition * 500;
                     switch(vm.time_c_vla) {
                             case "6个月":
@@ -743,16 +759,16 @@
                                 break;
                         } 
                     vm.change_Price.c = vm.changePrice.c + 500 * val + vm.addition * 500;
-                }
               }
             },
             addition:function(val,oldVal){
                  let vm = this;
+                  if(val>1000){
+                    this.$message("最多可以添加1000位人");
+                    this.addition = 1000;
+                    return false;
+                 }
                  if(!isNaN(val)){
-                    if(val==0||val==""){
-                     vm.price.c = vm.changePrice.c * 0; 
-                     vm.change_Price.c = vm.changePrice.c * 0;
-                    }else{
                         let sumPrice =  vm.changePrice.c + 500 * val + vm.attention * 500;
                         switch(vm.time_c_vla) {
                             case "6个月":
@@ -769,7 +785,6 @@
                                 break;
                         } 
                         vm.change_Price.c = vm.changePrice.c + 500 * val + vm.attention * 500;
-                    }
                 }
             }
         }
