@@ -197,6 +197,7 @@
                 multipleSelection: [],
                 limitsDialogVisible: false,
                 limitForm: {
+                    userId : '',
                     mainAccount: this.$parent.$parent.$parent.user.userAccount,
                     userAccount: '',
                     password: '',
@@ -228,11 +229,11 @@
         methods: {
 
             setPermission(row){
-              console.log(row);
-              this.limitForm.userAccount = row.userAccount;
-              this.limitForm.createDate = new Date(row.createDate).format('yyyy-MM-dd');
-              this.limitForm.permissions = row.permissions;
-              this.limitsDialogVisible = true;
+                this.limitForm.userId = row.id;
+                this.limitForm.userAccount = row.userAccount;
+                this.limitForm.createDate = new Date(row.createDate).format('yyyy-MM-dd');
+                this.limitForm.permissions = row.permissions;
+                this.limitsDialogVisible = true;
             },
 
             isShow(){
@@ -416,6 +417,26 @@
 
             updateSubCountLimits(){
                 console.log(this.limitForm)
+                let param = {
+                    userId: this.limitForm.userId,
+                    permissionIds: this.limitForm.permissions
+                }
+
+                console.log(param)
+                this.$http.post('/apis/userMgrt/updateSubAccountPermission.json', param).then(
+                    function (response) {
+                        if (response.data.success){
+                            this.$message({
+                                type: 'success',
+                                message: '更新成功'
+                            });
+                            this.limitsDialogVisible = false;
+                        }else {
+                            this.$message.error('更新失败，请稍后再试');
+                            console.error(response.data)
+                        }
+                    }
+                )
             }
         },
         mounted(){

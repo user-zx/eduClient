@@ -108,20 +108,24 @@
 </template>
 <style lang="scss" scoped>
     .seeWeibo{
-        .search_container{
-            padding: 15px 0 1px;
-            background-color: #141725;
-        }
-        .btn-box{
-            padding:20px 20px 0;
-        }
-        .mt20{margin-top: 20px;}
-        .character-name{
-            cursor: pointer;
-        }
-        .blue{
-            color: #60a3ff;
-        }
+            .search_container{
+                padding: 15px 0 1px;
+                background-color: #141725;
+            }
+            .btn-box{
+            /*为了和右侧分页在同行 so 加了margin-top*/
+                .pull-left{
+                    margin-top: 25px;
+                    margin-left: 20px;
+                }
+            }
+         .mt20{margin-top: 20px;}
+            .character-name{
+                cursor: pointer;
+            }
+            .blue{
+                color: #60a3ff;
+            }
     }
 </style>
 <script>
@@ -132,8 +136,8 @@
             return {
                 activeName: 'todayHot',
                 weiboStatisticsData: [],
-                searchNames: ['verified', 'exactDate'],
-                searchNames1: ['exactDate'],
+                searchNames: ['verified', 'selectDate'],
+                searchNames1: ['selectDate'],
                 tableData:　[],
                 hotParam: {
                     pageSize: 15,

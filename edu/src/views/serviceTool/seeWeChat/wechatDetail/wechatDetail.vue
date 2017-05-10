@@ -616,16 +616,7 @@
             this.requestParam.author = data.author;
             this.articleParam.author = data.author;
 
-            //父级传的参数没有起止时间 则默认为今天
-            if(data.startDate == undefined){
-                let date = new Date();
-                this.requestParam.startDate = date.format('yyyy-MM-dd 00:00:00');
-                this.requestParam.endDate = date.format('yyyy-MM-dd 23:59:59');
-                this.articleParam.startDate = date.format('yyyy-MM-dd 00:00:00');
-                this.articleParam.endDate = date.format('yyyy-MM-dd 23:59:59');
-                this.originalStartDate = date.format('yyyy-MM-dd 00:00:00');
-                this.originalEndDate = date.format('yyyy-MM-dd 23:59:59');
-            }else{
+            if(data.startDate != undefined){
                 this.requestParam.startDate = data.startDate;
                 this.requestParam.endDate = data.endDate;
                 this.articleParam.startDate = data.startDate;
@@ -633,6 +624,7 @@
                 this.originalStartDate = data.startDate;
                 this.originalEndDate = data.endDate;
             }
+
             this.setBreadCrumb();
         },
         mounted(){

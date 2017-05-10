@@ -3,7 +3,7 @@
     <div class="seeWeChat" id="seeWeChat" v-loading="loading" element-loading-text="加载中……">
         <el-tabs v-model="activeName" class="custom-tabs left-tabs" @tab-click="handleClick">
             <el-tab-pane label="微信统计" name="todayHot">
-                <div id="search_container">
+                <div id="search_container" class="search_container">
                     <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
                 </div>
                 <div class="clearfix btn-box">
@@ -43,7 +43,7 @@
                 </el-card>
             </el-tab-pane>
             <el-tab-pane label="微信指数" name="weekHot">
-                <div id="search_container1">
+                <div id="search_container1" class="search_container">
                     <search-box :searchNames=searchNames1 @searchDataChange="onSearchDataChange" class="dark"></search-box>
                 </div>
                 <div class="btn-box clearfix">
@@ -99,7 +99,7 @@
     </div>
 </template>
 <style lang="scss" scoped>
-    #search_container{
+    .search_container{
         padding: 15px 0 1px;
         background-color: #141725;
     }
@@ -130,20 +130,24 @@
                 statisticsParam: {
                     pageSize: 15,
                     pageNumber: 0,
-                    authcStatus: ''
+                    authcStatus: '',
+                    startDate: new Date(Date.now() - 8.64e7).format('yyyy-MM-dd 00:00:00'),
+                    endDate: new Date(Date.now() - 8.64e7).format('yyyy-MM-dd 23:59:59')
                 },
                 //微信指数请求参数
                 exponentParam: {
                     pageSize: 15,
                     pageNumber: 0,
-                    authcStatus: ''
+                    authcStatus: '',
+                    startDate: new Date(Date.now() - 8.64e7).format('yyyy-MM-dd 00:00:00'),
+                    endDate: new Date(Date.now() - 8.64e7).format('yyyy-MM-dd 23:59:59')
                 },
                 //微信统计返回参数
                 wechatStatisticsData: [],
                 //微信指数返回参数
                 wechatExponentData: [],
-                searchNames: ['verified', 'exactDate'],
-                searchNames1: ['exactDate'],
+                searchNames: ['verified', 'selectDate'],
+                searchNames1: ['selectDate'],
                 loading: true,
                 multipleSelection:{},
                 total1: 0,
@@ -201,7 +205,6 @@
                         this.loading = false;
                         if(response.data.success){
                             this.wechatStatisticsData = response.data.data.page.content;
-                            console.log(this.wechatStatisticsData)
                             this.total1 = response.data.data.page.totalElements;
                         }
                     }
@@ -270,10 +273,9 @@
         },
         created(){
             this.setBreadCrumb();
-            this.getWechatStatisticsData();
         },
         mounted(){
-
+            this.getWechatStatisticsData();
         }
     }
 </script>

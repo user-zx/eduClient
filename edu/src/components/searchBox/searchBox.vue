@@ -485,6 +485,7 @@
         mounted() {
             this.add();
             this.getUserParams();
+            this.selectDate = new Date(Date.now() - 8.64e7);
         },
         props: ["searchNames"],
     }
