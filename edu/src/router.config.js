@@ -52,7 +52,7 @@ export default {
     base:__dirname,
     routes:[
         {
-            path:"",
+            path:"/",
             redirect:"/home/panorama",
         },
         {

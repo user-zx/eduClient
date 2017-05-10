@@ -32,18 +32,18 @@
             <el-card class="box-card">
                 <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%" :resizable="false" @selection-change="handleSelectionChange">
                     <el-table-column type="selection" width="50" align="center"></el-table-column>
-                    <el-table-column label="排名" align="center" prop="all">
-                        <template scope="scope">
-                            <span v-if="scope.row.all == 1">
+                    <el-table-column label="排名" align="center" prop="index">
+                        <template scope="scope"> 
+                            <span v-if="scope.row.index == 1">
                                  <i class="icon-rank icon-gold"></i>
                             </span>
-                            <span v-else-if="scope.row.all == 2">
+                            <span v-else-if="scope.row.index == 2">
                                 <i class="icon-rank icon-silver"></i>
                            </span>
-                            <span v-else-if="scope.row.all == 3">
+                            <span v-else-if="scope.row.index == 3">
                                  <i class="icon-rank icon-copper"></i>
                             </span>
-                            {{scope.row.all}}
+                            {{scope.row.index}}
                         </template>
                     </el-table-column>
                     <el-table-column label="微博号" prop="name" align="center">
@@ -146,10 +146,13 @@
                 this.tableData = [];
                 this.$http.post("/apis/concerns/getMicroblogData.json",this.param).then((res)=>{
                     if(res.data.success){
+                        console.log(res);
                         this.total = res.data.data.page.totalElements>10000?10000:res.data.data.page.totalElements;
                         for (var i = 0; i < res.data.data.page.content.length; i++) {
+                            res.data.data.page.content[i].index = i+1;
                             this.tableData.push(res.data.data.page.content[i])
                         }
+                      //  console.log(this.tableData);
                     }
                 },(err)=>{
                     console.log(err);
