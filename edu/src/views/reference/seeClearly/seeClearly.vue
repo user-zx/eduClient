@@ -111,7 +111,8 @@
                                 <div class="charts" id="carrierDis_graph" style="height: 400px;"></div>
                             </div>
                             <div class="col-item item-right">
-                                <el-table :data="distributeData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title white-table-text">
+                                <el-table :data="distributeData" :resizable="false" :show-overflow-tooltip="true" height="400"
+                                          style="width: 100%" border class="tran-table no-col-title white-table-text scroll-table">
                                     <el-table-column prop="area" label="地域" width="150" align="center"></el-table-column>
                                     <el-table-column prop="wechat" label="微信" align="center"></el-table-column>
                                     <el-table-column prop="webo" label="微博" align="center"></el-table-column>

@@ -180,4 +180,10 @@
       background-color: #21273d;
     }
   }
+
+  &.scroll-table{
+    .el-table__body-wrapper{
+      overflow-y: auto;
+    }
+  }
 }
