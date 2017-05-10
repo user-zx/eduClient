@@ -186,7 +186,8 @@
                 this.$router.push({path:"/home/reportDetails", query: {
                     id: row.id,
                     title: row.title,
-                    createDate: new Date(row.createDate).format('yyyy年MM月dd日'),
+                    createDate: new Date(row.createDate).format('yyyy-MM-dd'),
+                    endDate: new Date(row.endDate).format('yyyy-MM-dd')
                 }});
             },
             dialogSubmit(formName) {

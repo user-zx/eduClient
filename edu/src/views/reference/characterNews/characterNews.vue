@@ -38,7 +38,7 @@
             <el-table :data="tableData" class="tran-table white-table" border style="width: 100%"
                       :resizable="false" @selection-change="handleSelectionChange"> 
                 <el-table-column type="selection" width="50" align="center"></el-table-column>
-                <el-table-column label="全部" align="center" prop="all">
+                <el-table-column label="排名" align="center" prop="all">
                     <template scope="scope">
                         <span v-if="scope.row.rank == 1">
                             <i class="icon-rank icon-gold"></i>
@@ -132,7 +132,6 @@
             getPersonageRank() {
                 this.loading = true;
                 this.$nextTick(function() {
-                    console.log(this.param);
                     this.$http.post('/apis/personNews/findPersonNewRankingList.json', this.param).then(
                         (response) => {
                             if (response.data.success) {

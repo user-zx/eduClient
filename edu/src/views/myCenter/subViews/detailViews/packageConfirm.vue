@@ -305,6 +305,7 @@
                     if(!reg.test(this.ruleForm.email)){
                         this.email_empty = true;
                         this.$message.error('邮箱格式不正确');
+                        return ;
                     }
                 }
 

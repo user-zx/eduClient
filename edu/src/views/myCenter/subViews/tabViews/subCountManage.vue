@@ -182,9 +182,11 @@
                     ],
                     realName: [
                         { required: true, message: '请输入姓名', trigger: 'blur' },
+                        { min: 1, max: 10, message: '长度在 1 到 10 个字之间', trigger: 'blur'}
                     ],  
                     userDepartment: [
                         { required: true, message: '请输入职称', trigger: 'blur' },
+                        { min: 1, max: 16, message: '长度在 1 到 16 个字之间', trigger: 'blur'}
                     ],
                     userPhone:[
                         { required: true, message: '请输入联系电话', trigger: 'blur' },
