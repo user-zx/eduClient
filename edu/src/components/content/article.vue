@@ -131,6 +131,8 @@
                         if(res.data.data.message==null){
                             this.$message("取消关注成功")
                            this.$emit('onchange',"");
+                           this.allSelect = false;
+                           this.handleCheckAllChange(event)
                            this.unfollowParam.concernsContent = [];
                         }else{
                             this.$message(res.data.data.message)
@@ -162,6 +164,7 @@
                 if(event.target.checked==undefined){
                     event.target.checked = false;
                 }
+                console.log(event.target.checked);
                this.checked = event.target.checked ? this.articleDataNew.map(v=>{return v.id}) : [];
                this.unfollowParam.concernsContent = this.checked;
                this.followParam.concernsContent = this.checked;
