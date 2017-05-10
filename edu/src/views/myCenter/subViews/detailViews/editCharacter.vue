@@ -124,19 +124,19 @@
                 },
                 rules:{
                     name: [
-                        { required: true, message: '请输入姓名', trigger: 'blur' },
+                        { required: true,min: 2, max: 10, message: '请输入姓名,长度在 2 到 10 个字符', trigger: 'blur' },
                     ],
                     colleges: [
-                        { required: true, message: '请输入所在高校', trigger: 'blur' },
+                          { required: true,min: 4, max: 20, message: '请输入所在高校,长度在 4 到 40 个字符', trigger: 'blur' },
                     ],
                     faculty: [
-                       { required: true, message: '请输入所在院系', trigger: 'blur' }, 
+                          { required: true,min: 4, max: 20, message: '请输入所在院系,长度在 4到 20 个字符', trigger: 'blur' },
                     ],
                     word: [
-                       { required: true, message: '请输入社交账号', trigger: 'blur' }, 
+                        { required: true,min: 4, max: 20, message: '请输入社交账号,长度在 4到 20 个字符', trigger: 'blur' },
                     ],
                     account: [
-                       { required: true, message: '请输入昵称/关键字', trigger: 'blur' }, 
+                        { required: true,min: 4, max: 20, message: '请输入昵称/关键字,长度在 4到 20 个字符', trigger: 'blur' }, 
                     ],
                 },
                 deletePersonSelection: []
