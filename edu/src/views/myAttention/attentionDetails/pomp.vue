@@ -4,7 +4,7 @@
 <template>
     <div class="article-wrap myAttention-pomp">
         <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
-        <articleView :articleData="articleData" class="dark" :total="total" :eventBtn="true" @onchange="pageChange"></articleView>
+        <articleView :articleData="articleData" class="dark" :total="total" :pageNumber="param.pageNumber" :eventBtn="true" @onchange="pageChange"></articleView>
     </div>
 </template>
 <style>
@@ -20,7 +20,7 @@
                 currentPage: 1,
                 total: 0,
                 param: {
-                    pageSize: 10,
+                    pageSize: 5,
                     pageNumber: 0,
                     startDate:"",
                     endDate:"",
@@ -75,6 +75,7 @@
                 }else{
                     this.param.endDate = "";
                 }
+                this.param.pageNumber = 0;
                 this.getArticleList();
             },
             pageChange(param) {

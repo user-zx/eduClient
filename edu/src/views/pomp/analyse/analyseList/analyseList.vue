@@ -4,7 +4,7 @@
 <template>
     <div v-loading="loading" element-loading-text="加载中……">
         <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" @onload="onSearchLoad"></search-box>
-        <articleView :articleData="articleData" :total="total" :eventBtn="true" :concernBtn="true" @onchange="pageChange"></articleView>
+        <articleView :articleData="articleData" :total="total" :pageNumber="param.pageNumber" :eventBtn="true" :concernBtn="true" @onchange="pageChange"></articleView>
     </div>
 </template>
 <script>

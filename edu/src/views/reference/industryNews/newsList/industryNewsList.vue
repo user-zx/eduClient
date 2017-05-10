@@ -4,7 +4,7 @@
 <template>
     <div class="industryNews article-wrap" v-loading="loading" element-loading-text="加载中……">
         <search-box :searchNames=searchNames @onload="onSearchLoad" @searchDataChange="onSearchDataChange"></search-box>
-        <articleView :articleData="articleData" :total="total" :eventBtn="true" :concernBtn="true" @onchange="pageChange"></articleView>
+        <articleView :articleData="articleData" :total="total" :pageNumber="param.pageNumber" :eventBtn="true" :concernBtn="true" @onchange="pageChange"></articleView>
     </div>
 </template> 
 <script>

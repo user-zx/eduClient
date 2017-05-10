@@ -32,7 +32,7 @@
             <div class="content-bar-page">
                 <el-pagination class="edu-pagination"
                                @current-change="handleCurrentChange"
-                               :current-page="param.pageNumber + 1"
+                               :current-page="pageNumber + 1"
                                :page-size="5"
                                layout="prev, next, jumper, total"
                                :total="total">
@@ -305,7 +305,7 @@
                 this.articleDataNew = val;
             }, 
         },
-        props: ["articleData", "eventBtn", "concernBtn", "total"]
+        props: ["articleData", "eventBtn", "concernBtn", "total", "pageNumber"]
     }
 </script>
 
