@@ -62,7 +62,7 @@
                        <el-input v-model="form.userDepartment" placeholder="请输入职称"></el-input>
                    </el-form-item>
                    <el-form-item label="联系电话" prop="userPhone">
-                       <el-input v-model="form.userPhone" placeholder="请输入手机号码或座机号码"></el-input>
+                       <el-input v-model="form.userPhone" placeholder="请输入手机号或座机号,座机号格式为: 区号-座机号"></el-input>
                    </el-form-item>
                    <el-form-item label="设置权限" prop="permissions">
                        <el-select v-model="form.permissions" multiple placeholder="请选择权限">
@@ -321,7 +321,6 @@
               this.$http.post("/apis/user/findAllSubAccount.json", this.param).then((res)=>{
                   if(res.data.success){
                       this.tableData = res.data.data.content;
-                      console.log(this.tableData)
                       this.total = res.data.data.totalElements;
                       for(var i in this.tableData){
                           if(this.tableData[i].status == 0){
@@ -419,13 +418,11 @@
             },
 
             updateSubCountLimits(){
-                console.log(this.limitForm)
                 let param = {
                     userId: this.limitForm.userId,
                     permissionIds: this.limitForm.permissions
                 }
-
-                console.log(param)
+                
                 this.$http.post('/apis/userMgrt/updateSubAccountPermission.json', param).then(
                     function (response) {
                         if (response.data.success){
