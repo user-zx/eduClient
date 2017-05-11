@@ -99,7 +99,7 @@
                     endDate:"",
                     university:[],
                 },
-                searchNames: ['university', 'type', 'verified', 'exactDate'],
+                searchNames: ['university', 'verified', 'exactDate'],
                 articleData: [],
                 loading:true,
                 curContent: this.$store.state.curContent,

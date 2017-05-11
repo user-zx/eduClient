@@ -22,7 +22,6 @@
                     </template>
                 </el-table-column>
                 <el-table-column label="date" prop="createDate" align="center" width="150" :formatter="formatDate"></el-table-column>
-
             </el-table>
         </div>
 

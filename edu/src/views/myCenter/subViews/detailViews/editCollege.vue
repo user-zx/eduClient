@@ -7,7 +7,7 @@
             </div>
             <div class="item">
                 最多可添加
-                <span class="yellow">10</span>
+                <span class="yellow">{{addColleges}}</span>
                 所高校
             </div>
         </div>
@@ -155,6 +155,7 @@
                 tags:[],
                 addTags:[],
                 arr:[],
+                addColleges:'',
             }
         },
         methods: {
@@ -186,9 +187,10 @@
             //提交选好的大学
             getSelected(){
                 let str = "";
-                if(this.tags.length>10||this.addTags.length>10||this.tags.length+this.addTags.length>10){
-                    this.$message("已添加"+this.tags.length+"可添加"+(10-this.tags.length)+"所高校")
+                if(this.tags.length>this.addColleges||this.addTags.length>this.addColleges||this.tags.length+this.addTags.length>this.addColleges){
+                    this.$message("已添加"+this.tags.length+"可添加"+(this.addColleges-this.tags.length)+"所高校")
                 }else{
+                    console.log(this.addTags);
                     for (let j in this.addTags) {
                         if(j==this.addTags.length-1){
                             str += this.addTags[j].name
@@ -200,6 +202,9 @@
                         if(res.data.success){
                             this.selected = res.data.data;
                             this.$message("保存成功")
+                            this.addTags = [];
+                            this.tags = [];
+                            this.getUserParams();
                         }
                     },(err)=>{
                         console.log(err);
@@ -240,6 +245,13 @@
         mounted(){
             this.selectProvince("","北京");
             this.getUserParams();
+            this.$http.post("/apis/user/getMemberInfo.json").then(res=>{
+                    if(res.data.success){
+                         this.addColleges = res.data.data.collegeNum;
+                    }
+            },err=>{
+                    console.log(err);
+            })
         },
         created(){  
             this.setBreadCrumb();
