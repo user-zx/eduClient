@@ -53,16 +53,16 @@
                        </el-input>
                    </el-form-item> 
                    <el-form-item label="子账号密码" prop="password">
-                       <el-input type="password" auto-complete="off" v-model="form.password"></el-input>
+                       <el-input type="password" auto-complete="off" v-model="form.password" placeholder="请输入密码"></el-input>
                    </el-form-item>
                    <el-form-item label="姓名" prop="realName">
-                       <el-input v-model="form.realName"></el-input>
+                       <el-input v-model="form.realName" placeholder="请输入姓名"></el-input>
                    </el-form-item>
                    <el-form-item label="职称" prop="userDepartment">
-                       <el-input v-model="form.userDepartment"></el-input>
+                       <el-input v-model="form.userDepartment" placeholder="请输入职称"></el-input>
                    </el-form-item>
                    <el-form-item label="联系电话" prop="userPhone">
-                       <el-input v-model="form.userPhone"></el-input>
+                       <el-input v-model="form.userPhone" placeholder="请输入手机号码或座机号码"></el-input>
                    </el-form-item>
                    <el-form-item label="设置权限" prop="permissions">
                        <el-select v-model="form.permissions" multiple placeholder="请选择权限">
@@ -144,13 +144,14 @@
           };
           var testPhone = (rule, value, callback)=>{
               if (value === '') {
-              callback(new Error('手机号不能为空'));
-            } else {
-              if(!/^1(3|4|5|7|8)\d{9}$/.test(value)){
-                callback(new Error('请输入正确手机号'));
+                callback(new Error('手机号不能为空'));
+              } else {
+                  let cellPhone = /^1(3|4|5|7|8)\d{9}$/, phone = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
+                if(!cellPhone.test(value) && !phone.test(value)){
+                    callback(new Error('请输入正确手机号或座机号'));
+                }
+                callback();
               }
-               callback();
-            }
           };
           var validPermission = (rule, value, callback) => {
              if((value == '' || value.length == 0) && this.firstOpen != true){
@@ -182,11 +183,11 @@
                     ],
                     realName: [
                         { required: true, message: '请输入姓名', trigger: 'blur' },
-                        { min: 1, max: 10, message: '长度在 1 到 10 个字之间', trigger: 'blur'}
+                        { min: 1, max: 20, message: '长度在 1 到 20 个字之间', trigger: 'blur'}
                     ],  
                     userDepartment: [
                         { required: true, message: '请输入职称', trigger: 'blur' },
-                        { min: 1, max: 16, message: '长度在 1 到 16 个字之间', trigger: 'blur'}
+                        { min: 1, max: 20, message: '长度在 1 到 20 个字之间', trigger: 'blur'}
                     ],
                     userPhone:[
                         { required: true, message: '请输入联系电话', trigger: 'blur' },

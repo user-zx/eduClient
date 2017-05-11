@@ -131,7 +131,7 @@
                     pageSize: 15,
                     pageNumber: 0,
                     authcStatus: '',
-                    startDate: new Date(Date.now() - 8.64e7).format('yyyy-MM-dd 00:00:00'),
+                    startDate: new Date(Date.now() - 8.64e7 * 31).format('yyyy-MM-dd 00:00:00'),
                     endDate: new Date(Date.now() - 8.64e7).format('yyyy-MM-dd 23:59:59')
                 },
                 //微信指数请求参数
@@ -139,7 +139,7 @@
                     pageSize: 15,
                     pageNumber: 0,
                     authcStatus: '',
-                    startDate: new Date(Date.now() - 8.64e7).format('yyyy-MM-dd 00:00:00'),
+                    startDate: new Date(Date.now() - 8.64e7 * 31).format('yyyy-MM-dd 00:00:00'),
                     endDate: new Date(Date.now() - 8.64e7).format('yyyy-MM-dd 23:59:59')
                 },
                 //微信统计返回参数
