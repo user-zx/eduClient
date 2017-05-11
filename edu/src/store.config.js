@@ -5,6 +5,7 @@ export default {
     state:{
         breadCrumb:[],
         curContent: 'article',
+       // userinfo:{},
     },
     mutations:{
         setBreadCrumb(state,params){
@@ -15,6 +16,7 @@ export default {
         },
         setCurContent(state,params){
             state.curContent = params;
-        }
+        },
+       
     }
 }

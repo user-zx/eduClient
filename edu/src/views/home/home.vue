@@ -32,7 +32,7 @@
         },
         components:{top,left,bottom},
         methods:{
-            getUserInfo() {
+            getUserInfo() { 
                 this.$http.post('/apis/userMgrt/getUserPermission.json', {type: 'user'}).then(
                     (response) => {
                         if (response.data.success) {
