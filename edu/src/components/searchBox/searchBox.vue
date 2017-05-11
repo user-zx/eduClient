@@ -160,7 +160,8 @@
                             {id: 4, text: 'QQ群', selected: false},
                             {id: 5, text: '博客', selected: false},
                             {id: 6, text: '网站门户', selected: false},
-                            {id: 7, text: '贴吧', selected: false}
+                            {id: 7, text: '贴吧', selected: false},
+                            {id: 8, text: '新闻', selected: false}
                         ]
                     },
                     {

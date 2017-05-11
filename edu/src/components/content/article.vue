@@ -17,14 +17,7 @@
                 </li>
             </ul>
             <div class="content-bar-button">
-                <el-dropdown class="event-store-box" trigger="click" v-if="eventBtn" @command="saveEvent">
-                    <el-button type="primary" icon="plus" class="button-icon">
-                        事件库
-                    </el-button>
-                    <el-dropdown-menu slot="dropdown" class="event-store-item">
-                        <el-dropdown-item v-for="event in events" :command="'' + event.id">{{event.title}}</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
+                <dropDown v-if="eventBtn"  @onSaveEvent="onSaveEvent"></dropDown>
 
                 <el-button type="primary" icon="plus" class="button-icon" v-if="concernBtn" @click="concernBtnClick">批量关注</el-button>
                 <el-button type="primary" icon="plus" class="button-icon" v-if="unfollowBtn" @click="unfollow">取消关注</el-button>
@@ -93,6 +86,7 @@
     </div>
 </template>
 <script>
+    import dropDown from "../dropdown/dropdown.vue";
     export default{
         data(){
             return {
@@ -121,7 +115,7 @@
                 followParam:{concernsContent:[]},
             }
         },
-        components: {},
+        components: {dropDown},
         methods: {
             unfollow(){
                 this.unfollowParam.concernsType = 1;
@@ -261,7 +255,7 @@
                 this.param.pageNumber = pageNumber - 1;
                 this.$emit('onchange', this.param);
             },
-            saveEvent(eventId) {
+            onSaveEvent(eventId) {
                 let ids = [];
                 $('#articleContainer').find("input[type='checkbox']").each(function() {
                     if ($(this).prop('checked')) {
@@ -295,10 +289,17 @@
                         message: '未选择文章'
                     });
                 }
+            },
+            init: function () {
+                let url = 'https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js'
+                let script = document.createElement('script')
+                script.setAttribute('src', url)
+                document.getElementsByTagName('head')[0].appendChild(script)
             }
         },
         mounted() {
             this.getAllEvent();
+            this.init();
         },
         watch:{
             articleData:function(val,oldval){

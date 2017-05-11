@@ -15,11 +15,6 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="status" label="事件状态" align="center"></el-table-column>
-                <el-table-column prop="week" label="事件报告" align="center">
-                    <template scope="scope">
-                        <el-button type="text" size="small">生成报告</el-button>
-                    </template>
-                </el-table-column>
                 <el-table-column label="操作" align="center">
                     <template scope="scope">
                         <el-button type="text" size="small" @click="editEvent(scope.row)">编辑</el-button>
