@@ -480,12 +480,25 @@
                     this.$emit('searchDataChange', this.buildParam());
                 }
 
+            },
+
+            judgeHeight(){
+                this.$nextTick(function () {
+                    console.log($('.search-box .el-row'))
+                    $('.search-box .el-row').each(function (index) {
+                        if($(this).height() > 41){
+                            let height = $(this).height();
+                            $(this).find('.el-col').height(height);
+                        }
+                    })
+                });
             }
         },
         mounted() {
             this.add();
             this.getUserParams();
             this.selectDate = new Date(Date.now() - 8.64e7);
+            this.judgeHeight();
         },
         props: ["searchNames"],
     }
