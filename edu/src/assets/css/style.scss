@@ -462,7 +462,7 @@ ul.event-store-item {
     }
   }
 
-  input.el-input__inner, .el-input.is-disabled .el-input__inner,textarea {
+  input.el-input__inner, .el-input.is-disabled .el-input__inner,.el-textarea textarea, .el-textarea.is-disabled textarea {
     background: #3e455f;
     border: none;
     color: #d0d7ff;

@@ -276,6 +276,7 @@
                     pageNumber: 0
                 },
                 requestParam: {
+                    id: '',
                     author: '',
                     startDate: '',
                     endDate: '',
@@ -333,7 +334,7 @@
 
             getBlogInfoData(){
                 let param = {
-                    author: this.requestParam.author
+                    id: this.requestParam.id
                 }
 
                 this.$http.post('/apis/businessTool/getMicroblogInfo.json', param).then(
@@ -619,8 +620,10 @@
         },
         created(){
             this.blogData = this.$route.query;
+            this.requestParam.id = this.blogData.id;
             this.requestParam.author = this.blogData.author;
             this.articleParam.author = this.blogData.author;
+            this.articleParam.id = this.blogData.id;
 
             if(this.blogData.startDate != undefined){
                 this.requestParam.startDate = this.blogData.startDate;

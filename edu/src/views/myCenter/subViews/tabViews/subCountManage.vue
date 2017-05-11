@@ -422,7 +422,7 @@
                     userId: this.limitForm.userId,
                     permissionIds: this.limitForm.permissions
                 }
-                
+
                 this.$http.post('/apis/userMgrt/updateSubAccountPermission.json', param).then(
                     function (response) {
                         if (response.data.success){
@@ -431,6 +431,7 @@
                                 message: '更新成功'
                             });
                             this.limitsDialogVisible = false;
+                            this.getChildAccount();
                         }else {
                             this.$message.error('更新失败，请稍后再试');
                             console.error(response.data)

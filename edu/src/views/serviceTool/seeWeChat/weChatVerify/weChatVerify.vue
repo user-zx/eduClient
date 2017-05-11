@@ -7,14 +7,14 @@
             <el-row :gutter="20" align="middle">
                 <el-col :span="4" class="text-right">微信号名称</el-col>
                 <el-col :span="6">
-                    <el-input :maxlength=30 v-model="wechatInfo.wechatName"></el-input>
+                    <el-input :maxlength=30 v-model="wechatInfo.wechatName" :disabled="true"></el-input>
                 </el-col>
                 <el-col :span="4" class="text-right uploadLabel">添加账号标志</el-col>
                 <el-col :span="6">
                     <div class="avatar-uploader">
-                        <div class="el-upload el-upload--text" @click="uploadSign">
-                            <i class="el-icon-plus avatar-uploader-icon" v-if="wechatInfo.accountSign == ''"></i>
-                            <img :src="wechatInfo.accountSign" alt="" v-else="" class="avatar">
+                        <div class="el-upload--text">
+                            <!--<i class="el-icon-plus avatar-uploader-icon" v-if="wechatInfo.accountSign == ''"></i>-->
+                            <img :src="wechatInfo.accountSign" alt="" class="avatar">
                             <input type="file" class="el-upload__input" @change="accountSignFileChange" id="accountSignInput">
                         </div>
                     </div>
@@ -23,33 +23,33 @@
             <el-row :gutter="20">
                 <el-col :span="4" class="text-right">微信号</el-col>
                 <el-col :span="6">
-                    <el-input :maxlength=30 v-model="wechatInfo.wechatNumber"></el-input>
+                    <el-input :maxlength=30 v-model="wechatInfo.wechatNumber" :disabled="true"></el-input>
                 </el-col>
             </el-row>
             <el-row :gutter="20">
                 <!--后台传参账号主体和院系参数名颠倒-->
                 <el-col :span="4" class="text-right">账号主体</el-col>
                 <el-col :span="6">
-                    <el-input :maxlength=30 v-model="wechatInfo.belongColleage"></el-input>
+                    <el-input :maxlength=30 v-model="wechatInfo.belongColleage" :disabled="true"></el-input>
                 </el-col>
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="4" class="text-right">所属院系</el-col>
                 <el-col :span="6">
-                    <el-input :maxlength=60 v-model="wechatInfo.wechatSubject"></el-input>
+                    <el-input :maxlength=60 v-model="wechatInfo.wechatSubject" :disabled="true"></el-input>
                 </el-col>
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="4" class="text-right">功能介绍</el-col>
                 <el-col :span="6">
-                    <el-input type="textarea" :rows="8" v-model="wechatInfo.instruction" :maxlength=200></el-input>
+                    <el-input type="textarea" :rows="8" v-model="wechatInfo.instruction" :maxlength=200 :disabled="true"></el-input>
                 </el-col>
                 <el-col :span="4" class="text-right uploadLabel">添加二维码</el-col>
                 <el-col :span="6">
                     <div class="avatar-uploader">
-                        <div class="el-upload el-upload--text" @click="uploadQrCode">
-                            <i class="el-icon-plus avatar-uploader-icon" v-if="wechatInfo.qrCode == ''"></i>
-                            <img :src="wechatInfo.qrCode" alt="" v-else="" class="avatar">
+                        <div class="el-upload--text">
+                            <!--<i class="el-icon-plus avatar-uploader-icon" v-if="wechatInfo.qrCode == ''"></i>-->
+                            <img :src="wechatInfo.qrCode" alt="" class="avatar">
                             <input type="file" class="el-upload__input" @change="qrCodeFileChange" id="qrCodeInput">
                         </div>
                     </div>
@@ -164,6 +164,7 @@
         data(){
             return {
                 wechatInfo: {
+                    id:　'',
                     wechatNumber: '',
                     wechatName: '',
                     wechatSubject: '',
@@ -409,10 +410,6 @@
 
             resetInfo(){
                this.wechatInfo = {
-                    belongColleage: '',
-                    instruction: '',
-                    accountSign: '',
-                    qrCode: '',
                     responsibleUser: '',
                     responsibleEmail:'',
                     responsibleTel: '',
@@ -423,11 +420,7 @@
             },
 
             getWechatInfoData(){
-                let param = {
-                    author: this.$route.query.author
-                }
-
-                this.$http.post('/apis/businessTool/getWechatNumberInfo.json', param).then(
+                this.$http.post('/apis/businessTool/getWechatNumberInfo.json', {id: this.wechatInfo.id}).then(
                     (response) => {
                         console.log(response.data)
                         if(response.data.success && response.data.data != null){
@@ -441,7 +434,7 @@
         },
         created(){
             this.setBreadCrumb();
-            this.wechatInfo.belongColleage = this.$route.query.university;
+            this.wechatInfo.id = this.$route.query.id;
         },
         mounted(){
             this.getWechatInfoData();

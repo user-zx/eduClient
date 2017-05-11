@@ -7,9 +7,9 @@
                     <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
                 </div>
                 <div class="clearfix btn-box">
-                    <div class="pull-left">
-                        <el-button type="primary" @click="verifyWechat">微信认证</el-button>
-                    </div>
+                    <!--<div class="pull-left">-->
+                        <!--<el-button type="primary" @click="verifyWechat">微信认证</el-button>-->
+                    <!--</div>-->
                     <div class="pull-right content-bar-page">
                         <el-pagination class="edu-pagination"
                                        @current-change="handleCurrentChange1"
@@ -23,20 +23,25 @@
                 <el-card class="box-card"> 
                     <el-table :data="wechatStatisticsData" :resizable="false" stripe style="width: 100%" border class="tran-table no-col-title yellow-table">  
                         <el-table-column type="index" width="70" label="序号"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="author" label="公众号" align="center"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="department" label="所属" align="center"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="wechatNumber" label="公众号" align="center"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="wechatSubject" label="所属" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleUser" label="负责人" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleEmail" label="负责人邮箱" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleTel" label="负责人电话" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="publishUser" label="发布人" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="publishEmail" label="发布人邮箱" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="publishTel" label="发布人电话" align="center"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="authcStatus" label="认证情况" align="center" width="140px">
+                        <el-table-column :show-overflow-tooltip="true" prop="authcStatus" label="认证情况" align="center" width="110px">
                             <template scope="scope">
                                 <span v-if="scope.row.authcStatus == '1'">已认证</span>
                                 <span v-else>
-                                    未认证，<span class="blue pointer" @click="toVerified(scope.row)">去认证</span>
+                                    未认证
                                 </span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="操作" align="center" width="80">
+                            <template scope="scope">
+                                <el-button type="text" @click="editWechat(scope.row)">编辑</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -49,7 +54,7 @@
                 <div class="btn-box clearfix">
                     <div class="pull-left">
                         <el-button type="primary" @click="batchConcerned">批量关注</el-button>
-                        <el-button type="primary" @click="verifyWechat">微信认证</el-button>
+                        <!--<el-button type="primary" @click="verifyWechat">微信认证</el-button>-->
                     </div>
                     <div class="pull-right content-bar-page">
                         <el-pagination class="edu-pagination"
@@ -130,9 +135,7 @@
                 statisticsParam: {
                     pageSize: 15,
                     pageNumber: 0,
-                    authcStatus: '',
-                    startDate: new Date(Date.now() - 8.64e7 * 31).format('yyyy-MM-dd 00:00:00'),
-                    endDate: new Date(Date.now() - 8.64e7).format('yyyy-MM-dd 23:59:59')
+                    authcStatus: ''
                 },
                 //微信指数请求参数
                 exponentParam: {
@@ -146,7 +149,7 @@
                 wechatStatisticsData: [],
                 //微信指数返回参数
                 wechatExponentData: [],
-                searchNames: ['verified', 'selectDate'],
+                searchNames: ['verified'],
                 searchNames1: ['selectDate'],
                 loading: true,
                 multipleSelection:{},
@@ -204,8 +207,9 @@
                     (response) => {
                         this.loading = false;
                         if(response.data.success){
-                            this.wechatStatisticsData = response.data.data.page.content;
-                            this.total1 = response.data.data.page.totalElements;
+                            this.wechatStatisticsData = response.data.data.content;
+                            console.log(this.wechatStatisticsData)
+                            this.total1 = response.data.data.totalElements;
                         }
                     }
                 )
@@ -271,6 +275,11 @@
             handleCurrentChange2(pageNumber){
                 this.exponentParam.pageNumber = pageNumber - 1;
                 this.getWechatExponentData();
+            },
+
+            editWechat(data){
+                console.log(data)
+                this.$router.push({path: "/home/weChatVerify", query: {id: data.id}});
             }
         },
         created(){

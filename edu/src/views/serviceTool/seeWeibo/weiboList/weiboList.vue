@@ -9,9 +9,9 @@
                     <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
                 </div>
                 <div class="clearfix btn-box">
-                    <div class="pull-left">
-                        <el-button type="primary" @click="verifyWeibo">微博认证</el-button>
-                    </div>
+                    <!--<div class="pull-left">-->
+                        <!--<el-button type="primary" @click="verifyWeibo">微博认证</el-button>-->
+                    <!--</div>-->
                     <div class="pull-right content-bar-page">
                         <el-pagination class="edu-pagination"
                                        @current-change="handleCurrentChange1"
@@ -25,20 +25,25 @@
                 <el-card class="box-card">
                     <el-table :data="weiboStatisticsData" :resizable="false" stripe style="width: 100%" border class="tran-table no-col-title yellow-table">
                         <el-table-column width="70" label="序号" align="center" type="index"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="author" label="微博号" align="center"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="university" label="所属" align="center"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="blogNickname" label="微博号" align="center"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="belongDepartment" label="所属" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleUser" label="负责人" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleEmail" label="负责人邮箱" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleTel" label="负责人电话" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="publishUser" label="发布人" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="publishEmail" label="发布人邮箱" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="publishTel" label="发布人电话" align="center"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="authcStatus" label="认证情况" align="center" width="140px">
+                        <el-table-column :show-overflow-tooltip="true" prop="authcStatus" label="认证情况" align="center" width="110">
                             <template scope="scope">
                                 <span v-if="scope.row.authcStatus == '1'">已认证</span>
                                 <span v-else>
                                     未认证，<span class="blue pointer" @click="toVerified(scope.row)">去认证</span>
                                 </span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column align="center" label="操作" width="80">
+                            <template scope="scope">
+                                <el-button size="small" type="text" @click="editWeibo(scope.row)">编辑</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -51,7 +56,7 @@
                 <div class="btn-box clearfix">
                     <div class="pull-left">
                         <el-button type="primary" @click="batchConcerned">批量关注</el-button>
-                        <el-button type="primary" @click="verifyWeibo">微博认证</el-button>
+                        <!--<el-button type="primary" @click="verifyWeibo">微博认证</el-button>-->
                     </div>
                     <div class="pull-right content-bar-page">
                         <el-pagination class="edu-pagination"
@@ -136,22 +141,20 @@
             return {
                 activeName: 'todayHot',
                 weiboStatisticsData: [],
-                searchNames: ['verified', 'selectDate'],
+                searchNames: ['verified'],
                 searchNames1: ['selectDate'],
                 tableData:　[],
                 hotParam: {
                     pageSize: 15,
                     pageNumber: 0,
                     authcStatus: '',
-                    startDate: new Date(Date.now() - 8.64e7 * 31).format('yyyy-MM-dd 00:00:00'),
+                    startDate: new Date(Date.now() - 8.64e7 * 8).format('yyyy-MM-dd 00:00:00'),
                     endDate: new Date(Date.now() - 8.64e7).format('yyyy-MM-dd 23:59:59')
                 },
                 statisticsParam: {
                     pageSize: 15,
                     pageNumber: 0,
                     authcStatus: '',
-                    startDate: new Date(Date.now() - 8.64e7 * 31).format('yyyy-MM-dd 00:00:00'),
-                    endDate: new Date(Date.now() - 8.64e7).format('yyyy-MM-dd 23:59:59')
                 },
                 loading:true,
                 multipleSelection:{},
@@ -185,6 +188,10 @@
                 //因为后台搜索认证条件时， 已认证、未认证传的参数是相应的汉字，但是全部要传空
                 if(data.verified == '全部'){
                     data.verified = '';
+                }else if(data.verified == '未认证'){
+                    data.verified = 0;
+                }else{
+                    data.verified = 1;
                 }
                 data.pageSize = 15;
                 data.pageNumber = 0;
@@ -195,6 +202,10 @@
                     this.getWeiboStatisticsData();
                 }else{
                     this.hotParam = data;
+                    if(data.endDate != null){
+                        let endDate = new Date(data.endDate).getTime();
+                        hotParam.startDate = new Date(endDate - 8.64e7 * 7).format('yyyy-MM-dd 00:00:00');
+                    }
                     this.getWeiboHotArticleList();
                 }
             },
@@ -232,8 +243,9 @@
                     (response) => {
                         this.loading = false;
                         if(response.data.success && response.data.data != null){
-                            this.weiboStatisticsData = response.data.data.page.content;
-                            this.total1 = response.data.data.page.totalElements;
+                            this.weiboStatisticsData = response.data.data.content;
+                            this.total1 = response.data.data.totalElements;
+                            console.log(this.weiboStatisticsData)
                         }
                     }
                 )
@@ -273,6 +285,10 @@
                 this.hotParam.pageNumber = pageNumber - 1;
                 this.getWeiboHotArticleList();
             },
+            editWeibo(data){
+                let id = data.id;
+                this.$router.push({path: "/home/weiboVerify", query: {id: id}});
+            }
         },
         created(){
             this.setBreadCrumb();

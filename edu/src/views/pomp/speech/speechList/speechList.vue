@@ -185,7 +185,7 @@
                 this.$router.push({path:"/home/speechDetails", query: {
                     id: row.id,
                     title: row.title,
-                    createDate: new Date(row.createDate).format('yyyy-MM-dd'),
+                    createDate: new Date(row.startDate).format('yyyy-MM-dd'),
                     endDate: new Date(row.endDate).format('yyyy-MM-dd')
                 }});
             },
