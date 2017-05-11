@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </div>
-            <div class="circle-wrap" :class="isAddChildAccount==true?AddChild:''">
+            <div class="circle-wrap" :class="{addChild:activeClass}">
                 <div class="circle-div">
                     <div class="text">
                         <p class="top">{{usetDataList.subAccountNum}}</p>
@@ -131,7 +131,6 @@
     .centerInfo{
         background: #21273d;
         overflow: hidden;
-        
         .logo-wrap{
             height: 100px;
             margin: 50px 50px 10px 50px;
@@ -283,6 +282,7 @@
             return {
                 tableData: [],
                 total:0,
+                activeClass:false,
                 isShow:false,
                 item_one:["全景舆情","舆情监测","舆情预警","事件监测","舆情报告"],
                 item_two:["行业动态","人物动态","媒体声量","两微洞察","内参报告"],
