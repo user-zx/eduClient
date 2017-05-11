@@ -318,6 +318,7 @@
             },
 
             getChildAccount(){
+              console.log(this.param);
               this.$http.post("/apis/user/findAllSubAccount.json", this.param).then((res)=>{
                   if(res.data.success){
                       this.tableData = res.data.data.content;

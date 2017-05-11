@@ -189,6 +189,7 @@
                 if(this.tags.length>10||this.addTags.length>10||this.tags.length+this.addTags.length>10){
                     this.$message("已添加"+this.tags.length+"可添加"+(10-this.tags.length)+"所高校")
                 }else{
+                    console.log(this.addTags);
                     for (let j in this.addTags) {
                         if(j==this.addTags.length-1){
                             str += this.addTags[j].name
@@ -200,6 +201,9 @@
                         if(res.data.success){
                             this.selected = res.data.data;
                             this.$message("保存成功")
+                            this.addTags = [];
+                            this.tags = [];
+                            this.getUserParams();
                         }
                     },(err)=>{
                         console.log(err);
@@ -223,6 +227,7 @@
              /**获取用户设置信息*/
             getUserParams() {
                 this.$http.post('/apis/user/getUnivsAndPersonage.json').then((res)=>{
+                    console.log(res);
                     if(res.data.success){
                         let arr = res.data.data.univs;
                         //es6数组去重

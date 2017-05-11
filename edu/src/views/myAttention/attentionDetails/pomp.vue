@@ -89,14 +89,16 @@
             },
             getArticleList() {
                 this.loading = true;
-                console.log(this.param)
                 this.$http.post('/apis/concerns/getOpinionData.json',this.param).then(
                     (response) => {
                         if (response.data.success) {
+                            if(response.data.data.page!=undefined){
                                  this.articleData = response.data.data.page.content;
                             // 最多允许翻10000页
                             this.total = response.data.data.page.totalElements > 10000 ? 10000 : response.data.data.page.totalElements;
                              this.loading = false;
+                            }
+                         
                         } else {
                             console.error(response.data.message);
                         }

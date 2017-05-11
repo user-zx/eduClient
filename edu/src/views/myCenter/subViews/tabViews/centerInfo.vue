@@ -18,7 +18,7 @@
                     <div class="text">
                         <p class="top">{{usetDataList.colleges}}</p>
                         <p class="middle">高校总数</p>
-                        <p class="bottom">剩余{{}}个</p>
+                        <p class="bottom">剩余{{surplusCollege}}个</p>
                     </div>
                     <div class="mask">
                         <div class="btn-wrap">
@@ -34,7 +34,7 @@
                     <div class="text">
                         <p class="top">{{usetDataList.peoson}}</p>
                         <p class="middle">人物总数</p>
-                        <p class="bottom">剩余{{usetDataList.peoson}}个</p>
+                        <p class="bottom">剩余{{surplusPerson}}个</p>
                     </div>
                     <div class="mask">
                         <div class="btn-wrap">
@@ -43,12 +43,12 @@
                     </div>
                 </div>
             </div>
-            <div class="circle-wrap">
+            <div class="circle-wrap" :class="isAddChildAccount==true?AddChild:''">
                 <div class="circle-div">
                     <div class="text">
-                        <p class="top">7</p>
+                        <p class="top">{{usetDataList.subAccountNum}}</p>
                         <p class="middle">子账号总数</p>
-                        <p class="bottom">剩余5个</p>
+                        <p class="bottom">剩余{{surplusAccount}}个</p>
                     </div>
                     <div class="mask">
                         <div class="btn-wrap">
@@ -298,6 +298,9 @@
                     pageNum: 0
                 },
                 usetDataList:{},
+                surplusCollege:"",
+                surplusPerson:"",
+                surplusAccount:"",
             }
         },
         methods: {
@@ -368,7 +371,6 @@
             getDataList(){
                 this.$http.post("/apis/packageManage/getPackageOrderList.json", this.param).then((res)=>{
                     if(res.data.success){
-                        console.log(res);   
                         this.total = res.data.data.totalElements;
                         this.tableData = res.data.data.content;
                     }
@@ -378,18 +380,34 @@
             },
             getUserData(){
                  this.$http.post("/apis/user/getMemberInfo.json").then((res)=>{
-                   // console.log(res);
                      let date = new Date();
                     if(res.data.success){
                         this.imgUrl = res.data.data.userImg;
                         this.username = res.data.data.realName;
                         this.time = new Date(res.data.data.createDate).format('yyyy-MM-dd hh:mm');
                         this.usetDataList.colleges = res.data.data.collegeNum;
-                        this.usetDataList.peoson = res.data.data.personageNum;
-                    }
+                        this.usetDataList.peoson = res.data.data.personageNum; 
+                        this.usetDataList.subAccountNum = res.data.data.subAccountNum;
+                        this.$http.post('/apis/user/getUnivsAndPersonage.json').then(res=>{
+                           if(res.data.success){
+                              this.surplusCollege = this.usetDataList.subAccountNum- res.data.data.univs.length;
+                              this.surplusPerson = this.usetDataList.peoson - res.data.data.persons.length;
+                            }
+                        },err=>{
+                            console.log(err);
+                        }) 
+                        this.$http.post("/apis/user/findAllSubAccount.json", {pageNumber:0,pageSize:10}).then(res=>{
+                            if(res.data.success){
+                                this.surplusAccount =  this.usetDataList.subAccountNum - res.data.data.content.length;
+                            }
+                         },(err)=>{
+                            console.log(err);
+                         })
+                       }
                  },(err)=>{
                     console.log(err);
                  })
+
             },
             formatSubmitDate(row, col){
                 return new Date(row.submitDate).format('yyyy-MM-dd');
