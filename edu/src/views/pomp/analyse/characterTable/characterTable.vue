@@ -10,22 +10,12 @@
             <div class="content-bar">
                 <ul class="content-bar-list">
                     <li class="pointer" @click="sort(0)">
-                        阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-up' : 'arrow-down'"></i>
+                        阅读量<i class="arrow" :class="param.orders[0].direction == 'DESC' ? 'arrow-down' : 'arrow-up'"></i>
                     </li>
                 </ul>
                 <div class="content-bar-button">
-                    <el-dropdown class="event-store-box" trigger="click">
-                        <el-button type="primary" icon="plus" class="button-icon">
-                            事件库
-                        </el-button>
-                        <el-dropdown-menu slot="dropdown" class="event-store-item">
-                            <el-dropdown-item>事件1</el-dropdown-item>
-                            <el-dropdown-item>事件2</el-dropdown-item>
-                            <el-dropdown-item>事件3</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
-
-                    <el-button type="primary" icon="plus" class="button-icon">批量关注</el-button>
+                    <dropDown @onSaveEvent="onSaveEvent"></dropDown>
+                    <el-button type="primary" icon="plus" class="button-icon" @click="batchConcerned">批量关注</el-button>
                 </div>
                 <div class="content-bar-page">
                     <el-pagination class="edu-pagination"
@@ -37,7 +27,7 @@
                     </el-pagination>
                 </div>
             </div>
-            <el-table :data="tableData" class="tran-table white-table" border style="width: 100%"
+            <el-table :data="tableData" class="tran-table white-table" border style="width: 100%" @selection-change="handleSelectionChange"
                       :resizable="false">
                 <el-table-column type="selection" width="50" align="center"></el-table-column>
                 <el-table-column label="排名" align="center" prop="all">
@@ -86,6 +76,7 @@
 
 <script>
     import searchBox from '../../../../components/searchBox/searchBox.vue';
+    import dropDown from "../../../../components/dropdown/dropdown.vue";
     export default{
         data(){
             return {
@@ -103,10 +94,12 @@
                     ]
                 },
                 university: '',
+                events: [],
+                multipleSelection:{},
                 tableData: []
             }
         },
-        components: {searchBox},
+        components: {searchBox, dropDown},
         methods: {
             //带参跳转到人物分析页面
             toCharacterAnalyse(data) {
@@ -127,7 +120,7 @@
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
             onSearchDataChange(data) {
-                if(data.dimension != "人物聚焦"){
+                if (data.dimension != "人物聚焦") {
                     this.$router.push({path: "/home/analyse", query: {dimension: data.dimension, university: data.university}});
                     return;
                 }
@@ -150,10 +143,87 @@
                 this.param.pageNumber = pageNumber - 1;
                 this.getPersonageRank();
             },
-
+            handleSelectionChange(val) {
+                this.multipleSelection.concernsContent = [];
+                for (var i = 0; i < val.length; i++) {
+                    this.multipleSelection.concernsContent.push(val[i].name)
+                }
+            },
+            batchConcerned(){
+                this.multipleSelection.concernsType = 2;
+                if(this.multipleSelection.concernsContent.length>0){
+                    this.$http.post("/apis/concerns/saveConcernsMore.json",this.multipleSelection).then(res=>{
+                        if(res.data.success){
+                            this.$notify({
+                                title: '成功',
+                                message: '关注成功',
+                                type: 'success'
+                            });
+                        }else{
+                            this.$notify({
+                                title: '失败',
+                                message: '关注失败',
+                                type: 'error',
+                                duration: 2000
+                            });
+                        }
+                    },err=>{
+                        console.log(err);
+                    })
+                }
+            },
             sort(index){
                 this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
                 this.getPersonageRank();
+            },
+            getAllEvent() {
+                this.$http.post('/apis/eventAnalysis/getEventList.json', {pageSize: 100, pageNumber: 0}).then(
+                    (response) => {
+                        // console.log(response);
+                        if (response.data.success) {
+                            this.events = response.data.data.content;
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            },
+            onSaveEvent(eventId) {
+                let contents = this.multipleSelection.concernsContent;
+                if (contents && contents.length > 0) {
+                    let param = {
+                        eventId: eventId,
+                        contents: contents
+                    };
+                    this.$http.post('/apis/eventAnalysis/saveEventPersonage.json', param).then(
+                        (response) => {
+                            if (response.data.success) {
+                                this.$notify({
+                                    title: '成功',
+                                    message: '添加成功',
+                                    type: 'success',
+                                    duration: 2000
+                                });
+                            } else {
+                                this.$notify({
+                                    title: '失败',
+                                    message: '单个事件不能超过100个人物',
+                                    type: 'error',
+                                    duration: 2000
+                                });
+                            }
+                        }, (response) => {
+                            console.error(response);
+                        }
+                    );
+                } else {
+                    this.$message({
+                        type: 'info',
+                        message: '未选择人物'
+                    });
+                }
             },
             getPersonageRank() {
                 this.loading = true;
@@ -179,6 +249,7 @@
             }
         },
         mounted() {
+            this.getAllEvent();
         },
         created() {
             this.setBreadCrumb();

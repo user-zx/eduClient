@@ -5,6 +5,7 @@
   import vintage from "../../../../vintage.json";
   import china from "../../../../china.json";
   import searchBox from "../../../../components/searchBox/searchBox.vue";
+  import dropDown from "../../../../components/dropdown/dropdown.vue";
 
   export default{
         data(){
@@ -16,7 +17,7 @@
                     pageNumber: 0
                 },
                 tableData1: [],
-                searchNames1: ['university', 'exactDate'],
+                searchNames1: ['university', 'selectDate'],
 
                 loading2: true,
                 total2: 0,
@@ -25,7 +26,7 @@
                     pageNumber: 0
                 },
                 tableData2: [],
-                searchNames2: ['university', 'officialAcctType', 'exactDate'],
+                searchNames2: ['university', 'officialAcctType', 'selectDate'],
 
                 university: '',
                 activeName2: 'TODAY',
@@ -43,9 +44,11 @@
                 weChatDistribute: {},
                 weBoDistribute: {},
                 distributeData: [],
+                multipleSelection1:{},
+                multipleSelection2:{},
             }
         },
-        components:{breadCrumb,overview,searchBox},
+        components:{breadCrumb, dropDown, overview,searchBox},
         methods:{
             setBreadCrumb(){
                  /*设置面包屑*/
@@ -220,15 +223,27 @@
                 if ("微博" == vector) {
                     this.loading1 = true;
                     param = this.param1;
-                    apiUrl = '/apis/businessTool/getMicroblogIndexData.json';
+                    apiUrl = '/apis/businessTool/getMicroblogIndexData2.json';
                 } else {
                     this.loading2 = true;
                     param = this.param2;
-                    apiUrl = '/apis/businessTool/getWechatIndexData.json';
+                    apiUrl = '/apis/businessTool/getWechatIndexData2.json';
                 }
                 this.$http.post(apiUrl, param).then(
                     (response) => {
                         if (response.data.success) {
+                            if (!response.data.data) {
+                                if (vector == "微博") {
+                                    this.tableData1 = [];
+                                    this.total1 = 0;
+                                    this.loading1 = false;
+                                } else {
+                                    this.tableData2 = [];
+                                    this.total2 = 0;
+                                    this.loading2 = false;
+                                }
+                                return;
+                            }
                             let page = response.data.data.page
                             let content = page.content;
                             for (var i = 0; i < content.length; i++) {
@@ -286,6 +301,132 @@
                 data.pageNumber = 0;
                 this.param2 = data;
             },
+            onSaveEvent1(eventId) {
+                let contents = this.multipleSelection1.concernsContent;
+                if (contents && contents.length > 0) {
+                    let param = {
+                        eventId: eventId,
+                        contents: contents
+                    };
+                    this.$http.post('/apis/eventAnalysis/saveEventWeBo.json', param).then(
+                        (response) => {
+                            if (response.data.success) {
+                                this.$notify({
+                                    title: '成功',
+                                    message: '添加成功',
+                                    type: 'success',
+                                    duration: 2000
+                                });
+                            } else {
+                                this.$notify({
+                                    title: '失败',
+                                    message: '单个事件不能超过100个微博号',
+                                    type: 'error',
+                                    duration: 2000
+                                });
+                            }
+                        }, (response) => {
+                            console.error(response);
+                        }
+                    );
+                } else {
+                    this.$message({
+                        type: 'info',
+                        message: '未选择微博号'
+                    });
+                }
+            },
+            onSaveEvent2(eventId) {
+                let contents = this.multipleSelection2.concernsContent;
+                if (contents && contents.length > 0) {
+                    let param = {
+                        eventId: eventId,
+                        contents: contents
+                    };
+                    this.$http.post('/apis/eventAnalysis/saveEventWeChat.json', param).then(
+                        (response) => {
+                            if (response.data.success) {
+                                this.$notify({
+                                    title: '成功',
+                                    message: '添加成功',
+                                    type: 'success',
+                                    duration: 2000
+                                });
+                            } else {
+                                this.$notify({
+                                    title: '失败',
+                                    message: '单个事件不能超过100个微信号',
+                                    type: 'error',
+                                    duration: 2000
+                                });
+                            }
+                        }, (response) => {
+                            console.error(response);
+                        }
+                    );
+                } else {
+                    this.$message({
+                        type: 'info',
+                        message: '未选择微信号'
+                    });
+                }
+            },
+            batchConcerned1(){
+                this.multipleSelection1.concernsType = 4;
+                if(this.multipleSelection1.concernsContent && this.multipleSelection1.concernsContent.length>0){
+                    this.$http.post("/apis/concerns/saveConcernsMore.json",this.multipleSelection1).then(res=>{
+                        if(res.data.success){
+                            this.$notify({
+                                title: '成功',
+                                message: '关注成功',
+                                type: 'success'
+                            });
+                        }else{
+                            this.$notify({
+                                title: '失败',
+                                message: '关注失败',
+                                type: 'error',
+                                duration: 2000
+                            });
+                        }
+                    },err=>{
+                        console.log(err);
+                    })
+                } else {
+                    this.$message({
+                        type: 'info',
+                        message: '未选择微博号'
+                    });
+                }
+            },
+            batchConcerned2(){
+                this.multipleSelection2.concernsType = 3;
+                if(this.multipleSelection2.concernsContent && this.multipleSelection2.concernsContent.length>0){
+                    this.$http.post("/apis/concerns/saveConcernsMore.json",this.multipleSelection2).then(res=>{
+                        if(res.data.success){
+                            this.$notify({
+                                title: '成功',
+                                message: '关注成功',
+                                type: 'success'
+                            });
+                        }else{
+                            this.$notify({
+                                title: '失败',
+                                message: '关注失败',
+                                type: 'error',
+                                duration: 2000
+                            });
+                        }
+                    },err=>{
+                        console.log(err);
+                    })
+                } else {
+                    this.$message({
+                        type: 'info',
+                        message: '未选择微信号'
+                    });
+                }
+            },
             toWeiboDetail(data){
                 data.startDate = this.param1.startDate;
                 data.endDate = this.param1.endDate;
@@ -299,9 +440,18 @@
             batchConcerned() {
 
             },
-            handleSelectionChange() {
-
-            }
+            handleSelectionChange1(val) {
+                this.multipleSelection1.concernsContent = [];
+                for (var i = 0; i < val.length; i++) {
+                    this.multipleSelection1.concernsContent.push(val[i].author)
+                }
+            },
+            handleSelectionChange2(val) {
+                this.multipleSelection2.concernsContent = [];
+                for (var i = 0; i < val.length; i++) {
+                    this.multipleSelection2.concernsContent.push(val[i].author)
+                }
+            },
         },
         mounted(){
             echarts.registerMap('china', china);

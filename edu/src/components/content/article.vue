@@ -27,7 +27,7 @@
                 </el-dropdown>
 
                 <el-button type="primary" icon="plus" class="button-icon" v-if="concernBtn" @click="concernBtnClick">批量关注</el-button>
-                <el-button type="primary" icon="plus" class="button-icon" v-else @click="unfollow">取消关注</el-button>
+                <el-button type="primary" icon="plus" class="button-icon" v-if="unfollowBtn" @click="unfollow">取消关注</el-button>
             </div>
             <div class="content-bar-page">
                 <el-pagination class="edu-pagination"
@@ -44,7 +44,7 @@
                 <div class="article" v-for="(item, index) in articleDataNew">
                     <div class="article-left">
                         <div class="checkbox-div">
-                           <!--  <input type="checkbox" @click="handleCheckChange"/> -->
+                            <!--  <input type="checkbox" @click="handleCheckChange"/> -->
                             <el-checkbox :label="item.id" ></el-checkbox>
                             <input type="hidden" :value="item.id"/>
                         </div>
@@ -126,30 +126,28 @@
             unfollow(){
                 this.unfollowParam.concernsType = 1;
                 if(this.unfollowParam.concernsContent.length>0){
-                     this.$http.post("/apis/concerns/removeConcernsMore.json",this.unfollowParam).then(res=>{
-                    if(res.data.success){
-                        if(res.data.data.message==null){
-                            this.$message("取消关注成功")
-                           this.$emit('onchange',"");
-                           this.allSelect = false;
-                           this.handleCheckAllChange(event)
-                           this.unfollowParam.concernsContent = [];
-                        }else{
-                            this.$message(res.data.data.message)
-                         }
-                        } 
-                   },err=>{
+                    this.$http.post("/apis/concerns/removeConcernsMore.json",this.unfollowParam).then(res=>{
+                        if(res.data.success){
+                            if(res.data.data.message==null){
+                                this.$message("取消关注成功")
+                                this.$emit('onchange',"");
+                                this.unfollowParam.concernsContent = [];
+                            }else{
+                                this.$message(res.data.data.message)
+                            }
+                        }
+                    },err=>{
                         console.log(err);
-                   })
+                    })
                 }else{
                     this.$message("未选择文章")
                 }
-              
+
             },
             getAllEvent() {
                 this.$http.post('/apis/eventAnalysis/getEventList.json', {pageSize: 5, pageNumber: 0}).then(
                     (response) => {
-                       // console.log(response);
+                        // console.log(response);
                         if (response.data.success) {
                             this.events = response.data.data.content;
                         } else {
@@ -161,14 +159,9 @@
                 );
             },
             handleCheckAllChange(event) {
-                if(event.target.checked==undefined){
-                    event.target.checked = false;
-                }
-                console.log(event.target.checked);
-               this.checked = event.target.checked ? this.articleDataNew.map(v=>{return v.id}) : [];
-               this.unfollowParam.concernsContent = this.checked;
-               this.followParam.concernsContent = this.checked;
-                console.log(this.checked);
+                this.checked = event.target.checked ? this.articleDataNew.map(v=>{return v.id}) : [];
+                this.unfollowParam.concernsContent = this.checked;
+                this.followParam.concernsContent = this.checked;
             },
             handleCheckedCitiesChange(value) {
                 this.unfollowParam.concernsContent = value;
@@ -218,16 +211,16 @@
             concernBtnClick() {
                 if (this.followParam.concernsContent.length > 0) {
                     this.followParam.concernsType = 1;
-                   
+
                     this.$http.post('/apis/concerns/saveConcernsMore.json',this.followParam).then(
                         (response) => {
                             if (response.data.success) {
-                               /* this.$notify({
-                                    title: '成功',
-                                    message: '关注成功',
-                                    type: 'success',
-                                    duration: 2000
-                                }); */
+                                /* this.$notify({
+                                 title: '成功',
+                                 message: '关注成功',
+                                 type: 'success',
+                                 duration: 2000
+                                 }); */
                                 this.$message("添加成功")
                             } else {
                                 console.error(response.data.message);
@@ -272,13 +265,13 @@
                 let ids = [];
                 $('#articleContainer').find("input[type='checkbox']").each(function() {
                     if ($(this).prop('checked')) {
-                        ids.push($(this).next().val());
+                        ids.push($(this).parent().parent().next().val());
                     }
                 });
                 if (ids.length > 0) {
                     let param = {
                         eventId: eventId,
-                        esIds: ids
+                        contents: ids
                     };
                     this.$http.post('/apis/eventAnalysis/saveEventArticle.json', param).then(
                         (response) => {
@@ -310,9 +303,9 @@
         watch:{
             articleData:function(val,oldval){
                 this.articleDataNew = val;
-            }, 
+            },
         },
-        props: ["articleData", "eventBtn", "concernBtn", "total", "pageNumber"]
+        props: ["articleData", "eventBtn", "concernBtn",'unfollowBtn', "total", "pageNumber"]
     }
 </script>
 
@@ -472,7 +465,7 @@
         }
     }
     .no-data {
-        color: #66a3ff;
+        color: #5e7382;
         text-align: center;
         font-size: 14px;
         margin-top: 30px;

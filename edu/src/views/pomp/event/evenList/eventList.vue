@@ -233,6 +233,14 @@
                                     });
                                     this.dialogFormVisible = false;
                                     this.getEventList();
+                                } else if (response.data.message == '参数不合法') {
+                                    this.$message({
+                                        message: '单个事件人物不能超过100个',
+                                        type: 'error'
+                                    });
+                                    this.startDate = new Date(this.addReportForm.startDate);
+                                    this.endDate = new Date(this.addReportForm.endDate);
+                                    return;
                                 } else {
                                     this.$message({
                                         message: '标题不能重复',
