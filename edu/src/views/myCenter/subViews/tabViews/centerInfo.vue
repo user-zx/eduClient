@@ -242,9 +242,6 @@
                     }
                 }
             }
-
-
-
             .circle-div:hover{
                 .mask{
                     z-index: 9999;
@@ -267,6 +264,9 @@
                 margin-top: 10px;
             }
         }
+    }
+    .addChild{
+        display: none !important; 
     }
 </style>
 <style lang="scss">
@@ -381,7 +381,13 @@
             getUserData(){
                  this.$http.post("/apis/user/getMemberInfo.json").then((res)=>{
                      let date = new Date();
+
                     if(res.data.success){
+                        if(res.data.data.accountType=="试用"){
+                            this.activeClass = true;
+                        }else{
+                            this.activeClass = false;
+                        }
                         this.imgUrl = res.data.data.userImg;
                         this.username = res.data.data.realName;
                         this.time = new Date(res.data.data.createDate).format('yyyy-MM-dd hh:mm');

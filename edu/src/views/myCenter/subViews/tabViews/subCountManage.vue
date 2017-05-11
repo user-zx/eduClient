@@ -5,7 +5,7 @@
     <div class="subCountManage">
         <div class="clearfix">
             <div class="btn-wrap pull-left">
-                <el-button type="primary" @click="isShow">添加</el-button>
+                <el-button type="primary" @click="isShow" :disabled="addAccount">添加</el-button>
                 <el-button type="primary" @click="deleteAccounts">删除</el-button>
             </div>
             <div class="content-bar-pagination">
@@ -171,6 +171,7 @@
                     userPhone: '',
                     permissions: ''
                 },
+                addAccount:true,
                 formLabelWidth: "100px",
                 rules:{
                     userAccount: [
@@ -316,7 +317,6 @@
                  })
                 //this.dialogFormVisible = false;
             },
-
             getChildAccount(){
               console.log(this.param);
               this.$http.post("/apis/user/findAllSubAccount.json", this.param).then((res)=>{
@@ -442,6 +442,15 @@
         },
         mounted(){
           this.getChildAccount();
+          this.$http.post("/apis/user/getMemberInfo.json").then(res=>{
+               if(res.data.data.accountType=="试用"){
+                    this.addAccount = true;
+                }else{
+                    this.addAccount = false;
+                }
+          },err=>{
+              console.log(err);
+          })
         },
         created(){
             this.setBreadCrumb();
