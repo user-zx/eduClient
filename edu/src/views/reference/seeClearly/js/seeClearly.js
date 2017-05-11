@@ -229,6 +229,7 @@
                     param = this.param2;
                     apiUrl = '/apis/businessTool/getWechatIndexData2.json';
                 }
+                param.pageSize = 15;
                 this.$http.post(apiUrl, param).then(
                     (response) => {
                         if (response.data.success) {
@@ -247,7 +248,7 @@
                             let page = response.data.data.page
                             let content = page.content;
                             for (var i = 0; i < content.length; i++) {
-                                content[i].rank = i + 1;
+                                content[i].rank = (param.pageNumber) * param.pageSize +  i + 1;
                             }
                             if (vector == "微博") {
                                 this.tableData1 = content;

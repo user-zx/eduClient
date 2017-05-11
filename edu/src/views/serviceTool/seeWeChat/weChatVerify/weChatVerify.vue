@@ -409,9 +409,6 @@
 
             resetInfo(){
                this.wechatInfo = {
-                    wechatNumber: '',
-                    wechatName: '',
-                    wechatSubject: '',
                     belongColleage: '',
                     instruction: '',
                     accountSign: '',

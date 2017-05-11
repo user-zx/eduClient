@@ -213,12 +213,14 @@
                     (response) => {
                         if(response.data.success){
                             this.loading = false;
-                            let content = response.data.data.page.content;
-                            for(var i = 0; i < content.length; i++){
-                                content[i].rank = i + 1;
+                            if(response.data.data != null && response.data.data.page != null){
+                                let content = response.data.data.page.content;
+                                for(var i = 0; i < content.length; i++){
+                                    content[i].rank = (this.hotParam.pageNumber) * this.hotParam.pageSize +  i + 1;
+                                }
+                                this.tableData = content;
+                                this.total2 = response.data.data.page.totalElements;
                             }
-                            this.tableData = content;
-                            this.total2 = response.data.data.page.totalElements;
                         }
                     }
                 )

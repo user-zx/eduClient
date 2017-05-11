@@ -215,12 +215,14 @@
                 this.loading = true;
                 this.$http.post('/apis/businessTool/getWechatIndexData.json', this.exponentParam).then(
                     (response) => {
-                        let content = response.data.data.page.content;
-                        for(let i = 0; i < content.length; i++){
-                            content[i].rank = i + 1;
+                        if(response.data.data != null && response.data.data.page != null){
+                            let content = response.data.data.page.content;
+                            for(let i = 0; i < content.length; i++){
+                                content[i].rank = (this.exponentParam.pageNumber) * this.exponentParam.pageSize +  i + 1;
+                            }
+                            this.total2 = response.data.data.page.totalElements;
+                            this.wechatExponentData = content;
                         }
-                        this.total2 = response.data.data.page.totalElements;
-                        this.wechatExponentData = content;
                         this.loading = false;
                     }
                 )

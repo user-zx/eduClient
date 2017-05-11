@@ -402,8 +402,6 @@
 
             resetInfo(){
                 this.weiboInfo = {
-                    blogNickname : '',
-                    blogColleage : '',
                     blogAddress: '',
                     belongDepartment: '',
                     instruction: '',

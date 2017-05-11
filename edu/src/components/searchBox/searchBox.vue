@@ -181,7 +181,10 @@
                             {id: 2, text: '运动', selected: false},
                             {id: 3, text: '教学', selected: false},
                             {id: 4, text: '情感', selected: false},
-                            {id: 5, text: '政务', selected: false}
+                            {id: 5, text: '政务', selected: false},
+                            {id: 6, text: '社团', selected: false},
+                            {id: 7, text: '科研', selected: false},
+                            {id: 8, text: '其他', selected: false},
                         ]
                     },
                     {
@@ -352,7 +355,8 @@
                                 }
                             }
                         }
-                        
+
+                        this.judgeHeight();
                         // 参数加载完毕回调
                         this.$emit('onload', this.buildParam());
                     }, (response) => {
@@ -485,7 +489,6 @@
 
             judgeHeight(){
                 this.$nextTick(function () {
-                    console.log($('.search-box .el-row'))
                     $('.search-box .el-row').each(function (index) {
                         if($(this).height() > 41){
                             let height = $(this).height();
