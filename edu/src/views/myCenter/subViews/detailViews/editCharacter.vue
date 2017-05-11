@@ -195,7 +195,7 @@
                                     this.dialogVisible = false;
                                     this.getPerson();
                                 }else{
-                                    this.$message(res.data.message);
+                                    this.$message("人物个数已达上限");
                                 }
                             },(err)=>{
                                 console.log(err);

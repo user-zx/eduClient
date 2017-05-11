@@ -629,7 +629,7 @@
                 this.articleParam.endDate = this.blogData.endDate;
                 this.originalStartDate = this.blogData.startDate;
                 this.originalEndDate = this.blogData.endDate;
-                this.originalMonth = this.blogData.startDate.substring(0,10);
+                this.originalMonth = this.blogData.endDate.substring(0,10);
             }
             this.setBreadCrumb();
         },

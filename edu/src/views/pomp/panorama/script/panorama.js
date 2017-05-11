@@ -43,7 +43,6 @@ export default {
                     (response) => {
                         if (response.data.success) {
                             this.opinionData = response.data.data;
-                            console.log(this.opinionData);
                         } else {
                             console.error(response.data.message);
                         }
@@ -60,7 +59,6 @@ export default {
                 let vm = this;
                 this.$http.post('/apis/allViewOpinion/getOpinionFunnel.json').then(
                     (response) => {
-                         console.log(response.data.data);
                         if (response.data.success) {
                             let formatData = [
                                 {value: 20, name: '预警'},
@@ -236,6 +234,10 @@ export default {
             },
             handleClick(event) {
                 console.log(event);
+            },
+
+            toDetail(data){
+                this.$router.push({path: '/home/articleDetail', query: {id: data.id}});
             }
         },
         mounted() {
