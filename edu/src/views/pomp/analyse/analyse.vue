@@ -15,7 +15,7 @@
      */
     import "vue-style-loader!css-loader!sass-loader!./css/analyse.scss";
     import breadCrumb from '../../../components/breadCrumb/breadCrumb.vue';
-
+    
     export default{
         data(){
             return {

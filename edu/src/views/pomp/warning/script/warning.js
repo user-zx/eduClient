@@ -46,6 +46,8 @@ export default{
             data.pageNumber = 0;
             data.orders = this.param.orders;
             this.param = data;
+               this.$refs.article.allSelect = false;
+                this.$refs.article.handleCheckAllChange(event)
             this.getArticleList();
         },
         pageChange(param) {

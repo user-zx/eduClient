@@ -5,7 +5,7 @@
     <div class="mediaCoverage article-wrap" v-loading="loading" element-loading-text="加载中……">
         <breadCrumb></breadCrumb>
         <search-box :searchNames=searchNames @onload="onSearchLoad" @searchDataChange="onSearchDataChange"></search-box>
-        <articleView :articleData="articleData" :total="total" :pageNumber="param.pageNumber" :eventBtn="true" :concernBtn="true" @onchange="pageChange"></articleView>
+        <articleView :articleData="articleData" :total="total" :pageNumber="param.pageNumber" :eventBtn="true" :concernBtn="true" @onchange="pageChange" ref="article"></articleView>
     </div>
 </template> 
 <script>
@@ -66,6 +66,8 @@
                 data.pageNumber = 0;
                 data.orders = this.param.orders;
                 this.param = data;
+                this.$refs.article.allSelect = false;
+                this.$refs.article.handleCheckAllChange(event)
                 this.getArticleList();
             },
             pageChange(param) {

@@ -4,7 +4,7 @@
 <template>
     <div class="article-wrap myAttention-pomp">
         <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
-        <articleView :articleData="articleData" class="dark" :total="total" :pageNumber="param.pageNumber" :eventBtn="true" @onchange="pageChange"></articleView>
+        <articleView :articleData="articleData" class="dark" :total="total" :pageNumber="param.pageNumber" :eventBtn="true" @onchange="pageChange" ref="article"></articleView>
     </div>
 </template>
 <style>
@@ -76,6 +76,10 @@
                     this.param.endDate = "";
                 }
                 this.param.pageNumber = 0;
+
+                
+                this.$refs.article.allSelect = false;
+                this.$refs.article.handleCheckAllChange(event)
                 this.getArticleList();
             },
             pageChange(param) {
@@ -88,7 +92,6 @@
                 console.log(this.param)
                 this.$http.post('/apis/concerns/getOpinionData.json',this.param).then(
                     (response) => {
-                      //  console.log(response);
                         if (response.data.success) {
                                  this.articleData = response.data.data.page.content;
                             // 最多允许翻10000页

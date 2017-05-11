@@ -1,8 +1,8 @@
 <template>
     <div class="nav clearfix">
         <div class="search-wrap">
-            <el-input icon="search" :on-icon-click="handleIconClick">
-            </el-input>
+           <!--  <el-input icon="search" :on-icon-click="handleIconClick">
+           </el-input> -->
         </div>
         <el-menu theme="dark" :default-active="activeIndex" mode="horizontal" class="nav-menu" id="top-title">
             <el-menu-item index="3"><a href="/apis/logOut.do">退出</a></el-menu-item>

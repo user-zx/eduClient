@@ -16,9 +16,9 @@
             <div class="circle-wrap">
                 <div class="circle-div">
                     <div class="text">
-                        <p class="top">10</p>
-                        <p class="middle">已选择高校</p>
-                        <p class="bottom">剩余5个</p>
+                        <p class="top">{{usetDataList.colleges}}</p>
+                        <p class="middle">高校总数</p>
+                        <p class="bottom">剩余{{}}个</p>
                     </div>
                     <div class="mask">
                         <div class="btn-wrap">
@@ -32,9 +32,9 @@
             <div class="circle-wrap">
                 <div class="circle-div">
                     <div class="text">
-                        <p class="top">15</p>
-                        <p class="middle">已选择人物</p>
-                        <p class="bottom">剩余5个</p>
+                        <p class="top">{{usetDataList.peoson}}</p>
+                        <p class="middle">人物总数</p>
+                        <p class="bottom">剩余{{usetDataList.peoson}}个</p>
                     </div>
                     <div class="mask">
                         <div class="btn-wrap">
@@ -47,7 +47,7 @@
                 <div class="circle-div">
                     <div class="text">
                         <p class="top">7</p>
-                        <p class="middle">已添加子账号</p>
+                        <p class="middle">子账号总数</p>
                         <p class="bottom">剩余5个</p>
                     </div>
                     <div class="mask">
@@ -131,7 +131,7 @@
     .centerInfo{
         background: #21273d;
         overflow: hidden;
-
+        
         .logo-wrap{
             height: 100px;
             margin: 50px 50px 10px 50px;
@@ -296,12 +296,13 @@
                 param: {
                     pageSize:　10,
                     pageNum: 0
-                }
+                },
+                usetDataList:{},
             }
         },
         methods: {
             setItem(){
-
+                
             },
             getItemData(arrShow,itemArr,arr){
                 let str = "";
@@ -377,14 +378,15 @@
             },
             getUserData(){
                  this.$http.post("/apis/user/getMemberInfo.json").then((res)=>{
-                    console.log(res);
+                   // console.log(res);
                      let date = new Date();
                     if(res.data.success){
                         this.imgUrl = res.data.data.userImg;
                         this.username = res.data.data.realName;
                         this.time = new Date(res.data.data.createDate).format('yyyy-MM-dd hh:mm');
+                        this.usetDataList.colleges = res.data.data.collegeNum;
+                        this.usetDataList.peoson = res.data.data.personageNum;
                     }
-                   
                  },(err)=>{
                     console.log(err);
                  })
@@ -401,6 +403,7 @@
             }
         },
         mounted(){
+            //console.log(this.$store.commit('getUserInfo'));
             this.getDataList();
             this.getUserData();
         },
