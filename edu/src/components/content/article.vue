@@ -205,7 +205,6 @@
             concernBtnClick() {
                 if (this.followParam.concernsContent.length > 0) {
                     this.followParam.concernsType = 1;
-
                     this.$http.post('/apis/concerns/saveConcernsMore.json',this.followParam).then(
                         (response) => {
                             if (response.data.success) {
