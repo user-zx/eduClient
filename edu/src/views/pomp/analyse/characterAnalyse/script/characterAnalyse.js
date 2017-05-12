@@ -4,17 +4,18 @@
 import "vue-style-loader!css-loader!sass-loader!../css/characterAnalyse.scss";
 import echarts from "echarts";
 import vintage from "../../../../../vintage.json";
+import dropDown from "../../../../../components/dropdown/dropdown.vue";
 import "echarts-wordcloud";
 
 export default{
     data(){
         return {
             characterInfo: [{
-                college: '清华大学',
-                department: '电子生物',
-                job: '教授',
-                publicAccount: '暂无',
-                weibo: '暂无'
+                college: '',
+                department: '',
+                job: '',
+                publicAccount: '',
+                weibo: ''
             }],
             tableData: [],
             vectorTableColumn: [],
@@ -30,7 +31,7 @@ export default{
             time_loading: true
         }
     },
-    components: {},
+    components: {dropDown},
     methods: {
         setBreadCrumb(){
             let breadcrumb = [
@@ -275,6 +276,33 @@ export default{
         },
         toDetail(data){
             this.$router.push({path: '/home/articleDetail', query: {id: data.id}});
+        },
+        onSaveEvent(eventId){
+            let requestParam = {
+                eventId: eventId,
+                contents: [this.param.name]
+            }
+            this.$http.post('/apis/eventAnalysis/saveEventPersonage.json', requestParam).then(
+                (response) => {
+                    if (response.data.success) {
+                        this.$notify({
+                            title: '成功',
+                            message: '添加成功',
+                            type: 'success',
+                            duration: 2000
+                        });
+                    } else {
+                        this.$notify({
+                            title: '失败',
+                            message: '单个事件不能超过100个人物',
+                            type: 'error',
+                            duration: 2000
+                        });
+                    }
+                }, (response) => {
+                    console.error(response);
+                }
+            );
         }
     },
     created(){

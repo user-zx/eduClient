@@ -19,16 +19,7 @@
                 <el-button type="primary" icon="plus" class="btn-alert">
                     预警
                 </el-button>
-                <el-dropdown class="event-store-box" style="margin-left: 10px;" trigger="click">
-                    <el-button type="primary" icon="plus" class="button-icon">
-                        事件库
-                    </el-button>
-                    <el-dropdown-menu slot="dropdown" class="event-store-item">
-                        <el-dropdown-item>事件1</el-dropdown-item>
-                        <el-dropdown-item>事件2</el-dropdown-item>
-                        <el-dropdown-item>事件3</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
+                <dropDown @onSaveEvent="onSaveEvent"></dropDown>
             </div>
         </div>
 

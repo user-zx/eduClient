@@ -10,16 +10,7 @@
                     </li>
                 </ul>
                 <div class="content-bar-button">
-                    <el-dropdown class="event-store-box" trigger="click">
-                        <el-button type="primary" icon="plus" class="button-icon">
-                            事件库
-                        </el-button>
-                        <el-dropdown-menu slot="dropdown" class="event-store-item">
-                            <el-dropdown-item>事件1</el-dropdown-item>
-                            <el-dropdown-item>事件2</el-dropdown-item>
-                            <el-dropdown-item>事件3</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
+                    <dropDown @onSaveEvent="onSaveEvent"></dropDown>
                     <el-button type="primary" icon="plus" @click="cancelAttention">取消关注</el-button>
                 </div>
                 <div class="content-bar-pagination">
@@ -34,12 +25,14 @@
                 </div>
             </div>  
             <character-table class="dark" ref="table" :tableData="getPersonList" @select="removeData"></character-table>
-        </div> 
+        </div>
     </div>
-</template> 
-<script> 
+</template>
+<script>
     import cascadeBox from '../../../components/searchBox/cascadeBox.vue';
     import characterTable from '../../../components/content/characterTable.vue';
+    import dropDown from "../../../components/dropdown/dropdown.vue";
+
     export default{
         data(){
             return {
@@ -59,7 +52,7 @@
                 removeParams:{},
             }
         },
-        components:{characterTable,cascadeBox},
+        components:{characterTable,cascadeBox,dropDown},
         methods:{
             sort(index){
              let orders = [{property: "totalHitCount"}];
@@ -70,7 +63,7 @@
               }
              orders[0].direction =  this.order0 ;
              this.params.orders = orders;
-              this.getDataList(); 
+              this.getDataList();
             },
             removeData(val){
               this.removeParams.concernsContent = [];
@@ -122,7 +115,6 @@
               this.getPersonList = [];
               this.$http.post("/apis/concerns/getPersonData.json",this.params).then((res)=>{
                   if(res.data.success){
-                      console.log(res);
                       for (var i = 0; i < res.data.data.page.content.length; i++) {
                         this.getPersonList.push(res.data.data.page.content[i]);
                       }
@@ -134,6 +126,38 @@
                  console.log(err);
               })
            },
+            onSaveEvent(eventId){
+               if(this.removeParams.concernsContent == undefined || this.removeParams.concernsContent.length == 0){
+                   this.$message('没有选中的人物');
+                   return ;
+               }
+
+               let param = {
+                   eventId: eventId,
+                   contents: this.removeParams.concernsContent
+               }
+                this.$http.post('/apis/eventAnalysis/saveEventPersonage.json', param).then(
+                    (response) => {
+                        if (response.data.success) {
+                            this.$message({
+                                title: '成功',
+                                message: '添加成功',
+                                type: 'success',
+                                duration: 2000
+                            });
+                        } else {
+                            this.$message({
+                                title: '失败',
+                                message: '单个事件不能超过100个人物',
+                                type: 'error',
+                                duration: 2000
+                            });
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            }
         },
 
         mounted(){
