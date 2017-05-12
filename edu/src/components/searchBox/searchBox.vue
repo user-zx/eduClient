@@ -13,15 +13,15 @@
                         @click="searchLiClick(item, index1, data)" :class="{'search-selected': item.selected}" v-if="item.text != ''">
                         {{item.text}}
                     </li>
-                    <li class="search-list date-span" v-show="show" v-for="item in data.searchList" v-if="item.dateBox == 'show'">
+                    <li class="search-list date-search-li" v-show="show" v-for="item in data.searchList" v-if="item.dateBox == 'show'">
                         <el-date-picker v-model="publishDate" type="daterange" placeholder="选择日期范围" @change="publishDateChange" range-separator=" 至 ">
                         </el-date-picker>
                     </li>
-                    <li class="search-list date-span" v-for="item in data.searchList" v-else-if="item.dateBox == 'exact'">
+                    <li class="search-list date-search-li" v-for="item in data.searchList" v-else-if="item.dateBox == 'exact'">
                         <el-date-picker type="date" placeholder="选择日期" v-model="exactDate" @change="exactDateChange">
                         </el-date-picker>
                     </li>
-                    <li class="search-list date-span" v-for="item in data.searchList" v-else-if="item.dateBox == 'selectDate'">
+                    <li class="search-list date-search-li" v-for="item in data.searchList" v-else-if="item.dateBox == 'selectDate'">
                         <el-date-picker type="date" placeholder="选择日期" v-model="selectDate" @change="selectDateChange"
                                         :picker-options="pickerOptions" :clearable="false">
                         </el-date-picker>
@@ -68,16 +68,29 @@
                 border-bottom: 1px solid #d6d6d6;
                 line-height: 40px;
                 overflow: hidden;
-                .search-list {
-                    display: inline-block;
-                    text-align: center;
-                    padding-left: 15px;
-                    padding-right: 15px;
-                    cursor: pointer;
-                }
+
                 &:first-child {
                      background: #e6e6e6;
                      padding-left: 20px;
+                 }
+
+                 ul{
+                     position: relative;
+
+                    .search-list {
+                        display: inline-block;
+                        text-align: center;
+                        padding-left: 15px;
+                        padding-right: 15px;
+                        cursor: pointer;
+                        height: 40px;
+                        min-width: 40px;
+                    }
+
+                    .date-search-li{
+                        position: absolute;
+                        padding-top: 2px;
+                    }
                  }
             }
             .school-list {
