@@ -214,14 +214,12 @@
             },
             //删除选中的大学
             closeChooseAdd(tag){
-            
               let name = tag.name;
                 this.arr.splice(this.arr.indexOf(name), 1)
                 this.addTags.splice(this.addTags.indexOf(tag), 1);
             },
             //添加大学
             addCollege(item){
-               
                if(this.collegeArr.indexOf(item) == -1){
                     if(this.arr.indexOf(item)==-1){
                           this.arr.push(item);

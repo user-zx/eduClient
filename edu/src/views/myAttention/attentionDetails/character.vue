@@ -18,7 +18,7 @@
                                    @size-change="handleSizeChange"
                                    @current-change="handleCurrentChange"
                                    :current-page="currentPage"
-                                   :page-size="5"
+                                   :page-size="10"
                                    layout="prev, next, jumper, total"
                                    :total="total">
                     </el-pagination>
@@ -42,7 +42,7 @@
                 getBodyData:{
                     personageType:[],
                     reportPersonage : [],
-                    pageSize:5,
+                    pageSize:10,
                     pageNumber:0,
                 },
                 total:1,
@@ -96,6 +96,10 @@
             },
            getParams(params){
               this.params.personageType = [];
+              this.params.reportPersonage = [];
+              if(params.reportPersonage==null){
+                this.params.reportPersonage = [];
+              }
               this.params.reportPersonage.push(params.reportPersonage);
               this.params.startDate = params.endDate.split(" ")[0] + " 00:00:00";
               this.params.endDate = params.endDate;
@@ -106,7 +110,7 @@
               this.params.reportPersonage = [];
                this.params.startDate = params.endDate.split(" ")[0] + " 00:00:00";
               this.params.endDate = params.endDate;
-              this.params.pageSize = 5;
+              this.params.pageSize = 10;
               this.params.pageNumber = 0;
               this.params.orders = [{property: "totalHitCount", direction: "DESC"}];
               this.getDataList();
@@ -118,7 +122,6 @@
                       for (var i = 0; i < res.data.data.page.content.length; i++) {
                         this.getPersonList.push(res.data.data.page.content[i]);
                       }
-                      console.log(this.getPersonList);
                       this.$refs.table.getTableDataEvent()
                      this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
                   }

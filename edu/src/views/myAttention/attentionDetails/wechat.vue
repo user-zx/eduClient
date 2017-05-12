@@ -14,7 +14,7 @@
                     <el-pagination class="edu-pagination"
                                    @current-change="handleCurrentChange"
                                    :current-page="currentPage"
-                                   :page-size="5"
+                                   :page-size="10"
                                    layout="prev, next, jumper, total"
                                    :total="total">
                     </el-pagination>
@@ -66,7 +66,7 @@
                 currentPage: 1,
                 total: 0,
                 param: {
-                    pageSize: 5,
+                    pageSize: 10,
                     pageNumber: 0,
                     vector:[],
                     authcStatus:"",
