@@ -2,7 +2,7 @@
 * Created by yu-bing on 2017/3/30.
 */
 <template>
-    <div class="article-wrap myAttention-pomp">
+    <div class="article-wrap myAttention-pomp" v-loading="loading" element-loading-text="加载中……">
         <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
         <articleView :articleData="articleData" class="dark" :total="total" :pageNumber="param.pageNumber" :eventBtn="true" :unfollowBtn="true" @onchange="pageChange" ref="article"></articleView>
     </div>
@@ -16,6 +16,7 @@
     export default{
         data(){
             return {
+                loading: false,
                 msg: "舆情",
                 currentPage: 1,
                 total: 0,
@@ -42,7 +43,6 @@
                     ],
                 searchNames: ['university', 'vector', 'emotion', 'publishDateTime'],
                 articleData: "",
-                loading:true,
                 curContent: this.$store.state.curContent,
             }
         },
@@ -75,6 +75,7 @@
                 }else{
                     this.param.endDate = "";
                 }
+                this.param.pageSize = 10;
                 this.param.pageNumber = 0;
                 this.$refs.article.allSelect = false;
                 this.$refs.article.handleCheckAllChange(event)
@@ -90,14 +91,15 @@
                 this.$http.post('/apis/concerns/getOpinionData.json',this.param).then(
                     (response) => {
                         if (response.data.success) {
-                            if(response.data.data.page!=undefined){
-                                 this.articleData = response.data.data.page.content;
-                            // 最多允许翻10000页
-                            this.total = response.data.data.page.totalElements > 10000 ? 10000 : response.data.data.page.totalElements;
-                             this.loading = false;
+                            if(response.data.data.page){
+                                this.articleData = response.data.data.page.content;
+                                // 最多允许翻10000页
+                                this.total = response.data.data.page.totalElements > 10000 ? 10000 : response.data.data.page.totalElements;
+                                this.loading = false;
                             }
                         } else {
                             console.error(response.data.message);
+                            this.loading = false;
                         }
                     }, (response) => {
                         console.error(response);

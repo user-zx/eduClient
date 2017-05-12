@@ -2,7 +2,7 @@
 * Created by lifei on 2017/3/30.
 */
 <template>
-    <div class="article-wrap myAttention-wechat">
+    <div class="article-wrap myAttention-wechat" v-loading="loading" element-loading-text="加载中……">
         <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
         <div class="content dark">
             <div class="content-bar clearfix">
@@ -63,6 +63,7 @@
     export default{
         data(){
             return {
+                loading: false,
                 currentPage: 1,
                 total: 0,
                 param: {
@@ -76,7 +77,6 @@
                 },
                 searchNames: ['university', 'type', 'verified', 'exactDate'],
                 articleData: [],
-                loading:true, 
                 curContent: this.$store.state.curContent,
                 tableData: [],
                 removeParams:{concernsContent:[]},
@@ -101,21 +101,27 @@
                 this.param.authcStatus = data.verified;
                 this.currentPage = 1;
                 this.param = data;
+                this.param.pageSize = 10;
+                this.param.pageNumber = 0;
                 this.getWechatData();
             },
             getWechatData(){
                 this.tableData = [];
+                this.loading = true;
                 this.$http.post("/apis/concerns/getWechatData.json", this.param).then((res)=>{
                     if(res.data.success){
-                        this.total = res.data.data.page.totalElements> 10000 ? 10000 : res.data.data.page.totalElements;
-                       
-                        for (var i = 0; i < res.data.data.page.content.length; i++) {
-                            res.data.data.page.content[i].index = i+1;
-                            this.tableData.push(res.data.data.page.content[i]);
+                        if (res.data.data.page) {
+                            this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
+                            for (var i = 0; i < res.data.data.page.content.length; i++) {
+                                res.data.data.page.content[i].index = this.param.pageNumber * this.param.pageSize + i + 1;
+                                this.tableData.push(res.data.data.page.content[i]);
+                            }
                         }
                     }
+                    this.loading = false;
                 },(err)=>{
                     console.log(err);
+                    this.loading = false;
                 })
             },
              cancelAttention(){
@@ -172,65 +178,6 @@
             this.$nextTick(function(){
                 this.getWechatData();
             })
-            /*let articleData = [
-                {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                    'attitude': 'positive',
-                    'buttonType': 'warning',
-                    'buttonText': '预警',
-                    'source': '新浪博客',
-                    'author': '梦想家期刊',
-                    'readNum': '2342',
-                    'publishDate': '2016-12-12 12:12',
-                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                },
-                {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                    'attitude': 'negative',
-                    'buttonType': 'warning',
-                    'buttonText': '预警',
-                    'source': '新浪博客',
-                    'author': '梦想家期刊',
-                    'readNum': '2342',
-                    'publishDate': '2016-12-12 12:12',
-                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                },
-                {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                    'attitude': 'positive',
-                    'buttonType': 'warning',
-                    'buttonText': '预警',
-                    'source': '新浪博客',
-                    'author': '梦想家期刊',
-                    'readNum': '2342',
-                    'publishDate': '2016-12-12 12:12',
-                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                },
-                {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                    'attitude': 'positive',
-                    'buttonType': 'warning',
-                    'buttonText': '预警',
-                    'source': '新浪博客',
-                    'author': '梦想家期刊',
-                    'readNum': '2342',
-                    'publishDate': '2016-12-12 12:12',
-                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                },
-                {
-                    'title': '杂志赤峰学院学报栏目设置和论文参考的目录',
-                    'attitude': 'negative',
-                    'buttonType': 'warning',
-                    'buttonText': '预警',
-                    'source': '新浪博客',
-                    'author': '梦想家期刊',
-                    'readNum': '2342',
-                    'publishDate': '2016-12-12 12:12',
-                    'content': '湖北工程学院新技术学院历来重视学生的心理健康教育问题，逐步健全了“测评—筛查—访谈—干预—跟踪”的心理健康教育体系；成立了由分管领导任组长的大学生心理健康教育工作领导小组；建立了心理咨询中心，安排一批经验丰富、心理学基础知识扎实思想道德素质高的教师对学生进行心理辅导,帮助学生克服心理障碍，减少大学生心理疾病的发生,避免由于心理危机而引起伤害行为的发生。'
-                }
-            ];
-            
-            this.articleData = articleData;*/
         },
     }
 </script>

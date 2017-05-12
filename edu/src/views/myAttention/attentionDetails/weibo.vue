@@ -2,7 +2,7 @@
 * Created by lifei on 2017/3/30.
 */
 <template>
-    <div class="article-wrap myAttention-weibo">
+    <div class="article-wrap myAttention-weibo" v-loading="loading" element-loading-text="加载中……">
         <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
         <div class="content dark">
             <div class="content-bar clearfix">
@@ -83,6 +83,7 @@
             return {
                 currentPage: 1,
                 total: 0,
+                loading: false,
                 param: {
                     pageSize: 10,
                     pageNumber: 0,
@@ -94,7 +95,6 @@
                 },
                 searchNames: ['university', 'verified', 'exactDate'],
                 articleData: [],
-                loading:true,
                 curContent: this.$store.state.curContent,
                 tableData: [],
                 removeParams:{concernsContent:[]},
@@ -128,27 +128,32 @@
                 this.getWeiboData();
             },
             onSearchDataChange(data) {
-                 this.param.vector = [];
+                this.param.vector = [];
                 this.param.vector.push(data.type)
                 this.param.authcStatus = data.verified;
                 this.currentPage = 1;
                 this.param = data;
+                this.param.pageSize = 10;
+                this.param.pageNumber = 0;
                 this.getWeiboData();
             },
             getWeiboData(){
                 this.tableData = [];
+                this.loading = true;
                 this.$http.post("/apis/concerns/getMicroblogData.json",this.param).then((res)=>{
                     if(res.data.success){
-                        console.log(res);
-                        this.total = res.data.data.page.totalElements>10000?10000:res.data.data.page.totalElements;
-                        for (var i = 0; i < res.data.data.page.content.length; i++) {
-                            res.data.data.page.content[i].index = i+1;
-                            this.tableData.push(res.data.data.page.content[i])
+                        if (res.data.data.page) {
+                            this.total = res.data.data.page.totalElements>10000?10000:res.data.data.page.totalElements;
+                            for (var i = 0; i < res.data.data.page.content.length; i++) {
+                                res.data.data.page.content[i].index = this.param.pageNumber * this.param.pageSize + i + 1;
+                                this.tableData.push(res.data.data.page.content[i])
+                            }
                         }
-                      //  console.log(this.tableData);
                     }
+                    this.loading = false;
                 },(err)=>{
                     console.log(err);
+                    this.loading = false;
                 })
             },
             toVerified(data){

@@ -1,5 +1,5 @@
 <template>
-    <div class="myAttention-character article-wrap">
+    <div class="myAttention-character article-wrap" v-loading="loading" element-loading-text="加载中……">
         <cascade-box @onSearchLoad="loadData" @onSearchChange="getParams"></cascade-box>
         <div class="content dark">
             <div class="content-bar">
@@ -36,6 +36,7 @@
     export default{
         data(){
             return {
+                loading: false,
                 searchNames: ['university', 'dimension', 'vector', 'emotion', 'publishDateTime'],
                 currentPage: 1,
                 order0: "DESC",
@@ -95,7 +96,6 @@
                 this.getDataList();
             },
            getParams(params){
-            console.log("param", params);
               this.params.personageType = [];
               this.params.reportPersonage = []; 
 
@@ -118,20 +118,25 @@
               this.params.orders = [{property: "totalHitCount", direction: "DESC"}];
               this.getDataList();
            },
-           getDataList(){ 
+           getDataList(){
               this.getPersonList = [];
+              this.loading = true;
               this.$http.post("/apis/concerns/getPersonData.json",this.params).then((res)=>{
                   if(res.data.success){
-                      for (var i = 0; i < res.data.data.page.content.length; i++) {
-
-                        this.getPersonList.push(res.data.data.page.content[i]);
-                         console.log( this.getPersonList);
+                      if (res.data.data.page) {
+                          for (var i = 0; i < res.data.data.page.content.length; i++) {
+                              console.log(this.params.pageNumber * this.params.pageSize + i);
+                              res.data.data.page.content[i].rank = this.params.pageNumber * this.params.pageSize + i + 1;
+                              this.getPersonList.push(res.data.data.page.content[i]);
+                          }
+                          this.$refs.table.getTableDataEvent()
+                          this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
                       }
-                      this.$refs.table.getTableDataEvent()
-                     this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
+                      this.loading = false;
                   }
               },(err)=>{
                  console.log(err);
+                  this.loading = false;
               })
            },
             onSaveEvent(eventId){
