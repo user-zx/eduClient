@@ -26,7 +26,6 @@
                     <el-table :data="weiboStatisticsData" :resizable="false" stripe style="width: 100%" border class="tran-table no-col-title yellow-table">
                         <el-table-column width="70" label="序号" align="center" type="index"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="blogNickname" label="微博号" align="center"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="belongDepartment" label="所属" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleUser" label="负责人" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleEmail" label="负责人邮箱" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleTel" label="负责人电话" align="center"></el-table-column>

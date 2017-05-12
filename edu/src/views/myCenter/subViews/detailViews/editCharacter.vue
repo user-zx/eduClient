@@ -203,7 +203,11 @@
                                     this.dialogVisible = false;
                                     this.getPerson();
                                 }else{
-                                    this.$message("人物个数已达上限");
+                                    if(res.data.message == "exist"){
+                                        this.$message.error("已关注该人物");
+                                    }else{
+                                        this.$message("人物个数已达上限");
+                                    }
                                 }
                             },(err)=>{
                                 console.log(err);
