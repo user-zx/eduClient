@@ -22,7 +22,7 @@
             <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
                       :resizable="false" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="55"></el-table-column>
-                <el-table-column label="序号" type="index" width="80" align="center"></el-table-column>
+                <el-table-column label="序号" prop="rank" width="80" align="center"></el-table-column>
                 <el-table-column label="子账号" prop="userAccount" align="center"></el-table-column>
                 <el-table-column label="开通时间" prop="createDate" align="center" :formatter="formatCreateDate"></el-table-column>
                 <el-table-column label="到期时间" prop="expireDate" align="center" :formatter="formatExpireDate"></el-table-column>
@@ -320,7 +320,13 @@
             getChildAccount(){
               this.$http.post("/apis/user/findAllSubAccount.json", this.param).then((res)=>{
                   if(res.data.success){
-                      this.tableData = res.data.data.content;
+                      let data = res.data.data.content;
+                      if(data != null && data.length > 0){
+                          for(let i = 0; i <　data.length; i++){
+                              data[i].rank = (this.param.pageNumber) * this.param.pageSize +  i + 1;
+                          }
+                      }
+                      this.tableData = data;
                       this.total = res.data.data.totalElements;
                       for(var i in this.tableData){
                           if(this.tableData[i].status == 0){
