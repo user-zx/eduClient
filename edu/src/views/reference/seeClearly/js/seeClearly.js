@@ -454,6 +454,9 @@
                     this.multipleSelection2.concernsContent.push(val[i].author)
                 }
             },
+            toDetail(data){
+                this.$router.push({path: '/home/articleDetail', query: {id: data.id}});
+            }
         },
         mounted(){
             echarts.registerMap('china', china);
