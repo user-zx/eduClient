@@ -95,7 +95,7 @@
                                             <div class="circle"></div>
                                         </div>
                                         <div class="time-line-content">
-                                            <p class="content"> {{item.title}}</p>
+                                            <p class="content pointer" @click="toDetail(item)"> {{item.title}}</p>
                                             <p class="datetime">{{item.publishDateTime}}</p>
                                         </div>
                                     </div>
@@ -157,7 +157,13 @@
                                 <el-tab-pane label="相关信息" name="related">
                                     <el-card class="box-card">
                                         <el-table :data="relatedData" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                            <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="245">
+                                                <template scope="scope">
+                                                    <span class="pointer" @click="toDetail(scope.row)">
+                                                        {{scope.row.title}}
+                                                    </span>
+                                                </template>
+                                            </el-table-column>
                                             <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
                                         </el-table>
                                     </el-card>
@@ -165,7 +171,13 @@
                                 <el-tab-pane label="正面" name="positive">
                                     <el-card class="box-card">
                                         <el-table :data="positiveData" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                            <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="245">
+                                                <template scope="scope">
+                                                    <span class="pointer" @click="toDetail(scope.row)">
+                                                        {{scope.row.title}}
+                                                    </span>
+                                                </template>
+                                            </el-table-column>
                                             <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
                                         </el-table>
                                     </el-card>
@@ -173,7 +185,13 @@
                                 <el-tab-pane label="负面" name="negative">
                                     <el-card class="box-card">
                                         <el-table :data="negativeData" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                            <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="245">
+                                                <template scope="scope">
+                                                    <span class="pointer" @click="toDetail(scope.row)">
+                                                        {{scope.row.title}}
+                                                    </span>
+                                                </template>
+                                            </el-table-column>
                                             <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
                                         </el-table>
                                     </el-card>

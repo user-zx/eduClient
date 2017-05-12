@@ -272,6 +272,9 @@ export default{
                     console.error(response);
                 }
             );
+        },
+        toDetail(data){
+            this.$router.push({path: '/home/articleDetail', query: {id: data.id}});
         }
     },
     created(){

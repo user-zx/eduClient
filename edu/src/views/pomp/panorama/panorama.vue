@@ -150,7 +150,13 @@
                             <el-tab-pane label="今日热点" name="todayHot">
                                 <el-card class="box-card">
                                     <el-table :data="hotPersonage.todayHot" :resizable="false" :show-header="false" style="width: 100%"  class="tran-table">
-                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="180px"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="180px">
+                                            <template scope="scope">
+                                                <span class="pointer" @click="toDetail(scope.row)">
+                                                    {{scope.row.title}}
+                                                </span>
+                                            </template>
+                                        </el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
@@ -160,7 +166,13 @@
                             <el-tab-pane label="近7天热点" name="weekHot">
                                 <el-card class="box-card">
                                     <el-table :data="hotPersonage.weekHot" :resizable="false" :show-header="false" style="width: 100%"  class="tran-table">
-                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="180px"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="180px">
+                                            <template scope="scope">
+                                                <span class="pointer" @click="toDetail(scope.row)">
+                                                    {{scope.row.title}}
+                                                </span>
+                                            </template>
+                                        </el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
@@ -170,7 +182,13 @@
                             <el-tab-pane label="近30天热点" name="monthHot">
                                 <el-card class="box-card">
                                     <el-table :data="hotPersonage.monthHot" :resizable="false" :show-header="false" style="width: 100%"  class="tran-table">
-                                        <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="180px"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="180px">
+                                            <template scope="scope">
+                                                <span class="pointer" @click="toDetail(scope.row)">
+                                                    {{scope.row.title}}
+                                                </span>
+                                            </template>
+                                        </el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                         <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
@@ -189,7 +207,13 @@
                     <div class="text item">
                         <el-card class="box-card">
                             <el-table :data="wechatHot" :resizable="false" style="width: 100%"  class="tran-table">
-                                <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="180px"></el-table-column>
+                                <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="180px">
+                                    <template scope="scope">
+                                                <span class="pointer" @click="toDetail(scope.row)">
+                                                    {{scope.row.title}}
+                                                </span>
+                                    </template>
+                                </el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
@@ -207,7 +231,13 @@
                     <div class="text item">
                         <el-card class="box-card">
                             <el-table :data="weboHot" :resizable="false" style="width: 100%"  class="tran-table">
-                                <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="180px"></el-table-column>
+                                <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="180px">
+                                    <template scope="scope">
+                                                <span class="pointer" @click="toDetail(scope.row)">
+                                                    {{scope.row.title}}
+                                                </span>
+                                    </template>
+                                </el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>

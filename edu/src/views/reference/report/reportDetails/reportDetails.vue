@@ -20,7 +20,13 @@
                         </div>
                         <div class="text item">
                             <el-table :data="internalRefSummary" :resizable="false" style="width: 100%" border class="tran-table">
-                                <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245">
+                                    <template scope="scope">
+                                                <span class="pointer" @click="toDetail(scope.row)">
+                                                    {{scope.row.title}}
+                                                </span>
+                                    </template>
+                                </el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                 <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
@@ -194,7 +200,13 @@
                         <div class="text item">
                             <el-card class="box-card educationBox">
                                 <el-table :data="wechatHot" :resizable="false" style="width: 100%" border class="tran-table">
-                                    <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                    <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245">
+                                        <template scope="scope">
+                                                <span class="pointer" @click="toDetail(scope.row)">
+                                                    {{scope.row.title}}
+                                                </span>
+                                        </template>
+                                    </el-table-column>
                                     <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                     <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                     <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
@@ -211,7 +223,13 @@
                         <div class="text item">
                             <el-card class="box-card educationBox">
                                 <el-table :data="weboHot" :resizable="false" style="width: 100%" border class="tran-table">
-                                    <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245"></el-table-column>
+                                    <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245">
+                                        <template scope="scope">
+                                                <span class="pointer" @click="toDetail(scope.row)">
+                                                    {{scope.row.title}}
+                                                </span>
+                                        </template>
+                                    </el-table-column>
                                     <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                     <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                     <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
@@ -501,6 +519,10 @@
                         console.error(response);
                     }
                 );
+            },
+
+            toDetail(data){
+                this.$router.push({path: '/home/articleDetail', query: {id: data.id}});
             }
         },
         mounted(){
