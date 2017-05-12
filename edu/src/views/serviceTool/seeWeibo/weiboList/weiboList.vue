@@ -253,6 +253,10 @@
                 this.$router.push({path: "/home/weiboVerify"});
             },
             batchConcerned(){
+                 if(this.multipleSelection.concernsContent == undefined || this.multipleSelection.concernsContent.length == 0){
+                this.$message("未选择公众号")
+                return false;
+               }
                 if(this.multipleSelection.concernsContent.length>0){
                    this.$http.post("/apis/concerns/saveConcernsMore.json",this.multipleSelection).then(res => {
                     if(res.data.success){
