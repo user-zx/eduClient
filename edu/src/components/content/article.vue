@@ -37,7 +37,6 @@
                 <div class="article" v-for="(item, index) in articleDataNew">
                     <div class="article-left">
                         <div class="checkbox-div">
-                            <!--  <input type="checkbox" @click="handleCheckChange"/> -->
                             <el-checkbox :label="item.id" ></el-checkbox>
                             <input type="hidden" :value="item.id"/>
                         </div>
@@ -153,9 +152,11 @@
                 );
             },
             handleCheckAllChange(event) {
-                this.checked = event.target.checked ? this.articleDataNew.map(v=>{return v.id}) : [];
-                this.unfollowParam.concernsContent = this.checked;
-                this.followParam.concernsContent = this.checked;
+                
+               this.checked = event.target.checked ? this.articleDataNew.map(v=>{return v.id}) : [];
+               this.unfollowParam.concernsContent = this.checked;
+               this.followParam.concernsContent = this.checked;
+
             },
             handleCheckedCitiesChange(value) {
                 this.unfollowParam.concernsContent = value;
@@ -208,12 +209,6 @@
                     this.$http.post('/apis/concerns/saveConcernsMore.json',this.followParam).then(
                         (response) => {
                             if (response.data.success) {
-                                /* this.$notify({
-                                 title: '成功',
-                                 message: '关注成功',
-                                 type: 'success',
-                                 duration: 2000
-                                 }); */
                                 this.$message("添加成功")
                             } else {
                                 console.error(response.data.message);
@@ -240,7 +235,7 @@
                     this.order0 = order.direction;
                 } else {
                     order.property = 'publishDateTime';
-                    order.direction = this.order1 = this.order1 == 'DESC' ? 'ASC' : 'DESC';
+                    order.direction = this.order1 == 'DESC' ? 'ASC' : 'DESC';
                     this.order1 = order.direction;
                 }
                 this.param.orders.pop();

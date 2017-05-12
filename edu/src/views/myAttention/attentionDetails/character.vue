@@ -62,10 +62,6 @@
         components:{characterTable,cascadeBox},
         methods:{
             sort(index){
-              //let order = {};
-             // console.log(this.order0);
-            // this.order0 == 'DESC' ? 'ASC' : 'DESC';
-             //this.params.orders = [{property: "totalHitCount", direction: "DESC"}];
              let orders = [{property: "totalHitCount"}];
               if(this.order0 == 'DESC'){
                 this.order0 = 'ASC'

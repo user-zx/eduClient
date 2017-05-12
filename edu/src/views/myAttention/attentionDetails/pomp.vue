@@ -4,7 +4,7 @@
 <template>
     <div class="article-wrap myAttention-pomp">
         <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange" class="dark"></search-box>
-        <articleView :articleData="articleData" class="dark" :total="total" :pageNumber="param.pageNumber" :eventBtn="true" @onchange="pageChange" ref="article"></articleView>
+        <articleView :articleData="articleData" class="dark" :total="total" :pageNumber="param.pageNumber" :eventBtn="true" :unfollowBtn="true" @onchange="pageChange" ref="article"></articleView>
     </div>
 </template>
 <style>
@@ -48,7 +48,7 @@
         },
         components: {searchBox, articleView},
         methods:{
-            onSearchDataChange(data) {
+            onSearchDataChange(data,event) {
                if(data.university.length>0){
                  this.param.university = data.university;
                }else{
@@ -76,8 +76,6 @@
                     this.param.endDate = "";
                 }
                 this.param.pageNumber = 0;
-
-                
                 this.$refs.article.allSelect = false;
                 this.$refs.article.handleCheckAllChange(event)
                 this.getArticleList();
@@ -98,7 +96,6 @@
                             this.total = response.data.data.page.totalElements > 10000 ? 10000 : response.data.data.page.totalElements;
                              this.loading = false;
                             }
-                         
                         } else {
                             console.error(response.data.message);
                         }

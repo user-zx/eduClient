@@ -41,7 +41,7 @@ export default{
             ];
             this.$store.commit("setBreadCrumb",breadcrumb);
         },
-        onSearchDataChange(data) {
+        onSearchDataChange(data,event) {
             data.pageSize = 5;
             data.pageNumber = 0;
             data.orders = this.param.orders;

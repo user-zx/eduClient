@@ -39,7 +39,7 @@
                     ]
                 },
                 loading: false,
-                searchNames: ['vector', 'emotion', 'publishDateTime']
+                searchNames: ['vector', 'emotion']
             }
         },
         components:{ searchBox, articleContainer,} ,

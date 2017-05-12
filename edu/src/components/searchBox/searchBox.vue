@@ -10,7 +10,7 @@
             <el-col :span="22" v-if="!data.buttons || data.buttons.length == 0" class="transition">
                 <ul>
                     <li v-for="(item, index1) in data.searchList" class="search-list" :key="item.id"
-                        @click="searchLiClick(item, index1, data)" :class="{'search-selected': item.selected}" v-if="item.text != ''">
+                        @click="searchLiClick(item, index1, data , $event)" :class="{'search-selected': item.selected}" v-if="item.text != ''">
                         {{item.text}}
                     </li>
                     <li class="search-list date-search-li" v-show="show" v-for="item in data.searchList" v-if="item.dateBox == 'show'">
@@ -31,7 +31,7 @@
             <el-col :span="20" v-else class="transition">
                 <ul :class="{'school-list': data.hasMore}">
                     <li class="search-list" v-for="(item, index1) in data.searchList"
-                        @click="searchLiClick(item, index1, data)" :class="{'search-selected': item.selected}">
+                        @click="searchLiClick(item, index1, data, $event)" :class="{'search-selected': item.selected}">
                         {{item.text}}
                     </li>
                     <li class="search-list" v-if="data.hasMore == true" v-show="foldSchool">
@@ -273,7 +273,7 @@
                 });
             },
 
-            searchLiClick (item, index1, data) {
+            searchLiClick (item, index1, data, event) {
                 for (var i  in data.searchList) {
                     data.searchList[i].selected = false;
                 }
@@ -297,7 +297,7 @@
                 }
 
                 // searchDataChange回调
-                this.$emit('searchDataChange', this.buildParam());
+                this.$emit('searchDataChange', this.buildParam(),event);
             },
 
             foldSchoolClick() {

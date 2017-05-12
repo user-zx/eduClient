@@ -180,7 +180,7 @@
             </div>
             <hr class="line">
             <div class="btn-wrap">
-                <el-button type="primary" @click="submit()">提交预定</el-button>
+                <el-button type="primary" @click="submit()" :disabled="isCheck">提交预定</el-button>
             </div>
         </div>
     </div>
@@ -335,6 +335,7 @@
                 itemNum_b:"",
                 itemNum_c:"",
                 checked: true,
+                isCheck:false,
                 unchecked: false,   
                   options: [{
                   value: '6个月',
@@ -434,10 +435,6 @@
             },
             check_count: function(event,type) {
                let value = event.target.value;
-                if( this.attention == 0 && this.addition ==0){
-                    this.price.c = 0;
-                    return false; 
-                  } 
                if (!/^\d+$/.test(value)) {
                         if(value==""){
                             return false;
@@ -700,11 +697,12 @@
             },
             loseBlur(){
                  let vm = this;
-                   if( (this.attention == 0&& this.addition ==0)||(this.attention == ""&& this.addition =="")){
+                   /*if( (this.attention == 0&& this.addition ==0)||(this.attention == ""&& this.addition =="")){
                     this.price.c = 0;
                     return false;
-                  }
+                  }*/
                  // console.log(this.changePrice.c);
+                
                  let sumPrice = this.changePrice.c + 500 * this.addition + this.attention * 500;
                  switch(vm.time_c_vla) {
                             case "6个月":
@@ -742,7 +740,16 @@
                     this.attention = 1000;
                     return false;
                 }
+
               if(!isNaN(val)){
+                        if(vm.addition==""){
+                            vm.addition = 0;
+                         } 
+                          if(this.attention==0||this.attention==""){
+                            this.isCheck = true;  
+                         }else{
+                            this.isCheck = false;
+                         }
                      let sumPrice = vm.changePrice.c + 500 * val + vm.addition * 500;
                     switch(vm.time_c_vla) {
                             case "6个月":
@@ -769,10 +776,14 @@
                     return false;
                  }
                  if(!isNaN(val)){
+                         if(vm.attention==""){
+                            vm.attention = 0;
+                         } 
                         let sumPrice =  vm.changePrice.c + 500 * val + vm.attention * 500;
                         switch(vm.time_c_vla) {
                             case "6个月":
                                vm.price.c =  sumPrice;
+                               console.log(vm.price.c );
                                 break;
                             case "一年":
                                 vm.price.c = Math.floor(sumPrice * 2 * 0.98);
