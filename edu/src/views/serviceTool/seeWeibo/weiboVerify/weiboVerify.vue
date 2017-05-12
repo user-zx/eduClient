@@ -9,7 +9,7 @@
                 <el-col :span="6">
                     <el-input id="blogNickname" v-model="weiboInfo.blogNickname" :disabled="true"></el-input>
                 </el-col>
-                <el-col :span="4" class="text-right uploadLabel">添加微博头像</el-col>
+                <el-col :span="4" class="text-right uploadLabel">微博头像</el-col>
                 <el-col :span="6">
                     <div class="avatar-uploader">
                         <div class="el-upload--text">
@@ -189,7 +189,6 @@
                 if(info === false){
                     return ;
                 }
-                console.log(this.weiboInfo)
                 let param = {
                     id: this.weiboInfo.id,
                     responsibleUser: this.weiboInfo.responsibleUser,
@@ -202,7 +201,7 @@
                 this.$http.post('/apis/businessTool/saveMicroblog.json', param).then(
                     (response) => {
                         if(response.data.success){
-                            this.$message({message: '微博认证成功'});
+                            this.$message({message: '修改成功'});
                         }else{
                             this.$message.error(response.data.message);
                         }

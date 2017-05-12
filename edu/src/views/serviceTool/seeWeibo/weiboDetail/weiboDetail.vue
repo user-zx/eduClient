@@ -30,7 +30,7 @@
            <div class="right">
                <div class="data-area">
                    <p class="data bigSize">{{blogData.rank}}</p>
-                   <p class="data smallSize">{{originalMonth}} 排行</p>
+                   <p class="data smallSize">{{parentEndDate}} 排行</p>
                </div>
                <div class="data-area">
                    <p class="data bigSize">{{blogData.sendCount}}</p>
@@ -111,16 +111,10 @@
                         <li>
                             文章排行
                         </li>
-                        <li class="pointer selected" @click="sort('original')">
-                            获取日期
+                        <li class="pointer selected parentEndDate" @click="sort('original')">
+                            {{parentEndDate}}
                         </li>
-                        <li class="pointer" @click="sort('today')">
-                            今日
-                        </li>
-                        <li class="pointer" @click="sort('yesterday')">
-                            昨日
-                        </li>
-                        <li class="pointer" @click="sort('range')">
+                        <li class="pointer dateRange" @click="sort('range')">
                             一周热门
                         </li>
                     </ul>
@@ -306,7 +300,7 @@
                 forwardOption: [],
                 originalStartDate: '',
                 originalEndDate: '',
-                originalMonth: '',
+                parentEndDate: '',
                 concerned:　false
             }
         },
@@ -334,7 +328,8 @@
 
             getBlogInfoData(){
                 let param = {
-                    id: this.requestParam.id
+                    id: this.requestParam.id,
+                    author:　this.requestParam.author
                 }
 
                 this.$http.post('/apis/businessTool/getMicroblogInfo.json', param).then(
@@ -537,14 +532,13 @@
                     this.articleParam.startDate = new Date(yesterday).format('yyyy-MM-dd 00:00:00');
                     this.articleParam.endDate = new Date(yesterday).format('yyyy-MM-dd 23:59:59');
                 }else if(param == 'range'){
-                    $('#sortUl li:eq(4)').addClass('selected');
-                    let week = date.getTime() - 24 * 7 * 3600 * 1000;
-                    this.articleParam.startDate = new Date(week).format('yyyy-MM-dd 00:00:00');
-                    this.articleParam.endDate = date.format('yyyy-MM-dd 23:59:59');
+                    $('#sortUl li.dateRange').addClass('selected');
+                    this.articleParam.startDate = this.blogData.startDate;
+                    this.articleParam.endDate = this.blogData.endDate;
                 }else{
-                    $('#sortUl li:eq(1)').addClass('selected');
-                    this.articleParam.startDate = this.originalStartDate;
-                    this.articleParam.endDate = this.originalEndDate;
+                    $('#sortUl li.parentEndDate').addClass('selected');
+                    this.articleParam.startDate = new Date(this.parentEndDate).format('yyyy-MM-dd 00:00:00');
+                    this.articleParam.endDate = this.blogData.endDate;
                 }
                 this.getBlogArticleData();
             },
@@ -599,6 +593,7 @@
             pageChange(param){
                 this.articleParam.pageNumber = param.pageNumber;
                 this.articleParam.orders = param.orders;
+                console.log(this.articleParam)
                 this.getBlogArticleData();
             },
 
@@ -632,7 +627,7 @@
                 this.articleParam.endDate = this.blogData.endDate;
                 this.originalStartDate = this.blogData.startDate;
                 this.originalEndDate = this.blogData.endDate;
-                this.originalMonth = this.blogData.endDate.substring(0,10);
+                this.parentEndDate = this.blogData.endDate.substring(0,10);
             }
             this.setBreadCrumb();
         },

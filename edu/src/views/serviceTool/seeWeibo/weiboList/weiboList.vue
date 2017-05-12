@@ -185,18 +185,18 @@
                 }
             },
             onSearchDataChange(data) {
-                //因为后台搜索认证条件时， 已认证、未认证传的参数是相应的汉字，但是全部要传空
-                if(data.verified == '全部'){
-                    data.verified = '';
-                }else if(data.verified == '未认证'){
-                    data.verified = 0;
-                }else{
-                    data.verified = 1;
-                }
                 data.pageSize = 15;
                 data.pageNumber = 0;
+                if(data.verified == '全部'){
+                    data.verified = '';
+                }
                 //根据tab页当前状态 判断请求的是微博指数还是微博统计的后台
                 if($('#seeWeibo .el-tabs__nav .el-tabs__item:eq(0)').hasClass('is-active')){
+                    if(data.verified == '未认证'){
+                        data.verified = 0;
+                    }else{
+                        data.verified = 1;
+                    }
                     this.statisticsParam = data;
                     this.statisticsParam.authcStatus = data.verified;
                     this.getWeiboStatisticsData();
@@ -204,7 +204,7 @@
                     this.hotParam = data;
                     if(data.endDate != null){
                         let endDate = new Date(data.endDate).getTime();
-                        hotParam.startDate = new Date(endDate - 8.64e7 * 7).format('yyyy-MM-dd 00:00:00');
+                        this.hotParam.startDate = new Date(endDate - 8.64e7 * 7).format('yyyy-MM-dd 00:00:00');
                     }
                     this.getWeiboHotArticleList();
                 }
@@ -220,6 +220,7 @@
             //微博指数数据获取
             getWeiboHotArticleList(){
                 this.loading = true;
+                console.log(this.hotParam)
                 this.$http.post('/apis/businessTool/getMicroblogIndexData.json', this.hotParam).then(
                     (response) => {
                         if(response.data.success){
@@ -245,7 +246,6 @@
                         if(response.data.success && response.data.data != null){
                             this.weiboStatisticsData = response.data.data.content;
                             this.total1 = response.data.data.totalElements;
-                            console.log(this.weiboStatisticsData)
                         }
                     }
                 )

@@ -24,7 +24,7 @@
                     <el-table :data="wechatStatisticsData" :resizable="false" stripe style="width: 100%" border class="tran-table no-col-title yellow-table">  
                         <el-table-column type="index" width="70" label="序号"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="wechatNumber" label="公众号" align="center"></el-table-column>
-                        <el-table-column :show-overflow-tooltip="true" prop="wechatSubject" label="所属" align="center"></el-table-column>
+                        <el-table-column :show-overflow-tooltip="true" prop="belongColleage" label="所属" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleUser" label="负责人" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleEmail" label="负责人邮箱" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleTel" label="负责人电话" align="center"></el-table-column>
@@ -142,7 +142,7 @@
                     pageSize: 15,
                     pageNumber: 0,
                     authcStatus: '',
-                    startDate: new Date(Date.now() - 8.64e7 * 31).format('yyyy-MM-dd 00:00:00'),
+                    startDate: new Date(Date.now() - 8.64e7 * 8).format('yyyy-MM-dd 00:00:00'),
                     endDate: new Date(Date.now() - 8.64e7).format('yyyy-MM-dd 23:59:59')
                 },
                 //微信统计返回参数
@@ -188,11 +188,20 @@
                 data.pageNumber = 0;
                 //根据tab页当前状态 判断请求的是微博指数还是微博统计的后台
                 if($('#seeWeChat .el-tabs__nav .el-tabs__item:eq(0)').hasClass('is-active')){
+                    if(data.verified == '未认证'){
+                        data.verified = 0;
+                    }else{
+                        data.verified = 1;
+                    }
                     this.statisticsParam = data;
                     this.statisticsParam.authcStatus = data.verified;
                     this.getWechatStatisticsData();
                 }else{
                     this.exponentParam = data;
+                    if(data.endDate != null){
+                        let endDate = new Date(data.endDate).getTime();
+                        this.exponentParam.startDate = new Date(endDate - 8.64e7 * 7).format('yyyy-MM-dd 00:00:00');
+                    }
                     this.getWechatExponentData();
                 }
             },
@@ -217,6 +226,7 @@
 
             getWechatExponentData(){
                 this.loading = true;
+                console.log(this.exponentParam)
                 this.$http.post('/apis/businessTool/getWechatIndexData.json', this.exponentParam).then(
                     (response) => {
                         if(response.data.data != null && response.data.data.page != null){

@@ -9,7 +9,7 @@
                 <el-col :span="6">
                     <el-input :maxlength=30 v-model="wechatInfo.wechatName" :disabled="true"></el-input>
                 </el-col>
-                <el-col :span="4" class="text-right uploadLabel">添加账号标志</el-col>
+                <el-col :span="4" class="text-right uploadLabel">账号标志</el-col>
                 <el-col :span="6">
                     <div class="avatar-uploader">
                         <div class="el-upload--text">
@@ -44,7 +44,7 @@
                 <el-col :span="6">
                     <el-input type="textarea" :rows="8" v-model="wechatInfo.instruction" :maxlength=200 :disabled="true"></el-input>
                 </el-col>
-                <el-col :span="4" class="text-right uploadLabel">添加二维码</el-col>
+                <el-col :span="4" class="text-right uploadLabel">二维码</el-col>
                 <el-col :span="6">
                     <div class="avatar-uploader">
                         <div class="el-upload--text">
@@ -321,67 +321,69 @@
 
             verifyData(){
                 let type = 'error';
-
-                if(this.wechatInfo.wechatName == ''){
-                    this.$message({message: '微信号名称不能为空', type: type});
-                    return false;
-                }
-
-                if(this.wechatInfo.wechatNumber == ''){
-                    this.$message({message: '微信号不能为空', type: type});
-                    return false;
-                }
-
-                if(this.wechatInfo.wechatSubject == ''){
-                    this.$message({message: '账号主体不能为空', type: type});
-                    return false;
-                }
-
-                if(this.wechatInfo.belongColleage == ''){
-                    this.$message({message: '所属院系不能为空', type: type});
-                    return false;
-                }
-
-                if(this.wechatInfo.instruction == ''){
-                    this.$message({message: '功能介绍不能为空', type: type});
-                    return false;
-                }
-
-                if(this.wechatInfo.accountSign == ''){
-                    this.$message({message: '账号标志不能为空', type: type});
-                    return false;
-                }
-
-                if(this.wechatInfo.qrCode == ''){
-                    this.$message({message: '账号二维码不能为空', type: type});
-                    return false;
-                }
-
-                if(this.wechatInfo.responsibleUser == ''){
-                    this.$message({message: '负责人姓名不能为空', type: type});
-                    return false;
-                }
-
-                if(this.wechatInfo.publishUser == ''){
-                    this.$message({message: '发布人姓名不能为空', type: type});
-                    return false;
-                }
+                //因为产品的需求修改  一下注释掉的代码都没用了
+//                if(this.wechatInfo.wechatName == ''){
+//                    this.$message({message: '微信号名称不能为空', type: type});
+//                    return false;
+//                }
+//
+//                if(this.wechatInfo.wechatNumber == ''){
+//                    this.$message({message: '微信号不能为空', type: type});
+//                    return false;
+//                }
+//
+//                if(this.wechatInfo.wechatSubject == ''){
+//                    this.$message({message: '账号主体不能为空', type: type});
+//                    return false;
+//                }
+//
+//                if(this.wechatInfo.belongColleage == ''){
+//                    this.$message({message: '所属院系不能为空', type: type});
+//                    return false;
+//                }
+//
+//                if(this.wechatInfo.instruction == ''){
+//                    this.$message({message: '功能介绍不能为空', type: type});
+//                    return false;
+//                }
+//
+//                if(this.wechatInfo.accountSign == ''){
+//                    this.$message({message: '账号标志不能为空', type: type});
+//                    return false;
+//                }
+//
+//                if(this.wechatInfo.qrCode == ''){
+//                    this.$message({message: '账号二维码不能为空', type: type});
+//                    return false;
+//                }
+//
+//                if(this.wechatInfo.responsibleUser == ''){
+//                    this.$message({message: '负责人姓名不能为空', type: type});
+//                    return false;
+//                }
+//
+//                if(this.wechatInfo.publishUser == ''){
+//                    this.$message({message: '发布人姓名不能为空', type: type});
+//                    return false;
+//                }
 
                 let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
                 let responsibleEmail = this.wechatInfo.responsibleEmail;
-                if(responsibleEmail == ''){
-                    this.$message({message: '负责人邮箱不能为空', type: type});
-                    return false;
-                }else if(!reg.test(responsibleEmail)){
+//                if(responsibleEmail == ''){
+//                    this.$message({message: '负责人邮箱不能为空', type: type});
+//                    return false;
+//                }else
+                if(!reg.test(responsibleEmail)){
                     this.$message({message: '负责人邮箱格式不正确', type: type});
                     return false;
                 }
 
                 let publishEmail = this.wechatInfo.publishEmail;
-                if(publishEmail == ''){
-                    this.$message({message: '发布人邮箱不能为空', type: type});
-                    return false;
-                }else if(!reg.test(publishEmail)){
+//                if(publishEmail == ''){
+//                    this.$message({message: '发布人邮箱不能为空', type: type});
+//                    return false;
+//                }else
+                if(!reg.test(publishEmail)){
                     this.$message({message: '发布人邮箱格式不正确', type: type});
                     return false;
                 }
@@ -389,19 +391,21 @@
                 //
                 let phoneReg =  /^1(3|4|5|7|8)\d{9}$/;
                 let  responsibleTel = this.wechatInfo.responsibleTel;
-                if(responsibleTel == ''){
-                    this.$message({message: '负责人电话不能为空', type: type});
-                    return false;
-                }else if(!phoneReg.test(responsibleTel)){
+//                if(responsibleTel == ''){
+//                    this.$message({message: '负责人电话不能为空', type: type});
+//                    return false;
+//                }else
+                if(!phoneReg.test(responsibleTel)){
                     this.$message({message: '负责人电话格式不正确', type: type});
                     return false;
                 }
 
                 let publishTel = this.wechatInfo.publishTel;
-                if(publishTel == ''){
-                    this.$message({message: '发布人电话不能为空', type: type});
-                    return false;
-                }else if(!phoneReg.test(publishTel)){
+//                if(publishTel == ''){
+//                    this.$message({message: '发布人电话不能为空', type: type});
+//                    return false;
+//                }else
+                if(!phoneReg.test(publishTel)){
                     this.$message({message: '发布人电话格式不正确', type: type});
                     return false;
                 }

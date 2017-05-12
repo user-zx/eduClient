@@ -102,16 +102,10 @@
                         <li>
                             文章排行
                         </li>
-                        <li class="pointer selected" @click="sort('orinigal')">
-                            获取日期
+                        <li class="pointer selected parentEndDate" @click="sort('orinigal')">
+                            {{originalEndDate}}
                         </li>
-                        <li class="pointer" @click="sort('today')">
-                            今日
-                        </li>
-                        <li class="pointer" @click="sort('yesterday')">
-                            昨日
-                        </li>
-                        <li class="pointer" @click="sort('range')">
+                        <li class="pointer dateRange" @click="sort('range')">
                             一周热门
                         </li>
                     </ul>
@@ -511,16 +505,14 @@
                     this.articleParam.startDate = new Date(yesterday).format('yyyy-MM-dd 00:00:00');
                     this.articleParam.endDate = new Date(yesterday).format('yyyy-MM-dd 23:59:59');
                 }else if(param == 'range'){
-                    $('#sortUl li:eq(4)').addClass('selected');
-                    let week = date.getTime() - 24 * 7 * 3600 * 1000;
-                    this.articleParam.startDate = new Date(week).format('yyyy-MM-dd 00:00:00');
-                    this.articleParam.endDate = date.format('yyyy-MM-dd 23:59:59');
-                }else{
-                    $('#sortUl li:eq(1)').addClass('selected');
+                    $('#sortUl li.dateRange').addClass('selected');
                     this.articleParam.startDate = this.originalStartDate;
+                    this.articleParam.endDate =  this.originalEndDate;
+                }else{
+                    $('#sortUl li.parentEndDate').addClass('selected');
+                    this.articleParam.startDate = new Date(this.originalEndDate).format('yyyy-MM-dd 00:00:00');
                     this.articleParam.endDate = this.originalEndDate;
                 }
-
                 this.getWechatArticleList();
             },
 
@@ -531,7 +523,6 @@
 
                 this.$http.post('/apis/businessTool/getWechatNumberInfo.json', param).then(
                     (response) => {
-                        console.log(response.data)
                         if(response.data.success && response.data.data != null){
                             this.wechatInfo = response.data.data;
                         }else if(response.data.message != null){
