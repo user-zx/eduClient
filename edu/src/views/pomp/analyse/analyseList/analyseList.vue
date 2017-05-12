@@ -33,6 +33,7 @@
                 articleData: [],
                 loading: false,
                 curContent: this.$store.state.curContent,
+                event:"",
             }
         },
         components: {searchBox, articleView},
@@ -48,7 +49,7 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
-            onSearchDataChange(data) {
+            onSearchDataChange(data,event) {
                 if(data.dimension == "人物聚焦"){
                     this.$router.push({path: "/home/characterTableAnalyse", query: {dimension: '人物聚焦', university: data.university}});
                     return;
@@ -57,8 +58,8 @@
                 data.pageNumber = 0;
                 data.orders = this.param.orders;
                 this.param = data;
-                  this.$refs.article.allSelect = false;
-                this.$refs.article.handleCheckAllChange(event)
+                this.$refs.article.allSelect = false;
+                this.$refs.article.handleCheckAllChange(event);
                 this.getArticleList();
             },
             onSearchLoad(data) {
@@ -95,7 +96,10 @@
                     );
                 });
             },
-
+            
+        },
+        mounted(){
+           
         },
         created(){
             this.setBreadCrumb();

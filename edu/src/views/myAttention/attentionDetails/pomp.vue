@@ -48,7 +48,7 @@
         },
         components: {searchBox, articleView},
         methods:{
-            onSearchDataChange(data) {
+            onSearchDataChange(data,event) {
                if(data.university.length>0){
                  this.param.university = data.university;
                }else{
