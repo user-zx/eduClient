@@ -274,6 +274,8 @@
                     },err=>{
                         console.log(err);
                     })
+               }else{
+                    this.$message("未选择公众号")
                }
             },
 

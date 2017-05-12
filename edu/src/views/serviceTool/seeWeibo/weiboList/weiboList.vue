@@ -266,6 +266,8 @@
                    },(err)=>{
                         console.log(err);
                    })
+                }else{
+                    this.$message("未选择微博号”")
                 }
             },
              handleSelectionChange(val) {

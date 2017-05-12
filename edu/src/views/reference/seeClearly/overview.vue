@@ -8,41 +8,41 @@
         </div>
         <div class="overview-content">
             <span class="number-icon number-icon1"></span>
-            <span class="number">{{platformData.data.toDayAddNum}}</span>
+            <span class="number">{{platformData.data.weChatNum}}</span>
             <p class="overview-name">微信量</p>
         </div>
         <div class="overview-content">
             <div class="number-box">
                 <span class="number-icon number-icon2"></span>
-                <span class="number">{{platformData.data.universNum}}</span>
+                <span class="number">{{platformData.data.weChatDataNum}}</span>
             </div>
             <p class="overview-name">微信信息量</p>
         </div>
         <div class="overview-content">
             <div class="number-box">
                 <span class="number-icon number-icon3"></span>
-                <span class="number">{{platformData.data.mediaNum}}</span>
+                <span class="number">{{platformData.data.weboNum}}</span>
             </div>
             <p class="overview-name">微博量</p>
         </div>
         <div class="overview-content">
             <div class="number-box">
                 <span class="number-icon number-icon4"></span>
-                <span class="number">{{platformData.data.collectNum}}</span>
+                <span class="number">{{platformData.data.weboDataNum}}</span>
             </div>
             <p class="overview-name">微博信息量</p>
         </div>
         <div class="overview-content">
             <div class="number-box">
                 <span class="number-icon number-icon5"></span>
-                <span class="number">{{platformData.data.weChatNum}}</span>
+                <span class="number">{{platformData.data.universNum}}</span>
             </div>
             <p class="overview-name">高校量</p>
         </div>
         <div class="overview-content">
             <div class="number-box">
                 <span class="number-icon number-icon6"></span>
-                <span class="number">{{platformData.data.weboNum}}</span>
+                <span class="number">{{platformData.data.universDataNum}}</span>
             </div>
             <p class="overview-name">高校信息量</p>
         </div>
@@ -106,14 +106,14 @@
             return {
                 msg:"两微全量",
                 platformData:{
-                    url: "",
+                    url: "/apis/twoMicroInsight/getTwoMicroData.json",
                     data: {
-                        collectNum: 0,
-                        mediaNum: 0,
-                        toDayAddNum: 1110,
-                        universNum: 11110,
+                        universNum: 0,
                         weboNum: 0,
-                        weChatNum: 0
+                        weChatNum: 0,
+                        universDataNum: 0,
+                        weboDataNum: 0,
+                        weChatDataNum: 0
                     }
                 }
             }
@@ -121,7 +121,7 @@
         components:{} ,
         methods:{
             getPlatformData() {
-               /* this.$http.post(this.platformData.url).then(
+               this.$http.post(this.platformData.url).then(
                     (response) => {
                         if (response.data.success) {
                             this.platformData.data = response.data.data;
@@ -129,7 +129,7 @@
                     }, (response) => {
                         console.error(response);
                     }
-                );*/ 
+                );
             } 
         },
         mounted() {

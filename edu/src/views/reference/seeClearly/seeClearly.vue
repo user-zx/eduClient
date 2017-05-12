@@ -184,7 +184,7 @@
             </el-tab-pane>
             <el-tab-pane label="微信" name="rule">
                 <div class="article-wrap" v-loading="loading2" element-loading-text="加载中……">
-                    <search-box class="dark" :searchNames=searchNames2 @searchDataChange="onSearchDataChange2" ></search-box>
+                    <search-box class="dark" :searchNames=searchNames2 @searchDataChange="onSearchDataChange2"  @onload="onSearchLoad2"></search-box>
                     <div class="content dark">
 
                         <div class="content-bar dark">

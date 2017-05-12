@@ -132,8 +132,7 @@
         background: #21273d;
         overflow: hidden;
         .logo-wrap{
-            height: 100px;
-            margin: 50px 50px 10px 50px;
+            margin: 20px;
 
             .logo{
                 width: 100px;
@@ -141,12 +140,10 @@
                 display: table-cell;
                 vertical-align: middle;
                 text-align: center;
-
                 img{
                     max-height:100px;
                     max-width: 100px;
                 }
-
             }
             .name-div{
                 width: calc(100% - 140px);
@@ -176,7 +173,7 @@
             text-align: center;
 
             .circle-wrap{
-                margin: 140px 50px 85px 50px;
+                margin: 40px;
                 display: inline-block;
 
                 .circle-div{

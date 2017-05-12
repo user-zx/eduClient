@@ -37,7 +37,15 @@
                     <el-input v-model="ruleForm.name"></el-input>
                  </el-form-item>
                 <el-form-item label="所在高校" prop="colleges">
-                    <el-input v-model="ruleForm.colleges"></el-input>
+                    <!-- <el-input v-model="ruleForm.colleges"></el-input> -->
+                    <el-select v-model="ruleForm.colleges" placeholder="请选择">
+                       <el-option
+                        v-for="item in addColleges"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                      </el-option>
+                    </el-select>
                  </el-form-item>
                  <el-form-item label="所在院系" prop="faculty">
                     <el-input v-model="ruleForm.faculty"></el-input>
@@ -128,7 +136,7 @@
                         { required: true,min: 2, max: 10, message: '请输入姓名,长度在 2 到 10 个字符', trigger: 'blur' },
                     ],
                     colleges: [
-                          { required: true,min: 4, max: 20, message: '请输入所在高校,长度在 4 到 40 个字符', trigger: 'blur' },
+                          { required: true,min: 4, max: 20, message: '请选择所在高校', trigger: 'blur' },
                     ],
                     faculty: [
                           { min: 4, max: 20, message: '请输入所在院系,长度在 4到 20 个字符', trigger: 'blur' },
@@ -140,11 +148,11 @@
                         { min: 4, max: 20, message: '请输入昵称/关键字,长度在 4到 20 个字符', trigger: 'blur' }, 
                     ],
                 },
-                deletePersonSelection: []
+                deletePersonSelection: [],
+                addColleges:[{value:'',label:''}],
             }
-        },
+        }, 
         methods: {
-           
             isDeleteSure(){
                  this.$http.post('/apis/concernPerson/deleteConcernPerson', this.deletePersonSelection).then(
                         function (response) {
@@ -225,11 +233,30 @@
                     console.log('test');
                     this.isDelete = true; 
                 }
-            }
+            },
+             getCollege(){
+                this.addColleges = [];
+                this.$http.post("/apis/user/getUnivsAndPersonage.json").then(res=>{
+                    if(res.data.success){
+                      //  this.addColleges = res.data.data.univs;
+                      //console.log(res.data.data.univs);
+                      let data = res.data.data.univs;
+                      for (let i = 0; i < data.length; i++) {
+                           this.addColleges.push({value:data[i],label:data[i]})
+                      }
+                      console.log(this.addColleges);
+                    }
+                },err=>{
+                        console.log(err);
+                })
+            },
         },
 
         mounted(){
             this.getPerson();
+             this.$nextTick(function(){
+                 this.getCollege();
+             })
         },
         created(){
             this.setBreadCrumb();

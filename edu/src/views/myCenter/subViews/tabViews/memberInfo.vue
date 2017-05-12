@@ -36,7 +36,7 @@
                         <img :src="memberForm.userImg" alt="" id="userImg">
                     </div>
                     <div class="btn-wrap">
-                        <el-button type="text" @click="triggerUpload">修改头像</el-button>
+                        <el-button type="text" @click="triggerUpload">上传头像</el-button>
                         <input type="file" class="el-upload__input" id="uploadInput" @change="uploadFileChange" accept="image/png,image/jpg,image/jpeg">
                     </div>
                 </el-form-item>
@@ -122,11 +122,11 @@
                     ]
                 },
                 options: regionData,
-                selectedOptions: []
+                selectedOptions: [],
+                addColleges:"",
             }
         },
         methods: {
-
             submitForm(formName){
                 this.$refs[formName].validate(
                     (valid) => {
@@ -241,10 +241,12 @@
                 let canvas = document.getElementById('canvas');
                 let dataUrl = this.$compressImg(canvas, img, 200, 200, 0.5);
                 this.memberForm.userImg = dataUrl;
-            }
+            },
+           
         },
         mounted(){
-            this.getUserData();
+            this.getUserData(); 
+            
         },
         created(){
             this.setBreadCrumb();
