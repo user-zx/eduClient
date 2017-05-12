@@ -13,12 +13,7 @@
                     <div class="btn-wrap">
                         <drop-down @onSaveEvent="onSaveEvent"></drop-down>
                     </div>
-                    <div class="share clearfix bdsharebuttonbox" data-tag="share_1">
-                        <i>分享到: </i>
-                        <a class="bds_tsina" data-cmd="tsina"></a>
-                        <a class="bds_weixin" data-cmd="weixin"></a>
-                        <a class="bds_tqq" data-cmd="tqq"></a>
-                        <a class="bds_qzone" data-cmd="qzone"></a>
+                    <div class="share">
                     </div>
                 </div>
                 <div class="info-item">
@@ -283,12 +278,6 @@
                     }
                 );
             },
-            init: function () {
-                let url = 'http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5);
-                let script = document.createElement('script')
-                script.setAttribute('src', url)
-                document.getElementsByTagName('head')[0].appendChild(script);
-            },
             onSaveEvent(eventId) {
                 let ids = [this.article.id];
                 let param = {
@@ -381,27 +370,6 @@
         },
         mounted(){
             this.getArticleDetailsById();
-            window._bd_share_config = {
-                share : [{
-                    "bdSize" : 24
-                }],
-                slide : [{
-                    bdImg : 0,
-                    bdPos : "right",
-                    bdTop : 100
-                }],
-                image : [{
-                    viewType : 'list',
-                    viewPos : 'top',
-                    viewColor : 'black',
-                    viewList : ['tsina','weixin','tqq','qzone']
-                }],
-                selectShare : [{
-                    "bdselectMiniList" : ['tsina','weixin','tqq','qzone']
-                }]
-            }
-            this.init();
-
         },
         created(){
             this.article.id = this.$route.query.id;

@@ -281,7 +281,7 @@
             onSearchLoad1(data) {
                 data.pageNumber = 0;
                 this.param1 = data;
-                this.getTableData("微信");
+                this.getTableData("微博");
             },
 
             handleCurrentChange2(val) {
@@ -301,6 +301,7 @@
             onSearchLoad2(data) {
                 data.pageNumber = 0;
                 this.param2 = data;
+                this.getTableData("微信");
             },
             onSaveEvent1(eventId) {
                 let contents = this.multipleSelection1.concernsContent;
@@ -464,8 +465,6 @@
             this.get2VOpinion('微博');
             this.get2VDistribute("微信");
             this.get2VDistribute("微博");
-            this.getTableData("微信");
-            this.getTableData("微博");
         },
         created(){
             this.setBreadCrumb();
