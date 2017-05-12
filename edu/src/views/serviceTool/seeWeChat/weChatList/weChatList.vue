@@ -225,7 +225,7 @@
 
             getWechatExponentData(){
                 this.loading = true;
-                console.log(this.exponentParam)
+                //console.log(this.exponentParam)
                 this.$http.post('/apis/businessTool/getWechatIndexData.json', this.exponentParam).then(
                     (response) => {
                         if(response.data.data != null && response.data.data.page != null){
@@ -258,7 +258,10 @@
             },
             batchConcerned(){ 
                this.multipleSelection.concernsType = 3; 
-				
+               if(this.multipleSelection.concernsContent == undefined || this.multipleSelection.concernsContent.length == 0){
+                this.$message("未选择公众号")
+                return false;
+               }
                if(this.multipleSelection.concernsContent.length>0){
                     this.$http.post("/apis/concerns/saveConcernsMore.json",this.multipleSelection).then(res=>{
                         //console.log(res);
@@ -273,8 +276,6 @@
                     },err=>{
                         console.log(err);
                     })
-               }else{
-                    this.$message("未选择公众号")
                }
             },
 
