@@ -66,7 +66,7 @@
         .el-row {
             .el-col {
                 border-bottom: 1px solid #d6d6d6;
-                line-height: 40px;
+                line-height: 44px;
                 overflow: hidden;
 
                 &:first-child {
@@ -76,7 +76,7 @@
 
                  ul{
                      position: relative;
-                     min-height: 40px;
+                     min-height: 44px;
 
                     .search-list {
                         display: inline-block;
@@ -84,13 +84,13 @@
                         padding-left: 15px;
                         padding-right: 15px;
                         cursor: pointer;
-                        height: 40px;
-                        min-width: 40px;
+                        height: 44px;
+                        min-width: 44px;
                     }
 
                     .date-search-li{
                         position: absolute;
-                        padding-top: 2px;
+                        padding-top: 1px;
                     }
                  }
             }
@@ -505,7 +505,7 @@
             judgeHeight(){
                 this.$nextTick(function () {
                     $('.search-box .el-row').each(function (index) {
-                        if($(this).height() > 41){
+                        if($(this).height() > 47){
                             let height = $(this).height();
                             $(this).find('.el-col').height(height);
                         }
