@@ -76,7 +76,8 @@
 
                  ul{
                      position: relative;
-
+                     min-height: 40px;
+                 
                     .search-list {
                         display: inline-block;
                         text-align: center;
