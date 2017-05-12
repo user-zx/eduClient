@@ -95,12 +95,15 @@
                 this.getDataList();
             },
            getParams(params){
+            console.log("param", params);
               this.params.personageType = [];
-              this.params.reportPersonage = [];
+              this.params.reportPersonage = []; 
+
               if(params.reportPersonage==null){
                 this.params.reportPersonage = [];
+              } else{
+                this.params.reportPersonage.push(params.reportPersonage);
               }
-              this.params.reportPersonage.push(params.reportPersonage);
               this.params.startDate = params.endDate.split(" ")[0] + " 00:00:00";
               this.params.endDate = params.endDate;
               this.getDataList()
@@ -120,7 +123,9 @@
               this.$http.post("/apis/concerns/getPersonData.json",this.params).then((res)=>{
                   if(res.data.success){
                       for (var i = 0; i < res.data.data.page.content.length; i++) {
+
                         this.getPersonList.push(res.data.data.page.content[i]);
+                         console.log( this.getPersonList);
                       }
                       this.$refs.table.getTableDataEvent()
                      this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
