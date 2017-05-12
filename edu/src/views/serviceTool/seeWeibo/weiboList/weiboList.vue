@@ -220,7 +220,6 @@
             //微博指数数据获取
             getWeiboHotArticleList(){
                 this.loading = true;
-                console.log(this.hotParam)
                 this.$http.post('/apis/businessTool/getMicroblogIndexData.json', this.hotParam).then(
                     (response) => {
                         if(response.data.success){

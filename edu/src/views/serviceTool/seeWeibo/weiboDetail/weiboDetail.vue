@@ -413,6 +413,7 @@
 
                         if(response.data.success){
                             let option = response.data.data.echart;
+                            console.log(option)
                             let seriesOne = [], seriesTwo = [];
 
                             seriesOne.push(option.series[0]);//关注量
@@ -623,7 +624,7 @@
             if(this.blogData.startDate != undefined){
                 this.requestParam.startDate = this.blogData.startDate;
                 this.requestParam.endDate = this.blogData.endDate;
-                this.articleParam.startDate = this.blogData.startDate;
+                this.articleParam.startDate = new Date(this.blogData.endDate).format('yyyy-MM-dd 00:00:00');
                 this.articleParam.endDate = this.blogData.endDate;
                 this.originalStartDate = this.blogData.startDate;
                 this.originalEndDate = this.blogData.endDate;

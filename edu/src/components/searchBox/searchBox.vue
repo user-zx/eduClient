@@ -22,7 +22,8 @@
                         </el-date-picker>
                     </li>
                     <li class="search-list date-span" v-for="item in data.searchList" v-else-if="item.dateBox == 'selectDate'">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="selectDate" @change="selectDateChange" :picker-options="pickerOptions">
+                        <el-date-picker type="date" placeholder="选择日期" v-model="selectDate" @change="selectDateChange"
+                                        :picker-options="pickerOptions" :clearable="false">
                         </el-date-picker>
                     </li>
                 </ul>

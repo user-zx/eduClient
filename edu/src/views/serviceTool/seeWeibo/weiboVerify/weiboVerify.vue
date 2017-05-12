@@ -431,7 +431,6 @@
                     (response) => {
                         if(response.data.success){
                             this.weiboInfo = response.data.data;
-                            console.log(response.data.data)
                         }
                     }
                 )
