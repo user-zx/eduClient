@@ -20,7 +20,7 @@
                 currentPage: 1,
                 total: 0,
                 param: {
-                    pageSize: 5,
+                    pageSize: 10,
                     pageNumber: 0,
                     startDate:"",
                     endDate:"",
