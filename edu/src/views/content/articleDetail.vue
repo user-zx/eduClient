@@ -2,7 +2,7 @@
 * Created by zhangxin on 2017/3/17.
 */
 <template>
-    <div class="article-detail-news">
+    <div class="article-detail-news" v-loading="loading" element-loading-text="加载中……">
         <h2 class="article-title">
             {{article.title}}
         </h2>
@@ -11,23 +11,14 @@
             <div class="article-info">
                 <div class="info-item">
                     <div class="btn-wrap">
-                        <el-dropdown class="event-store-box" trigger="click">
-                            <el-button type="primary" class="addToEventStore">
-                                添加到事件库
-                            </el-button>
-                            <el-dropdown-menu slot="dropdown" class="event-store-item">
-                                <el-dropdown-item>事件1</el-dropdown-item>
-                                <el-dropdown-item>事件2</el-dropdown-item>
-                                <el-dropdown-item>事件3</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
+                        <drop-down @onSaveEvent="onSaveEvent"></drop-down>
                     </div>
-                    <div class="share">
-                        分享到:
-                        <i class="icon icon-weibo">微博图标</i>
-                        <i class="icon icon-wechat">微信图标</i>
-                        <i class="icon icon-qqweibo">qq微博图标</i>
-                        <i class="icon icon-qqZone">qq空间图标</i>
+                    <div class="share clearfix bdsharebuttonbox" data-tag="share_1">
+                        <i>分享到: </i>
+                        <a class="bds_tsina" data-cmd="tsina"></a>
+                        <a class="bds_weixin" data-cmd="weixin"></a>
+                        <a class="bds_tqq" data-cmd="tqq"></a>
+                        <a class="bds_qzone" data-cmd="qzone"></a>
                     </div>
                 </div>
                 <div class="info-item">
@@ -39,11 +30,11 @@
                         <span v-if="article.emotion == 'positive'">
                             正面
                         </span>
-                        <span v-else-if="article.emotion == 'neutral'">
-                            中性
+                        <span v-else-if="article.emotion == 'negative'">
+                            负面
                         </span>
                         <span v-else>
-                            负面
+                            中性
                         </span>
                     </span>
                 </div>
@@ -79,25 +70,29 @@
         <div class="detail-right">
             <div class="top-box">
                 <p class="item readNum">
-                    <span class="describe">阅读量： </span> {{article.hitCount}}
+                    <span class="describe">阅读量：</span>{{article.hitCount}}
                 </p>
                 <p class="item commentNum">
-                    <span class="describe">评论量： </span>
-                    {{article.replyCount}}
+                    <span class="describe">评论量：</span>{{article.replyCount}}
                 </p>
                 <p class="item repostNum">
-                   <span class="describe">转发量：</span>
+                    <span class="describe">转发量：</span>{{article.forwardCount}}
                 </p>
                 <p class="item likeNum">
-                    <span class="describe">点赞量： </span>
-                    {{article.supportCount}}
+                    <span class="describe">点赞量：</span>{{article.supportCount}}
                 </p>
                 <div class="btn-wrap">
-                    <el-button type="primary" class="focus-btn" icon="plus">
-                        关注
+                    <el-button v-if="article.hasConcern" @click="unfollow" type="primary" class="focus-btn">
+                        取消关注
                     </el-button>
-                    <el-button type="primary"  class="alert-btn" icon="plus">
-                        预警
+                    <el-button v-else @click="concernBtnClick" class="focus-btn">
+                        添加关注
+                    </el-button>
+                    <el-button @click="warnBtnClick" v-if="article.hasWarn" type="primary"  class="alert-btn">
+                        取消预警
+                    </el-button>
+                    <el-button @click="warnBtnClick" v-else class="alert-btn">
+                        添加预警
                     </el-button>
                 </div>
             </div>
@@ -106,33 +101,10 @@
                     相匹配文章
                 </div>
                 <div class="related-article">
-                    <div class="related-title pointer">
-                        教育部部长陈宝生：让教师成为让人羡慕的职业教育部部长陈宝生：让教师成为让人羡慕的职业
+                    <div v-for="art in similarArticles" class="related-title pointer"  @click="toDetail(art)">
+                        {{art.title}}
                     </div>
-                    <div class="related-title pointer">
-                        教育部部长陈宝生：让教师成为让人羡慕的职业 教育部部长陈宝生：让教师成为让人羡慕的职业
-                    </div>
-                    <div class="related-title pointer">
-                        教育部部长陈宝生：让教师成为让人羡慕的职业教育部部长陈宝生：让教师成为让人羡慕的职业
-                    </div>
-                    <div class="related-title pointer">
-                        教育部部长陈宝生：让教师成为让人羡慕的职业
-                    </div>
-                    <div class="related-title pointer">
-                        教育部部长陈宝生：让教师成为让人羡慕的职业
-                    </div>
-                    <div class="related-title pointer">
-                        教育部部长陈宝生：让教师成为让人羡慕的职业
-                    </div>
-                    <div class="related-title pointer">
-                        教育部部长陈宝生：让教师成为让人羡慕的职业
-                    </div>
-                    <div class="related-title pointer">
-                        教育部部长陈宝生：让教师成为让人羡慕的职业
-                    </div>
-                    <div class="related-title pointer">
-                        教育部部长陈宝生：让教师成为让人羡慕的职业
-                    </div>
+                    <div class="no-data" v-if="similarArticles.length == 0">暂无匹配文章</div>
                 </div>
             </div>
         </div>
@@ -179,8 +151,13 @@
                         vertical-align: top;
                         text-align: right;
 
-                        .icon{
-                            margin-left:10px;
+                        a {
+                            float: right;
+                            display: inline-block;
+                            width: 25px;
+                            height: 26px;
+                            margin: 0px 0px 0px 10px;
+                            line-height: 26px;
                         }
                     }
                     .item{
@@ -221,13 +198,13 @@
                     width: calc(50% - 2px);
                     vertical-align: top;
                     display: inline-block;
-                    text-align: center;
                     margin-top: 30px;
                     color: #60a3ff;
 
                     .describe{
                         display: inline-block;
                         width: 100px;
+                        text-align: right;
                     }
                 }
 
@@ -265,41 +242,166 @@
                 .related-title:last-child{
                     margin-bottom: 30px;
                 }
+                .no-data {
+                    text-align: center;
+                    padding: 20px;
+                }
             }
         }
     }
 </style>
 <script>
+    import dropDown from "../../components/dropdown/dropdown.vue";
     export default{
         data(){
             return {
+                loading: false,
                 article: {
                     id: ''
-                }
+                },
+                similarArticles: []
             }
         },
-        components:{} ,
+        components:{dropDown} ,
         methods:{
             getArticleDetailsById(){
                 if(this.article.id == ''){
                     this.$message.error('参数错误');
-                    return
+                    return;
                 }
-
+                this.loading = true;
                 this.$http.post('/apis/lib/getArticleDetailsById.json', {id: this.article.id}).then(
                     function (response) {
                         if(response.data.success){
-                            this.article = response.data.data;
-                            console.log(this.article)
+                            this.article = response.data.data.article;
+                            this.similarArticles = response.data.data.similarArticles;
+                            console.log(response.data.data);
                         }else{
                             this.$message.error('出错了， 请稍后再试');
                         }
+                        this.loading = false;
                     }
                 );
+            },
+            init: function () {
+                let url = 'http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5);
+                let script = document.createElement('script')
+                script.setAttribute('src', url)
+                document.getElementsByTagName('head')[0].appendChild(script);
+            },
+            onSaveEvent(eventId) {
+                let ids = [this.article.id];
+                let param = {
+                    eventId: eventId,
+                    contents: ids
+                };
+                this.$http.post('/apis/eventAnalysis/saveEventArticle.json', param).then(
+                    (response) => {
+                        if (response.data.success) {
+                            this.$notify({
+                                title: '成功',
+                                message: '添加成功',
+                                type: 'success',
+                                duration: 2000
+                            });
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            },
+            warnBtnClick() {
+                var tmp = {};
+                tmp.id = this.article.id;
+                tmp.hasWarn = !this.article.hasWarn;
+                tmp.emotion = this.article.emotion;
+                tmp.vector = this.article.vector;
+                tmp.hitCount = this.article.hitCount;
+                tmp.publishDateTime = this.article.publishDateTime;
+                this.$http.post('/apis/opinionWarn/warnOrCancel.json', tmp).then(
+                    (response) => {
+                        if (response.data.success) {
+                            if (!this.article.hasWarn) {
+                                this.article.hasWarn = true;
+                                this.$message('添加预警成功');
+                            } else {
+                                this.article.hasWarn = false;
+                                this.$message('取消预警成功');
+                            }
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            },
+            concernBtnClick() {
+                let followParam = {
+                    concernsType: 1,
+                    concernsContent: [this.article.id]
+                };
+                this.$http.post('/apis/concerns/saveConcernsMore.json',followParam).then(
+                    (response) => {
+                        if (response.data.success) {
+                            this.$message("添加关注成功")
+                            this.article.hasConcern = true;
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
+            },
+            unfollow(){
+                let followParam = {
+                    concernsType: 1,
+                    concernsContent: [this.article.id]
+                };
+                this.$http.post("/apis/concerns/removeConcernsMore.json", followParam).then(res=>{
+                    if (res.data.success) {
+                        if (res.data.data.message == null) {
+                            this.$message("取消关注成功");
+                            this.article.hasConcern = false;
+                        } else {
+                            this.$message(res.data.data.message)
+                        }
+                    }
+                },err => {
+                    console.log(err);
+                });
+            },
+            toDetail(data){
+                this.article.id = data.id;
+                this.getArticleDetailsById();
             }
         },
         mounted(){
             this.getArticleDetailsById();
+            window._bd_share_config = {
+                share : [{
+                    "bdSize" : 24
+                }],
+                slide : [{
+                    bdImg : 0,
+                    bdPos : "right",
+                    bdTop : 100
+                }],
+                image : [{
+                    viewType : 'list',
+                    viewPos : 'top',
+                    viewColor : 'black',
+                    viewList : ['tsina','weixin','tqq','qzone']
+                }],
+                selectShare : [{
+                    "bdselectMiniList" : ['tsina','weixin','tqq','qzone']
+                }]
+            }
+            this.init();
+
         },
         created(){
             this.article.id = this.$route.query.id;
