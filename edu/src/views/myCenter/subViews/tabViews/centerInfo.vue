@@ -89,11 +89,11 @@
             <h3 class="text-center">订单详情</h3>
             <el-row class="item-details">
                 <el-col :span="6">订单编号：</el-col>
-                <el-col :span="6">C20170120</el-col>
+                <el-col :span="6">{{orderDetails.id}}</el-col>
             </el-row>
             <el-row class="item-details">
                 <el-col :span="6">订单类型：</el-col>
-                <el-col :span="6">C套餐</el-col>
+                <el-col :span="6">{{orderDetails.packageType}}</el-col>
             </el-row>
             <el-row class="item-details">
                 <el-col :span="24"><div>提供服务：</div></el-col>
@@ -106,19 +106,19 @@
             </el-row>
             <el-row class="item-details">
                 <el-col :span="6">可关注高校：</el-col>
-                <el-col :span="6">6</el-col>
+                <el-col :span="6">{{orderDetails.concernCollegeNum}}</el-col>
             </el-row>
             <el-row class="item-details">
                 <el-col :span="6">可关注人物：</el-col>
-                <el-col :span="6">16</el-col>
+                <el-col :span="6">{{orderDetails.concernPersonNum}}</el-col>
             </el-row>
             <el-row class="item-details">
                 <el-col :span="6">开始时间：</el-col>
-                <el-col :span="6">16</el-col>
+                <el-col :span="6">{{orderDetails.signedDate}}</el-col>
             </el-row>
             <el-row class="item-details">
                 <el-col :span="6">到期时间：</el-col>
-                <el-col :span="6">16</el-col>
+                <el-col :span="6">{{orderDetails.expireDate}}</el-col>
             </el-row>
             <span slot="footer" class="dialog-footer">
             <el-button @click="isShow = false">取 消</el-button>
@@ -301,6 +301,7 @@
                 surplusCollege:"",
                 surplusPerson:"",
                 surplusAccount:"",
+                orderDetails:{},
             }
         },
         methods: {
@@ -327,12 +328,15 @@
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
             viewDetail(params){
-                console.log(params.id)
                 this.$http.get("/apis/packageManage/getPackageOrderById.json/" + params.id).then((res)=>{
-                    console.log(res)
                     if(res.data.success){
+                       
+                        this.orderDetails = res.data.data;
+                         this.orderDetails.signedDate = new Date(res.data.data.signedDate).format('yyyy-MM-dd')
+                         this.orderDetails.expireDate = new Date(res.data.data.expireDate).format('yyyy-MM-dd')
                         this.showOne = [];this.showTwo = [];this.showThree = [];
                         let itemString = res.data.data.itemPriceList;
+
                         this.getItemData(itemString,this.item_one,this.showOne);
                         this.getItemData(itemString,this.item_two,this.showTwo);
                         this.getItemData(itemString,this.item_three,this.showThree);
@@ -393,7 +397,7 @@
                         this.time = new Date(res.data.data.createDate).format('yyyy-MM-dd hh:mm');
                         this.usetDataList.colleges = res.data.data.collegeNum;
                         this.usetDataList.peoson = res.data.data.personageNum; 
-                        this.usetDataList.subAccountNum = res.data.data.subAccountNum;
+                        this.usetDataList.subAccountNum = res.data.data.collegeNum;
                         this.$http.post('/apis/user/getUnivsAndPersonage.json').then(res=>{
                            if(res.data.success){
                               this.surplusCollege = this.usetDataList.subAccountNum- res.data.data.univs.length;

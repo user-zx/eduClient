@@ -62,10 +62,20 @@
         components:{characterTable,cascadeBox},
         methods:{
             sort(index){
-              let order = {};
-              console.log(index);
-               order.direction = this.order0 == 'DESC' ? 'ASC' : 'DESC';
-              },
+              //let order = {};
+             // console.log(this.order0);
+            // this.order0 == 'DESC' ? 'ASC' : 'DESC';
+             //this.params.orders = [{property: "totalHitCount", direction: "DESC"}];
+             let orders = [{property: "totalHitCount"}];
+              if(this.order0 == 'DESC'){
+                this.order0 = 'ASC'
+              }else{
+                this.order0 = 'DESC'
+              }
+             orders[0].direction =  this.order0 ;
+             this.params.orders = orders;
+              this.getDataList(); 
+            },
             removeData(val){
               this.removeParams.concernsContent = [];
                for (let i = 0; i < val.length; i++) {
@@ -109,16 +119,18 @@
               this.params.endDate = params.endDate;
               this.params.pageSize = 5;
               this.params.pageNumber = 0;
+              this.params.orders = [{property: "totalHitCount", direction: "DESC"}];
               this.getDataList();
            },
            getDataList(){ 
               this.getPersonList = [];
               this.$http.post("/apis/concerns/getPersonData.json",this.params).then((res)=>{
                   if(res.data.success){
-                  //   console.log(res);
+                      console.log(res);
                       for (var i = 0; i < res.data.data.page.content.length; i++) {
-                        this.getPersonList.push(res.data.data.page.content[i])
+                        this.getPersonList.push(res.data.data.page.content[i]);
                       }
+                      console.log(this.getPersonList);
                       this.$refs.table.getTableDataEvent()
                      this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
                   }
