@@ -373,7 +373,7 @@
 //                    this.$message({message: '负责人邮箱不能为空', type: type});
 //                    return false;
 //                }else
-                if(!reg.test(responsibleEmail)){
+                if(responsibleEmail != null && !reg.test(responsibleEmail)){
                     this.$message({message: '负责人邮箱格式不正确', type: type});
                     return false;
                 }
@@ -383,7 +383,7 @@
 //                    this.$message({message: '发布人邮箱不能为空', type: type});
 //                    return false;
 //                }else
-                if(!reg.test(publishEmail)){
+                if(publishEmail != null && !reg.test(publishEmail)){
                     this.$message({message: '发布人邮箱格式不正确', type: type});
                     return false;
                 }
@@ -395,7 +395,7 @@
 //                    this.$message({message: '负责人电话不能为空', type: type});
 //                    return false;
 //                }else
-                if(!phoneReg.test(responsibleTel)){
+                if(responsibleTel != null && !phoneReg.test(responsibleTel)){
                     this.$message({message: '负责人电话格式不正确', type: type});
                     return false;
                 }
@@ -405,7 +405,7 @@
 //                    this.$message({message: '发布人电话不能为空', type: type});
 //                    return false;
 //                }else
-                if(!phoneReg.test(publishTel)){
+                if(publishTel != null && !phoneReg.test(publishTel)){
                     this.$message({message: '发布人电话格式不正确', type: type});
                     return false;
                 }
@@ -413,14 +413,12 @@
             },
 
             resetInfo(){
-               this.wechatInfo = {
-                    responsibleUser: '',
-                    responsibleEmail:'',
-                    responsibleTel: '',
-                    publishUser: '',
-                    publishEmail: '',
-                    publishTel: ''
-                }
+                this.wechatInfo.responsibleUser = null;
+                this.wechatInfo.responsibleEmail = null;
+                this.wechatInfo.responsibleTel = null;
+                this.wechatInfo.publishUser = null;
+                this.wechatInfo.publishEmail = null;
+                this.wechatInfo.publishTel = null;
             },
 
             getWechatInfoData(){

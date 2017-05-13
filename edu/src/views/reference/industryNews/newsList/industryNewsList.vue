@@ -67,7 +67,6 @@
                 this.$nextTick(function() {
                     this.$http.post('/apis/industryNews/findEduInfoByCondation.json', this.param).then(
                         (response) => {
-                            console.log(response);
                             if (response.data.success) {
                                 this.articleData = response.data.data.content;
                                 // 最多允许翻1000页

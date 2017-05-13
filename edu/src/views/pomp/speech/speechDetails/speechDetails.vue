@@ -7,7 +7,7 @@
             <div>
                 <h3 class="date">{{param.createDate}} 至 {{param.endDate}}</h3>
                 <div class="btn-box text-right">
-                    <el-button type="primary" @click="downloadReport">下载</el-button>
+                    <!--<el-button type="primary" @click="downloadReport">下载</el-button>-->
                 </div>
             </div>
         </div>

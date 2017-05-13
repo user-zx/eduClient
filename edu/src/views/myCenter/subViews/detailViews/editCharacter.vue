@@ -21,7 +21,7 @@
             <div class="table-wrap">
                 <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
                           :resizable="false" @selection-change="handleSelectionChange">
-                    <el-table-column type="selection" width="50" align="center"></el-table-column>
+                    <!--<el-table-column type="selection" width="50" align="center"></el-table-column>-->
                     <el-table-column label="姓名" prop="name" align="center"></el-table-column>
                     <el-table-column label="所在高校" prop="collegeName" align="center"></el-table-column>
                     <el-table-column label="所在院系" prop="department" align="center"></el-table-column>

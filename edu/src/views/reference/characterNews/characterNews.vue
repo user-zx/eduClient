@@ -136,7 +136,6 @@
             getPersonageRank() {
                 this.loading = true;
                 this.$nextTick(function() {
-                    console.log(this.param);
                     this.$http.post('/apis/personNews/findPersonNewRankingList.json', this.param).then(
                         (response) => {
                             if (response.data.success) {

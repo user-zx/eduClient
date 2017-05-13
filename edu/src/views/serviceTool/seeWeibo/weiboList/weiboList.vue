@@ -36,7 +36,8 @@
                             <template scope="scope">
                                 <span v-if="scope.row.authcStatus == '1'">已认证</span>
                                 <span v-else>
-                                    未认证，<span class="blue pointer" @click="toVerified(scope.row)">去认证</span>
+                                    未认证
+                                    <!--，<span class="blue pointer" @click="toVerified(scope.row)">去认证</span>-->
                                 </span>
                             </template>
                         </el-table-column>
@@ -193,7 +194,7 @@
                 if($('#seeWeibo .el-tabs__nav .el-tabs__item:eq(0)').hasClass('is-active')){
                     if(data.verified == '未认证'){
                         data.verified = 0;
-                    }else{
+                    }else if(data.verified == '已认证'){
                         data.verified = 1;
                     }
                     this.statisticsParam = data;

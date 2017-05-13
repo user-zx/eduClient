@@ -189,7 +189,7 @@
                 if($('#seeWeChat .el-tabs__nav .el-tabs__item:eq(0)').hasClass('is-active')){
                     if(data.verified == '未认证'){
                         data.verified = 0;
-                    }else{
+                    }else if(data.verified == '已认证'){
                         data.verified = 1;
                     }
                     this.statisticsParam = data;

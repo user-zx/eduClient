@@ -46,7 +46,7 @@
                     pageSize:10,
                     pageNumber:0,
                 },
-                total:1,
+                total:0,
                 labelPosition: 'left',
                 getPersonList: [],
                 params:{},
