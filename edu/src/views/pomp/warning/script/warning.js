@@ -63,7 +63,6 @@ export default{
                         if (response.data.success) {
                             this.articleData = response.data.data.content;
                             // 最多允许翻1000页
-                            console.log(response.data.data)
                             this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
                             this.$nextTick(function() {
                                 this.loading = false;
@@ -77,7 +76,11 @@ export default{
                     }
                 );
             });
+        },
+        warnSetting() {
+            this.$router.push({path:"/home/publicOpinionRule"});
         }
+
     },
     created(){
         this.setBreadCrumb();
