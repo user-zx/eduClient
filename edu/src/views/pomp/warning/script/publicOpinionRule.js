@@ -52,7 +52,7 @@ export default{
                 vector: [
                     {type: 'array', required: true, message: "请至少选择一个载体", trigger: 'change'}
                 ],
-                eventKeyword: [
+                keyword: [
                     {required: true, message: "请输入事件关键词", trigger: 'blur'}
                 ],
                 receiverIds: [
