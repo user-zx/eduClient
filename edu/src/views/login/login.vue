@@ -178,8 +178,13 @@
     .login{
         min-height:100%;
         background-color: #191c2d;
+        position: relative;
+        padding-top: 88px; 
         .header{
-            height:89px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;   
             line-height:88px;
             border-bottom:1px solid #07080e;
             .container{
@@ -210,9 +215,9 @@
                 width:100%;
                 position: absolute;
                 transition: text-align 2s;
-                top:-20px;
+                top:35px;
                 &+.text-center{
-                    top:40px;
+                    top:100px;
                   }
             }
             img.banner{
@@ -223,8 +228,7 @@
         .wrapper{
             position: relative;
             width: 1200px;
-            margin: 95px auto 0;
-
+            margin: 0 auto; 
         }
     }
 </style>

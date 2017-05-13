@@ -6,12 +6,14 @@
         <h1 class="login-title">
             <span>登录</span>
         </h1>
-        <el-form :model="ruleForm" action="/apis/login.do" method="post" :rules="rules" ref="ruleForm" label-width="70px" class="ruleForm" autocomplete="off">
+        <el-form :model="ruleForm" action="/apis/login.do" method="post" :rules="rules" ref="ruleForm" label-width="70px" class="ruleForm" >
             <el-form-item label="账号：" prop="user" class="login-input-box">
-                <el-input type="text" name="username" icon="username" v-model="ruleForm.user" placeholder="请输入账号" auto-complete="off" autocomplete=off></el-input>
+                <input type="text" style="position: absolute;top: -9999px;display:none"/>
+                <el-input type="text" name="username" icon="username" v-model="ruleForm.user" placeholder="请输入账号"  ></el-input>
             </el-form-item>
             <el-form-item label="密码：" prop="pass" class="login-input-box">
-                <el-input type="password" name="password" icon="password" v-model="ruleForm.pass" placeholder="请输入密码" auto-complete="off" autocomplete=off></el-input>
+                <input type="password" style="position: absolute;top: -9999px;display:none"/>
+                <el-input type="password" name="password" icon="password" v-model="ruleForm.pass" placeholder="请输入密码" auto-complete="off" ></el-input>
             </el-form-item>
             <el-form-item class="login-text-color clearfix">
                 <el-col :span="12">
@@ -68,7 +70,19 @@
                                     var password =  $('input[name=password]').val();
                                     let encrypedPwd = RSAUtils.encryptedString(key,password);
                                     $('input[name=password]').val(encrypedPwd);
-                                    $(".ruleForm").submit();
+                                   //$(".ruleForm").submit();
+                                  // console.log(encrypedPwd);
+                                
+                                  this.$http.post("/apis/login.do",{username:this.ruleForm.user,password:encrypedPwd}).then(res=>{
+                                        if(res.data.success){
+                                            this.$router.push({path:"/home/panorama"});
+                                        }else{
+                                            this.ruleForm.user = "";
+                                            this.ruleForm.pass = "";
+                                        }
+                                  },err=>{
+                                        console.log(err);
+                                  })    
                                 } else {
                                     console.error(response.data.msg);
                                     return false;
@@ -93,7 +107,13 @@
             }
         },
         mounted(){
-            
+           /* this.$nextTick(function(){
+                console.log('test');
+               this.ruleForm.user = "";
+               this.ruleForm.pass = "";
+            })
+*/
+             //this.$refs[formName].resetFields();
         }
     }
 </script>
