@@ -505,7 +505,7 @@
             },
             selectDateChange() {
                 if (this.selectDate) {
-                    this.$emit('searchDataChange', this.buildParam());
+                    this.$emit('searchDataChange', this.buildParam(),);
                 }
 
             },

@@ -52,13 +52,13 @@
         components: {},
         methods: {
             handleSelectionChange(val){
-                console.log(val);
                 this.$emit('select',val) 
             },
             //带参跳转到人物分析页面
-            toCharacterAnalyse(data){
-                console.log(data);
-                this.$router.push({path:"/home/characterAnalyse"});
+            toCharacterAnalyse(data) {
+                data.startDate = new Date(new Date(this.param.endDate).getTime() - 8.64e7 * 30).format("yyyy-MM-dd") + " 00:00:00";
+                data.endDate = this.param.endDate;
+                this.$router.push({path:"/home/characterAnalyse", query: data});
             },
             getData(){
                 console.log('test');
@@ -73,7 +73,7 @@
                 this.getTableDataEvent();
             }) 
         },
-        props:["tableData"],
+        props:["tableData", "param"],
     }
 
 </script>

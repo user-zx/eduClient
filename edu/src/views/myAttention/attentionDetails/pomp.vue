@@ -75,13 +75,15 @@
                 }else{
                     this.param.endDate = "";
                 }
+                console.log(event);
                 this.param.pageSize = 10;
                 this.param.pageNumber = 0;
                 this.$refs.article.allSelect = false;
-                this.$refs.article.handleCheckAllChange(event)
+                this.$refs.article.handleCheckAllChange();
                 this.getArticleList();
             },
             pageChange(param) {
+                console.log(param);
                 this.param.pageNumber = param.pageNumber;
                 this.param.orders = param.orders;
                 this.getArticleList();
@@ -93,10 +95,14 @@
                         if (response.data.success) {
                             if(response.data.data.page){
                                 this.articleData = response.data.data.page.content;
+                                console.log(this.articleData);
                                 // 最多允许翻10000页
                                 this.total = response.data.data.page.totalElements > 10000 ? 10000 : response.data.data.page.totalElements;
-                                this.loading = false;
+                            } else {
+                                this.articleData = [];
                             }
+                            
+                            this.loading = false;
                         } else {
                             console.error(response.data.message);
                             this.loading = false;

@@ -24,7 +24,7 @@
                     </el-pagination>
                 </div>
             </div>  
-            <character-table class="dark" ref="table" :tableData="getPersonList" @select="removeData"></character-table>
+            <character-table class="dark" ref="table" :tableData="getPersonList" :param="this.params" @select="removeData"></character-table>
         </div>
     </div>
 </template>
@@ -111,7 +111,7 @@
            loadData(params){
               this.params.personageType = [];
               this.params.reportPersonage = [];
-               this.params.startDate = params.endDate.split(" ")[0] + " 00:00:00";
+              this.params.startDate = params.endDate.split(" ")[0] + " 00:00:00";
               this.params.endDate = params.endDate;
               this.params.pageSize = 10;
               this.params.pageNumber = 0;

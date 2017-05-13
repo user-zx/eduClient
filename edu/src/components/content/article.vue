@@ -121,6 +121,7 @@
                 if(this.unfollowParam.concernsContent.length>0){
                     this.$http.post("/apis/concerns/removeConcernsMore.json",this.unfollowParam).then(res=>{
                         if(res.data.success){
+                            console.log(res); 
                             if(res.data.data.message==null){
                                 this.$message("取消关注成功")
                                 this.$emit('onchange',"");
@@ -151,12 +152,11 @@
                     }
                 );
             },
-            handleCheckAllChange(event) {
-                
-               this.checked = event.target.checked ? this.articleDataNew.map(v=>{return v.id}) : [];
+            handleCheckAllChange(val) {
+               this.checked = val && val.target.checked ? this.articleDataNew.map(v=>{return v.id}) : [];
                this.unfollowParam.concernsContent = this.checked;
                this.followParam.concernsContent = this.checked;
-
+               //console.log(this.checked);
             },
             handleCheckedCitiesChange(value) {
                 this.unfollowParam.concernsContent = value;
