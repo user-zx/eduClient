@@ -270,7 +270,17 @@
             return {
                 articleParam: {
                     pageSize: 5,
-                    pageNumber: 0
+                    pageNumber: 0,
+                    orders: [
+                        {
+                            property: 'hitCount',
+                            direction: 'DESC'
+                        },
+                        {
+                            property: 'publishDateTime',
+                            direction: 'DESC'
+                        }
+                    ]
                 },
                 requestParam: {
                     author: '',
