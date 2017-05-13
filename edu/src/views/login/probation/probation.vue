@@ -87,6 +87,7 @@
                         {min:2,max:10,message: "长度在 2 到 10 个字符",trigger: 'blur' },
                     ],
                     userPhone:[
+                        {required:true, message:"请输入手机号", trigger: 'blur' },
                         {validator: userPhone,trigger: 'blur' },
                     ],
                     userEmail:[
