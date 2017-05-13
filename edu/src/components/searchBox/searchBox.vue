@@ -203,6 +203,14 @@
                         ]
                     },
                     {
+                        'name': 'vectorForWechatWeibo',
+                        'title': '载体:',
+                        'searchList': [
+                            {id: 2, text: '微博', selected: true},
+                            {id: 3, text: '微信', selected: false},
+                        ]
+                    },
+                    {
                         'name': 'publishDateTime',
                         'title': '时间:',
                         'searchList': [

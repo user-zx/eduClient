@@ -1,5 +1,4 @@
-  import "vue-style-loader!css-loader!sass-loader!../../../../assets/css/tabs/tabs.scss"; 
-  import breadCrumb from '../../../../components/breadCrumb/breadCrumb.vue';
+  import "vue-style-loader!css-loader!sass-loader!../../../../assets/css/tabs/tabs.scss";
   import overview from '../overview.vue';
   import echarts from 'echarts';
   import vintage from "../../../../vintage.json";
@@ -48,20 +47,8 @@
                 multipleSelection2:{},
             }
         },
-        components:{breadCrumb, dropDown, overview,searchBox},
+        components:{dropDown, overview,searchBox},
         methods:{
-            setBreadCrumb(){
-                 /*设置面包屑*/
-                let breadcrumb=[
-                     {
-                        name:"情报内参",to:{path:"/home/industryNews"}
-                    },
-                    {
-                        name:"两微洞察",to:{path:"/home/seeClearly"}
-                    }
-                ];
-                this.$store.commit("setBreadCrumb",breadcrumb);
-            },
             information(tab, event) {
                 console.log(tab, event);
             },
@@ -456,7 +443,10 @@
             },
             toDetail(data){
                 this.$router.push({path: '/home/articleDetail', query: {id: data.id}});
-            }
+            },
+            toMoreInfoPage(param){
+                this.$router.push({path: "/home/seeClearlyMore", query: {type: param}});
+            },
         },
         mounted(){
             echarts.registerMap('china', china);
@@ -470,7 +460,7 @@
             this.get2VDistribute("微博");
         },
         created(){
-            this.setBreadCrumb();
+            // this.setBreadCrumb();
         },
         watch: {
             radio1: function (val, oldVal) {

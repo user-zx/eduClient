@@ -77,6 +77,7 @@
                         if(url.indexOf("industry") != -1) nowNav="industryNews";
                         if(url.indexOf("weChat") != -1) nowNav="seeWeChat";
                         if(url.indexOf("weibo") != -1) nowNav="seeWeibo";
+                        if(url.indexOf("seeClearly") != -1) nowNav = "seeClearly";
 
                         if(nowNav)
                             this.routerName=nowNav;

@@ -1,6 +1,5 @@
 <template>
     <div class="seeClearly">
-        <bread-crumb></bread-crumb>
         <el-tabs v-model="activeName" @tab-click="information" class="custom-tabs">
             <el-tab-pane label="信息聚合" name="informationAggregation">
                 <overview></overview>
@@ -34,6 +33,9 @@
                             <div slot="header" class="clearfix">
                                 <span class="icons icons-chart2"></span>
                                 <span>两微热点</span>
+                                <div class="pull-right">
+                                    <el-button type="text" icon="plus" size="small" @click="toMoreInfoPage('hot')">更多</el-button>
+                                </div>
                             </div>
                             <div class="text item" style="position: relative;">
                                 <el-tabs v-model="tab1">
@@ -78,6 +80,9 @@
                         <el-card class="educationBox box-card">
                             <div slot="header" class="clearfix">
                                 <span class="icons icons-chart3"></span><span>两微舆情</span>
+                                <div class="pull-right">
+                                    <el-button type="text" icon="plus" size="small" @click="toMoreInfoPage('pomp')">更多</el-button>
+                                </div>
                             </div>
                             <div class="text item" style="position: relative;">
                                 <el-tabs v-model="tab2">

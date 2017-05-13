@@ -10,7 +10,9 @@ import speechList from './views/pomp/speech/speechList/speechList.vue';
 import speechDetails from './views/pomp/speech/speechDetails/speechDetails.vue';
 import industryNews from './views/reference/industryNews/industryNews.vue';
 import characterNews from './views/reference/characterNews/characterNews.vue';
+import seeClearlyIndex from './views/reference/seeClearly/index.vue';
 import seeClearly from './views/reference/seeClearly/seeClearly.vue';
+import seeClearlyMore from './views/reference/seeClearly/moreInfo.vue';
 import mediaCoverage from './views/reference/mediaCoverage/mediaCoverage.vue';
 import report from './views/reference/report/report.vue';
 import reportList from './views/reference/report/reportList/reportList.vue';
@@ -178,9 +180,24 @@ export default {
                     component:characterNews
                 },
                 {
-                    name:"两微洞察",
                     path:"seeClearly",
-                    component:seeClearly
+                    component:seeClearlyIndex,
+                    children: [
+                        {
+                            path: "",
+                            component: seeClearly
+                        }
+                    ]
+                },
+                {
+                    path: "seeClearlyMore",
+                    component: seeClearlyIndex,
+                    children: [
+                        {
+                            path: "",
+                            component: seeClearlyMore
+                        }
+                    ]
                 },
                 {
                     name:"媒体声量",
