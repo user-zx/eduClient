@@ -56,15 +56,17 @@
                 data.pageSize = 5;
                 data.pageNumber = 0;
                 data.orders = this.param.orders;
+                data.vector = data.vectorForWechatWeibo;
                 this.param = data;
                 this.getArticleList();
             },
 
             onSearchDataChange(data,event) {
-                console.log(data)
+                console.log(event)
                 data.pageSize = 5;
                 data.pageNumber = 0;
                 data.orders = this.param.orders;
+                data.vector = data.vectorForWechatWeibo;
                 this.param = data;
                 this.getArticleList();
             },
@@ -84,7 +86,6 @@
                     this.$http.post('/apis/twoMicroInsight/findTwoMicroInsightInfo.json', this.param).then(
                         (response) => {
                             if (response.data.success) {
-                                console.log(response.data.data)
 //                                this.wechatHot = response.data.data.content;
                                 this.articleData = response.data.data.content;
                                 // 最多允许翻1000页
@@ -100,7 +101,7 @@
                         }
                     );
                 }else {
-
+                    console.log(this.type)
                 }
             }
         },

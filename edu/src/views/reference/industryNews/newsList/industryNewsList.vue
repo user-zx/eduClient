@@ -48,13 +48,13 @@
                 this.param = data;
                 this.getArticleList();
             },
-             onSearchDataChange(data,event) {
+             onSearchDataChange(data) {
                 data.pageSize = 5;
                 data.pageNumber = 0;
                 data.orders = this.param.orders;
                 this.param = data;
                 this.$refs.article.allSelect = false;
-                this.$refs.article.handleCheckAllChange(event)
+                this.$refs.article.handleCheckAllChange()
                 this.getArticleList();
             },
             pageChange(param) {
