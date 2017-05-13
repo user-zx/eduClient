@@ -183,19 +183,12 @@ export default{
                 });
             });
         },
-        addRule() {
+        addRule(formName) {
             this.form1Title = "添加";
-            this.form = {
-                warnName: '',
-                emotion: [],
-                vector: [],
-                keyword: '',
-                receiverIds: [],
-                personages: '',
-                weboNumbers: '',
-                wechatNumbers: ''
-            };
 			this.dialogFormVisible = true;
+            this.$nextTick(() => {
+                this.$refs[formName].resetFields();
+            });
         },
         saveOrUpDateRule(formName) {
             this.$refs[formName].validate((valid) => {
@@ -289,14 +282,12 @@ export default{
                 });
             });
         },
-        addReceiver() {
+        addReceiver(formName) {
 			this.form2Title = "添加";
-            this.formLabelAlign = {
-                receiveName: '',
-				receiveTel: '',
-				receiveEmail: ''
-            };
             this.dialogVisible = true;
+            this.$nextTick(() => {
+                this.$refs[formName].resetFields();
+			});
 		},
         saveOrUpDateReceiver(formName) {
             this.$refs[formName].validate((valid) => {

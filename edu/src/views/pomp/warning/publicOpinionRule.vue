@@ -16,7 +16,7 @@
 							 class="grid-content bg-purple">
 						</el-input>
 						-->
-						 <el-button type="primary" class="search_div_button" @click="dialogFormVisible = true">添加规则</el-button>
+						 <el-button type="primary" class="search_div_button" @click="addRule('ruleForm')">添加规则</el-button>
 					 </div>
 			    	<el-table
 					      :data="tableData1"
@@ -92,7 +92,7 @@
 							 class="grid-content bg-purple">
 						</el-input>
 						-->
-						 <el-button type="primary" class="search_div_button" @click="addReceiver">添加接收人</el-button>
+						 <el-button type="primary" class="search_div_button" @click="addReceiver('receiverForm')">添加接收人</el-button>
 					 </div>
 		    		<el-table
 					      :data="tableData2"
