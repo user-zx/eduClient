@@ -71,6 +71,7 @@
                                     let encrypedPwd = RSAUtils.encryptedString(key,password);
                                     $('input[name=password]').val(encrypedPwd);
                                     $(".ruleForm").submit();
+                                    <!--
                                     this.$http.post("/apis/login.do", {username:this.ruleForm.user, password:encrypedPwd}).then(res => {
                                         if(res.data.success){
                                             this.$router.push({path:"/home/panorama"});
@@ -80,7 +81,7 @@
                                         }
                                     },err=>{
                                         console.log(err);
-                                    });
+                                    });-->
                                 } else {
                                     console.error(response.data.msg);
                                     return false;
