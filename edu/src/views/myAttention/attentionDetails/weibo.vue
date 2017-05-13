@@ -24,7 +24,7 @@
                 <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%" :resizable="false" @selection-change="handleSelectionChange">
                     <el-table-column type="selection" width="50" align="center"></el-table-column>
                     <el-table-column label="排名" align="center" prop="index">
-                        <template scope="scope"> 
+                        <template scope="scope">
                             <span v-if="scope.row.index == 1">
                                  <i class="icon-rank icon-gold"></i>
                             </span>
@@ -199,7 +199,7 @@
         mounted(){
             this.$nextTick(function(){
                 this.getWeiboData();
-            })          
+            })
         },
     }
 </script>

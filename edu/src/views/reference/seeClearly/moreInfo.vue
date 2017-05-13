@@ -61,13 +61,14 @@
                 this.getArticleList();
             },
 
-            onSearchDataChange(data,event) {
-                console.log(event)
+            onSearchDataChange(data) {
                 data.pageSize = 5;
                 data.pageNumber = 0;
                 data.orders = this.param.orders;
                 data.vector = data.vectorForWechatWeibo;
                 this.param = data;
+                this.$refs.article.allSelect = false;
+                this.$refs.article.handleCheckAllChange()
                 this.getArticleList();
             },
 
@@ -79,14 +80,12 @@
 
             getArticleList(){
                 this.loading = true;
-                console.log(this.param);
 
                 //根据上级页面传的参数判断是获取热点更多文章还是舆情更多文章
                 if(this.type == 'hot'){
                     this.$http.post('/apis/twoMicroInsight/findTwoMicroInsightInfo.json', this.param).then(
                         (response) => {
                             if (response.data.success) {
-//                                this.wechatHot = response.data.data.content;
                                 this.articleData = response.data.data.content;
                                 // 最多允许翻1000页
                                 this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
@@ -101,14 +100,28 @@
                         }
                     );
                 }else {
-                    console.log(this.type)
+                    this.$http.post('/apis/twoMicroInsight/findTwoMicroInsightInfo.json', this.param).then(
+                        (response) => {
+                            if (response.data.success) {
+                                this.articleData = response.data.data.content;
+                                // 最多允许翻1000页
+                                this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
+                                this.$nextTick(function() {
+                                    this.loading = false;
+                                });
+                            } else {
+                                console.error(response.data.message);
+                            }
+                        }, (response) => {
+                            console.error(response);
+                        }
+                    );
                 }
             }
         },
         created(){
             this.setBreadCrumb();
             this.type = this.$route.query.type;
-            console.log(this.type)
         }
     }
 </script>

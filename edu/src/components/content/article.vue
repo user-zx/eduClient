@@ -161,7 +161,6 @@
             handleCheckedCitiesChange(value) {
                 this.unfollowParam.concernsContent = value;
                 this.followParam.concernsContent = value;
-                console.log(value);
             },
             warnBtnClick(item) {
                 item.loading = true;
@@ -245,6 +244,10 @@
 
             },
             handleCurrentChange(pageNumber) {
+                //每次分页  之前选中的状态都取消
+                this.allSelect = false;
+                this.handleCheckedCitiesChange([]);
+                this.checked = [];
                 //后台是从0开始
                 this.param.pageNumber = pageNumber - 1;
                 this.$emit('onchange', this.param);
