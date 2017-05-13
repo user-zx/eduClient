@@ -5,6 +5,7 @@ import "vue-style-loader!css-loader!sass-loader!../css/characterAnalyse.scss";
 import echarts from "echarts";
 import vintage from "../../../../../vintage.json";
 import dropDown from "../../../../../components/dropdown/dropdown.vue";
+import warnDropDown from "../../../../../components/dropdown/warnDropDown.vue";
 import "echarts-wordcloud";
 
 export default{
@@ -31,7 +32,7 @@ export default{
             time_loading: true
         }
     },
-    components: {dropDown},
+    components: {dropDown, warnDropDown},
     methods: {
         setBreadCrumb(){
             let breadcrumb = [
@@ -303,7 +304,53 @@ export default{
                     console.error(response);
                 }
             );
-        }
+        },
+        saveWarn(id) {
+            let ids = [this.param.name];
+            let param = {
+                warnId: id,
+                contents: ids
+            };
+            this.$http.post('/apis/opinionWarn/saveWarnPersonage.json', param).then(
+                (response) => {
+                    if (response.data.success) {
+                        this.$notify({
+                            title: '成功',
+                            message: '添加成功',
+                            type: 'success',
+                            duration: 2000
+                        });
+                    } else {
+                        console.error(response.data.message);
+                    }
+                }, (response) => {
+                    console.error(response);
+                }
+            );
+        },
+        concernedPersonage(){
+            let param = {};
+            param.concernsType = 2;
+            param.concernsContent = [this.param.name];
+            this.$http.post("/apis/concerns/saveConcernsMore.json", param).then(res=>{
+                if(res.data.success){
+                    this.$notify({
+                        title: '成功',
+                        message: '关注成功',
+                        type: 'success'
+                    });
+                }else{
+                    this.$notify({
+                        title: '失败',
+                        message: '关注失败',
+                        type: 'error',
+                        duration: 2000
+                    });
+                }
+            },err=>{
+                console.log(err);
+            });
+        },
     },
     created(){
         this.setBreadCrumb();
