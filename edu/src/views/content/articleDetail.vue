@@ -54,7 +54,7 @@
                 </div>
                 <div class="info-item">
                     <span class="item sourceLink">
-                        来源站点： <a :href="article.sourceLink ? article.sourceLink : '#'>{{article.sourceLink ? article.sourceLink.length > 50 ? article.sourceLink.substring(0, 50) + "..." : article.sourceLink : article.sourceLink}}</a>
+                        来源站点： <a :href="article.sourceLink ? article.sourceLink : '#'">{{article.sourceLink ? article.sourceLink.length > 50 ? article.sourceLink.substring(0, 50) + "..." : article.sourceLink : article.sourceLink}}</a>
                     </span>
                 </div>
             </div>
