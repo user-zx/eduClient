@@ -70,19 +70,17 @@
                                     var password =  $('input[name=password]').val();
                                     let encrypedPwd = RSAUtils.encryptedString(key,password);
                                     $('input[name=password]').val(encrypedPwd);
-                                   //$(".ruleForm").submit();
-                                  // console.log(encrypedPwd);
-                                
-                                  this.$http.post("/apis/login.do",{username:this.ruleForm.user,password:encrypedPwd}).then(res=>{
+                                    $(".ruleForm").submit();
+                                    this.$http.post("/apis/login.do", {username:this.ruleForm.user, password:encrypedPwd}).then(res => {
                                         if(res.data.success){
                                             this.$router.push({path:"/home/panorama"});
-                                        }else{
+                                        } else {
                                             this.ruleForm.user = "";
                                             this.ruleForm.pass = "";
                                         }
-                                  },err=>{
+                                    },err=>{
                                         console.log(err);
-                                  })    
+                                    });
                                 } else {
                                     console.error(response.data.msg);
                                     return false;
