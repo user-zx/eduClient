@@ -267,7 +267,17 @@
             return {
                 articleParam: {
                     pageSize: 5,
-                    pageNumber: 0
+                    pageNumber: 0,
+                    orders: [
+                        {
+                            property: 'hitCount',
+                            direction: 'DESC'
+                        },
+                        {
+                            property: 'publishDateTime',
+                            direction: 'DESC'
+                        }
+                    ]
                 },
                 requestParam: {
                     id: '',
@@ -509,7 +519,7 @@
             },
 
             getBlogArticleData(){
-//                console.log(this.articleParam)
+                console.log(this.articleParam)
                 this.$http.post('/apis/businessTool/getMicroblogArticleData.json', this.articleParam).then(
                     (response) => {
                         //没有数据
@@ -594,7 +604,6 @@
             pageChange(param){
                 this.articleParam.pageNumber = param.pageNumber;
                 this.articleParam.orders = param.orders;
-                console.log(this.articleParam)
                 this.getBlogArticleData();
             },
 
