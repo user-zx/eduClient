@@ -19,7 +19,7 @@
                     </el-button>
                 </div>
                 <div class="btn alert">
-                    <el-button type="primary" icon="plus">预警</el-button>
+                    <warn-drop-down @onSaveWarn="saveWarn"></warn-drop-down>
                 </div>
             </div>
         </div>
@@ -118,15 +118,6 @@
                             一周热门
                         </li>
                     </ul>
-                    <!-- <div class="content-bar-pagination">
-                        <el-pagination class="edu-pagination"
-                                       @current-change="handleCurrentChange"
-                                       :current-page="articleParam.pageNumber + 1"
-                                       :page-size="5"
-                                       layout="prev, next, jumper, total"
-                                       :total="total">
-                        </el-pagination>
-                    </div> -->
                 </div>
                 <articleView :articleData="articleData" :total="total" :pageNumber="articleParam.pageNumber" @onchange="pageChange"></articleView>
 
@@ -261,6 +252,7 @@
     import echarts from "echarts";
     import vintage from "../../../../vintage.json";
     import articleView from "../../../../components/content/article.vue";
+    import warnDropDown from "../../../../components/dropdown/warnDropDown.vue";
 
     export default{
         data(){
@@ -314,7 +306,7 @@
                 concerned:　false
             }
         },
-        components:　{articleView},
+        components:　{articleView, warnDropDown},
         methods: {
             setBreadCrumb(){
                 let breadcrumb=[
@@ -621,6 +613,29 @@
                         }
                     }
                 )
+            },
+            saveWarn(id) {
+                let ids = [this.requestParam.author];
+                let param = {
+                    warnId: id,
+                    contents: ids
+                };
+                this.$http.post('/apis/opinionWarn/saveWarnWeBo.json', param).then(
+                    (response) => {
+                        if (response.data.success) {
+                            this.$notify({
+                                title: '成功',
+                                message: '添加成功',
+                                type: 'success',
+                                duration: 2000
+                            });
+                        } else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) => {
+                        console.error(response);
+                    }
+                );
             }
         },
         created(){
