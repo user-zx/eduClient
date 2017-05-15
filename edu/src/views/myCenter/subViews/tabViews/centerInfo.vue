@@ -328,8 +328,11 @@
                 this.$http.get("/apis/packageManage/getPackageOrderById.json/" + params.id).then((res)=>{
                     if(res.data.success){
                         this.orderDetails = res.data.data;
-                         this.orderDetails.signedDate = new Date(res.data.data.signedDate).format('yyyy-MM-dd')
-                         this.orderDetails.expireDate = new Date(res.data.data.expireDate).format('yyyy-MM-dd')
+                      //  console.log(res.data.data.signedDate);
+
+                  this.orderDetails.signedDate = this.orderDetails.signedDate == null ? "--:--" : new Date(res.data.data.signedDate).format('yyyy-MM-dd');
+                         
+                  this.orderDetails.expireDate = this.orderDetails.expireDate == null ? "--:--" : new Date(res.data.data.expireDate).format('yyyy-MM-dd');
                         this.showOne = [];this.showTwo = [];this.showThree = [];
                         let itemString = res.data.data.itemPriceList;
                         this.getItemData(itemString,this.item_one,this.showOne);
