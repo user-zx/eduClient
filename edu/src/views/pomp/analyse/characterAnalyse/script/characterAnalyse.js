@@ -361,6 +361,9 @@ export default{
         }
         this.$route.query.university = univs;
         this.param = this.$route.query;
+        if (this.param.name) {
+            this.param.reportPersonage = this.param.name;
+        }
     },
     mounted() {
         echarts.registerTheme('vintage', vintage);
