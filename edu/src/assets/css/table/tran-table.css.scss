@@ -6,7 +6,7 @@
   &.el-table{
     background-color:transparent;
     border-color:rgba(96,163,255,.1);
-    border: 0; 
+   // border: 0; 
     &.yellow-table{
       tr{
         td:first-child{
@@ -118,6 +118,7 @@
       border-color:rgba(96,163,255,.1);
       &.is-leaf{
         border-color: rgba(96,163,255,.1);
+       // border-right: 1px solid #dfe6ec; 
       }
       .cell{
         background-color: transparent;
@@ -186,4 +187,8 @@
       overflow-y: auto;
     }
   }
+}
+
+.el-table td, .el-table th.is-leaf {
+    border-right: 1px solid #dfe6ec;
 }
