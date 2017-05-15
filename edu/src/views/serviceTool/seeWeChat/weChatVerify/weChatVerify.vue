@@ -373,7 +373,7 @@
 //                    this.$message({message: '负责人邮箱不能为空', type: type});
 //                    return false;
 //                }else
-                if(responsibleEmail != null && !reg.test(responsibleEmail)){
+                if(responsibleEmail && !reg.test(responsibleEmail)){
                     this.$message({message: '负责人邮箱格式不正确', type: type});
                     return false;
                 }
@@ -383,7 +383,7 @@
 //                    this.$message({message: '发布人邮箱不能为空', type: type});
 //                    return false;
 //                }else
-                if(publishEmail != null && !reg.test(publishEmail)){
+                if(publishEmail && !reg.test(publishEmail)){
                     this.$message({message: '发布人邮箱格式不正确', type: type});
                     return false;
                 }
@@ -395,7 +395,7 @@
 //                    this.$message({message: '负责人电话不能为空', type: type});
 //                    return false;
 //                }else
-                if(responsibleTel != null && !phoneReg.test(responsibleTel)){
+                if(responsibleTel && !phoneReg.test(responsibleTel)){
                     this.$message({message: '负责人电话格式不正确', type: type});
                     return false;
                 }
@@ -405,7 +405,7 @@
 //                    this.$message({message: '发布人电话不能为空', type: type});
 //                    return false;
 //                }else
-                if(publishTel != null && !phoneReg.test(publishTel)){
+                if(publishTel && !phoneReg.test(publishTel)){
                     this.$message({message: '发布人电话格式不正确', type: type});
                     return false;
                 }

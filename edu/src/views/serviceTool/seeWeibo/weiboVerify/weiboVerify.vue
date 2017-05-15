@@ -282,7 +282,7 @@
 //                    });
 //                    return false;
 //                }else
-                if(responsibleEmail != null && !reg.test(responsibleEmail)){
+                if(responsibleEmail && !reg.test(responsibleEmail)){
                     this.$message({
                         showClose: true,
                         message: '负责人邮箱格式不正确',
@@ -302,7 +302,7 @@
 //                    });
 //                    return false;
 //                }else
-                if(responsibleTel != null && !phoneReg.test(responsibleTel)){
+                if(responsibleTel && !phoneReg.test(responsibleTel)){
                     this.$message({
                         showClose: true,
                         message: '负责人电话格式不正确',
@@ -331,7 +331,7 @@
 //                    });
 //                    return false;
 //                }else
-                if(publishEmail != null && !reg.test(publishEmail)){
+                if(publishEmail && !reg.test(publishEmail)){
                     this.$message({
                         showClose: true,
                         message: '发布人邮箱格式不正确',
@@ -350,7 +350,7 @@
 //                    });
 //                    return false;
 //                }else
-                if(publishTel != null && !phoneReg.test(publishTel)){
+                if(publishTel && !phoneReg.test(publishTel)){
                     this.$message({
                         showClose: true,
                         message: '发布人电话格式不正确',
