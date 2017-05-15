@@ -73,7 +73,9 @@
                     <el-input v-model="weiboInfo.responsibleTel"></el-input>
                 </el-col>
                 <el-col class="text-right" :span="4" :offset="1">发布人电话</el-col>
-                <el-col :span="6"><el-input v-model="weiboInfo.publishTel"></el-input></el-col>
+                <el-col :span="6">
+                    <el-input v-model="weiboInfo.publishTel"></el-input>
+                </el-col>
             </el-row>
             <el-row>
                 <el-col class="text-center" :offset="9" :span="6">
@@ -292,7 +294,7 @@
                 }
 
                 //负责人电话校验
-                let phoneReg =  /^1(3|4|5|7|8)\d{9}$/;
+                let cellPhoneReg = /^1(3|4|5|7|8)\d{9}$/, phoneReg = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
                 let responsibleTel = this.weiboInfo.responsibleTel;
 //                if(responsibleTel == ''){
 //                    this.$message({
@@ -302,7 +304,7 @@
 //                    });
 //                    return false;
 //                }else
-                if(responsibleTel && !phoneReg.test(responsibleTel)){
+                if(responsibleTel && (!cellPhoneReg.test(responsibleTel) && !phoneReg.test(responsibleTel))){
                     this.$message({
                         showClose: true,
                         message: '负责人电话格式不正确',
@@ -350,7 +352,7 @@
 //                    });
 //                    return false;
 //                }else
-                if(publishTel && !phoneReg.test(publishTel)){
+                if(publishTel && (!cellPhoneReg.test(publishTel) && !phoneReg.test(publishTel))){
                     this.$message({
                         showClose: true,
                         message: '发布人电话格式不正确',

@@ -3,7 +3,7 @@
         <div class="form-wrap">
             <el-form :model="form" :rules="rules" ref="form" :label-width="formLabelWidth" name="addForm" class="edu-form dark">
                 <el-form-item label="主账号">
-                    <el-input v-model="form.mainAcount" auto-complete="off" :disabled="true"></el-input>
+                    <el-input v-model="form.primaryAccount" auto-complete="off" :disabled="true"></el-input>
                 </el-form-item>
                 <el-form-item label="子账号"  prop="userAccount">
                     <el-input v-model="form.userAccount" auto-complete="off" :disabled="true"></el-input>
@@ -52,7 +52,7 @@
             return{
                 formLabelWidth: '100px',
                 form: {
-                    mainAcount: this.$parent.$parent.$parent.user.userAccount,
+                    primaryAccount: '',
                     userAccount: '',
                     realName: '',
                     userDepartment: '',

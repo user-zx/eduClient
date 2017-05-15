@@ -24,7 +24,7 @@
                 </div>
                 <el-card class="box-card">
                     <el-table :data="weiboStatisticsData" :resizable="false" stripe style="width: 100%" border class="tran-table no-col-title yellow-table">
-                        <el-table-column width="70" label="序号" align="center" type="index"></el-table-column>
+                        <el-table-column width="70" label="序号" align="center" prop="rank"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="blogNickname" label="微博号" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleUser" label="负责人" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="responsibleEmail" label="负责人邮箱" align="center"></el-table-column>
@@ -243,7 +243,13 @@
                     (response) => {
                         this.loading = false;
                         if(response.data.success && response.data.data != null){
-                            this.weiboStatisticsData = response.data.data.content;
+                            let data = response.data.data.content;
+                            if(data != null && data.length > 0){
+                                for(let i = 0; i <　data.length; i++){
+                                    data[i].rank = (this.statisticsParam.pageNumber) * this.statisticsParam.pageSize +  i + 1;
+                                }
+                            }
+                            this.weiboStatisticsData = data;
                             this.total1 = response.data.data.totalElements;
                         }
                     }

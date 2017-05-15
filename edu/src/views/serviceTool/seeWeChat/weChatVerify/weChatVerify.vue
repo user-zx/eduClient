@@ -389,13 +389,13 @@
                 }
 
                 //
-                let phoneReg =  /^1(3|4|5|7|8)\d{9}$/;
+                let cellPhoneReg = /^1(3|4|5|7|8)\d{9}$/, phoneReg = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
                 let  responsibleTel = this.wechatInfo.responsibleTel;
 //                if(responsibleTel == ''){
 //                    this.$message({message: '负责人电话不能为空', type: type});
 //                    return false;
 //                }else
-                if(responsibleTel && !phoneReg.test(responsibleTel)){
+                if(responsibleTel && (!cellPhoneReg.test(responsibleTel) && !phoneReg.test(responsibleTel))){
                     this.$message({message: '负责人电话格式不正确', type: type});
                     return false;
                 }
@@ -405,7 +405,7 @@
 //                    this.$message({message: '发布人电话不能为空', type: type});
 //                    return false;
 //                }else
-                if(publishTel && !phoneReg.test(publishTel)){
+                if(publishTel && (!cellPhoneReg.test(publishTel) && !phoneReg.test(publishTel))){
                     this.$message({message: '发布人电话格式不正确', type: type});
                     return false;
                 }

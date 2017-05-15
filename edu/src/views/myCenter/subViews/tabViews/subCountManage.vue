@@ -26,11 +26,11 @@
                 <el-table-column label="子账号" prop="userAccount" align="center"></el-table-column>
                 <el-table-column label="开通时间" prop="createDate" align="center" :formatter="formatCreateDate"></el-table-column>
                 <el-table-column label="到期时间" prop="expireDate" align="center" :formatter="formatExpireDate"></el-table-column>
-                <el-table-column label="设置权限" prop="permission" align="center">
+                <el-table-column label="操作" prop="permission" align="center">
                     <template scope="scope">
-                        <span @click="setPermission(scope.row)" class="pointer">
-                            设置
-                        </span>
+                        <el-button @click="setPermission(scope.row)" size="small">
+                            编辑
+                        </el-button>
                     </template>
                 </el-table-column>
                 <el-table-column label="开关" align="center">
@@ -147,10 +147,10 @@
                 callback(new Error('手机号不能为空'));
               } else {
                   let cellPhone = /^1(3|4|5|7|8)\d{9}$/, phone = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
-                if(!cellPhone.test(value) && !phone.test(value)){
+                  if(!cellPhone.test(value) && !phone.test(value)){
                     callback(new Error('请输入正确手机号或座机号'));
-                }
-                callback();
+                  }
+                  callback();
               }
           };
           var validPermission = (rule, value, callback) => {
@@ -233,6 +233,7 @@
         methods: {
 
             setPermission(row){
+                console.log(row)
                 this.limitForm.userId = row.id;
                 this.limitForm.userAccount = row.userAccount;
                 this.limitForm.createDate = new Date(row.createDate).format('yyyy-MM-dd');

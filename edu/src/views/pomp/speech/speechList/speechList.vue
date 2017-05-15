@@ -9,7 +9,7 @@
             </div>
             <el-table :data="tableData" class="tran-table no-col-title" border style="width: 100%"
                       :resizable="false">
-                <el-table-column label="序号" align="center" type="index" width="70"></el-table-column>
+                <el-table-column label="序号" align="center" prop="rank" width="70"></el-table-column>
                 <el-table-column label="生成区间" prop="range" align="center" :formatter="formatRangeDate"></el-table-column>
                 <el-table-column label="报告名称" prop="title" align="center"></el-table-column>
                 <el-table-column label="添加时间" prop="createDate" align="center" :formatter="formatCreateDate" width="200"></el-table-column>
@@ -264,7 +264,13 @@
                     this.$http.post('/apis/opinionReport/getReport.json', this.param).then(
                         (response) => {
                             if (response.data.success) {
-                                this.tableData = response.data.data.content;
+                                let data = response.data.data.content;
+                                if(data != null && data.length > 0){
+                                    for(let i = 0; i <　data.length; i++){
+                                        data[i].rank = (this.param.pageNumber) * this.param.pageSize +  i + 1;
+                                    }
+                                }
+                                this.tableData = data;
                                 // 最多允许翻1000页
                                 this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
                             } else {
