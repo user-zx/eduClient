@@ -260,7 +260,7 @@
             },
             batchConcerned(){
                  if(this.multipleSelection.concernsContent == undefined || this.multipleSelection.concernsContent.length == 0){
-                this.$message("未选择公众号")
+                this.$message("未选择微博号")
                 return false;
                }
                 if(this.multipleSelection.concernsContent.length>0){
