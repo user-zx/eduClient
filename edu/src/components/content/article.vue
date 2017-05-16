@@ -190,7 +190,9 @@
                                         message: '取消预警成功',
                                         type: 'success',
                                         duration: 2000
-                                    })
+                                    });
+
+                                    this.$emit('onchange', this.param);
                                 }
                                 item.loading = false;
                             } else {
