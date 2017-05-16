@@ -103,7 +103,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="开通时间">
-                        <span>{{limitForm.createDateFormat}}</span>
+                        <span>{{limitForm.createDate}}</span>
                     </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
