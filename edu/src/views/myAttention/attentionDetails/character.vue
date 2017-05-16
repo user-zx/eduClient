@@ -104,15 +104,17 @@
               } else{
                 this.params.reportPersonage.push(params.reportPersonage);
               }
-              this.params.startDate = params.endDate.split(" ")[0] + " 00:00:00";
-              this.params.endDate = params.endDate;
+              //this.params.startDate = params.endDate.split(" ")[0] + " 00:00:00";
+               this.params.startDate = params.startDate;
+               this.params.endDate = params.endDate;
               this.getDataList()
            },  
            loadData(params){
               this.params.personageType = [];
               this.params.reportPersonage = [];
-              this.params.startDate = params.endDate.split(" ")[0] + " 00:00:00";
-              this.params.endDate = params.endDate;
+              //this.params.startDate = params.endDate.split(" ")[0] + " 00:00:00";
+               this.params.startDate = params.startDate;
+               this.params.endDate = params.endDate;
               this.params.pageSize = 10;
               this.params.pageNumber = 0;
               this.params.orders = [{property: "totalHitCount", direction: "DESC"}];

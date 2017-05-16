@@ -121,7 +121,7 @@
             },
 
             getSysNoticeList(){
-                this.$http.post('/apis/sysNotice/getSysNoticeList.json', this.param).then(
+                this.$http.post('/apis/userMgrt/getSysNoticeList.json', this.param).then(
                     function (response) {
                         if(response.data.success){
                             this.total = response.data.data.totalElements;
