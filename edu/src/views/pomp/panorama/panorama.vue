@@ -92,7 +92,7 @@
                         <el-tabs v-model="activeName" class="custom-tabs" @tab-click="handleClick">
                             <el-tab-pane label="今日热点" name="todayHot">
                                 <el-card class="box-card">
-                                    <el-table :data="hotOpinion.todayHot" :resizable="false" :show-header="false" style="width: 100%"  class="tran-table">
+                                    <el-table :data="hotOpinion.todayHot" :resizable="false" style="width: 100%"  class="tran-table">
                                         <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="180px">
                                             <template scope="scope">
                                                 <span @click="toDetail(scope.row)" class="pointer">{{scope.row.title}}</span>
@@ -106,7 +106,7 @@
                             </el-tab-pane>
                             <el-tab-pane label="近7天热点" name="weekHot">
                                 <el-card class="box-card">
-                                    <el-table :data="hotOpinion.weekHot" :resizable="false" :show-header="false" style="width: 100%"  class="tran-table">
+                                    <el-table :data="hotOpinion.weekHot" :resizable="false" style="width: 100%"  class="tran-table">
                                         <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="180px">
                                             <template scope="scope">
                                                 <span class="pointer" @click="toDetail(scope.row)">
@@ -122,7 +122,7 @@
                             </el-tab-pane>
                             <el-tab-pane label="近30天热点" name="monthHot">
                                 <el-card class="box-card">
-                                    <el-table :data="hotOpinion.monthHot" :resizable="false" :show-header="false" style="width: 100%"  class="tran-table">
+                                    <el-table :data="hotOpinion.monthHot" :resizable="false" style="width: 100%"  class="tran-table">
                                         <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="180px">
                                             <template scope="scope">
                                                 <span class="pointer" @click="toDetail(scope.row)">
@@ -149,7 +149,7 @@
                         <el-tabs v-model="activeName2" class="custom-tabs" @tab-click="handleClick">
                             <el-tab-pane label="今日热点" name="todayHot">
                                 <el-card class="box-card">
-                                    <el-table :data="hotPersonage.todayHot" :resizable="false" :show-header="false" style="width: 100%"  class="tran-table">
+                                    <el-table :data="hotPersonage.todayHot" :resizable="false" style="width: 100%"  class="tran-table">
                                         <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="180px">
                                             <template scope="scope">
                                                 <span class="pointer" @click="toDetail(scope.row)">
@@ -165,7 +165,7 @@
                             </el-tab-pane>
                             <el-tab-pane label="近7天热点" name="weekHot">
                                 <el-card class="box-card">
-                                    <el-table :data="hotPersonage.weekHot" :resizable="false" :show-header="false" style="width: 100%"  class="tran-table">
+                                    <el-table :data="hotPersonage.weekHot" :resizable="false" style="width: 100%"  class="tran-table">
                                         <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="180px">
                                             <template scope="scope">
                                                 <span class="pointer" @click="toDetail(scope.row)">
@@ -181,7 +181,7 @@
                             </el-tab-pane>
                             <el-tab-pane label="近30天热点" name="monthHot">
                                 <el-card class="box-card">
-                                    <el-table :data="hotPersonage.monthHot" :resizable="false" :show-header="false" style="width: 100%"  class="tran-table">
+                                    <el-table :data="hotPersonage.monthHot" :resizable="false" style="width: 100%"  class="tran-table">
                                         <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="180px">
                                             <template scope="scope">
                                                 <span class="pointer" @click="toDetail(scope.row)">

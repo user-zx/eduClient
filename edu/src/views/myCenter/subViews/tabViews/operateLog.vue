@@ -41,38 +41,7 @@
                     pageNumber: 0
                 },
                 total: 0,
-                tableData: [
-                    {
-                        id:1,
-                        number: '1',
-                        ip: '192.156.0.11',
-                        datetime: '2017-02-02 12:12'
-                    },
-                    {
-                        id:5,
-                        number: '2',
-                        ip: '192.156.0.11',
-                        datetime: '2017-02-02 12:12'
-                    },
-                    {
-                        id:2,
-                        number: '3',
-                        ip: '192.156.0.11',
-                        datetime: '2017-02-02 12:12'
-                    },
-                    {
-                        id:3,
-                        number: '4',
-                        ip: '192.156.0.11',
-                        datetime: '2017-02-02 12:12'
-                    },
-                    {
-                        id:4,
-                        number: '5',
-                        ip: '192.156.0.11',
-                        datetime: '2017-02-02 12:12'
-                    },
-                ]
+                tableData: []
             }
         },
         methods: {
