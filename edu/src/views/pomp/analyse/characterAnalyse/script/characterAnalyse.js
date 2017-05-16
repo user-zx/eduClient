@@ -12,7 +12,7 @@ export default{
     data(){
         return {
             characterInfo: [{
-                college: '',
+                university: '',
                 department: '',
                 job: '',
                 publicAccount: '',
@@ -47,6 +47,19 @@ export default{
                 }
             ];
             this.$store.commit("setBreadCrumb", breadcrumb);
+        },
+        getPersonageInfo(){
+            this.$http.post('/apis/opinionMonitor/getPersonageInfo.json', {personage: this.param.name}).then(
+                (response) => {
+                    if (response.data.success) {
+                        this.characterInfo[0] = response.data.data;
+                    } else {
+                        console.error(response.data.message);
+                    }
+                }, (response) => {
+                    console.error(response);
+                }
+            );
         },
         /**获取活动轨迹echart图*/
         getActionTrail(){
@@ -367,6 +380,7 @@ export default{
     },
     mounted() {
         echarts.registerTheme('vintage', vintage);
+        this.getPersonageInfo();
         this.getActionTrail();
         this.getPersonageArticle(this.param.endDate.split(' ')[0]);
         this.getEmotionTrend();
