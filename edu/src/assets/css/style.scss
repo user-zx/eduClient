@@ -263,7 +263,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
               top: 20px;
               height: 25px;
               width: 2px;
-              background-color: #7f9ecc;     
+              background-color: rgba(78,141,228,.5);     
             }
             &:first-child::before{
               content: "";
@@ -356,8 +356,12 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#b8b8b8;}
     line-height: 38px;
   }
   .el-breadcrumb__item{
+
     .el-breadcrumb__item__inner{
       color:#ffffff;
+      a{
+        color: #FFF; 
+      }
     }
     .el-breadcrumb__separator{
       color:#ffffff;

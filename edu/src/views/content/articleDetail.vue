@@ -6,7 +6,7 @@
         <h2 class="article-title">
             {{article.title}}
         </h2>
-
+        
         <div class="detail-left">
             <div class="article-info">
                 <div class="info-item">
@@ -178,6 +178,8 @@
                 margin: 20px;
                 min-height: 500px;
                 line-height: 30px;
+                width: 95%;
+                overflow: hidden; 
             }
         }
 
@@ -271,7 +273,7 @@
                         if(response.data.success){
                             this.article = response.data.data.article;
                             this.similarArticles = response.data.data.similarArticles;
-                            console.log(response.data.data);
+                           // console.log(response.data.data);
                         }else{
                             this.$message.error('出错了， 请稍后再试');
                         }
