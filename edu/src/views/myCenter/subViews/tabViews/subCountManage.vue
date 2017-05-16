@@ -21,19 +21,19 @@
         <div class="table-wrap">
             <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
                       :resizable="false" @selection-change="handleSelectionChange">
-                <el-table-column type="selection" width="55"></el-table-column>
+                <el-table-column type="selection" width="80" align="center"></el-table-column>
                 <el-table-column label="序号" prop="rank" width="80" align="center"></el-table-column>
                 <el-table-column label="子账号" prop="userAccount" align="center"></el-table-column>
                 <el-table-column label="开通时间" prop="createDate" align="center" :formatter="formatCreateDate"></el-table-column>
                 <el-table-column label="到期时间" prop="expireDate" align="center" :formatter="formatExpireDate"></el-table-column>
-                <el-table-column label="操作" prop="permission" align="center">
+                <el-table-column label="操作" prop="permission" align="center" width="120">
                     <template scope="scope">
                         <el-button @click="setPermission(scope.row)" size="small">
                             编辑
                         </el-button>
                     </template>
                 </el-table-column>
-                <el-table-column label="开关" align="center">
+                <el-table-column label="开关" align="center" width="120">
                     <template scope="scope">
                         <el-switch v-model="scope.row.switchStatus" @change="changeStatus(scope.row)"></el-switch>
                     </template>
@@ -80,21 +80,30 @@
 
         <div>
             <el-dialog title="权限设置" v-model="limitsDialogVisible" class="dialog-center" @close="closeDialog('limitForm')">
-                <el-form :model="limitForm"  ref="limitForm" :label-width="formLabelWidth" name="limitForm" class="edu-form">
+                <el-form :model="limitForm" :rules="limitRules" ref="limitForm" :label-width="formLabelWidth" name="limitForm" class="edu-form">
                     <el-form-item label="主账号">
                         <span>{{limitForm.mainAccount}}</span>
                     </el-form-item>
                     <el-form-item label="子账号"  prop="userAccount">
                         <span>{{limitForm.userAccount}}</span>
                     </el-form-item>
-                    <el-form-item label="权限" >
+                    <el-form-item label="姓名" prop="realName">
+                        <el-input v-model="limitForm.realName"></el-input>
+                    </el-form-item>
+                    <el-form-item label="职称" prop="userDepartment">
+                        <el-input v-model="limitForm.userDepartment"></el-input>
+                    </el-form-item>
+                    <el-form-item label="联系电话" prop="userPhone">
+                        <el-input v-model="limitForm.userPhone"></el-input>
+                    </el-form-item>
+                    <el-form-item label="权限" prop="permissions">
                         <el-select v-model="limitForm.permissions" multiple placeholder="请选择权限">
                             <el-option v-for="item in limitOpts" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="开通时间">
-                        <span>{{limitForm.createDate}}</span>
+                        <span>{{limitForm.createDateFormat}}</span>
                     </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
@@ -159,6 +168,12 @@
              }
              callback();
           };
+          var validLimit = (rule, value, callback) => {
+              if(!value){
+                  callback('请选择权限');
+              }
+              callback();
+          };
             return {
                 tableData: [],
                 dialogFormVisible: false,
@@ -201,12 +216,14 @@
                 multipleSelection: [],
                 limitsDialogVisible: false,
                 limitForm: {
-                    userId : '',
+                    id : '',
                     mainAccount: this.$parent.$parent.$parent.user.userAccount,
                     userAccount: '',
-                    password: '',
                     createDate: '',
-                    permissions: ''
+                    permissions: '',
+                    realName: '',
+                    userDepartment: '',
+                    userPhone: ''
                 },
                 allLimits: [
                     {value: 22, label: '全景舆情'},
@@ -228,16 +245,36 @@
                     pageNumber: 0
                 },
                 total: 0,
+                limitRules: {
+                    realName: [
+                        { required: true, message: '请输入姓名', trigger: 'blur' },
+                        { min: 1, max: 20, message: '长度在 1 到 20 个字之间', trigger: 'blur'}
+                    ],
+                    userDepartment: [
+                        { required: true, message: '请输入职称', trigger: 'blur' },
+                        { min: 1, max: 20, message: '长度在 1 到 20 个字之间', trigger: 'blur'}
+                    ],
+                    userPhone:[
+                        { required: true, message: '请输入联系电话', trigger: 'blur' },
+                        { validator: testPhone, trigger: 'blur' }
+                    ],
+                    permissions: [
+                        { type: 'array', required: true, message: '请选择权限', trigger: 'change'},
+                        { validator: validLimit, trigger: 'change' }
+                    ]
+                },
             }
         },
         methods: {
 
             setPermission(row){
-                console.log(row)
-                this.limitForm.userId = row.id;
+                this.limitForm.id = row.id;
                 this.limitForm.userAccount = row.userAccount;
                 this.limitForm.createDate = new Date(row.createDate).format('yyyy-MM-dd');
                 this.limitForm.permissions = row.permissions;
+                this.limitForm.realName = row.realName;
+                this.limitForm.userPhone = row.userPhone;
+                this.limitForm.userDepartment = row.userDepartment;
                 this.limitsDialogVisible = true;
             },
 
@@ -345,7 +382,9 @@
             closeDialog(formName){
                 //关闭添加窗口后 清空表单信息
                 this.$refs[formName].resetFields();
-                this.firstOpen = false;
+                if(formName == 'form'){
+                    this.firstOpen = false;
+                }
             },
 
             formatCreateDate(row, col){
@@ -425,26 +464,25 @@
             },
 
             updateSubCountLimits(){
-                let param = {
-                    userId: this.limitForm.userId,
-                    permissionIds: this.limitForm.permissions
-                }
-
-                this.$http.post('/apis/userMgrt/updateSubAccountPermission.json', param).then(
-                    function (response) {
-                        if (response.data.success){
-                            this.$message({
-                                type: 'success',
-                                message: '更新成功'
-                            });
-                            this.limitsDialogVisible = false;
-                            this.getChildAccount();
-                        }else {
-                            this.$message.error('更新失败，请稍后再试');
-                            console.error(response.data)
-                        }
+                this.$refs['limitForm'].validate((valid)=>{
+                    if(valid){
+                        console.log(this.limitForm)
+                        this.$http.post('/apis/userMgrt/updateSubAccount.json', this.limitForm).then(
+                            function (response) {
+                                if (response.data.success){
+                                    this.$message({
+                                        type: 'success',
+                                        message: '更新成功'
+                                    });
+                                    this.limitsDialogVisible = false;
+                                    this.getChildAccount();
+                                }else {
+                                    this.$message.error(response.data.message);
+                                }
+                            }
+                        )
                     }
-                )
+                });
             }
         },
         mounted(){

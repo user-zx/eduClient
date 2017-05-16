@@ -11,7 +11,7 @@
          <div id="search_container">
              <search-box :searchNames=searchNames @searchDataChange="onSearchDataChange"></search-box>
          </div>
-        <article-container :articleData=articleData :eventBtn="true" @onchange="pageChange" :total="total" ref="article"></article-container>
+        <article-container :articleData=articleData :eventBtn="true" @onchange="pageChange" :total="total" ref="article" :pageNumber="param.pageNumber"></article-container>
     </div>
 </template>
 
