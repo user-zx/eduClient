@@ -14,7 +14,7 @@
                 <div class="btn attention">
                     <el-button :type="concerned == true ? 'warning' : 'primary'" icon="plus" @click="attentionClick" id="attentionBtn">
                         <span v-if="concerned == true">取消关注</span>
-                        <span v-else>关注</span>
+                        <span v-else>添加关注</span>
                     </el-button>
                 </div>
                 <div class="btn alert">
