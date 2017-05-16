@@ -159,14 +159,14 @@ export default{
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                this.$http.delete('/apis/opinionWarn/deleteWarnReceiver.json/' + row.id).then((response) => {
+                this.$http.delete('/apis/opinionWarn/deleteWarnRule.json/' + row.id).then((response) => {
                         if (response.data.success) {
                             this.$message({
                                 message: '删除成功',
                                 type: 'success'
                             });
-                            this.param2.pageNumber = 0;
-                            this.getReceiverList();
+                            this.param1.pageNumber = 0;
+                            this.getRuleList();
                         } else {
                             console.error(response.data.message);
                             return false;

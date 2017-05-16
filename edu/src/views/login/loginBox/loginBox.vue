@@ -8,12 +8,10 @@
         </h1>
         <el-form :model="ruleForm" action="/apis/login.do" method="post" :rules="rules" ref="ruleForm" label-width="70px" class="ruleForm" >
             <el-form-item label="账号：" prop="user" class="login-input-box">
-                <input type="text" style="position: absolute;top: -9999px;display:none"/> 
                 <span class="userNameImg"></span>
                 <el-input type="text" name="username" icon="username" v-model="ruleForm.user" placeholder="请输入账号"  ></el-input>
             </el-form-item>
             <el-form-item label="密码：" prop="pass" class="login-input-box">
-                <input type="password" style="position: absolute;top: -9999px;display:none"/>
                 <span class="passwordImg"></span>
                 <el-input type="password" name="password" icon="password" v-model="ruleForm.pass" placeholder="请输入密码" auto-complete="off" ></el-input>
             </el-form-item>
@@ -97,13 +95,7 @@
             }
         },
         mounted(){
-           /* this.$nextTick(function(){
-                console.log('test');
-               this.ruleForm.user = "";
-               this.ruleForm.pass = "";
-            })
-*/
-             //this.$refs[formName].resetFields();
+             this.$refs['ruleForm'].resetFields();
         }
     }
 </script>

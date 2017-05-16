@@ -31,9 +31,9 @@
                         <div class="text item">
                             <el-table :data="characterInfo" class="tran-table no-col-title" border style="width: 100%"
                                       :resizable="false">
-                                <el-table-column label="所属" prop="college" align="center"></el-table-column>
+                                <el-table-column label="所属" prop="university" align="center"></el-table-column>
                                 <el-table-column label="部门" prop="department" align="center"></el-table-column>
-                                <el-table-column label="职务" prop="job" align="center"></el-table-column>
+                                <el-table-column :show-overflow-tooltip="true" label="职务" prop="job" align="center"></el-table-column>
                                 <el-table-column label="公众号" prop="publicAccount" align="center"></el-table-column>
                                 <el-table-column label="微博号" prop="weibo" align="center"></el-table-column>
                             </el-table>
