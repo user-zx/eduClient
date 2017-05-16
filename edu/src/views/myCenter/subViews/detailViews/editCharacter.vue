@@ -15,9 +15,21 @@
         </div>
         <div class="bottom">
             <div class="btn-wrap">
-                <el-button type="primary" @click="addPerson">添加</el-button>
-               <!--  <el-button type="primary" @click="deletePerson">删除</el-button> -->
+                <div class="pull-left">
+                    <el-button type="primary" @click="addPerson">添加</el-button>
+                    <!--  <el-button type="primary" @click="deletePerson">删除</el-button> -->
+                </div>
+                <div class="content-bar-pagination">
+                    <el-pagination class="edu-pagination"
+                                   @current-change="handleCurrentChange"
+                                   :current-page="param.pageNumber + 1"
+                                   :page-size="param.pageSize"
+                                   layout="prev, next, jumper, total"
+                                   :total="total">
+                    </el-pagination>
+                </div>
             </div>
+
             <div class="table-wrap">
                 <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
                           :resizable="false" @selection-change="handleSelectionChange">
@@ -87,17 +99,19 @@
         }
 
         .bottom{
-            margin-bottom: 250px;
 
             .btn-wrap{
-                text-align: right;
                 margin-bottom: 26px;
-                margin-right: 87px;
+
+                .pull-left{
+                    margin-left: 50px;
+                }
             }
 
             .table-wrap{
                 margin-right: 50px;
                 margin-left: 50px;
+                margin-bottom: 20px;
             }
         }
 
@@ -150,6 +164,11 @@
                 },
                 deletePersonSelection: [],
                 addColleges:[{value:'',label:''}],
+                param: {
+                    pageSize: 10,
+                    pageNumber: 0
+                },
+                total: 0
             }
         }, 
         methods: {
@@ -216,9 +235,10 @@
                 })
             },
             getPerson(){
-                this.$http.post("/apis/concernPerson/concernPersonPageList.json").then((res)=>{
+                this.$http.post("/apis/concernPerson/concernPersonPageList.json", this.param).then((res)=>{
                     if(res.data.success){
-                        this.tableData = res.data.data;
+                        this.tableData = res.data.data.content;
+                        this.total = res.data.data.totalElements;
                     }
                 },(err)=>{
                     console.log(err);
@@ -248,12 +268,16 @@
                       for (let i = 0; i < data.length; i++) {
                            this.addColleges.push({value:data[i],label:data[i]})
                       }
-                      console.log(this.addColleges);
                     }
                 },err=>{
                         console.log(err);
                 })
             },
+
+            handleCurrentChange(pageNumber){
+                 this.param.pageNumber = pageNumber - 1;
+                 this.getPerson();
+            }
         },
 
         mounted(){
