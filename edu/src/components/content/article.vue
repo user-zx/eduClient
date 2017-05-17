@@ -164,7 +164,17 @@
             },
             warnBtnClick(item) {
                 item.loading = true;
-                let permissions = this.$parent.$parent.$parent.user.permissions;
+                let permissions = "";
+                //层级不一样 parent不一样 应该不会超过4个了
+                //解决禅道2834  用户没有舆情预警权限时 点击其他页面预警按钮 提示没权限
+                //written by lifei
+                if(this.$parent.$parent.user){
+                    permissions = this.$parent.$parent.user.permissions;
+                }else if(this.$parent.$parent.$parent.user){
+                    permissions = this.$parent.$parent.$parent.user.permissions;
+                }else if(this.$parent.$parent.$parent.$parent.user){
+                    permissions = this.$parent.$parent.$parent.$parent.user.permissions;
+                }
                 if(!permissions){
                     this.$message('您无权限添加预警');
                     return ;

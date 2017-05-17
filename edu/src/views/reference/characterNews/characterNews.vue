@@ -30,16 +30,18 @@
                 <el-table-column type="selection" width="50" align="center"></el-table-column>
                 <el-table-column label="排名" align="center" prop="all">
                     <template scope="scope">
-                        <span v-if="scope.row.rank == 1">
+                        <span v-if="scope.row.rank == 1 && hitDirection == 'DESC'">
                             <i class="icon-rank icon-gold"></i>
                         </span>
-                        <span v-else-if="scope.row.rank == 2">
+                        <span v-else-if="scope.row.rank == 2 && hitDirection == 'DESC'">
                             <i class="icon-rank icon-silver"></i>
                         </span>
-                        <span v-else-if="scope.row.rank == 3">
+                        <span v-else-if="scope.row.rank == 3 && hitDirection == 'DESC'">
                             <i class="icon-rank icon-copper"></i>
                         </span>
-                        {{scope.row.rank}}
+                        <span :class="hitDirection == 'DESC' && scope.row.rank == 1 ? 'rankFirst' : (hitDirection == 'DESC' && scope.row.rank == 2) ? 'rankSecond' : (hitDirection == 'DESC' && scope.row.rank == 3) ? 'rankThird' : ''">
+                            {{scope.row.rank}}
+                        </span>
                     </template>
                 </el-table-column>
                 <el-table-column label="人物" prop="name" align="center">
@@ -81,6 +83,7 @@
                 university: '',
                 tableData: [],
                 multipleSelection:{},
+                hitDirection: 'DESC'
             }
         },
         components:{breadCrumb, cascadeBox, dropDown, characterTable} ,
@@ -118,6 +121,11 @@
 
             sort(index){
                 this.param.orders[index].direction = this.param.orders[index].direction == 'DESC' ? 'ASC' : 'DESC';
+                if(this.param.orders[index].property == 'totalHitCount'){
+                    this.hitDirection = this.param.orders[index].direction;
+                }
+                //每次排序 分页都应该从第一页查询
+                this.param.pageNumber = 0;
                 this.getPersonageRank();
             },
             getAllEvent() {

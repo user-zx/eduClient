@@ -47,21 +47,21 @@
           }
 
           tr:first-child{
-            td:nth-child(2) div.cell{
+            td:nth-child(2) div.cell span.rankFirst{
               color: #eebd00;
               font-size: 24px;
             }
           }
 
           tr:nth-child(2){
-            td:nth-child(2) div.cell{
+            td:nth-child(2) div.cell span.rankSecond{
               font-size:24px;
               color: #cccab9;
             }
           }
 
           tr:nth-child(3){
-            td:nth-child(2) div.cell{
+            td:nth-child(2) div.cell span.rankThird{
               font-size: 24px;
               color: #ffa27e;
             }

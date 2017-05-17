@@ -305,8 +305,14 @@
                 );
             },
             warnBtnClick() {
+                //解决禅道2834  用户没有舆情预警权限时 点击其他页面预警按钮 提示没权限
                 //written by lifei
-                let permissions = this.$parent.user.permissions;
+                let permissions = '';
+                if(this.$parent.user){
+                    permissions  = this.$parent.user.permissions;
+                }else if(this.$parent.$parent.user){
+                    permissions  = this.$parent.$parent.user.permissions;
+                }
                 if(!permissions){
                     this.$message('您无权限添加预警');
                     return ;
