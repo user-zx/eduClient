@@ -75,7 +75,6 @@
             },
             cancelAttention(){
               this.removeParams.concernsType = 2;
-              console.log(this.removeParams.concernsContent); 
                this.$http.post("/apis/concerns/removeConcernsMore.json",this.removeParams).then(res=>{
                   if(res.data.success){
                     this.$message("取消关注成功");
@@ -127,13 +126,12 @@
                   if(res.data.success){
                       if (res.data.data.page) {
                           for (var i = 0; i < res.data.data.page.content.length; i++) {
-                              console.log(this.params.pageNumber * this.params.pageSize + i);
                               res.data.data.page.content[i].rank = this.params.pageNumber * this.params.pageSize + i + 1;
                               this.getPersonList.push(res.data.data.page.content[i]);
                           }
-                          this.$refs.table.getTableDataEvent()
                           this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
                       }
+                      this.$refs.table.getTableDataEvent()
                       this.loading = false;
                   }
               },(err)=>{

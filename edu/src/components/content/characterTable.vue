@@ -64,14 +64,14 @@
                 console.log('test');
             },
             getTableDataEvent(){
-                this.getTableData = this.tableData; 
+                this.getTableData = this.tableData;
                 //console.log(this.tableData);
             }
         },
-        mounted(){   
-            this.$nextTick(function(){  
+        mounted(){
+            this.$nextTick(function(){
                 this.getTableDataEvent();
-            }) 
+            })
         },
         props:["tableData", "param"],
     }

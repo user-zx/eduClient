@@ -75,7 +75,7 @@
                     endDate:"",
                     university:[],
                 },
-                searchNames: ['university', 'type', 'verified', 'exactDate'],
+                searchNames: ['university', 'officialAcctType', 'verified', 'exactDate'],
                 articleData: [],
                 curContent: this.$store.state.curContent,
                 tableData: [],
