@@ -52,7 +52,7 @@ export default{
             this.$http.post('/apis/opinionMonitor/getPersonageInfo.json', {personage: this.param.name}).then(
                 (response) => {
                     if (response.data.success) {
-                        this.characterInfo[0] = response.data.data;
+                        this.characterInfo = [response.data.data];
                     } else {
                         console.error(response.data.message);
                     }

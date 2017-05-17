@@ -395,10 +395,10 @@
                         this.time = new Date(res.data.data.createDate).format('yyyy-MM-dd hh:mm');
                         this.usetDataList.colleges = res.data.data.collegeNum;
                         this.usetDataList.peoson = res.data.data.personageNum; 
-                        this.usetDataList.subAccountNum = res.data.data.collegeNum;
+                        this.usetDataList.subAccountNum = res.data.data.subAccountNum;
                         this.$http.post('/apis/user/getUnivsAndPersonage.json').then(res=>{
                            if(res.data.success){
-                              this.surplusCollege = this.usetDataList.subAccountNum- res.data.data.univs.length;
+                              this.surplusCollege = this.usetDataList.colleges - res.data.data.univs.length;
                               this.surplusPerson = this.usetDataList.peoson - res.data.data.persons.length;
                             }
                         },err=>{
