@@ -36,7 +36,7 @@ export default{
                     name:"舆情管理",to:{path:"/home/panorama"}
                 },
                 {
-                    name:"舆情预警",to:{path:"/home/warning"}
+                    name:"舆情预警"
                 }
             ];
             this.$store.commit("setBreadCrumb",breadcrumb);
