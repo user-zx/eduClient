@@ -50,7 +50,7 @@
         components:{dropDown, overview,searchBox},
         methods:{
             information(tab, event) {
-                console.log(tab, event);
+                // console.log(tab, event);
             },
             vectorTrendClick(tab, event) {
                 let vm = this;

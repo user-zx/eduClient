@@ -305,6 +305,16 @@
                 );
             },
             warnBtnClick() {
+                //written by lifei
+                let permissions = this.$parent.user.permissions;
+                if(!permissions){
+                    this.$message('您无权限添加预警');
+                    return ;
+                }else if(permissions.length > 0 && permissions.indexOf(21) < 0){
+                    this.$message('您无权限添加预警');
+                    return ;
+                }
+
                 var tmp = {};
                 tmp.id = this.article.id;
                 tmp.hasWarn = !this.article.hasWarn;

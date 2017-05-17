@@ -62,7 +62,7 @@
         <div class="detail-wrap">
             <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
                       :resizable="false">
-                <el-table-column label="订单编号" prop="id" align="center"></el-table-column>
+                <el-table-column label="订单编号" prop="rank" align="center"></el-table-column>
                 <el-table-column label="产品类型" prop="packageType" align="center"></el-table-column>
                 <el-table-column label="提交时间" prop="submitDate" align="center" :formatter="formatSubmitDate"></el-table-column>
                 <el-table-column label="期限" prop="timeLimit" align="center"></el-table-column>
@@ -89,7 +89,7 @@
             <h3 class="text-center">订单详情</h3>
             <el-row class="item-details">
                 <el-col :span="6">订单编号：</el-col>
-                <el-col :span="6">{{orderDetails.id}}</el-col>
+                <el-col :span="6">{{orderDetails.rank}}</el-col>
             </el-row>
             <el-row class="item-details">
                 <el-col :span="6">订单类型：</el-col>
@@ -121,7 +121,7 @@
                 <el-col :span="6">{{orderDetails.expireDate}}</el-col>
             </el-row>
             <span slot="footer" class="dialog-footer">
-            <el-button @click="isShow = false">取 消</el-button>
+            <!--<el-button @click="isShow = false">取 消</el-button>-->
             <el-button type="primary" @click="isShow = false">确 定</el-button>
           </span>
         </el-dialog>
@@ -292,7 +292,7 @@
                 time:"",
                 param: {
                     pageSize:　10,
-                    pageNum: 0
+                    pageNumber: 0
                 },
                 usetDataList:{},
                 surplusCollege:"",
@@ -329,15 +329,14 @@
                     if(res.data.success){
                         this.orderDetails = res.data.data;
                       //  console.log(res.data.data.signedDate);
-
-                  this.orderDetails.signedDate = this.orderDetails.signedDate == null ? "--:--" : new Date(res.data.data.signedDate).format('yyyy-MM-dd');
-                         
-                  this.orderDetails.expireDate = this.orderDetails.expireDate == null ? "--:--" : new Date(res.data.data.expireDate).format('yyyy-MM-dd');
+                        this.orderDetails.signedDate = this.orderDetails.signedDate == null ? "--:--" : new Date(res.data.data.signedDate).format('yyyy-MM-dd');
+                        this.orderDetails.expireDate = this.orderDetails.expireDate == null ? "--:--" : new Date(res.data.data.expireDate).format('yyyy-MM-dd');
                         this.showOne = [];this.showTwo = [];this.showThree = [];
                         let itemString = res.data.data.itemPriceList;
                         this.getItemData(itemString,this.item_one,this.showOne);
                         this.getItemData(itemString,this.item_two,this.showTwo);
                         this.getItemData(itemString,this.item_three,this.showThree);
+                        this.orderDetails.rank = params.rank;
                         this.isShow = true;
                     }
                 },(err)=>{
@@ -374,7 +373,13 @@
                 this.$http.post("/apis/packageManage/getPackageOrderList.json", this.param).then((res)=>{
                     if(res.data.success){
                         this.total = res.data.data.totalElements;
-                        this.tableData = res.data.data.content;
+                        let data = res.data.data.content;
+                        if(data != null && data.length > 0){
+                            for(let i = 0; i <　data.length; i++){
+                                data[i].rank = (this.param.pageNumber) * this.param.pageSize +  i + 1;
+                            }
+                        }
+                        this.tableData = data;
                     }
                 },(err)=>{
                     console.log(err);

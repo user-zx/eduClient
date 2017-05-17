@@ -164,6 +164,14 @@
             },
             warnBtnClick(item) {
                 item.loading = true;
+                let permissions = this.$parent.$parent.$parent.user.permissions;
+                if(!permissions){
+                    this.$message('您无权限添加预警');
+                    return ;
+                }else if(permissions.length > 0 && permissions.indexOf(21) < 0){
+                    this.$message('您无权限添加预警');
+                    return ;
+                }
                 this.$nextTick(function () {
                     var tmp = {};
                     tmp.id = item.id;
