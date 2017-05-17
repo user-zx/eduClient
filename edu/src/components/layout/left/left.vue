@@ -9,7 +9,7 @@
             </a>
         </div>
         <el-menu mode="vertical" :default-active="routerName" :router="true" :unique-opened="true" class="el-menu-vertical" @open="handleOpen" @close="handleClose">
-            <el-submenu index="home">
+            <el-submenu index="home" v-show="showPomp">
                 <template slot="title"><i class="nav-icon nav-icon1"></i>舆情管理</template>
                 <el-menu-item-group>
                     <el-menu-item v-if="permissions.indexOf(22) != -1" index="panorama">全景舆情</el-menu-item>
@@ -19,7 +19,7 @@
                     <el-menu-item v-if="permissions.indexOf(14) != -1" index="speech">舆情报告</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
-            <el-submenu index="2">
+            <el-submenu index="2" v-show="showReference">
                 <template slot="title"><i class="nav-icon nav-icon2"></i>情报内参</template>
                 <el-menu-item-group>
                     <el-menu-item v-if="permissions.indexOf(15) != -1" index="industryNews">行业动态</el-menu-item>
@@ -29,7 +29,7 @@
                     <el-menu-item v-if="permissions.indexOf(19) != -1" index="report">内参报告</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
-            <el-submenu index="3"  v-if="permissions.indexOf(20) != -1">
+            <el-submenu index="3"  v-if="permissions.indexOf(20) != -1" v-show="showServiceTool">
                 <template slot="title"><i class="nav-icon nav-icon3"></i>业务平台</template>
                 <el-menu-item-group>
                     <el-menu-item index="seeWeChat">微信监测</el-menu-item>
@@ -50,7 +50,10 @@
         data(){
             return {
                 routerName:"",
-                permissions: []
+                permissions: [],
+                showPomp: true,
+                showReference: true,
+                showServiceTool: true
             }
         },
         components:{} ,
@@ -96,6 +99,25 @@
             },
             onPermissionsLoad(permissions) {
                 this.permissions = permissions;
+                //为了解决禅道2832: 左侧一级菜单下，二级菜单都没权限，则不显示一级菜单的问题  目前能想到的解决方案是这个了... 后期谁有更好的idea 再修改
+                //written by lifei
+                if(permissions.length == 0){
+                    this.showPomp = false;
+                    this.showReference = false;
+                    this.showServiceTool = false;
+                }else if(permissions.length > 0){
+                    if(permissions.indexOf(22) < 0 && permissions.indexOf(12) < 0 && permissions.indexOf(21) < 0
+                        && permissions.indexOf(13) < 0 && permissions.indexOf(14) < 0){
+                        this.showPomp = false;
+                    }
+                    if(permissions.indexOf(15) < 0 && permissions.indexOf(16) < 0 && permissions.indexOf(17) < 0
+                        && permissions.indexOf(18) < 0 && permissions.indexOf(19) < 0){
+                        this.showReference = false;
+                    }
+                    if(permissions.indexOf(20) < 0){
+                        this.showServiceTool = false;
+                    }
+                }
             }
         },
         mounted() {

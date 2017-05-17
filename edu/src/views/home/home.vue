@@ -55,8 +55,11 @@
                             let univs = response.data.data.univs;
                             if (univs.length == 0) {
                                 this.$confirm('您还没有设置大学，前往设置?', '提示', {
+                                    showClose: false,
                                     confirmButtonText: '确定',
-                                    cancelButtonText: '取消',
+                                    //我猜出来在这个属性的  哈哈  by lifei
+                                    showCancelButton: false,
+//                                    cancelButtonText: '取消',
                                     type: 'warning'
                                 }).then(() => {
                                     this.$router.push({path:"/home/centerCollege"});
