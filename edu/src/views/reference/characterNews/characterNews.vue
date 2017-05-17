@@ -164,26 +164,33 @@
             },
             batchConcerned(){
                 this.multipleSelection.concernsType = 2;
-                if(this.multipleSelection.concernsContent.length>0){
-                    this.$http.post("/apis/concerns/saveConcernsMore.json",this.multipleSelection).then(res=>{
-                        if(res.data.success){
-                            this.$notify({
-                                title: '成功',
-                                message: '关注成功',
-                                type: 'success'
-                            });
-                        }else{
-                            this.$notify({
-                                title: '失败',
-                                message: '关注失败',
-                                type: 'error',
-                                duration: 2000
-                            });
-                        }
-                    },err=>{
-                        console.log(err);
-                    })
+                if(!this.multipleSelection.concernsContent || this.multipleSelection.concernsContent.length == 0){
+                    this.$message.info({
+                        title: '提示',
+                        message: '未选择人物',
+                        duration: 2000
+                    });
+                    return ;
                 }
+
+                this.$http.post("/apis/concerns/saveConcernsMore.json",this.multipleSelection).then(res=>{
+                    if(res.data.success){
+                        this.$message({
+                            title: '成功',
+                            message: '关注成功',
+                            type: 'success'
+                        });
+                    }else{
+                        this.$message({
+                            title: '失败',
+                            message: '关注失败',
+                            type: 'error',
+                            duration: 2000
+                        });
+                    }
+                },err=>{
+                    console.log(err);
+                });
             },
             handleSelectionChange(val){
                 this.multipleSelection.concernsContent = [];
@@ -193,6 +200,7 @@
             },
             onSaveEvent(eventId) {
                 let contents = this.multipleSelection.concernsContent;
+
                 if (contents && contents.length > 0) {
                     let param = {
                         eventId: eventId,
@@ -201,14 +209,14 @@
                     this.$http.post('/apis/eventAnalysis/saveEventPersonage.json', param).then(
                         (response) => {
                             if (response.data.success) {
-                                this.$notify({
+                                this.$message({
                                     title: '成功',
                                     message: '添加成功',
                                     type: 'success',
                                     duration: 2000
                                 });
                             } else {
-                                this.$notify({
+                                this.$message({
                                     title: '失败',
                                     message: '单个事件不能超过100个人物',
                                     type: 'error',
