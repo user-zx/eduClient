@@ -23,7 +23,7 @@
             <el-card class="box-card">
                 <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%" :resizable="false" @selection-change="handleSelectionChange">
                     <el-table-column type="selection" width="50" align="center"></el-table-column>
-                    <el-table-column label="排名" align="center" prop="index">
+                    <el-table-column label="排名" align="center" prop="index" width="80">
                         <template scope="scope">
                             <span v-if="scope.row.index == 1">
                                  <i class="icon-rank icon-gold"></i>
@@ -37,7 +37,7 @@
                             {{scope.row.index}}
                         </template>
                     </el-table-column>
-                    <el-table-column label="公众号" prop="wechatNumber" align="center"></el-table-column>
+                    <el-table-column label="公众号" prop="wechatNumber" align="center" :show-overflow-tooltip="true"></el-table-column>
                     <el-table-column label="文章数" prop="articleCount" align="center"></el-table-column>
                     <el-table-column label="总点赞量" prop="supportSum" align="center"></el-table-column>
                      <el-table-column label="平均点赞量" prop="supportAvg" align="center"></el-table-column>

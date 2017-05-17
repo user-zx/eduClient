@@ -23,7 +23,7 @@
             <el-card class="box-card">
                 <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%" :resizable="false" @selection-change="handleSelectionChange">
                     <el-table-column type="selection" width="50" align="center"></el-table-column>
-                    <el-table-column label="排名" align="center" prop="index">
+                    <el-table-column label="排名" align="center" prop="index" width="80">
                         <template scope="scope">
                             <span v-if="scope.row.index == 1">
                                  <i class="icon-rank icon-gold"></i>
@@ -37,7 +37,7 @@
                             {{scope.row.index}}
                         </template>
                     </el-table-column>
-                    <el-table-column label="微博号" prop="name" align="center">
+                    <el-table-column label="微博号" prop="name" align="center" :show-overflow-tooltip="true">
                         <template scope="scope">
                             <span @click="toCharacterAnalyse(scope.row)" class="character-name">
                                 {{scope.row.microblogName}}
@@ -51,7 +51,7 @@
                     <el-table-column label="评论数" prop="replySum" align="center"></el-table-column>
                     <el-table-column label="点赞总数" prop="supportSum" align="center"></el-table-column>
                     <el-table-column label="平均点赞量" prop="supportAvg" align="center"></el-table-column>
-                    <el-table-column label="认证状态" prop="authcStatus" align="center" width="140px">
+                    <el-table-column label="认证状态" prop="authcStatus" align="center" width="110px">
                         <template scope="scope">
                             <span v-if="scope.row.authcStatus == '1'">已认证</span>
                             <span v-if="scope.row.authcStatus == '0'">

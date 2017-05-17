@@ -11,7 +11,7 @@
                 <el-form-item label="姓名" prop="realName">
                     <el-input v-model="form.realName"></el-input>
                 </el-form-item>
-                <el-form-item label="部门" prop="userDepartment">
+                <el-form-item label="职称" prop="userDepartment">
                     <el-input v-model="form.userDepartment"></el-input>
                 </el-form-item>
                 <el-form-item label="联系电话" prop="userPhone">
@@ -63,7 +63,7 @@
                         {required: true, message: '请输入您的姓名', trigger: 'blur'}
                     ],
                     userDepartment: [
-                        {required: true, message: '请输入您的部门',trigger: 'blur'}
+                        {required: true, message: '请输入您的职称',trigger: 'blur'}
                     ],
                     userPhone: [
                         {required: true, message: '请输入您的手机号码',trigger: 'blur'},

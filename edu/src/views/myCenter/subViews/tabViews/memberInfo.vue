@@ -14,8 +14,8 @@
                 <el-form-item label="高校" prop="collegeName">
                     <el-input v-model="memberForm.collegeName" :disabled="true"></el-input>
                 </el-form-item>
-                <el-form-item label="部门" prop="userDepartment">
-                    <el-input v-model="memberForm.userDepartment" placeholder="请输入您的部门"></el-input>
+                <el-form-item label="职务" prop="userDepartment">
+                    <el-input v-model="memberForm.userDepartment" placeholder="请输入您的职务"></el-input>
                 </el-form-item>
                 <el-form-item label="手机" prop="userPhone">
                     <el-input v-model="memberForm.userPhone" placeholder="请输入手机号码"></el-input>
@@ -110,7 +110,7 @@
                 },
                 rules: {
                     userDepartment: [
-                        {required: true, message: '请输入您的部门',trigger: 'blur'}
+                        {required: true, message: '请输入您的职务',trigger: 'blur'}
                     ],
                     userPhone: [
                         {required: true, message: '请输入您的手机号码',trigger: 'blur'},
