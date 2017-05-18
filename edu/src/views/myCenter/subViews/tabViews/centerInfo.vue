@@ -412,7 +412,7 @@
                         },err=>{
                             console.log(err);
                         }) 
-                        this.$http.post("/apis/user/findAllSubAccount.json", {pageNumber:0,pageSize:10}).then(res=>{
+                        this.$http.post("/apis/user/findAllSubAccount.json", {pageNumber:0,pageSize:1000}).then(res=>{
                             if(res.data.success){
                                 this.surplusAccount =  this.usetDataList.subAccountNum - res.data.data.content.length;
                             }

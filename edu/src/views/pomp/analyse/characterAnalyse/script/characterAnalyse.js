@@ -18,6 +18,7 @@ export default{
                 publicAccount: '',
                 weibo: ''
             }],
+            hasWarn: false,
             tableData: [],
             vectorTableColumn: [],
             vectorTableData: [],
@@ -53,6 +54,7 @@ export default{
                 (response) => {
                     if (response.data.success) {
                         this.characterInfo = [response.data.data];
+                        this.hasWarn = response.data.data.hasWarn;
                     } else {
                         console.error(response.data.message);
                     }
@@ -346,6 +348,7 @@ export default{
             param.concernsType = 2;
             param.concernsContent = [this.param.name];
             this.$http.post("/apis/concerns/saveConcernsMore.json", param).then(res=>{
+                this.hasWarn = true;
                 if(res.data.success){
                     this.$notify({
                         title: '成功',
@@ -356,6 +359,30 @@ export default{
                     this.$notify({
                         title: '失败',
                         message: '关注失败',
+                        type: 'error',
+                        duration: 2000
+                    });
+                }
+            },err=>{
+                console.log(err);
+            });
+        },
+        cancelConcern(){
+            let param = {};
+            param.concernsType = 2;
+            param.concernsContent = [this.param.name];
+            this.$http.post("/apis/concerns/removeConcernsMore.json", param).then(res=>{
+                this.hasWarn = false;
+                if(res.data.success){
+                    this.$notify({
+                        title: '成功',
+                        message: '取消关注成功',
+                        type: 'success'
+                    });
+                }else{
+                    this.$notify({
+                        title: '失败',
+                        message: '取消关注失败',
                         type: 'error',
                         duration: 2000
                     });

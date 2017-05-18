@@ -83,7 +83,7 @@
 
                 //根据上级页面传的参数判断是获取热点更多文章还是舆情更多文章
                 if(this.type == 'hot'){
-                    this.$http.post('/apis/twoMicroInsight/findTwoMicroInsightInfo.json', this.param).then(
+                    this.$http.post('/apis/opinionMonitor/getOpinionMonitor.json', this.param).then(
                         (response) => {
                             if (response.data.success) {
                                 this.articleData = response.data.data.content;

@@ -13,8 +13,11 @@
                </span>
             </div>
             <div class="info-right">
-                <el-button type="primary" icon="plus" @click="concernedPersonage">
-                    关注
+                <el-button v-if="hasWarn" type="danger" @click="cancelConcern">
+                    取消关注
+                </el-button>
+                <el-button v-else type="primary" @click="concernedPersonage">
+                    添加关注
                 </el-button>
                 <warn-drop-down @onSaveWarn="saveWarn" style="margin-left: 10px; margin-right: 10px;"></warn-drop-down>
                 <dropDown @onSaveEvent="onSaveEvent"></dropDown>
