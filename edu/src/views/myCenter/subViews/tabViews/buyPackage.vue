@@ -359,21 +359,10 @@
                 nameListA:[{name:"舆情管理",item:[]},{name:"情报内参",item:[]},{name:"业务工具",item:[]}],
                 nameListB:[{name:"舆情管理",item:[]},{name:"情报内参",item:[]},{name:"业务工具",item:[]}],
                 nameListC:[{name:"舆情管理",item:[]},{name:"情报内参",item:[]},{name:"业务工具",item:[]}],
-                item_A_one:["全景舆情","舆情监测","舆情预警","事件监测","舆情报告"],
-                item_A_two:["行业动态","人物动态","媒体声量","两微洞察","内参报告"],
-                item_A_three:["微信检测","微博检测"],
-                item_A_two:["行业动态","人物动态","媒体声量","两微洞察","内参报告"],
-                item_A_three:["两微监管"],
-                item_B_one:["全景舆情","舆情监测","舆情预警","事件监测","舆情报告"],
-                item_B_two:["行业动态","人物动态","媒体声量","两微洞察","内参报告"],
-                item_B_three:["微信检测","微博检测"],
-                item_B_two:["行业动态","人物动态","媒体声量","两微洞察","内参报告"],
-                item_B_three:["两微监管"],
-                item_C_one:["全景舆情","舆情监测","舆情预警","事件监测","舆情报告"],
-                item_C_two:["行业动态","人物动态","媒体声量","两微洞察","内参报告"],
-                item_C_three:["微信检测","微博检测"],
-                item_C_two:["行业动态","人物动态","媒体声量","两微洞察","内参报告"],
-                item_C_three:["两微监管"],
+                item_a:["全景舆情","舆情监测","舆情预警","事件监测","舆情报告"],
+                item_b:["行业动态","人物动态","媒体声量","两微洞察","内参报告"],
+                item_c:["两微监管"],
+               
                 changePrice:{c:""},
                 change_Price:{c:"",b:"",a:""},
                 activeClick:1,
@@ -550,10 +539,10 @@
                    nameList.item.push(objA);
                }
             },
-            getDataCArr(item_C_one,ListC,dataC,nameListC){
+            getDataCArr(item_a,ListC,dataC,nameListC){
                 let nameC = "";
-                   for (var i = 0; i < item_C_one.length; i++) {
-                       nameC+=item_C_one[i]
+                   for (var i = 0; i < item_a.length; i++) {
+                       nameC+=item_a[i]
                    }
                    for (let j = 0; j < ListC.length; j++) {
                        if(nameC.indexOf(ListC[j])>=0){
@@ -661,12 +650,12 @@
                                 this.concernPersonNum_b = res.data.data[1].concernPersonNum;
                                 this.itemNum_a = res.data.data[0].packageItem;
                                 this.itemNum_b = res.data.data[1].packageItem;
-                                this.getDataArr(ListA,this.item_A_one,this.nameListA[0])
-                                this.getDataArr(ListA,this.item_A_two,this.nameListA[1])
-                                this.getDataArr(ListA,this.item_A_three,this.nameListA[2])
-                                this.getDataArr(ListB,this.item_B_one,this.nameListB[0])
-                                this.getDataArr(ListB,this.item_B_two,this.nameListB[1])
-                                this.getDataArr(ListB,this.item_B_three,this.nameListB[2])
+                                this.getDataArr(ListA,this.item_a,this.nameListA[0])
+                                this.getDataArr(ListA,this.item_b,this.nameListA[1])
+                                this.getDataArr(ListA,this.item_c,this.nameListA[2])
+                                this.getDataArr(ListB,this.item_a,this.nameListB[0])
+                                this.getDataArr(ListB,this.item_b,this.nameListB[1])
+                                this.getDataArr(ListB,this.item_c,this.nameListB[2])
                             }else{  
                                 console.log(res.data.message)
                             }  
@@ -683,9 +672,9 @@
                                dataC = res.data.data;
                                ListC.push(res.data.data[i].name)
                            } 
-                           this.getDataCArr(this.item_C_one,ListC,dataC,this.nameListC[0]);
-                           this.getDataCArr(this.item_C_two,ListC,dataC,this.nameListC[1]);
-                           this.getDataCArr(this.item_C_three,ListC,dataC,this.nameListC[2]);
+                           this.getDataCArr(this.item_a,ListC,dataC,this.nameListC[0]);
+                           this.getDataCArr(this.item_b,ListC,dataC,this.nameListC[1]);
+                           this.getDataCArr(this.item_c,ListC,dataC,this.nameListC[2]);
                            this.getPrice();
                         }else{
                             console.log(res.data.message);
