@@ -97,6 +97,7 @@
                                 this.total = response.data.data.page.totalElements > 10000 ? 10000 : response.data.data.page.totalElements;
                             } else {
                                 this.articleData = [];
+                                this.total = 0;
                             }
                             
                             this.loading = false;

@@ -123,6 +123,7 @@
               this.getPersonList = [];
               this.loading = true;
               this.$http.post("/apis/concerns/getPersonData.json",this.params).then((res)=>{
+                 console.log(res);
                   if(res.data.success){
                       if (res.data.data.page) {
                           for (var i = 0; i < res.data.data.page.content.length; i++) {
@@ -130,6 +131,8 @@
                               this.getPersonList.push(res.data.data.page.content[i]);
                           }
                           this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
+                      }else{
+                        this.total = 0;
                       }
                       this.$refs.table.getTableDataEvent()
                       this.loading = false;
