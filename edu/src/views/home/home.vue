@@ -27,25 +27,48 @@
         data() {
             return {
                 msg:"",
-                user: {}
+                user: {},
+                warnPermission: true,
+                eventPermission: true,
             }
         },
         components:{top,left,bottom},
         methods:{
-            getUserInfo() { 
-                this.$http.post('/apis/userMgrt/getUserPermission.json', {type: 'user'}).then(
-                    (response) => {
-                        if (response.data.success) {
-                            this.user = response.data.data;
-                            var left = this.$refs.left;
-                            left.onPermissionsLoad(this.user.permissions);
+            getUserInfo() {
+                let vm = this;
+
+                $.ajax({
+                    url: '/apis/userMgrt/getUserPermission.json',
+                    data: JSON.stringify({type: 'user'}),
+                    method: 'POST',
+                    async: false,
+                    contentType: 'application/json',
+                    success: function (response) {
+                        if (response.success) {
+                            vm.user = response.data;
+                            var left = vm.$refs.left;
+                            left.onPermissionsLoad(vm.user.permissions);
+
+                            let permissions = vm.user.permissions;
+                            if(!permissions){
+                                vm.warnPermission = false;
+                            }else if(permissions.length > 0 && permissions.indexOf(21) < 0){
+                                vm.warnPermission = false;
+                            }else{
+                                vm.warnPermission = true;
+                            }
+                            if(!permissions){
+                                vm.eventPermission = false;
+                            }else if(permissions.length > 0 && permissions.indexOf(13) < 0){
+                                vm.eventPermission = false;
+                            }else{
+                                vm.eventPermission = true;
+                            }
                         } else {
-                            console.error(response.data.message);
+                            console.error(response.message);
                         }
-                    }, (response) => {
-                        console.error(response);
                     }
-                );
+                });
             },
             getUserParams() {
                 this.$http.post('/apis/user/getUnivsAndPersonage.json').then(
@@ -77,7 +100,7 @@
         },
         mounted() {
             this.getUserInfo();
-            this.getUserParams()
+            this.getUserParams();
         }
     }
 

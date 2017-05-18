@@ -17,7 +17,7 @@
                 </li>
             </ul>
             <div class="content-bar-button">
-                <dropDown v-if="eventBtn"  @onSaveEvent="onSaveEvent"></dropDown>
+                <dropDown v-if="eventBtn"  @onSaveEvent="onSaveEvent" v-show="eventPermission"></dropDown>
 
                 <el-button type="primary" icon="plus" class="button-icon" v-if="concernBtn" @click="concernBtnClick">批量关注</el-button>
                 <el-button type="primary" icon="plus" class="button-icon" v-if="unfollowBtn" @click="unfollow">取消关注</el-button>
@@ -49,7 +49,7 @@
                                 <i class="title-icon negative-icon" v-else-if="item.emotion == 'negative'"></i>
                                 <i class="title-icon neutral-icon" v-else></i>
                             </p>
-                            <p class="button-box">
+                            <p class="button-box" v-show="warnPermission">
                                 <el-button type="danger" class="article-danger-button" v-if="item.hasWarn"
                                            @click="warnBtnClick(item)" :loading="item.loading">
                                     取消预警
@@ -112,6 +112,8 @@
                 allSelect:false,
                 unfollowParam:{concernsContent:[]},
                 followParam:{concernsContent:[]},
+                warnPermission: true,
+                eventPermission: true
             }
         },
         components: {dropDown},
@@ -121,7 +123,6 @@
                 if(this.unfollowParam.concernsContent.length>0){
                     this.$http.post("/apis/concerns/removeConcernsMore.json",this.unfollowParam).then(res=>{
                         if(res.data.success){
-                            console.log(res); 
                             if(res.data.data.message==null){
                                 this.$message("取消关注成功")
                                 this.$emit('onchange',"");
@@ -312,11 +313,15 @@
                 let script = document.createElement('script')
                 script.setAttribute('src', url)
                 document.getElementsByTagName('head')[0].appendChild(script)
-            }
+            },
         },
         mounted() {
             this.getAllEvent();
             this.init();
+            this.$nextTick(function () {
+                this.warnPermission = this.$root.$children[0].$children[0].warnPermission;
+                this.eventPermission = this.$root.$children[0].$children[0].eventPermission;
+            });
         },
         watch:{
             articleData:function(val,oldval){

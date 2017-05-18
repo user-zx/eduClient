@@ -156,7 +156,7 @@
                     <div class="content dark">
                         <div class="content-bar dark">
                             <div class="content-bar-button" style="margin-left: 10px;">
-                                <dropDown @onSaveEvent="onSaveEvent1"></dropDown>
+                                <dropDown @onSaveEvent="onSaveEvent1" v-show="eventPermission"></dropDown>
                                 <el-button type="primary" icon="plus" class="button-icon" @click="batchConcerned1">批量关注</el-button>
                             </div>
 
@@ -218,7 +218,7 @@
 
                         <div class="content-bar dark">
                             <div class="content-bar-button" style="margin-left: 10px;">
-                                <dropDown @onSaveEvent="onSaveEvent2"></dropDown>
+                                <dropDown @onSaveEvent="onSaveEvent2" v-show="eventPermission"></dropDown>
                                 <el-button type="primary" icon="plus" class="button-icon" @click="batchConcerned2">批量关注</el-button>
                             </div>
 

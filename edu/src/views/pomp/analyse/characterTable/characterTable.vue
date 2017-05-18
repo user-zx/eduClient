@@ -14,7 +14,7 @@
                     </li>
                 </ul>
                 <div class="content-bar-button">
-                    <dropDown @onSaveEvent="onSaveEvent"></dropDown>
+                    <dropDown @onSaveEvent="onSaveEvent" v-show="eventPermission"></dropDown>
                     <el-button type="primary" icon="plus" class="button-icon" @click="batchConcerned">批量关注</el-button>
                 </div>
                 <div class="content-bar-page">
@@ -99,7 +99,8 @@
                 events: [],
                 multipleSelection:{},
                 tableData: [],
-                hitDirection: 'DESC'
+                hitDirection: 'DESC',
+                eventPermission:　true
             }
         },
         components: {searchBox, dropDown},
@@ -259,6 +260,9 @@
         },
         mounted() {
             this.getAllEvent();
+            this.$nextTick(function () {
+                this.eventPermission = this.$root.$children[0].$children[0].eventPermission;
+            });
         },
         created() {
             this.setBreadCrumb();

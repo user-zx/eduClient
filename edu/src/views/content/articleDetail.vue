@@ -11,7 +11,7 @@
             <div class="article-info">
                 <div class="info-item">
                     <div class="btn-wrap">
-                        <drop-down @onSaveEvent="onSaveEvent"></drop-down>
+                        <drop-down @onSaveEvent="onSaveEvent" v-show="eventPermission"></drop-down>
                     </div>
                     <div class="share">
                     </div>
@@ -83,10 +83,10 @@
                     <el-button v-else @click="concernBtnClick" class="focus-btn">
                         添加关注
                     </el-button>
-                    <el-button @click="warnBtnClick" v-if="article.hasWarn" type="primary"  class="alert-btn">
+                    <el-button @click="warnBtnClick" v-if="article.hasWarn" type="primary"  class="alert-btn" v-show="warnPermission">
                         取消预警
                     </el-button>
-                    <el-button @click="warnBtnClick" v-else class="alert-btn">
+                    <el-button @click="warnBtnClick" v-else class="alert-btn" v-show="warnPermission">
                         添加预警
                     </el-button>
                 </div>
@@ -166,7 +166,7 @@
                 }
 
                 .info-item:first-child{
-                    margin-bottom: 30px;
+                    margin-bottom: 20px;
                 }
 
                 .info-item:last-child{
@@ -257,7 +257,9 @@
                 article: {
                     id: ''
                 },
-                similarArticles: []
+                similarArticles: [],
+                warnPermission: true,
+                eventPermission: true,
             }
         },
         components:{dropDown} ,
@@ -305,22 +307,6 @@
                 );
             },
             warnBtnClick() {
-                //解决禅道2834  用户没有舆情预警权限时 点击其他页面预警按钮 提示没权限
-                //written by lifei
-                let permissions = '';
-                if(this.$parent.user){
-                    permissions  = this.$parent.user.permissions;
-                }else if(this.$parent.$parent.user){
-                    permissions  = this.$parent.$parent.user.permissions;
-                }
-                if(!permissions){
-                    this.$message('您无权限添加预警');
-                    return ;
-                }else if(permissions.length > 0 && permissions.indexOf(21) < 0){
-                    this.$message('您无权限添加预警');
-                    return ;
-                }
-
                 var tmp = {};
                 tmp.id = this.article.id;
                 tmp.hasWarn = !this.article.hasWarn;
@@ -389,6 +375,10 @@
         },
         mounted(){
             this.getArticleDetailsById();
+            this.$nextTick(function () {
+                this.warnPermission = this.$root.$children[0].$children[0].warnPermission;
+                this.eventPermission = this.$root.$children[0].$children[0].eventPermission;
+            });
         },
         created(){
             this.article.id = this.$route.query.id;

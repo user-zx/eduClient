@@ -10,7 +10,7 @@
                     </li>
                 </ul>
                 <div class="content-bar-button">
-                    <dropDown @onSaveEvent="onSaveEvent"></dropDown>
+                    <dropDown @onSaveEvent="onSaveEvent" v-show="eventPermission"></dropDown>
                     <el-button type="primary" icon="plus" @click="cancelAttention">取消关注</el-button>
                 </div>
                 <div class="content-bar-pagination">
@@ -51,6 +51,7 @@
                 getPersonList: [],
                 params:{},
                 removeParams:{},
+                eventPermission: true
             }
         },
         components:{characterTable,cascadeBox,dropDown},
@@ -174,7 +175,9 @@
         },
 
         mounted(){
-
+            this.$nextTick(function () {
+                this.eventPermission = this.$root.$children[0].$children[0].eventPermission;
+            });
         },
         created(){
          

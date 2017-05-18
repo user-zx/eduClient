@@ -18,7 +18,7 @@
                     </el-button>
                 </div>
                 <div class="btn alert">
-                    <warn-drop-down @onSaveWarn="saveWarn"></warn-drop-down>
+                    <warn-drop-down @onSaveWarn="saveWarn" v-show="warnPermission"></warn-drop-down>
                 </div>
             </div>
             <div class="qrcode-area">
@@ -311,7 +311,8 @@
                     wechatNumber: '',
                     wechatSubject: ''
                 },
-                concerned: false
+                concerned: false,
+                warnPermission: true,
             }
         },
         components:　{articleView, warnDropDown},
@@ -662,6 +663,9 @@
             this.getForwardSupportHitData();
             this.getWechatArticleList();
             this.judgeConcerned();
+            this.$nextTick(function () {
+                this.warnPermission = this.$root.$children[0].$children[0].warnPermission;
+            });
         }
     }
 </script>

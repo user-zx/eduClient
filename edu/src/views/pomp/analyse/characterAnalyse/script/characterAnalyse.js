@@ -29,7 +29,9 @@ export default{
             timeLineData: [],
             activeName: 'related',
             selectDate: '',
-            time_loading: true
+            time_loading: true,
+            warnPermission: true,
+            eventPermission: true
         }
     },
     components: {dropDown, warnDropDown},
@@ -394,5 +396,9 @@ export default{
         this.getArticleByEmotion();
         this.getArticleByEmotion('positive');
         this.getArticleByEmotion('negative');
+        this.$nextTick(function () {
+            this.warnPermission = this.$root.$children[0].$children[0].warnPermission;
+            this.eventPermission = this.$root.$children[0].$children[0].eventPermission;
+        });
     }
 }

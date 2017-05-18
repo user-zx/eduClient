@@ -45,6 +45,7 @@
                 distributeData: [],
                 multipleSelection1:{},
                 multipleSelection2:{},
+                eventPermission: true
             }
         },
         components:{dropDown, overview,searchBox},
@@ -458,6 +459,9 @@
             this.get2VOpinion('微博');
             this.get2VDistribute("微信");
             this.get2VDistribute("微博");
+            this.$nextTick(function () {
+                this.eventPermission = this.$root.$children[0].$children[0].eventPermission;
+            });
         },
         created(){
             // this.setBreadCrumb();
