@@ -126,65 +126,64 @@
 
             <el-row :gutter="10">
                 <el-col :span="24">
-                    <el-card class="box-card"  v-loading="twoVSeeLoading" element-loading-text="加载中……">
+                    <el-card class="box-card"  v-loading="weboLoading" element-loading-text="加载中……">
                         <div slot="header" class="clearfix">
                             <span class="icons icons-chart5"></span><span>两微洞察</span>
                         </div>
                         <div class="text item">
                             <el-table :data="webo" :resizable="false" style="width: 100%" border class="tran-table">
-
-                                <el-table-column label="排名" align="center" prop="rank">
+                                <el-table-column label="排名" align="center" width="110px">
                                     <template scope="scope">
-                                        <span v-if="scope.row.rank == 1">
-                                             <i class="icon-rank icon-gold"></i>
-                                        </span>
-                                                    <span v-else-if="scope.row.rank == 2">
-                                            <i class="icon-rank icon-silver"></i>
-                                       </span>
-                                                    <span v-else-if="scope.row.rank == 3">
-                                             <i class="icon-rank icon-copper"></i>
-                                        </span>
-                                                    {{scope.row.rank}}
-                                    </template>
+                                    <span v-if="scope.row.rank == 1">
+                                         <i class="icon-rank icon-gold"></i>
+                                    </span>
+                                        <span v-else-if="scope.row.rank == 2">
+                                        <i class="icon-rank icon-silver"></i>
+                                   </span>
+                                        <span v-else-if="scope.row.rank == 3">
+                                         <i class="icon-rank icon-copper"></i>
+                                    </span>
+                                        {{scope.row.rank}}
+                                </template>
                                 </el-table-column>
-                                <el-table-column label="微博号" prop="author" align="center"></el-table-column>
-                                <el-table-column label="发博量" prop="articleNum" align="center"></el-table-column>
-                                <el-table-column label="关注量" prop="attentionAmount" align="center"></el-table-column>
-                                <el-table-column label="粉丝量" prop="fansAmount" align="center"></el-table-column>
-                                <el-table-column label="转发量" prop="forwardCount" align="center"></el-table-column>
-                                <el-table-column label="评论数" prop="replyCount" align="center"></el-table-column>
-                                <el-table-column label="点赞总数" prop="supportCount" align="center"></el-table-column>
-                                <el-table-column label="平均点赞量" prop="supportCountAvg" align="center"></el-table-column>
+                                <el-table-column label="微博号" prop="author" align="center" :show-overflow-tooltip="true"></el-table-column>
+                                <el-table-column label="发博量" prop="sendCount" align="center" width="110px"></el-table-column>
+                                <el-table-column label="关注量" prop="concernsCount" align="center" width="110px"></el-table-column>
+                                <el-table-column label="粉丝量" prop="fansCount" align="center" width="110px"></el-table-column>
+                                <el-table-column label="转发量" prop="forwardCount" align="center" width="110px"></el-table-column>
+                                <el-table-column label="评论数" prop="replySum" align="center" width="110px"></el-table-column>
+                                <el-table-column label="点赞总数" prop="supportSum" align="center" width="110px"></el-table-column>
+                                <el-table-column label="平均点赞量" prop="supportAvg" align="center" width="110px"></el-table-column>
                             </el-table>
                         </div>
                     </el-card>
                 </el-col>
 
                 <el-col :span="24">
-                    <el-card class="box-card">
+                    <el-card class="box-card" v-loading="wechatLoading" element-loading-text="加载中……">
                         <div class="text item">
                             <el-table :data="wechat" :resizable="false" style="width: 100%" border class="tran-table">
                                 <el-table-column label="排名" align="center" prop="rank">
                                     <template scope="scope">
-                                        <span v-if="scope.row.rank == 1">
-                                             <i class="icon-rank icon-gold"></i>
-                                        </span>
+                                <span v-if="scope.row.rank == 1">
+                                     <i class="icon-rank icon-gold"></i>
+                                </span>
                                         <span v-else-if="scope.row.rank == 2">
-                                            <i class="icon-rank icon-silver"></i>
-                                       </span>
+                                    <i class="icon-rank icon-silver"></i>
+                               </span>
                                         <span v-else-if="scope.row.rank == 3">
-                                             <i class="icon-rank icon-copper"></i>
-                                        </span>
+                                     <i class="icon-rank icon-copper"></i>
+                                </span>
                                         {{scope.row.rank}}
-                                    </template>
+                                </template>
                                 </el-table-column>
-                                <el-table-column label="公众号" prop="author" align="center"></el-table-column>
-                                <el-table-column label="文章数" prop="articleNum" align="center"></el-table-column>
-                                <el-table-column label="总点赞量" prop="supportCountTotal" align="center"></el-table-column>
-                                <el-table-column label="总阅读量" prop="hitCountTotal" align="center"></el-table-column>
-                                <el-table-column label="平均阅读量" prop="hitCountTotalAvg" align="center"></el-table-column>
-                                <el-table-column label="平均点赞量" prop="supportCountAvg" align="center"></el-table-column>
-                                <el-table-column label="活跃指数(wai)" prop="wai" align="center"></el-table-column>
+                                <el-table-column label="公众号" prop="author" align="center" :show-overflow-tooltip="true"></el-table-column>
+                                <el-table-column label="文章数" prop="articleCount" align="center"></el-table-column>
+                                <el-table-column label="总点赞量" prop="supportSum" align="center"></el-table-column>
+                                <el-table-column label="总阅读量" prop="hitSum" align="center"></el-table-column>
+                                <el-table-column label="平均阅读量" prop="hitAvg" align="center"></el-table-column>
+                                <el-table-column label="平均点赞量" prop="supportAvg" align="center"></el-table-column>
+                                <el-table-column label="活跃指数" prop="activityIndex" align="center"></el-table-column>
                             </el-table>
                         </div>
                     </el-card>
@@ -348,7 +347,8 @@
     export default{
         data(){
             return {
-                twoVSeeLoading: true,
+                wechatLoading: true,
+                weboLoading: true,
                 param: {},
                 internalRefSummary: [],
                 personageTop10: [],
@@ -474,18 +474,40 @@
                     }
                 );
             },
-            get2VSee() {
-                this.twoVSeeLoading = true;
-                this.$http.get('/apis/internalRefReport/findTwoMicroInsightIndexRanking.json/' + this.param.id).then(
+            get2VSee(vector) {
+                let param = {pageNumber: 0, pageSize: 10, vector: [vector], startDate: this.param.createDate + ' 00:00:00', endDate: this.param.endDate + ' 23:59:59'};
+                let apiUrl;
+                if ("微博" == vector) {
+                    this.weboLoading = true;
+                    apiUrl = '/apis/businessTool/getMicroblogIndexData2.json';
+                } else {
+                    this.wechatLoading = true;
+                    apiUrl = '/apis/businessTool/getWechatIndexData2.json';
+                }
+                this.$http.post(apiUrl, param).then(
                     (response) => {
                         if (response.data.success) {
-                            if (response.data.data.wechat) {
-                                this.wechat = response.data.data.wechat.content;
+                            if (!response.data.data) {
+                                if (vector == "微博") {
+                                    this.webo = [];
+                                } else {
+                                    this.wechat = [];
+                                }
+                                return;
                             }
-                            if (response.data.data.webo) {
-                                this.webo = response.data.data.webo.content;
+                            let page = response.data.data.page
+                            let content = page.content;
+                            for (var i = 0; i < content.length; i++) {
+                                content[i].rank = i + 1;
                             }
-                            this.twoVSeeLoading = false;
+                            if (vector == "微博") {
+                                this.webo = content;
+                                this.weboLoading = false;
+                            } else {
+                                this.wechat = content;
+                                this.wechatLoading = false;
+                            }
+
                         } else {
                             console.error(response.data.message);
                         }
@@ -531,8 +553,8 @@
             this.getVectorDistribution();
             this.getVectorTable();
             this.getUnivsMediaFocus();
-            this.get2VSee();
-
+            this.get2VSee('微博');
+            this.get2VSee('微信');
             this.getWechatHot();
             this.getWeboHot();
         },
