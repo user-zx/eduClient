@@ -117,6 +117,8 @@
                                 res.data.data.page.content[i].index = this.param.pageNumber * this.param.pageSize + i + 1;
                                 this.tableData.push(res.data.data.page.content[i]);
                             }
+                        }else{
+                           this.total = 0; 
                         }
                     }
                     this.loading = false;
@@ -126,7 +128,8 @@
                 })
             },
              cancelAttention(){
-              this.removeParams.concernsType = 3;
+               this.removeParams.concernsType = 3;
+
                this.$http.post("/apis/concerns/removeConcernsMore.json",this.removeParams).then(res=>{
                   if(res.data.success){
                     this.$message("取消关注成功");

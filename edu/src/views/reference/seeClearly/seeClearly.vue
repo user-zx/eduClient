@@ -41,7 +41,7 @@
                                 <el-tabs v-model="tab1">
                                     <el-tab-pane label="微信" name="relation">
                                         <el-table :data="wechatHot" :show-header="false" :resizable="false" style="width: 100%" border class="tran-table">
-                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245">
+                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="left" width="245">
                                                 <template scope="scope">
                                                     <span class="pointer" @click="toDetail(scope.row)">
                                                         {{scope.row.title}}
@@ -55,7 +55,7 @@
                                     </el-tab-pane>
                                     <el-tab-pane label="微博" name="positive">
                                         <el-table :data="weboHot" :show-header="false" :resizable="false" style="width: 100%" border class="tran-table">
-                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245">
+                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="left" width="245">
                                                 <template scope="scope">
                                                     <span class="pointer" @click="toDetail(scope.row)">
                                                         {{scope.row.title}}
@@ -88,7 +88,7 @@
                                 <el-tabs v-model="tab2">
                                     <el-tab-pane label="微信" name="relation">
                                         <el-table :data="wechatOpinion" :show-header="false" :resizable="false" style="width: 100%" border class="tran-table">
-                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245">
+                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="left" width="245">
                                                 <template scope="scope">
                                                     <span class="pointer" @click="toDetail(scope.row)">
                                                         {{scope.row.title}}
@@ -102,7 +102,7 @@
                                     </el-tab-pane>
                                     <el-tab-pane label="微博" name="positive">
                                         <el-table :data="weboOpinion" :show-header="false" :resizable="false" style="width: 100%" border class="tran-table">
-                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245">
+                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="left" width="245">
                                                 <template scope="scope">
                                                     <span class="pointer" @click="toDetail(scope.row)">
                                                         {{scope.row.title}}

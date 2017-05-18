@@ -283,7 +283,7 @@
                 isShow:false,
                 item_one:["全景舆情","舆情监测","舆情预警","事件监测","舆情报告"],
                 item_two:["行业动态","人物动态","媒体声量","两微洞察","内参报告"],
-                item_three:["微信检测","微博检测"],
+                item_three:["两微监管"],
                 showOne:[],
                 showTwo:[],
                 showThree:[],
@@ -315,6 +315,7 @@
                         arr.push(arrShow[j])
                     }
                 }
+               // console.log(arr);
             },
             setBreadCrumb(){
                 let breadcrumb=[
@@ -326,6 +327,7 @@
             },
             viewDetail(params){
                 this.$http.get("/apis/packageManage/getPackageOrderById.json/" + params.id).then((res)=>{
+                    console.log(res);
                     if(res.data.success){
                         this.orderDetails = res.data.data;
                       //  console.log(res.data.data.signedDate);
@@ -333,6 +335,7 @@
                         this.orderDetails.expireDate = this.orderDetails.expireDate == null ? "--:--" : new Date(res.data.data.expireDate).format('yyyy-MM-dd');
                         this.showOne = [];this.showTwo = [];this.showThree = [];
                         let itemString = res.data.data.itemPriceList;
+                       // console.log(itemString);
                         this.getItemData(itemString,this.item_one,this.showOne);
                         this.getItemData(itemString,this.item_two,this.showTwo);
                         this.getItemData(itemString,this.item_three,this.showThree);
@@ -409,7 +412,7 @@
                         },err=>{
                             console.log(err);
                         }) 
-                        this.$http.post("/apis/user/findAllSubAccount.json", {pageNumber:0,pageSize:10}).then(res=>{
+                        this.$http.post("/apis/user/findAllSubAccount.json", {pageNumber:0,pageSize:1000}).then(res=>{
                             if(res.data.success){
                                 this.surplusAccount =  this.usetDataList.subAccountNum - res.data.data.content.length;
                             }

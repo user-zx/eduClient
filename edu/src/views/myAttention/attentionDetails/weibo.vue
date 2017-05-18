@@ -149,7 +149,9 @@
                                 res.data.data.page.content[i].index = this.param.pageNumber * this.param.pageSize + i + 1;
                                 this.tableData.push(res.data.data.page.content[i])
                             }
-                        }
+                        }else{
+                             this.total = 0;
+                        } 
                     }
                     this.loading = false;
                 },(err)=>{

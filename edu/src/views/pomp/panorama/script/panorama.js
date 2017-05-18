@@ -69,6 +69,17 @@ export default {
                                 ];
                             this.opinionFunnel = response.data.data.series[0].data;
                             response.data.data.series[0].data = formatData;
+                            response.data.data.series[0].label = {
+                                 normal: {
+                                 show: true,
+                                    position: 'inside'
+                                },
+                                emphasis: {
+                                    textStyle: {
+                                        fontSize: 20
+                                    }
+                                }
+                            }
                             response.data.data.tooltip = {
                                 trigger: 'item',
                                 formatter: function (params, ticket, callback) {

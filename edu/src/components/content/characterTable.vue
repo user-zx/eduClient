@@ -52,6 +52,7 @@
         components: {},
         methods: {
             handleSelectionChange(val){
+               // console.log('test');
                 this.$emit('select',val) 
             },
             //带参跳转到人物分析页面
