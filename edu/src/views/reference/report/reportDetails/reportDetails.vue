@@ -199,9 +199,9 @@
                         <div class="text item">
                             <el-card class="box-card educationBox">
                                 <el-table :data="wechatHot" :resizable="false" style="width: 100%" border class="tran-table">
-                                    <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245">
-                                        <template scope="scope">
-                                                <span class="pointer" @click="toDetail(scope.row)">
+                                    <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="left" width="245"> 
+                                        <template scope="scope" > 
+                                                <span  class="pointer" @click="toDetail(scope.row)">
                                                     {{scope.row.title}}
                                                 </span>
                                         </template>
@@ -222,7 +222,7 @@
                         <div class="text item">
                             <el-card class="box-card educationBox">
                                 <el-table :data="weboHot" :resizable="false" style="width: 100%" border class="tran-table">
-                                    <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245">
+                                    <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="left" width="245">
                                         <template scope="scope">
                                                 <span class="pointer" @click="toDetail(scope.row)">
                                                     {{scope.row.title}}
