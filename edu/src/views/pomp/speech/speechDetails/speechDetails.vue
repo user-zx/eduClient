@@ -274,7 +274,7 @@
                     height: height,
                     background: "rgba(255,255,255,1)",
                     onrendered: function (canvas) {
-                        let ie = !-[1,];
+                        let ie = vm.isIE();
                         if (ie) {
                             let myWindow = window.open('','_blank');
                             //等待新页面渲染
@@ -313,7 +313,7 @@
             },
             /**获取舆情监测图*/
             getOpinionMonitor() {
-                 echarts.registerTheme('vintage', vintage);
+                echarts.registerTheme('vintage', vintage);
                 let chart = echarts.init(document.getElementById('opinionMonitorChart'),"vintage");
                 chart.showLoading();
                 this.$http.get('/apis/opinionReport/getOpinionMonitor.json/' + this.param.id).then(
@@ -425,6 +425,12 @@
 
             toDetail(data){
                 this.$router.push({path: '/home/articleDetail', query: {id: data.id}});
+            },
+            isIE() {
+                if (!!window.ActiveXObject || "ActiveXObject" in window)
+                    return true;
+                else
+                    return false;
             }
         },
         mounted(){

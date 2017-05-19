@@ -386,7 +386,7 @@
                     height: height,
                     background: "rgba(20,23,37,1)",
                     onrendered: function (canvas) {
-                        let ie = !-[1,];
+                        let ie = vm.isIE();
                         if (ie) {
                             let myWindow = window.open('','_blank');
                             //等待新页面渲染
@@ -578,6 +578,12 @@
 
             toDetail(data){
                 this.$router.push({path: '/home/articleDetail', query: {id: data.id}});
+            },
+            isIE() {
+                if (!!window.ActiveXObject || "ActiveXObject" in window)
+                    return true;
+                else
+                    return false;
             }
         },
         mounted(){
