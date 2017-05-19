@@ -349,7 +349,8 @@
                 this.$http.post('/apis/businessTool/getMicroblogSupportAvgData.json', this.requestParam).then(
                     (response) => {
                         if(response.data.success){
-                            chart.setOption(response.data.data.echart);
+                            let data = response.data.data.echart;
+                            chart.setOption(data);
                             this.$nextTick(function (){
                                 chart.hideLoading();
                             });
@@ -510,7 +511,6 @@
             },
 
             getBlogArticleData(){
-                console.log(this.articleParam)
                 this.$http.post('/apis/businessTool/getMicroblogArticleData.json', this.articleParam).then(
                     (response) => {
                         //没有数据
