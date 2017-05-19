@@ -110,7 +110,9 @@
                 this.tableData = [];
                 this.loading = true;
                 this.$http.post("/apis/concerns/getWechatData.json", this.param).then((res)=>{
+                      console.log(res);
                     if(res.data.success){
+
                         if (res.data.data.page) {
                             this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
                             for (var i = 0; i < res.data.data.page.content.length; i++) {
@@ -129,7 +131,10 @@
             },
              cancelAttention(){
                this.removeParams.concernsType = 3;
-
+                if(this.removeParams.concernsContent.length == 0){
+                     this.$message("未选择微信");
+                     return false;
+                };
                this.$http.post("/apis/concerns/removeConcernsMore.json",this.removeParams).then(res=>{
                   if(res.data.success){
                     this.$message("取消关注成功");

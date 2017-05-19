@@ -105,6 +105,10 @@
         methods:{
             cancelAttention(){
                 this.removeParams.concernsType = 4;
+                if(this.removeParams.concernsContent.length==0){
+                    this.$message("未选择微博");
+                    return false;
+                }
                this.$http.post("/apis/concerns/removeConcernsMore.json",this.removeParams).then(res=>{
                   if(res.data.success){
                     this.$message("取消关注成功");
