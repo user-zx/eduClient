@@ -7,7 +7,7 @@
             <div>
                 <h3 class="date">{{param.createDate}} 至 {{param.endDate}}</h3>
                 <div class="btn-box text-right">
-                    <!--<el-button type="primary" @click="downloadReport">下载</el-button>-->
+                    <el-button type="primary" @click="downloadReport">下载</el-button>
                 </div>
             </div>
         </div>
@@ -344,6 +344,7 @@
 <script>
     import echarts from 'echarts';
     import vintage from '../../../../vintage.json';
+    import html2canvas from 'html2canvas';
     export default{
         data(){
             return {
@@ -376,6 +377,38 @@
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
             downloadReport() {
+                let obj = $('.eventCharts');
+                let width = obj.width();
+                let height = obj.height();
+                let vm = this;
+                html2canvas(obj, {
+                    width: width,
+                    height: height,
+                    background: "rgba(20,23,37,1)",
+                    onrendered: function (canvas) {
+                        let ie = !-[1,];
+                        if (ie) {
+                            let myWindow = window.open('','_blank');
+                            //等待新页面渲染
+                            setTimeout(() => {
+                                let img = myWindow.document.createElement('img');
+                                img.src = canvas.toDataURL();
+                                img.title = '右键点击保存';
+                                myWindow.document.body.appendChild(img);
+                                myWindow.focus();
+                            }, 100);
+                            return;
+                        }
+                        if ($("#jumpDetails").length > 0) {
+                            $("#jumpDetails1").attr('download', vm.param.title + '.png');
+                            $("#jumpDetails1").attr('href', canvas.toDataURL("image/png"));
+                            $("#jumpDetails2").click();
+                        } else {
+                            $("body").append("<a style='display:none' download='" + vm.param.title + ".png' id='jumpDetails' href='" + canvas.toDataURL("image/png") + "' target='_blank'><span id='jumpDetails2'>jump</span></a>");
+                            $("#jumpDetails2").click();
+                        }
+                    }
+                });
             },
             findInternalRefSummary() {
                 this.$http.get('/apis/internalRefReport/findInternalRefSummary.json/' + this.param.id).then(
