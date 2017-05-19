@@ -87,7 +87,6 @@
                 param: {
                     pageSize: 10,
                     pageNumber: 0,
-                    vector:[],
                     authcStatus:"",
                     startDate:"",
                     endDate:"",
@@ -133,18 +132,19 @@
                 this.getWeiboData();
             },
             onSearchDataChange(data) {
-                this.param.vector = [];
-                this.param.vector.push(data.type)
-                this.param.authcStatus = data.verified;
-                this.currentPage = 1;
-                this.param = data;
+                 this.param.authcStatus = data.verified;
+                 this.param.university = data.university; 
+                 this.param.startDate = data.startDate;
+                 this.param.endDate = data.endDate;
+                this.currentPage = 1;   
                 this.param.pageSize = 10;
                 this.param.pageNumber = 0;
-                this.getWeiboData();
+                this.getWeiboData(); 
             },
             getWeiboData(){
                 this.tableData = [];
                 this.loading = true;
+               // console.log(this.param);  
                 this.$http.post("/apis/concerns/getMicroblogData.json",this.param).then((res)=>{
                     if(res.data.success){
                         if (res.data.data.page) {

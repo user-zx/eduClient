@@ -69,7 +69,6 @@
                 param: {
                     pageSize: 10,
                     pageNumber: 0,
-                    vector:[],
                     authcStatus:"",
                     startDate:"",
                     endDate:"",
@@ -97,11 +96,13 @@
                 this.getWechatData();
             },
             onSearchDataChange(data) {
-                this.param.vector = [];
-                this.param.vector.push(data.type)
-                this.param.authcStatus = data.verified;
+                this.param.officialAcctType = []; 
+               this.param.officialAcctType.push(data.officialAcctType)
+               this.param.university = data.university;
+                this.param.authcStatus = data.verified; 
+                this.param.startDate = data.startDate;
+                 this.param.endDate = data.endDate;
                 this.currentPage = 1;
-                this.param = data;
                 this.param.pageSize = 10;
                 this.param.pageNumber = 0;
                 this.getWechatData();
