@@ -300,8 +300,7 @@
                 supportOption: [],
                 hitOption: [],
                 forwardOption: [],
-                originalStartDate: '',
-                originalEndDate: '',
+                //上一级传来的结束时间  格式化为 1970-01-01
                 parentEndDate: '',
                 concerned:　false,
                 warnPermission: true
@@ -536,8 +535,10 @@
                     this.articleParam.endDate = new Date(yesterday).format('yyyy-MM-dd 23:59:59');
                 }else if(param == 'range'){
                     $('#sortUl li.dateRange').addClass('selected');
-                    this.articleParam.startDate = this.blogData.startDate;
                     this.articleParam.endDate = this.blogData.endDate;
+                    //
+                    let mill = new Date(this.parentEndDate).getTime() - 8.64e7 * 6;
+                    this.articleParam.startDate = new Date(mill).format('yyyy-MM-dd 00:00:00');
                 }else{
                     $('#sortUl li.parentEndDate').addClass('selected');
                     this.articleParam.startDate = new Date(this.parentEndDate).format('yyyy-MM-dd 00:00:00');
@@ -650,8 +651,6 @@
                 this.requestParam.endDate = this.blogData.endDate;
                 this.articleParam.startDate = new Date(this.blogData.endDate).format('yyyy-MM-dd 00:00:00');
                 this.articleParam.endDate = this.blogData.endDate;
-                this.originalStartDate = this.blogData.startDate;
-                this.originalEndDate = this.blogData.endDate;
                 this.parentEndDate = this.blogData.endDate.substring(0,10);
             }
             this.setBreadCrumb();

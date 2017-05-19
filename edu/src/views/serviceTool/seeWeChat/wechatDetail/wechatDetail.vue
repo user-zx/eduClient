@@ -103,7 +103,7 @@
                             文章排行
                         </li>
                         <li class="pointer selected parentEndDate" @click="sort('orinigal')">
-                            {{originalEndDate}}
+                            {{parentEndDate}}
                         </li>
                         <li class="pointer dateRange" @click="sort('range')">
                             一周热门
@@ -299,8 +299,7 @@
                 hitSumOption: [],
                 supportAvgOption: [],
                 hitAvgOption: [],
-                originalStartDate: '',
-                originalEndDate: '',
+                parentEndDate: '',
                 parentData: {},
                 wechatInfo: {
                     accountSign: '',
@@ -518,12 +517,13 @@
                     this.articleParam.endDate = new Date(yesterday).format('yyyy-MM-dd 23:59:59');
                 }else if(param == 'range'){
                     $('#sortUl li.dateRange').addClass('selected');
-                    this.articleParam.startDate = this.originalStartDate;
-                    this.articleParam.endDate =  this.originalEndDate;
+                    let mill = new Date(this.parentEndDate).getTime() - 8.64e7 * 6;
+                    this.articleParam.startDate = new Date(mill).format('yyyy-MM-dd 00:00:00');
+                    this.articleParam.endDate = this.requestParam.endDate;
                 }else{
                     $('#sortUl li.parentEndDate').addClass('selected');
                     this.articleParam.startDate = new Date(this.originalEndDate).format('yyyy-MM-dd 00:00:00');
-                    this.articleParam.endDate = this.originalEndDate;
+                    this.articleParam.endDate = this.requestParam.endDate;
                 }
                 this.getWechatArticleList();
             },
@@ -646,10 +646,9 @@
             if(data.startDate != undefined){
                 this.requestParam.startDate = data.startDate;
                 this.requestParam.endDate = data.endDate;
-                this.articleParam.startDate = data.startDate;
+                this.articleParam.startDate = new Date(data.endDate).format('yyyy-MM-dd 00:00:00');
                 this.articleParam.endDate = data.endDate;
-                this.originalStartDate = data.startDate;
-                this.originalEndDate = data.endDate;
+                this.parentEndDate =  data.endDate.substring(0,10);
             }
 
             this.setBreadCrumb();

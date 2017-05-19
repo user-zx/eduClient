@@ -148,7 +148,7 @@
                     pageSize: 15,
                     pageNumber: 0,
                     authcStatus: '',
-                    startDate: new Date(Date.now() - 8.64e7 * 8).format('yyyy-MM-dd 00:00:00'),
+                    startDate: new Date(Date.now() - 8.64e7 * 7).format('yyyy-MM-dd 00:00:00'),
                     endDate: new Date(Date.now() - 8.64e7).format('yyyy-MM-dd 23:59:59')
                 },
                 statisticsParam: {
