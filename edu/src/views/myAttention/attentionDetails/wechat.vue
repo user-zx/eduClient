@@ -110,9 +110,7 @@
                 this.tableData = [];
                 this.loading = true;
                 this.$http.post("/apis/concerns/getWechatData.json", this.param).then((res)=>{
-                      console.log(res);
                     if(res.data.success){
-
                         if (res.data.data.page) {
                             this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
                             for (var i = 0; i < res.data.data.page.content.length; i++) {
