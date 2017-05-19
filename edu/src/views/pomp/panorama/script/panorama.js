@@ -93,8 +93,8 @@ export default {
                                     }
                                 }
                             }
+                            
                             response.data.data.color = ["#fbff85","#60dab3","#60a3fe","#6076ff","#5356ed"];
-                            //console.log(response.data.data);
                             response.data.data.textStyle = null;
                             chart.setOption(response.data.data);
                             this.$nextTick(function() {
