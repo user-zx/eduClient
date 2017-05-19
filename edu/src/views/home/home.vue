@@ -71,31 +71,37 @@
                 });
             },
             getUserParams() {
+                //子账号不需要提示设置学校
+                if(this.user.primaryAccountId != null){
+                    return ;
+                }
+
                 this.$http.post('/apis/user/getUnivsAndPersonage.json').then(
                     (response) => {
 
-                        if (response.data.success) {
-                            let univs = response.data.data.univs;
-                            if (univs.length == 0) {
-                                this.$confirm('您还没有设置大学，前往设置?', '提示', {
-                                    showClose: false,
-                                    confirmButtonText: '确定',
-                                    //我猜出来在这个属性的  哈哈  by lifei
-                                    showCancelButton: false,
-//                                    cancelButtonText: '取消',
-                                    type: 'warning'
-                                }).then(() => {
-                                    this.$router.push({path:"/home/centerCollege"});
-                                });
-                            }
-                        } else {
-                            console.error(response.data.message);
+                    if (response.data.success) {
+                        let univs = response.data.data.univs;
+                        if (univs.length == 0) {
+                            this.$confirm('您还没有设置大学，前往设置?', '提示', {
+                                showClose: false,
+                                confirmButtonText: '确定',
+                                //我猜出来在这个属性的  哈哈  by lifei
+                                showCancelButton: false,
+    //                                    cancelButtonText: '取消',
+                                type: 'warning'
+                            }).then(() => {
+                                this.$router.push({path:"/home/centerCollege"});
+                        });
                         }
+                    } else {
+                        console.error(response.data.message);
+                    }
 
-                    }, (response) => {
+                }, (response) => {
                         console.error(response);
                     }
                 );
+
             },
         },
         mounted() {
