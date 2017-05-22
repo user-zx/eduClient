@@ -1,142 +1,158 @@
 <template>
-    <div class="reportDetails" id="reportDetails">
-        <div class="title-box">
-            <div>
-                <h3 class="title">{{param.title}}</h3>
-            </div>
-            <div>
-                <h3 class="date">{{param.createDate}} 至 {{param.endDate}}</h3>
-                <div class="btn-box text-right">
-                    <el-button type="primary" @click="downloadReport">下载</el-button>
+    <div class="container">
+        <div class="load-btn">
+            <el-button id="downLoadBtn" type="primary" @click="downloadReport" :loading="loading">下载</el-button>
+        </div>
+
+        <div class="reportDetails" id="reportDetails">
+            <div class="title-box">
+                <div>
+                    <h3 class="title">{{param.title}}</h3>
+                </div>
+                <div>
+                    <h3 class="date">{{param.createDate}} 至 {{param.endDate}}</h3>
                 </div>
             </div>
-        </div>
-        <div class="eventCharts">
-            <el-row :gutter="10">
-                <el-col :span="24">
-                    <el-card class="box-card">
-                        <div slot="header" class="clearfix">
-                            <span class="icons icons-chart1"></span><span>舆情热点</span>
-                        </div>
-                        <div class="text item">
-                            <el-table :data="opinionHot" :resizable="false" style="width: 100%" border class="tran-table">
-                                <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="245">
-                                    <template scope="scope">
-                                                <span class="pointer" @click="toDetail(scope.row)">
-                                                    {{scope.row.title}}
-                                                </span>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
-                                <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
-                                <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
-                            </el-table>
-                        </div>
-                    </el-card>
-                </el-col>
-            </el-row>
-            <el-row :gutter="10">
-                <el-col :span="24">
-                    <el-card class="box-card">
-                        <div slot="header" class="clearfix">
-                            <span class="icons icons-chart2"></span><span>舆情监测</span>
-                        </div>
-                        <div class="col-item item-left">
-                            <div class="charts" id="opinionMonitorChart" style="height: 400px;"></div>
-                        </div>
-                        <div class="col-item item-right">
-                            <el-table :data="opinionMonitor" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title">
-                                <el-table-column prop="name" label="属性" align="center"></el-table-column>
-                                <el-table-column prop="num" label="文章数" align="center"></el-table-column>
-                            </el-table>
-                        </div>
-                    </el-card>
-                </el-col>
-            </el-row>
-            <el-row :gutter="10">
-                <el-col :span="24">
-                    <el-card class="box-card">
-                        <div slot="header" class="clearfix">
-                            <span class="icons icons-chart3"></span><span>载体分布</span>
-                        </div>
-                        <div class="col-item item-left">
-                            <div class="charts" id="vectorDistributionChart" style="height: 400px;"></div>
-                        </div>
-                        <div class="col-item item-right">
-                            <el-table :data="distributeData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title">
-                                <el-table-column prop="name" label="载体" width="150" align="center"></el-table-column>
-                                <el-table-column prop="positive" label="正面文章数" align="center"></el-table-column>
-                                <el-table-column prop="negative" label="负面文章数" align="center"></el-table-column>
-                            </el-table>
-                        </div>
-                    </el-card>
-                </el-col>
-            </el-row>
-            <el-row :gutter="10">
-                <el-col :span="24">
-                    <el-card class="box-card">
-                        <div slot="header" class="clearfix">
-                            <span class="icons icons-chart4"></span><span>重点高校关注度</span>
-                        </div>
-                        <div class="text item">
-                            <div class="charts" id="univsChart" style="height: 400px;"></div>
-                        </div>
-                    </el-card>
-                </el-col>
-            </el-row>
-            <el-row :gutter="10">
-                <el-col :span="12">
-                    <el-card class="box-card educationBox" style="margin-top: 0px">
-                        <div slot="header" class="clearfix">
-                            <span class="icons icons-chart5"></span><span>微信热点</span>
-                        </div>
-                        <div class="text item">
-                            <el-card class="box-card educationBox">
-                                <el-table :data="wechatHot" :resizable="false" style="width: 100%" border class="tran-table">
+            <div class="eventCharts">
+                <el-row :gutter="10">
+                    <el-col :span="24">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span class="icons icons-chart1"></span><span>舆情热点</span>
+                            </div>
+                            <div class="text item">
+                                <el-table :data="opinionHot" :resizable="false" style="width: 100%" border class="tran-table">
                                     <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="245">
                                         <template scope="scope">
-                                                <span class="pointer" @click="toDetail(scope.row)">
-                                                    {{scope.row.title}}
-                                                </span>
+                                                    <span class="pointer" @click="toDetail(scope.row)">
+                                                        {{scope.row.title}}
+                                                    </span>
                                         </template>
                                     </el-table-column>
                                     <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
                                     <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
                                     <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
                                 </el-table>
-                            </el-card>
-                        </div>
-                    </el-card>
-                </el-col>
-                <el-col :span="12">
-                    <el-card class="box-card educationBox" style="margin-top: 0px">
-                        <div slot="header" class="clearfix">
-                            <span class="icons icons-chart6"></span><span>微博热点</span>
-                        </div>
-                        <div class="text item">
-                            <el-card class="box-card educationBox">
-                                <el-table :data="weboHot" :resizable="false" style="width: 100%" border class="tran-table">
-                                    <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="245">
-                                        <template scope="scope">
-                                                <span class="pointer" @click="toDetail(scope.row)">
-                                                    {{scope.row.title}}
-                                                </span>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
-                                    <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
-                                    <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="10">
+                    <el-col :span="24">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span class="icons icons-chart2"></span><span>舆情监测</span>
+                            </div>
+                            <div class="col-item item-left">
+                                <div class="charts" id="opinionMonitorChart" style="height: 400px;"></div>
+                            </div>
+                            <div class="col-item item-right">
+                                <el-table :data="opinionMonitor" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title">
+                                    <el-table-column prop="name" label="属性" align="center"></el-table-column>
+                                    <el-table-column prop="num" label="文章数" align="center"></el-table-column>
                                 </el-table>
-                            </el-card>
-                        </div>
-                    </el-card>
-                </el-col>
-            </el-row>
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="10">
+                    <el-col :span="24">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span class="icons icons-chart3"></span><span>载体分布</span>
+                            </div>
+                            <div class="col-item item-left">
+                                <div class="charts" id="vectorDistributionChart" style="height: 400px;"></div>
+                            </div>
+                            <div class="col-item item-right">
+                                <el-table :data="distributeData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title">
+                                    <el-table-column prop="name" label="载体" width="150" align="center"></el-table-column>
+                                    <el-table-column prop="positive" label="正面文章数" align="center"></el-table-column>
+                                    <el-table-column prop="negative" label="负面文章数" align="center"></el-table-column>
+                                </el-table>
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="10">
+                    <el-col :span="24">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span class="icons icons-chart4"></span><span>重点高校关注度</span>
+                            </div>
+                            <div class="text item">
+                                <div class="charts" id="univsChart" style="height: 400px;"></div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="10">
+                    <el-col :span="12">
+                        <el-card class="box-card educationBox" style="margin-top: 0px">
+                            <div slot="header" class="clearfix">
+                                <span class="icons icons-chart5"></span><span>微信热点</span>
+                            </div>
+                            <div class="text item">
+                                <el-card class="box-card educationBox">
+                                    <el-table :data="wechatHot" :resizable="false" style="width: 100%" border class="tran-table">
+                                        <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="245">
+                                            <template scope="scope">
+                                                    <span class="pointer" @click="toDetail(scope.row)">
+                                                        {{scope.row.title}}
+                                                    </span>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
+                                    </el-table>
+                                </el-card>
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-card class="box-card educationBox" style="margin-top: 0px">
+                            <div slot="header" class="clearfix">
+                                <span class="icons icons-chart6"></span><span>微博热点</span>
+                            </div>
+                            <div class="text item">
+                                <el-card class="box-card educationBox">
+                                    <el-table :data="weboHot" :resizable="false" style="width: 100%" border class="tran-table">
+                                        <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="245">
+                                            <template scope="scope">
+                                                    <span class="pointer" @click="toDetail(scope.row)">
+                                                        {{scope.row.title}}
+                                                    </span>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
+                                        <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
+                                    </el-table>
+                                </el-card>
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
+            </div>
         </div>
     </div>
 </template>
 <style lang="scss" scoped>
   $img-url:url("../../../../assets/images/zhongtubiao@1x.png") no-repeat;
+    .container {
+        position: relative;
+        .load-btn {
+            position: absolute;
+            top: 35px;
+            right: 0;
+            display: inline-block;
+            .el-button{
+                padding:7px 15px;
+            }
+        }
+    }
+
     .el-row{
         &+.el-row{
             margin-top: 10px;
@@ -162,7 +178,6 @@
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-            margin-left: 60px;
         }
         .btn-box{
             display: inline-block;
@@ -241,12 +256,15 @@
     export default{
         data(){
             return {
+                loading: true,
                 param: {},
                 opinionHot: [],
                 opinionMonitor: [],
                 distributeData: [],
                 wechatHot: [],
                 weboHot: [],
+
+                hasCompleted: 0,
             }
         },
         methods:{
@@ -265,14 +283,14 @@
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
             downloadReport() {
-                let obj = $('.eventCharts');
+                let obj = $('#reportDetails');
                 let width = obj.width();
                 let height = obj.height();
                 let vm = this;
                 html2canvas(obj, {
                     width: width,
                     height: height,
-                    background: "rgba(255,255,255,1)",
+                    background: "rgba(20,23,37,1)",
                     onrendered: function (canvas) {
                         let ie = vm.isIE();
                         if (ie) {
@@ -285,15 +303,15 @@
                                 myWindow.document.body.appendChild(img);
                                 myWindow.focus();
                             }, 100);
-                            return;
-                        }
-                        if ($("#jumpDetails").length > 0) {
-                            $("#jumpDetails1").attr('download', vm.param.title + '.png');
-                            $("#jumpDetails1").attr('href', canvas.toDataURL("image/png"));
-                            $("#jumpDetails2").click();
                         } else {
-                            $("body").append("<a style='display:none' download='" + vm.param.title + ".png' id='jumpDetails' href='" + canvas.toDataURL("image/png") + "' target='_blank'><span id='jumpDetails2'>jump</span></a>");
-                            $("#jumpDetails2").click();
+                            if ($("#jumpDetails").length > 0) {
+                                $("#jumpDetails1").attr('download', vm.param.title + '.png');
+                                $("#jumpDetails1").attr('href', canvas.toDataURL("image/png"));
+                                $("#jumpDetails2").click();
+                            } else {
+                                $("body").append("<a style='display:none' download='" + vm.param.title + ".png' id='jumpDetails' href='" + canvas.toDataURL("image/png") + "' target='_blank'><span id='jumpDetails2'>jump</span></a>");
+                                $("#jumpDetails2").click();
+                            }
                         }
                     }
                 });
@@ -306,7 +324,9 @@
                         } else {
                             console.error(response.data.message);
                         }
+                        this.handleBack();
                     }, (response) => {
+                        this.handleBack();
                         console.error(response);
                     }
                 );
@@ -336,7 +356,9 @@
                         } else {
                             console.error(response.data.message);
                         }
+                        this.handleBack();
                     }, (response) => {
+                        this.handleBack();
                         console.error(response);
                     }
                 );
@@ -357,7 +379,9 @@
                         } else {
                             console.error(response.data.message);
                         }
+                        this.handleBack();
                     }, (response) => {
+                        this.handleBack();
                         console.error(response);
                     }
                 );
@@ -370,7 +394,9 @@
                         } else {
                             console.error(response.data.message);
                         }
+                        this.handleBack();
                     }, (response) => {
+                        this.handleBack();
                         console.error(response);
                     }
                 );
@@ -391,7 +417,9 @@
                         } else {
                             console.error(response.data.message);
                         }
+                        this.handleBack();
                     }, (response) => {
+                        this.handleBack();
                         console.error(response);
                     }
                 );
@@ -404,7 +432,9 @@
                         } else {
                             console.error(response.data.message);
                         }
+                        this.handleBack();
                     }, (response) => {
+                        this.handleBack();
                         console.error(response);
                     }
                 );
@@ -417,12 +447,18 @@
                         } else {
                             console.error(response.data.message);
                         }
+                        this.handleBack();
                     }, (response) => {
+                        this.handleBack();
                         console.error(response);
                     }
                 );
             },
-
+            handleBack() {
+                if (++this.hasCompleted == 7) {
+                    this.loading = false;
+                }
+            },
             toDetail(data){
                 this.$router.push({path: '/home/articleDetail', query: {id: data.id}});
             },
