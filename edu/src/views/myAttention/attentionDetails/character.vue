@@ -75,6 +75,11 @@
                console.log(this.removeParams.concernsContent);
             },
             cancelAttention(){
+            console.log(this.removeParams.concernsContent);
+             if(!this.removeParams.concernsContent||this.removeParams.concernsContent.length==0){
+                this.$message("未选择人物");
+                return false;
+             }
               this.removeParams.concernsType = 2;
                this.$http.post("/apis/concerns/removeConcernsMore.json",this.removeParams).then(res=>{
                   if(res.data.success){
