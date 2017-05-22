@@ -13,12 +13,12 @@
         </header>
         <div class="wrapper">
             <div class="left-banner">
-                <div class="text-center">
-                    <img src="./images/trade.png" alt="教育行业">
-                </div>
-                <div class="text-center">
-                    <img src="./images/pru.png" alt="大数据应用服务平台">
-                </div>
+               <!--  <div class="text-center">
+                  <img src="./images/trade.png" alt="教育行业">
+               </div>
+               <div class="text-center">
+                  <img src="./images/pru.png" alt="大数据应用服务平台">
+               </div> -->
                 <img class="banner" src="./images/data.png" />
             </div>
             <router-view></router-view>
@@ -210,7 +210,8 @@
         .left-banner{
             position: relative;
             display: inline-block;
-            text-align: left;
+            margin-top: 20px; 
+           // text-align: left;
             .text-center{
                 width:100%;
                 position: absolute;
@@ -221,8 +222,8 @@
                   }
             }
             img.banner{
-                width: 835px;
-                height: 581px;
+                width: 600px;
+              //  height: 581px;
             }
         }
         .wrapper{
