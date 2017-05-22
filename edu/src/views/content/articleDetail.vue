@@ -58,8 +58,8 @@
                     </span>
                 </div>
             </div>
-            <div class="article-content">
-                {{article.content}}
+            <div class="article-content" v-html="article.content">
+                <!--{{article.content}}-->
             </div>
         </div>
         <div class="detail-right">

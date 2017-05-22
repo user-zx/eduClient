@@ -60,8 +60,7 @@
                                 </el-button>
                             </p>
                         </div>
-                        <p class="article-main">
-                            {{item.content}}
+                        <p class="article-main"  v-html="item.content">
                         </p>
                         <p class="article-describe">
                             <span class="article-source">
