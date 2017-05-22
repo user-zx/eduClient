@@ -397,7 +397,7 @@
                 let width = obj.width();
                 let height = obj.height();
                 let vm = this;
-                html2canvas(obj, {
+                html2canvas(obj[0], {
                     width: width,
                     height: height,
                     background: "rgba(20,23,37,1)",

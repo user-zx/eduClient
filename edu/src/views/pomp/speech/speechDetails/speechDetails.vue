@@ -4,7 +4,7 @@
             <el-button id="downLoadBtn" type="primary" @click="downloadReport" :loading="loading">下载</el-button>
         </div>
 
-        <div class="reportDetails" id="reportDetails">
+        <div class="reportDetails" id="speechDetails">
             <div class="title-box">
                 <div>
                     <h3 class="title">{{param.title}}</h3>
@@ -283,11 +283,11 @@
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
             downloadReport() {
-                let obj = $('#reportDetails');
+                let obj = $('#speechDetails');
                 let width = obj.width();
                 let height = obj.height();
                 let vm = this;
-                html2canvas(obj, {
+                html2canvas(obj[0], {
                     width: width,
                     height: height,
                     background: "rgba(20,23,37,1)",
