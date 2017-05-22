@@ -3,8 +3,7 @@
 */
 <template>
     <div class="article-detail-news" v-loading="loading" element-loading-text="加载中……">
-        <h2 class="article-title">
-            {{article.title}}
+        <h2 class="article-title" v-html="article.title">
         </h2>
         
         <div class="detail-left">
@@ -96,8 +95,7 @@
                     相匹配文章
                 </div>
                 <div class="related-article">
-                    <div v-for="art in similarArticles" class="related-title pointer"  @click="toDetail(art)">
-                        {{art.title}}
+                    <div v-for="art in similarArticles" class="related-title pointer" v-html="art.title" @click="toDetail(art)">
                     </div>
                     <div class="no-data" v-if="similarArticles.length == 0">暂无匹配文章</div>
                 </div>

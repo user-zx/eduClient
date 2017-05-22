@@ -44,7 +44,7 @@
                     <div class="article-right">
                         <div class="article-title-box">
                             <p class="article-title pointer" @click="toDetail(item)">
-                                <span>{{item.title}}</span>
+                                <span v-html="item.title"></span>
                                 <i class="title-icon positive-icon" v-if="item.emotion == 'positive'"></i>
                                 <i class="title-icon negative-icon" v-else-if="item.emotion == 'negative'"></i>
                                 <i class="title-icon neutral-icon" v-else></i>
