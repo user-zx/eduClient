@@ -282,7 +282,6 @@
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-            margin-left: 60px;
         }
         .btn-box{
             display: inline-block;
@@ -404,25 +403,19 @@
                     onrendered: function (canvas) {
                         let ie = vm.isIE();
                         if (ie) {
-                            let myWindow = window.open('','_blank');
-                            //等待新页面渲染
-                            setTimeout(() => {
-                                let img = myWindow.document.createElement('img');
-                                img.src = canvas.toDataURL();
-                                img.title = '右键点击保存';
-                                myWindow.document.body.appendChild(img);
-                                myWindow.focus();
-                            }, 100);
+                            let html = "<html><body style='margin: 0'>"
+                                + "<img src='" + canvas.toDataURL() + "'>"
+                                + "</body></html>";
+                            let myWindow = window.open();
+                            myWindow.document.write(html);
                             return;
                         }
-                        if ($("#jumpDetails").length > 0) {
-                            $("#jumpDetails1").attr('download', vm.param.title + '.png');
-                            $("#jumpDetails1").attr('href', canvas.toDataURL("image/png"));
-                            $("#jumpDetails2").click();
-                        } else {
-                            $("body").append("<a style='display:none' download='" + vm.param.title + ".png' id='jumpDetails' href='" + canvas.toDataURL("image/png") + "' target='_blank'><span id='jumpDetails2'>jump</span></a>");
-                            $("#jumpDetails2").click();
-                        }
+                        let aTag = document.createElement("a");
+                        aTag.href = canvas.toDataURL("image/png");
+                        aTag.download = vm.param.title + '.png';
+                        document.body.appendChild(aTag);
+                        aTag.click();
+                        document.body.removeChild(aTag);
                     }
                 });
             },
