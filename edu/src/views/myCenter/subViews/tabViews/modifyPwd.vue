@@ -4,7 +4,7 @@
 <template>
     <div class="modifyPwd">
        <div class="form-wrap">
-           <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="100px" class="pwdForm dark" id="pwdForm">
+           <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2"  class="pwdForm dark" id="pwdForm">
                <el-form-item prop="oldPwd">
                    <el-input type="password" v-model="ruleForm2.oldPwd" placeholder="输入当前密码" auto-complete="off" name="oldPwd"></el-input>
                </el-form-item>
@@ -25,11 +25,9 @@
     .modifyPwd{
         background: #21273d;
         overflow: hidden;
-
         .form-wrap{
-            width: 350px;
-            margin: 67px auto 134px auto;
-
+            width: 300px;
+            margin: 100px auto;
             .el-button{
                 width: 100%;
             }
