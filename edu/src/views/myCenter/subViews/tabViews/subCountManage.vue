@@ -492,19 +492,20 @@
                 });
             }
         },
-        mounted(){
-          this.$http.post("/apis/user/getMemberInfo.json").then(res=>{
-              this.subAccountNum = res.data.data.subAccountNum;
-              this.accountType = res.data.data.accountType;
-               if(res.data.data.accountType=="试用"){
+        mounted() {
+            this.$http.post("/apis/user/getMemberInfo.json").then(res => {
+                this.subAccountNum = res.data.data.subAccountNum;
+                this.accountType = res.data.data.accountType;
+                if (this.accountType=="试用") {
                     this.addAccount = true;
-                }else{
+                } else {
                     this.addAccount = false;
                 }
-              this.getChildAccount();
-          },err=>{
-              console.log(err);
-          })
+                this.getChildAccount();
+                },
+                err => {
+                    console.log(err);
+                });
         },
         created(){
             this.setBreadCrumb();
