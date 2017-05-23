@@ -187,6 +187,8 @@
                     permissions: ''
                 },
                 addAccount:true,
+                subAccountNum: 0,
+                accountType: '',
                 formLabelWidth: "100px",
                 rules:{
                     userAccount: [
@@ -366,6 +368,11 @@
                       }
                       this.tableData = data;
                       this.total = res.data.data.totalElements;
+                      if (this.total >= this.subAccountNum) {
+                          this.addAccount = true;
+                      } else if (this.accountType != '试用') {
+                          this.addAccount = false;
+                      }
                       for(var i in this.tableData){
                           if(this.tableData[i].status == 0){
                               this.tableData[i].switchStatus = true;
@@ -486,13 +493,15 @@
             }
         },
         mounted(){
-          this.getChildAccount();
           this.$http.post("/apis/user/getMemberInfo.json").then(res=>{
+              this.subAccountNum = res.data.data.subAccountNum;
+              this.accountType = res.data.data.accountType;
                if(res.data.data.accountType=="试用"){
                     this.addAccount = true;
                 }else{
                     this.addAccount = false;
                 }
+              this.getChildAccount();
           },err=>{
               console.log(err);
           })
