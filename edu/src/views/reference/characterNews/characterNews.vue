@@ -17,6 +17,7 @@
                 </div>
                 <div class="content-bar-page">
                     <el-pagination class="edu-pagination"
+                                    v-initjump = "param.pageNumber + 1"
                                    @current-change="handleCurrentChange"
                                    :current-page="param.pageNumber + 1"
                                    :page-size="param.pageSize"
@@ -244,6 +245,7 @@
                 }
             }
         },
+
         mounted(){
             this.getAllEvent();
             this.$nextTick(function () {

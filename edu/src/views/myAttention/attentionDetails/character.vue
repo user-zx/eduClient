@@ -15,6 +15,7 @@
                 </div>
                 <div class="content-bar-pagination">
                     <el-pagination class="edu-pagination"
+                                  v-initjump = 'currentPage'
                                    @size-change="handleSizeChange"
                                    @current-change="handleCurrentChange"
                                    :current-page="currentPage"
