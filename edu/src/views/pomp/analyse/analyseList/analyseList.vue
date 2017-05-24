@@ -71,6 +71,7 @@
             },
             pageChange(param) {
                 this.param.pageNumber = param.pageNumber;
+              //  console.log( this.param.pageNumber);
                 this.param.orders = param.orders;
                 this.getArticleList();
             },

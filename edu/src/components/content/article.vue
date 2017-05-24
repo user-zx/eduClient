@@ -24,12 +24,13 @@
             </div>
             <div class="content-bar-page">
                 <el-pagination class="edu-pagination"
+                                v-initjump = "pageIndex"
                                @current-change="handleCurrentChange"
-                               :current-page="pageNumber + 1"
+                               :current-page="pageIndex"
                                :page-size="5"
                                layout="prev, next, jumper, total"
                                :total="total">
-                </el-pagination>
+                </el-pagination> 
             </div>
         </div>
         <div class="article-container" id="articleContainer" :data="articleDataNew">
@@ -264,6 +265,8 @@
 
             },
             handleCurrentChange(pageNumber) {
+                /*console.log(pageNumber);
+                console.log(this.pageIndex);*/
                 //每次分页  之前选中的状态都取消
                 this.allSelect = false;
                 this.handleCheckedCitiesChange([]);
@@ -321,6 +324,11 @@
                 this.warnPermission = this.$root.$children[0].$children[0].warnPermission;
                 this.eventPermission = this.$root.$children[0].$children[0].eventPermission;
             });
+        },
+        computed:{
+            pageIndex:function(){
+                return  this.pageNumber + 1;
+            }
         },
         watch:{
             articleData:function(val,oldval){

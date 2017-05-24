@@ -3,7 +3,6 @@
  */
 
 exports.install = function (Vue, options) {
-
     /**
      * 按照宽高比例压缩图片
      * @param canvas

@@ -9,6 +9,7 @@ import routerConfig from './router.config';
 import './utils';
 import vueConfig from './store.config';
 import imgUtils from './imgUtil'; 
+import page from './components/currentPage.js';
 import "vue-style-loader!css-loader!sass-loader!./assets/css/style.scss";
 import 'vue-style-loader!css-loader!sass-loader!element-ui/lib/theme-default/index.css'
 Vue.config.debug=true;
@@ -17,6 +18,7 @@ Vue.use(vueRouter);
 Vue.use(vueResource);
 Vue.use(Vuex);
 Vue.use(imgUtils);
+Vue.use(page);
 const router =new vueRouter(routerConfig);
 const store = new Vuex.Store(vueConfig);
 Vue.http.interceptors.push((request, next) => {
@@ -24,8 +26,8 @@ Vue.http.interceptors.push((request, next) => {
         if (response.status == 403) {
             window.location.href="/login";
         } else if(response.status >= 500) {
-            // window.location.href="/500";
-            console.log(response);
+             window.location.href="/500";
+            //console.log(response);
         }
     });
 });
