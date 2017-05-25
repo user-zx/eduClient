@@ -78,9 +78,11 @@
             </el-table>
             <div class="block content-bar-pagination">
                 <el-pagination class="edu-pagination"
+                               v-initjump = 'currentPage' 
+                               :current-page="currentPage"
                                @current-change="handleCurrentChange"
                                :page-size= "param.pageSize"
-                               layout="total, prev, next, jumper"
+                               layout="prev, next, jumper, total"
                                :total="total">
                 </el-pagination>
             </div>
@@ -291,8 +293,8 @@
                 username:"",
                 time:"",
                 param: {
-                    pageSize:　10,
-                    pageNumber: 0
+                    pageSize:　5,
+                    pageNumber: 0,
                 },
                 usetDataList:{},
                 surplusCollege:"",
@@ -367,12 +369,13 @@
                 this.$parent.currentTabs.currentTab = "subCount";
             },
 
-            handleCurrentChange(pageNumber) {
-                this.param.pageNum = pageNumber - 1;
+            handleCurrentChange(pageNumber) { 
+                this.param.pageNumber = pageNumber -1;
                 this.getDataList();
             },
 
             getDataList(){
+                 //console.log(this.param);
                 this.$http.post("/apis/packageManage/getPackageOrderList.json", this.param).then((res)=>{
                     if(res.data.success){
                         this.total = res.data.data.totalElements;
@@ -434,6 +437,11 @@
                     return new Date(row.expireDate).format('yyyy-MM-dd');
                 }
                 return '';
+            }
+        },
+        computed:{
+            currentPage:function(){
+              return  this.param.pageNumber + 1;
             }
         },
         mounted(){

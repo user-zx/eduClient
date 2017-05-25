@@ -39,7 +39,7 @@
             return {
                 loading: false,
                 searchNames: ['university', 'dimension', 'vector', 'emotion', 'publishDateTime'],
-                currentPage: 1,
+               
                 order0: "DESC",
                 getBodyData:{
                     personageType:[],
@@ -50,7 +50,7 @@
                 total:0,
                 labelPosition: 'left',
                 getPersonList: [],
-                params:{},
+                params:{pageNumber:1},
                 removeParams:{},
                 eventPermission: true
             }
@@ -76,7 +76,7 @@
                console.log(this.removeParams.concernsContent);
             },
             cancelAttention(){
-            console.log(this.removeParams.concernsContent);
+            //console.log(this.removeParams.concernsContent);
              if(!this.removeParams.concernsContent||this.removeParams.concernsContent.length==0){
                 this.$message("未选择人物");
                 return false;
@@ -140,7 +140,9 @@
                       }else{
                         this.total = 0;
                       }
+                      console.log(this.$refs);
                       this.$refs.table.getTableDataEvent()
+
                       this.loading = false;
                   }
               },(err)=>{
@@ -181,14 +183,18 @@
                 );
             }
         },
-
+        computed:{
+           currentPage:function(){
+             return this.params.pageNumber + 1;
+           }
+        },
         mounted(){
             this.$nextTick(function () {
                 this.eventPermission = this.$root.$children[0].$children[0].eventPermission;
             });
         },
         created(){
-         
+
         },
         watch:{  
           

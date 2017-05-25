@@ -12,6 +12,7 @@
                 </div>
                 <div class="content-bar-pagination">
                     <el-pagination class="edu-pagination"
+                                    v-initjump = 'currentPage'
                                    @current-change="handleCurrentChange"
                                    :current-page="currentPage"
                                    :page-size="10"
@@ -81,7 +82,7 @@
     export default{
         data(){
             return {
-                currentPage: 1,
+               
                 total: 0,
                 loading: false,
                 param: {
@@ -136,7 +137,7 @@
                  this.param.university = data.university; 
                  this.param.startDate = data.startDate;
                  this.param.endDate = data.endDate;
-                this.currentPage = 1;   
+              
                 this.param.pageSize = 10;
                 this.param.pageNumber = 0;
                 this.getWeiboData(); 
@@ -144,7 +145,7 @@
             getWeiboData(){
                 this.tableData = [];
                 this.loading = true;
-               // console.log(this.param);  
+                console.log(this.param);  
                 this.$http.post("/apis/concerns/getMicroblogData.json",this.param).then((res)=>{
                     if(res.data.success){
                         if (res.data.data.page) {
@@ -199,6 +200,11 @@
                     }
                 );
             }
+        },
+        computed:{
+             currentPage:function(){
+                return this.param.pageNumber + 1;
+             }
         },
         created(){
 
