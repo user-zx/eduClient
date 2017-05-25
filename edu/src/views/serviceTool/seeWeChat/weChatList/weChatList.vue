@@ -32,15 +32,10 @@
                         <el-table-column :show-overflow-tooltip="true" prop="publishTel" label="发布人电话" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="authcStatus" label="认证情况" align="center" width="110px">
                             <template scope="scope">
-                                <span v-if="scope.row.authcStatus == '1'">已认证</span>
-                                <span v-else>
+                                <span v-if="scope.row.authcStatus == '1'" @click="editWechat(scope.row)" class="pointer">已认证</span>
+                                <span v-else @click="editWechat(scope.row)" class="pointer">
                                     未认证
                                 </span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="操作" align="center" width="80">
-                            <template scope="scope">
-                                <el-button type="text" @click="editWechat(scope.row)">编辑</el-button>
                             </template>
                         </el-table-column>
                     </el-table>

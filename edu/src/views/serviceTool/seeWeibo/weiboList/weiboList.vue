@@ -34,16 +34,10 @@
                         <el-table-column :show-overflow-tooltip="true" prop="publishTel" label="发布人电话" align="center"></el-table-column>
                         <el-table-column :show-overflow-tooltip="true" prop="authcStatus" label="认证情况" align="center" width="110">
                             <template scope="scope">
-                                <span v-if="scope.row.authcStatus == '1'">已认证</span>
-                                <span v-else>
+                                <span v-if="scope.row.authcStatus == '1'" @click="editWeibo(scope.row)" class="pointer">已认证</span>
+                                <span v-else @click="editWeibo(scope.row)" class="pointer">
                                     未认证
-                                    <!--，<span class="blue pointer" @click="toVerified(scope.row)">去认证</span>-->
                                 </span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column align="center" label="操作" width="80">
-                            <template scope="scope">
-                                <el-button size="small" type="text" @click="editWeibo(scope.row)">编辑</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
