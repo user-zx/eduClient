@@ -12,6 +12,7 @@
                 </div>
                 <div class="content-bar-pagination">
                     <el-pagination class="edu-pagination"
+                                   v-initjump = 'currentPage'
                                    @current-change="handleCurrentChange"
                                    :current-page="currentPage"
                                    :page-size="10"
@@ -64,7 +65,6 @@
         data(){
             return {
                 loading: false,
-                currentPage: 1,
                 total: 0,
                 param: {
                     pageSize: 10,
@@ -102,7 +102,6 @@
                 this.param.authcStatus = data.verified; 
                 this.param.startDate = data.startDate;
                  this.param.endDate = data.endDate;
-                this.currentPage = 1;
                 this.param.pageSize = 10;
                 this.param.pageNumber = 0;
                 this.getWechatData();
@@ -144,7 +143,7 @@
                },err=>{
                   console.log(err);
                })
-            },
+            }, 
 
             onSaveEvent(eventId){
                 if(this.removeParams.concernsContent == undefined || this.removeParams.concernsContent.length == 0){
@@ -178,6 +177,11 @@
                     }
                 );
             }
+        },
+        computed:{
+             currentPage:function(){
+                return this.param.pageNumber + 1;
+             }
         },
         created(){
 

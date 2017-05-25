@@ -118,7 +118,7 @@
             .ruleForm{
                 width: 400px;
                 margin: 0 auto;
-                padding: 25px 20px;
+                padding: 0 20px;
             }
             .login-title{
                 span{
