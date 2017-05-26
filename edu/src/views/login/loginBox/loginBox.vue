@@ -9,7 +9,7 @@
         <el-form :model="ruleForm" action="/apis/login.do" method="post" :rules="rules" ref="ruleForm" label-width="70px" class="ruleForm" >
             <el-form-item label="账号：" prop="user" class="login-input-box">
                 <span class="userNameImg"></span>
-                <el-input type="text" name="username" icon="username" v-model="ruleForm.user" placeholder="请输入账号"  ></el-input>
+                <el-input type="text" name="username" icon="username" v-model="ruleForm.user" placeholder="请输入账号/手机号/邮箱"  ></el-input>
             </el-form-item>
             <el-form-item label="密码：" prop="pass" class="login-input-box">
                 <span class="passwordImg"></span>
@@ -46,12 +46,11 @@
                 },
                 rules:{
                     user:[
-                        { required: true, message: '请输入账号', trigger: 'blur' },
-                        { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
+                        { required: true, message: '请输入账号/手机号/邮箱', trigger: 'blur' },
                     ],
                     pass:[
                         {required: true, message: '请输入密码', trigger: 'blur'},
-                        { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
+                        { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
                     ]
                 }
             }

@@ -7,14 +7,8 @@
             <span>申请试用</span>
         </h1>
         <el-form :model="form" method="post" :rules="rules" ref="ruleForm" label-width="0" class="ruleForm dark">
-            <el-form-item label="" prop="realName">
-                <el-input v-model="form.realName" placeholder="请输入您的称呼"></el-input>
-            </el-form-item>
-            <el-form-item label="" prop="collegeName">
-                <el-input v-model="form.collegeName" placeholder="请输入您所在高校全称"></el-input>
-            </el-form-item>
-            <el-form-item label="" prop="userDepartment">
-                <el-input v-model="form.userDepartment" placeholder="请输入您的职称"></el-input>
+            <el-form-item label="" prop="userAccount">
+                <el-input v-model="form.userAccount" placeholder="请输入账号, 3-20位英文数字组合"></el-input>
             </el-form-item>
             <el-form-item label="" prop="userPhone">
                 <el-input v-model="form.userPhone" placeholder="请输入手机号"></el-input>
@@ -26,17 +20,27 @@
                 <el-col :span="2">
                 </el-col>
                 <el-col :span="11" class="text-center">
-                    <img src="/apis/security/captcha.do" ID="captcha" onclick="this.src = this.src + '?' + Math.random()"/>
+                    <el-button type="primary" @click="getCaptcha()" :disabled="disabled">{{msg}}</el-button>
                 </el-col>
             </el-form-item>
             <el-form-item label="" prop="userEmail">
                 <el-input v-model="form.userEmail" placeholder="请输入邮箱"></el-input>
             </el-form-item>
-            <el-form-item label="" prop="position">
-                 <el-col :span="24">
-                   <el-cascader size="large" :options="options" v-model="position" @change="handleChange" class="edu-cascader"  placeholder="请输入您的所在地">
-                   </el-cascader>
-                 </el-col>
+            <el-form-item label="" prop="collegeName">
+
+                <el-select filterable v-model="form.collegeName" placeholder="请选择大学名称">
+                    <el-option-group
+                            v-for="group in options"
+                            :key="group.label"
+                            :label="group.label">
+                        <el-option
+                                v-for="item in group.options"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                        </el-option>
+                    </el-option-group>
+                </el-select>
             </el-form-item>
             <el-form-item label="">
                 <el-button type="primary submit" @click="submitForm('ruleForm')">提交申请</el-button>
@@ -44,8 +48,17 @@
         </el-form>
     </div>
 </template>
+<style lang="scss">
+    .el-select {
+        width: 100%;
+    }
+    .el-icon-close {
+        display: none !important;
+    }
+</style>
 <script>
-    import {regionData,CodeToText} from "element-china-area-data"
+    import {regionData,CodeToText} from "element-china-area-data";
+    import schools from "../../../school.json";
     export default{
         data(){
             let userPhone = (rule, value, callback) => {
@@ -59,32 +72,37 @@
                     callback();
                 }
             };
+            let userAccount = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入账号'));
+                } else {
+                    let reg = /^[a-zA-Z\d]{3,20}$/;
+                    if (!reg.test(value)) {
+                        callback(new Error('请输入3-20位英文数字组合'));
+                    }
+                    callback();
+                }
+            };
             return {
-                msg:"申请试用",
-                options: regionData,
-                position: [],
+                msg:"获取验证码",
+                disabled: false,
+                options: schools,
                 form: {
-                    realName: '',
+                    userAccount: '',
                     collegeName: '',
-                    userDepartment: '',
                     userPhone: '',
                     userEmail: '',
                     captcha: '',
-                    area:'',
-                    areaCode:'',
+                    type: 'register',
                 },
                 rules:{
-                    realName:[
-                        {required:true, message:"请输入称呼", trigger: 'blur' },
-                        {min:2,max:10,message: "长度在 2 到 10 个字符",trigger: 'blur' },
+                    userAccount: [
+                        {required:true, message:"请输入账号", trigger: 'blur' },
+                        {validator: userAccount,trigger: 'blur' },
                     ],
                     collegeName:[
                         {required:true, message:"请输入高校全称", trigger: 'blur' },
-                        {min:4,max:20,message: "长度在 4 到 20 个字符",trigger: 'blur' },
-                    ],
-                    userDepartment:[
-                        {required:true, message:"请输入职称", trigger: 'blur' },
-                        {min:2,max:10,message: "长度在 2 到 10 个字符",trigger: 'blur' },
+                        {min:4,max:20,message: "长度在 4 到 20 个字符",trigger: 'change' },
                     ],
                     userPhone:[
                         {required:true, message:"请输入手机号", trigger: 'blur' },
@@ -96,7 +114,7 @@
                     ],
                     captcha:[
                         {required:true, message:"请输入验证码", trigger: 'blur' },
-                        {min:4,max:4,message: "长度在 4 个字符",trigger: 'blur' },
+                        {min:6,max:6,message: "长度在 6 个字符",trigger: 'blur' },
                     ]
                 }
             }
@@ -106,20 +124,16 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        if (!this.form.area) {
-                            this.$message({
-                                message: "所在地不能为空",
-                                type: 'error'
-                            });
-                            return false;
-                        }
                         this.$http.post('/apis/addTrial.json', this.form).then((response) => {
                             if (response.data.success) {
-                                this.$message({
-                                    message: '申请成功, 我们会尽快处理',
-                                    type: 'success'
-                                });
                                 this.resetForm(formName);
+                                this.$alert('提交成功，审核通过后您将收到短信通知', {
+                                    confirmButtonText: '确定',
+                                    type: 'success',
+                                    callback: action => {
+                                        this.$router.push({path:"/login"});
+                                    }
+                                });
                             } else {
                                 this.$message({
                                     message: response.data.message,
@@ -142,21 +156,42 @@
                 /*重置表单*/
                 this.$refs[formName].resetFields();
             },
-            handleChange(val){
-                let str = "";
-                for (var i = 0; i < val.length; i++) {
-                    if(i == val.length-1){
-                        str += val[i];
-                    }else{
-                         str += val[i] + ","
-                    }
+            getCaptcha() {
+                let vm = this;
+                let reg = /^1(3|4|5|7|8)\d{9}$/;
+                if (this.form.userPhone === '') {
+                    this.$message({message:'手机号不能为空',type:"error"});
+                    return;
                 }
-                this.form.areaCode = str;
-                this.form.area = CodeToText[this.position[0]].replace("省", "").replace("市", "");
+                if (!reg.test(this.form.userPhone)) {
+                    this.$message({message:'请输入正确的手机号',type:"error"});
+                    return;
+                }
+                this.disabled = true;
+                this.$http.post('/apis/getPhoneCaptcha.json', {phoneNumber: this.form.userPhone, type: 'register'}).then((response) => {
+                        if (response.data.success) {
+                            let num = 60;
+                            this.msg = '重新发送(' + num + ')';
+                            let cleanId = setInterval(() => {
+                                num --;
+                                vm.msg = '重新发送(' + num + ')';
+                            }, 1000);
+                            setTimeout(() => {
+                                clearInterval(cleanId);
+                                this.msg = '重新发送';
+                                this.disabled = false;
+                            }, 60 * 1000);
+                        } else {
+                            this.$message({message:response.data.message,type:"error"});
+                            this.disabled = false;
+                            return false;
+                        }
+                    }, (response) => {
+                        console.error(response);
+                        return false;
+                    }
+                );
             }
-        },
-        mounted(){
-            console.log($(".edu-cascader").html());
         }
     }
 </script>
