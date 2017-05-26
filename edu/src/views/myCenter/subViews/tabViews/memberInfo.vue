@@ -5,8 +5,8 @@
     <div class="memberInfo">
         <div class="form-wrap">
             <el-form :model="memberForm" :rules="rules" ref="memberForm" label-width="100px" class="member-form dark">
-                <el-form-item label="用户名" prop="realName">
-                    <el-input v-model="memberForm.realName" :disabled="true"></el-input>
+                <el-form-item label="用户名" prop="userAccount">
+                    <el-input v-model="memberForm.userAccount" :disabled="true"></el-input>
                 </el-form-item>
                 <el-form-item label="注册时间" prop="createDateFormat">
                     <el-input v-model="memberForm.createDateFormat" :disabled="true"></el-input>
