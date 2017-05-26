@@ -55,10 +55,6 @@
                     newPassword: '',
                 },
                 rules: {
-                    collegeName:[
-                        { required: true, message: '请输入高校全称', trigger: 'blur' },
-                        { min: 4, max: 20, message: '长度在 4 到 20 个字符', trigger: 'blur' }
-                    ],
                     phoneNumber:[
                         {validator: userPhone,trigger: 'blur' },
                     ],
@@ -67,7 +63,7 @@
                     ],
                     newPassword: [
                         { required: true, message: '请输入密码', trigger: 'blur' },
-                        { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
+                        { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' }
                     ]
                 }
             }
