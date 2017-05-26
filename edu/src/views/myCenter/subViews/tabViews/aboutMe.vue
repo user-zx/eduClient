@@ -40,14 +40,15 @@
     export default{
         data(){
             var validPhone = (rule, value, callback) => {
-                if(value == ''){
-                    return callback(new Error('请输入手机号码'));
+                if (value === '') {
+                    callback(new Error('联系电话不能为空'));
+                } else {
+                    let cellPhone = /^1(3|4|5|7|8)\d{9}$/, phone = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
+                    if(!cellPhone.test(value) && !phone.test(value)){
+                        callback(new Error('请输入正确手机号或座机号'));
+                    }
+                    callback();
                 }
-                let phoneReg =  /^1(3|4|5|7|8)\d{9}$/;
-                if(!phoneReg.test(value)){
-                    return callback(new Error('手机号码格式不正确'));
-                }
-                callback();
             };
             return{
                 formLabelWidth: '100px',
