@@ -402,7 +402,7 @@
                             this.activeClass = false;
                         }
                         this.imgUrl = res.data.data.userImg;
-                        this.username = res.data.data.realName;
+                        this.username = res.data.data.userAccount;
                         this.time = new Date(res.data.data.createDate).format('yyyy-MM-dd hh:mm');
                         this.usetDataList.colleges = res.data.data.collegeNum;
                         this.usetDataList.peoson = res.data.data.personageNum; 
