@@ -60,7 +60,6 @@
             getOperateLogs(){
                 this.$http.post('/apis/user/getUserOperation.json', this.param).then(
                     function (response) {
-                        console.log(response);
                         if(response.data.success){
                             let data = response.data.data.content;
                             if(data != null && data.length > 0){
