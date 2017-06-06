@@ -284,7 +284,7 @@
                 activeClass:false,
                 isShow:false,
                 item_one:["全景舆情","舆情监测","舆情预警","事件监测","舆情报告"],
-                item_two:["行业动态","人物动态","媒体声量","两微洞察","内参报告"],
+                item_two:["行业动态","人物动态","媒体声誉","两微洞察","内参报告"],
                 item_three:["两微监管"],
                 showOne:[],
                 showTwo:[],
