@@ -70,7 +70,7 @@
                          $("#top-title .topCenter").css("color","#fefefe")
                     }
                     if(val){
-                        let url=val.split('/')[2],nowNav=null;
+                        let url=val.split('/')[2],nowNav=null;console.log(url)
 
                         if(url.indexOf("panorama")!= -1) nowNav="panorama";
                         if(url.indexOf("event")!= -1) nowNav="event";

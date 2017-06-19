@@ -651,7 +651,9 @@
                 this.parentEndDate =  data.endDate.substring(0,10);
             }
 
-            this.setBreadCrumb();
+            if(!data.breadcrumb){
+                this.setBreadCrumb();
+            }
         },
         mounted(){
             echarts.registerTheme('vintage', vintage);

@@ -200,6 +200,26 @@ export default {
                     ]
                 },
                 {
+                    path: 'seeClearlyWeibo',
+                    component: seeClearlyIndex,
+                    children: [
+                        {
+                            path: "",
+                            component: weiboDetail
+                        }
+                    ]
+                },
+                {
+                    path: 'seeClearlyWechat',
+                    component: seeClearlyIndex,
+                    children: [
+                        {
+                            path: "",
+                            component: weChatDetail
+                        }
+                    ]
+                },
+                {
                     name:"媒体声量",
                     path:"mediaCoverage",
                     component:mediaCoverage

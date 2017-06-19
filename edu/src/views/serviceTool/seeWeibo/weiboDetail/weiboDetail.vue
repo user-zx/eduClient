@@ -303,13 +303,8 @@
                 //上一级传来的结束时间  格式化为 1970-01-01
                 parentEndDate: '',
                 concerned:　false,
-                warnPermission: true
-            }
-        },
-        components:　{articleView, warnDropDown},
-        methods: {
-            setBreadCrumb(){
-                let breadcrumb=[
+                warnPermission: true,
+                breadcrumb: [
                     {
                         name:"业务平台",to:{path:"/home/seeWeibo"}
                     },
@@ -319,8 +314,13 @@
                     {
                         name: "指数详情"
                     }
-                ];
-                this.$store.commit("setBreadCrumb",breadcrumb);
+                ]
+            }
+        },
+        components:　{articleView, warnDropDown},
+        methods: {
+            setBreadCrumb(){
+                this.$store.commit("setBreadCrumb", this.breadcrumb);
             },
             handleCurrentChange(pageNumber) {
                 //后台是从0开始
@@ -653,7 +653,10 @@
                 this.articleParam.endDate = this.blogData.endDate;
                 this.parentEndDate = this.blogData.endDate.substring(0,10);
             }
-            this.setBreadCrumb();
+
+            if(!this.$route.query.breadcrumb){
+                this.setBreadCrumb();
+            }
         },
         mounted(){
             echarts.registerTheme('vintage', vintage);

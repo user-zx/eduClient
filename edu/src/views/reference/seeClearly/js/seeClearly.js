@@ -420,12 +420,16 @@
             toWeiboDetail(data){
                 data.startDate = this.param1.startDate;
                 data.endDate = this.param1.endDate;
-                this.$router.push({path:"/home/weiboDetail", query: data});
+                data.breadcrumb = true;
+                this.$parent.setBreadCrumb('weibo');
+                this.$router.push({path:"/home/seeClearlyWeibo", query: data});
             },
             toWechatDetail(data){
                 data.startDate = this.param2.startDate;
                 data.endDate = this.param2.endDate;
-                this.$router.push({path:"/home/weChatDetail", query: data});
+                data.breadcrumb = true;
+                this.$parent.setBreadCrumb('wechat');
+                this.$router.push({path:"/home/seeClearlyWechat", query: data});
             },
             batchConcerned() {
 
