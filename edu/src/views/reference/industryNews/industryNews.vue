@@ -25,7 +25,7 @@
                         name:"情报内参",to:{path:"/"}
                     },
                     {
-                        name:"行业动态",to:{path:"/industryNews"}
+                        name:"行业动态"
                     }
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);

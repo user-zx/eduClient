@@ -46,7 +46,7 @@ export default{
                     name: "人物动态", to: {path: "/home/characterNews"}
                 },
                 {
-                    name: "人物详情"
+                    name: "人物分析"
                 }
             ];
             this.$store.commit("setBreadCrumb", breadcrumb);

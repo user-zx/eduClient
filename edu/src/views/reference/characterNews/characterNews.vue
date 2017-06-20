@@ -94,7 +94,7 @@
                         name:"情报内参",to:{path:"/"}
                     },
                     {
-                        name:"人物动态",to:{path:"/characterNews"}
+                        name:"人物动态"
                     }
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);

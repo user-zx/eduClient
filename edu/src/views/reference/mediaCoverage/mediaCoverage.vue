@@ -49,7 +49,7 @@
                         name:"情报内参",to:{path:"/"}
                     },
                     {
-                        name:"媒体声誉",to:{path:"/characterNews"}
+                        name:"媒体声誉"
                     }
                 ];
                 this.$store.commit("setBreadCrumb", breadcrumb);
