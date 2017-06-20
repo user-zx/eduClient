@@ -10,6 +10,8 @@ import speechList from './views/pomp/speech/speechList/speechList.vue';
 import speechDetails from './views/pomp/speech/speechDetails/speechDetails.vue';
 import industryNews from './views/reference/industryNews/industryNews.vue';
 import characterNews from './views/reference/characterNews/characterNews.vue';
+import characterIndex from "./views/reference/characterNews/characterIndex.vue";
+import characterAnalyse from "./views/reference/characterNews/characterAnalyse.vue";
 import seeClearlyIndex from './views/reference/seeClearly/index.vue';
 import seeClearly from './views/reference/seeClearly/seeClearly.vue';
 import seeClearlyMore from './views/reference/seeClearly/moreInfo.vue';
@@ -32,7 +34,6 @@ import eventDetails from './views/pomp/event/eventDetails/eventDetails.vue';
 import eventList from './views/pomp/event/evenList/eventList.vue';
 import publicOpinionRule from "./views/pomp/warning/publicOpinionRule.vue";
 import analyseList from "./views/pomp/analyse/analyseList/analyseList.vue";
-import characterAnalyse from "./views/pomp/analyse/characterAnalyse/characterAnalyse.vue";
 import characterTable from "./views/pomp/analyse/characterTable/characterTable.vue";
 import industryNewsList from "./views/reference/industryNews/newsList/industryNewsList.vue"
 import industryDetailNews from "./views/reference/industryNews/newsDetail/industryDetailNews.vue";
@@ -55,7 +56,7 @@ export default {
     routes:[
         {
             path:"/",
-            redirect:"/home/panorama",
+            redirect:"/home/industryNews",
         },
         {
             name:"home",
@@ -106,16 +107,6 @@ export default {
                         {
                             path: "",
                             component: characterTable
-                        }
-                    ]
-                },
-                {
-                    path: "characterAnalyse",
-                    component: analyse,
-                    children: [
-                        {
-                            path: "",
-                            component: characterAnalyse
                         }
                     ]
                 },
@@ -177,7 +168,23 @@ export default {
                 {
                     name:"人物动态",
                     path:"characterNews",
-                    component:characterNews
+                    component:characterIndex,
+                    children: [
+                        {
+                            path: '',
+                            component: characterNews
+                        }
+                    ]
+                },
+                {
+                    path: "characterAnalyse",
+                    component: characterIndex,
+                    children: [
+                        {
+                            path: "",
+                            component: characterAnalyse
+                        }
+                    ]
                 },
                 {
                     path:"seeClearly",

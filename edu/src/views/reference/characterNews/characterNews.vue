@@ -1,7 +1,6 @@
 
 <template>
     <div class="characterNews article-wrap" v-loading="loading" element-loading-text="加载中……">
-        <bread-crumb></bread-crumb>
         <cascadeBox  @onSearchLoad="onSearchLoad" @onSearchChange="onSearchChange"></cascadeBox>
         <div class="content dark">
 
@@ -62,7 +61,6 @@
 </template>
 <script>
     import characterTable from '../../../components/content/characterTable.vue';
-    import breadCrumb from "../../../components/breadCrumb/breadCrumb.vue";
     import cascadeBox from "../../../components/searchBox/cascadeBox.vue";
     import dropDown from "../../../components/dropdown/dropdown.vue";
     export default{
@@ -88,7 +86,7 @@
                 eventPermission: true
             }
         },
-        components:{breadCrumb, cascadeBox, dropDown, characterTable} ,
+        components:{cascadeBox, dropDown, characterTable} ,
         methods:{
             setBreadCrumb(){
                 let breadcrumb=[

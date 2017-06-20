@@ -280,7 +280,7 @@
     </div>
 </template>
 <style lang="scss" scoped>
-    $img-url:url("../../../../assets/images/zhongtubiao@1x.png") no-repeat;
+    $img-url:url("../../../assets/images/zhongtubiao@1x.png") no-repeat;
     .icons-chart1{
         width: 22px;
         height: 23px;

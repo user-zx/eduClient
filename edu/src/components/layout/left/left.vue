@@ -8,18 +8,18 @@
                 <img src="../../../assets/images/logo.png" alt="logo" />
             </a>
         </div>
-        <el-menu mode="vertical" :default-active="routerName" :router="true" :unique-opened="true" class="el-menu-vertical" @open="handleOpen" @close="handleClose">
-            <el-submenu index="home" v-show="showPomp">
-                <template slot="title"><i class="nav-icon nav-icon1"></i>舆情管理</template>
-                <el-menu-item-group>
-                    <el-menu-item v-if="permissions.indexOf(22) != -1" index="panorama">全景舆情</el-menu-item>
-                    <el-menu-item v-if="permissions.indexOf(12) != -1" index="analyse">舆情监测</el-menu-item>
-                    <el-menu-item v-if="permissions.indexOf(21) != -1" index="warning">舆情预警</el-menu-item>
-                    <el-menu-item v-if="permissions.indexOf(13) != -1" index="event">事件监测</el-menu-item>
-                    <el-menu-item v-if="permissions.indexOf(14) != -1" index="speech">舆情报告</el-menu-item>
-                </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2" v-show="showReference">
+        <el-menu mode="vertical" :default-active="routerName" :router="true" :unique-opened="true" class="el-menu-vertical">
+            <!--<el-submenu index="home" v-show="showPomp">-->
+                <!--<template slot="title"><i class="nav-icon nav-icon1"></i>舆情管理</template>-->
+                <!--<el-menu-item-group>-->
+                    <!--<el-menu-item v-if="permissions.indexOf(22) != -1" index="panorama">全景舆情</el-menu-item>-->
+                    <!--<el-menu-item v-if="permissions.indexOf(12) != -1" index="analyse">舆情监测</el-menu-item>-->
+                    <!--<el-menu-item v-if="permissions.indexOf(21) != -1" index="warning">舆情预警</el-menu-item>-->
+                    <!--<el-menu-item v-if="permissions.indexOf(13) != -1" index="event">事件监测</el-menu-item>-->
+                    <!--<el-menu-item v-if="permissions.indexOf(14) != -1" index="speech">舆情报告</el-menu-item>-->
+                <!--</el-menu-item-group>-->
+            <!--</el-submenu>-->
+            <el-submenu index="1" v-show="showReference">
                 <template slot="title"><i class="nav-icon nav-icon2"></i>情报内参</template>
                 <el-menu-item-group>
                     <el-menu-item v-if="permissions.indexOf(15) != -1" index="industryNews">行业动态</el-menu-item>
@@ -29,6 +29,10 @@
                     <el-menu-item v-if="permissions.indexOf(19) != -1" index="report">内参报告</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
+            <el-menu-item index="/">
+                <i class="nav-icon nav-icon1"></i>
+                <a href="/apis/opinionButler/redirect" target="_blank">舆情管理</a>
+            </el-menu-item>
             <el-submenu index="3"  v-if="permissions.indexOf(20) != -1" v-show="showServiceTool">
                 <template slot="title"><i class="nav-icon nav-icon3"></i>业务平台</template>
                 <el-menu-item-group>
@@ -93,10 +97,6 @@
             }
         },
         methods:{
-            handleOpen(key, keyPath) {
-            },
-            handleClose(key, keyPath) {
-            },
             onPermissionsLoad(permissions) {
                 this.permissions = permissions;
                 //为了解决禅道2832: 左侧一级菜单下，二级菜单都没权限，则不显示一级菜单的问题  目前能想到的解决方案是这个了... 后期谁有更好的idea 再修改

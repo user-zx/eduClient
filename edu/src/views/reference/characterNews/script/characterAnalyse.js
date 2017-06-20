@@ -3,9 +3,9 @@
  */
 import "vue-style-loader!css-loader!sass-loader!../css/characterAnalyse.scss";
 import echarts from "echarts";
-import vintage from "../../../../../vintage.json";
-import dropDown from "../../../../../components/dropdown/dropdown.vue";
-import warnDropDown from "../../../../../components/dropdown/warnDropDown.vue";
+import vintage from "../../../../vintage.json";
+import dropDown from "../../../../components/dropdown/dropdown.vue";
+import warnDropDown from "../../../../components/dropdown/warnDropDown.vue";
 import "echarts-wordcloud";
 
 export default{
@@ -40,13 +40,13 @@ export default{
         setBreadCrumb(){
             let breadcrumb = [
                 {
-                    name: "舆情管理", to: {path: "/"}
+                    name: "情报内参", to: {path: "/"}
                 },
                 {
-                    name: "舆情监测", to: {path: "/home/analyse"}
+                    name: "人物动态", to: {path: "/home/characterNews"}
                 },
                 {
-                    name: "人物分析"
+                    name: "人物详情"
                 }
             ];
             this.$store.commit("setBreadCrumb", breadcrumb);
