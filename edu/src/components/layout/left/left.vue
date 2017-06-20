@@ -29,7 +29,7 @@
                     <el-menu-item v-if="permissions.indexOf(19) != -1" index="report">内参报告</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
-            <el-menu-item index="/">
+            <el-menu-item index="">
                 <i class="nav-icon nav-icon1"></i>
                 <a href="/apis/opinionButler/redirect" target="_blank">舆情管理</a>
             </el-menu-item>
