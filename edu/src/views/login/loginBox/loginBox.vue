@@ -6,7 +6,7 @@
         <h1 class="login-title">
             <span>登录</span>
         </h1>
-        <el-form :model="ruleForm" action="/apis/login.do" method="post" :rules="rules" ref="ruleForm" label-width="70px" class="ruleForm" >
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="70px" class="ruleForm" >
             <el-form-item label="账号：" prop="user" class="login-input-box">
                 <span class="userNameImg"></span>
                 <el-input type="text" name="username" icon="username" v-model="ruleForm.user" placeholder="请输入账号/手机号/邮箱"  ></el-input>
@@ -68,8 +68,13 @@
                                     let key = new RSAUtils.getKeyPair(exponent, "", modulus);
                                     var password =  $('input[name=password]').val();
                                     let encrypedPwd = RSAUtils.encryptedString(key,password);
-                                    $('input[name=password]').val(encrypedPwd);
-                                    $(".ruleForm").submit();
+//                                    $('input[name=password]').val(encrypedPwd);
+//                                    $(".ruleForm").submit();
+                                    let param = {
+                                        username: this.ruleForm.user,
+                                        password: encrypedPwd
+                                    }
+                                    this.requestLogin(param);
                                 } else {
                                     console.error(response.data.msg);
                                     return false;
@@ -85,6 +90,21 @@
                     }
                 });
             },
+
+            requestLogin(param){
+                this.$http.post('/apis/login.do', param, {emulateJSON: true}).then(
+                    function (response) {
+                        let res = eval('(' + response.bodyText + ')');
+                        if(!res.success){
+                            this.$message.error(res.message);
+                            return ;
+                        }
+
+                        this.$router.replace('/home/industryNews');
+                    }
+                )
+            },
+
             resetForm(formName) {
                 /*重置表单*/
                 this.$refs[formName].resetFields();
@@ -94,7 +114,7 @@
             }
         },
         mounted(){
-             this.$refs['ruleForm'].resetFields();
+            this.$refs['ruleForm'].resetFields();
         }
     }
 </script>
@@ -102,7 +122,7 @@
     .userNameImg{
         position: absolute;
         left: 5px;
-        top: 22px;  
+        top: 22px;
         width: 22px;
         height: 24px;
         background: url("../../../assets/images/login@1x.png") -2px -2px no-repeat;
@@ -110,10 +130,10 @@
     .passwordImg{
         position: absolute;
         left: 8px;
-        top: 22px;  
+        top: 22px;
         width: 18px;
         height: 24px;
         background: url("../../../assets/images/login@1x.png") -27px -2px no-repeat;
-         
+
     }
 </style>
