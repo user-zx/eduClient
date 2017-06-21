@@ -74,7 +74,7 @@
                          $("#top-title .topCenter").css("color","#fefefe")
                     }
                     if(val){
-                        let url=val.split('/')[2],nowNav=null;console.log(url)
+                        let url=val.split('/')[2],nowNav=null;
 
                         if(url.indexOf("panorama")!= -1) nowNav="panorama";
                         if(url.indexOf("event")!= -1) nowNav="event";
@@ -121,6 +121,9 @@
             }
         },
         mounted() {
+            this.$nextTick(function () {
+                $('.is-active').addClass('is-opened').find('ul.el-menu').show();
+            });
         }
     }
 </script>

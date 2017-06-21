@@ -304,17 +304,17 @@
                     }
                 )
             },
-            setBreadCrumb(){
-                let breadcrumb=[
-                    {
-                        name:"会员中心",to:{path:"/home/myCenter"}
-                    },
-                    {
-                        name:"子账号管理"
-                    }
-                ];
-                this.$store.commit("setBreadCrumb",breadcrumb);
-            },
+//            setBreadCrumb(){
+//                let breadcrumb=[
+//                    {
+//                        name:"会员中心",to:{path:"/home/myCenter"}
+//                    },
+//                    {
+//                        name:"子账号管理"
+//                    }
+//                ];
+//                this.$store.commit("setBreadCrumb",breadcrumb);
+//            },
 
             saveSubCount(){
                 this.firstOpen = false;
@@ -508,7 +508,7 @@
                 });
         },
         created(){
-            this.setBreadCrumb();
+//            this.setBreadCrumb();
             this.getMainAccountLimits();
         }
     }

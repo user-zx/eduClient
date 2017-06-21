@@ -98,17 +98,17 @@
             }
         },
         methods: {
-            setBreadCrumb(){
-                let breadcrumb=[
-                    {
-                        name:"会员中心",to:{path:"/home/myCenter"}
-                    },
-                    {
-                        name:"系统通知"
-                    }
-                ];
-                this.$store.commit("setBreadCrumb",breadcrumb);
-            },
+//            setBreadCrumb(){
+//                let breadcrumb=[
+//                    {
+//                        name:"会员中心",to:{path:"/home/myCenter"}
+//                    },
+//                    {
+//                        name:"系统通知"
+//                    }
+//                ];
+//                this.$store.commit("setBreadCrumb",breadcrumb);
+//            },
             handleCurrentChange(pageNumber){
                 this.param.pageNumber = pageNumber - 1;
                 this.getSysNoticeList();
@@ -157,7 +157,7 @@
             this.getSysNoticeList();
         },
         created(){
-            this.setBreadCrumb();
+//            this.setBreadCrumb();
         }
     }
 </script>

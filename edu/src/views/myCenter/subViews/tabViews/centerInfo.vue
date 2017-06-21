@@ -319,14 +319,14 @@
                 }
                // console.log(arr);
             },
-            setBreadCrumb(){
-                let breadcrumb=[
-                    {
-                        name:"会员中心",to:{path:"/home/myCenter"}
-                    }
-                ];
-                this.$store.commit("setBreadCrumb",breadcrumb);
-            },
+//            setBreadCrumb(){
+//                let breadcrumb=[
+//                    {
+//                        name:"会员中心",to:{path:"/home/myCenter"}
+//                    }
+//                ];
+//                this.$store.commit("setBreadCrumb",breadcrumb);
+//            },
             viewDetail(params){
                 this.$http.get("/apis/packageManage/getPackageOrderById.json/" + params.id).then((res)=>{
                     console.log(res);
@@ -450,7 +450,7 @@
             this.getUserData();
         },
         created(){
-            this.setBreadCrumb();
+//            this.setBreadCrumb();
         }
     }
 </script>

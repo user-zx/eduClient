@@ -188,17 +188,17 @@
         },
         components:{centerInfo,memberInfo,aboutMe,subCount,modifyPwd,operateLog,buyPackage,systemNotice} ,
         methods:{
-            setBreadCrumb(){
-                let breadcrumb=[
-                    {
-                        name:"个人中心",to:{path:"/"}
-                    },
-                    {
-                        name: "会员中心", to: {path: "home/myCenter"}
-                    }
-                ];
-                this.$store.commit("setBreadCrumb",breadcrumb);
-            },
+//            setBreadCrumb(){
+//                let breadcrumb=[
+//                    {
+//                        name:"个人中心",to:{path:"/"}
+//                    },
+//                    {
+//                        name: "会员中心", to: {path: "home/myCenter"}
+//                    }
+//                ];
+//                this.$store.commit("setBreadCrumb",breadcrumb);
+//            },
             currentFun(params){
                 this.currentTabs.currentTab = params;
             },
@@ -242,7 +242,7 @@
             }
         },
         created(){
-            this.setBreadCrumb();
+//            this.setBreadCrumb();
             this.judgeAccountType();
         }
     }

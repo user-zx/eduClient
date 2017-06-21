@@ -100,17 +100,17 @@
             };
         },
         methods: {
-            setBreadCrumb(){
-                let breadcrumb=[
-                    {
-                        name:"会员中心",to:{path:"/home/myCenter"}
-                    },
-                    {
-                        name:"修改密码"
-                    }
-                ];
-                this.$store.commit("setBreadCrumb",breadcrumb);
-            },
+//            setBreadCrumb(){
+//                let breadcrumb=[
+//                    {
+//                        name:"会员中心",to:{path:"/home/myCenter"}
+//                    },
+//                    {
+//                        name:"修改密码"
+//                    }
+//                ];
+//                this.$store.commit("setBreadCrumb",breadcrumb);
+//            },
 
             submitForm(formName){
                 this.$refs[formName].validate(
@@ -179,7 +179,7 @@
         mounted(){
         },
         created(){
-            this.setBreadCrumb();
+//            this.setBreadCrumb();
         }
     }
 </script>

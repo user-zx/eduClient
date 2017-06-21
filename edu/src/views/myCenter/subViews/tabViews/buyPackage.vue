@@ -437,17 +437,17 @@
                        }
                }
              },
-            setBreadCrumb(){
-                let breadcrumb=[
-                    {
-                        name:"会员中心",to:{path:"/home/myCenter"}
-                    },
-                    {
-                        name:"购买套餐"
-                    }
-                ];
-                this.$store.commit("setBreadCrumb",breadcrumb);
-            },
+//            setBreadCrumb(){
+//                let breadcrumb=[
+//                    {
+//                        name:"会员中心",to:{path:"/home/myCenter"}
+//                    },
+//                    {
+//                        name:"购买套餐"
+//                    }
+//                ];
+//                this.$store.commit("setBreadCrumb",breadcrumb);
+//            },
             selectPackage(index){
                 $('.buyPackage .item').removeClass('selected');
                 if(index == 1){
@@ -716,7 +716,7 @@
             this.selectPackage(1);
         },
         created(){
-            this.setBreadCrumb();
+//            this.setBreadCrumb();
         },
         watch:{
             setMeal:function(val,oldVal){

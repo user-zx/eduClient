@@ -45,17 +45,17 @@
             }
         },
         methods: {
-            setBreadCrumb(){
-                let breadcrumb=[
-                    {
-                        name:"会员中心",to:{path:"/home/myCenter"}
-                    },
-                    {
-                        name:"操作日志"
-                    }
-                ];
-                this.$store.commit("setBreadCrumb",breadcrumb);
-            },
+//            setBreadCrumb(){
+//                let breadcrumb=[
+//                    {
+//                        name:"会员中心",to:{path:"/home/myCenter"}
+//                    },
+//                    {
+//                        name:"操作日志"
+//                    }
+//                ];
+//                this.$store.commit("setBreadCrumb",breadcrumb);
+//            },
 
             getOperateLogs(){
                 this.$http.post('/apis/user/getUserOperation.json', this.param).then(
@@ -87,7 +87,7 @@
             this.getOperateLogs();
         },
         created(){
-            this.setBreadCrumb();
+//            this.setBreadCrumb();
         }
     }
 </script>

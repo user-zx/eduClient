@@ -162,17 +162,17 @@
                 this.memberForm.area = CodeToText[this.selectedOptions[0]].replace("省", "").replace("市", "");
             },
 
-            setBreadCrumb(){
-                let breadcrumb=[
-                    {
-                        name:"会员中心",to:{path:"/home/myCenter"}
-                    },
-                    {
-                        name:"会员资料"
-                    }
-                ];
-                this.$store.commit("setBreadCrumb",breadcrumb);
-            },
+//            setBreadCrumb(){
+//                let breadcrumb=[
+//                    {
+//                        name:"会员中心",to:{path:"/home/myCenter"}
+//                    },
+//                    {
+//                        name:"会员资料"
+//                    }
+//                ];
+//                this.$store.commit("setBreadCrumb",breadcrumb);
+//            },
 
             getUserData(){
                 this.$http.post("/apis/user/getMemberInfo.json").then((res)=>{
@@ -250,7 +250,7 @@
             
         },
         created(){
-            this.setBreadCrumb();
+//            this.setBreadCrumb();
         }
     }
 </script>
