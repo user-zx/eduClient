@@ -74,7 +74,6 @@
                 for (let i = 0; i < val.length; i++) {
                     this.removeParams.concernsContent.push(val[i].name);
                 }
-                console.log(this.removeParams.concernsContent);
             },
             cancelAttention(){
                 //console.log(this.removeParams.concernsContent);
@@ -141,9 +140,7 @@
                         } else {
                             this.total = 0;
                         }
-                        console.log(this.$refs);
-                        this.$refs.table.getTableDataEvent()
-
+                        this.$refs.table.getTableDataEvent();
                         this.loading = false;
                     }
                 }, (err) => {
@@ -203,33 +200,33 @@
 <style lang="scss">
     .myAttention-character {
 
-    .custom-tabs > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav {
-        margin: 0;
-    }
+        .custom-tabs > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav {
+            margin: 0;
+        }
 
-    .custom-tabs .el-tabs__content {
-        margin-top: 10px;
-    }
+        .custom-tabs .el-tabs__content {
+            margin-top: 10px;
+        }
 
-    .chooseTime {
-        padding-left: 16px;
-        line-height: 50px;
-        display: inline-block;
-        width: 100%;
-        color: #d0d7ff;
-    }
+        .chooseTime {
+            padding-left: 16px;
+            line-height: 50px;
+            display: inline-block;
+            width: 100%;
+            color: #d0d7ff;
+        }
 
-    .row-time {
-        border-bottom: 1px solid rgba(96, 163, 255, 0.1);
-    }
+        .row-time {
+            border-bottom: 1px solid rgba(96, 163, 255, 0.1);
+        }
 
-    .el-select {
-        margin-top: 7px;
-    }
+        .el-select {
+            margin-top: 7px;
+        }
 
-    .block {
-        margin-top: 7px;
-    }
+        .block {
+            margin-top: 7px;
+        }
 
     }
 </style>

@@ -61,12 +61,9 @@
                 data.endDate = this.param.endDate;
                 this.$router.push({path:"/home/characterAnalyse", query: data});
             },
-            getData(){
-                console.log('test');
-            },
+
             getTableDataEvent(){
                 this.getTableData = this.tableData;
-                //console.log(this.tableData);
             }
         },
         mounted(){

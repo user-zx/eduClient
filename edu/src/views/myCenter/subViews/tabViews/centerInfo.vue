@@ -60,13 +60,16 @@
             </div>
         </div>
         <div class="detail-wrap">
-            <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
+            <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border
+                      style="width: 100%"
                       :resizable="false">
                 <el-table-column label="订单编号" prop="rank" align="center"></el-table-column>
                 <el-table-column label="产品类型" prop="packageType" align="center"></el-table-column>
-                <el-table-column label="提交时间" prop="submitDate" align="center" :formatter="formatSubmitDate"></el-table-column>
+                <el-table-column label="提交时间" prop="submitDate" align="center"
+                                 :formatter="formatSubmitDate"></el-table-column>
                 <el-table-column label="期限" prop="timeLimit" align="center"></el-table-column>
-                <el-table-column label="到期时间"  align="center" prop="expireDate" :formatter="formatExpireDate"></el-table-column>
+                <el-table-column label="到期时间" align="center" prop="expireDate"
+                                 :formatter="formatExpireDate"></el-table-column>
                 <el-table-column label="支付金额" prop="totalPrice" align="center"></el-table-column>
                 <el-table-column label="查看详情" align="center">
                     <template scope="scope">
@@ -78,10 +81,10 @@
             </el-table>
             <div class="block content-bar-pagination">
                 <el-pagination class="edu-pagination"
-                               v-initjump = 'currentPage' 
+                               v-initjump='currentPage'
                                :current-page="currentPage"
                                @current-change="handleCurrentChange"
-                               :page-size= "param.pageSize"
+                               :page-size="param.pageSize"
                                layout="prev, next, jumper, total"
                                :total="total">
                 </el-pagination>
@@ -98,7 +101,9 @@
                 <el-col :span="6">{{orderDetails.packageType}}</el-col>
             </el-row>
             <el-row class="item-details">
-                <el-col :span="24"><div>提供服务：</div></el-col>
+                <el-col :span="24">
+                    <div>提供服务：</div>
+                </el-col>
                 <el-col :span="6" :offset="6" v-if="showOne.length>0">舆情管理</el-col>
                 <el-col :span="12" :offset="12" v-for="item in showOne">{{item}}</el-col>
                 <el-col :span="6" :offset="6" v-if="showTwo.length>0">情报内参</el-col>
@@ -130,149 +135,165 @@
     </div>
 </template>
 <style lang="scss" scoped>
-    .centerInfo{
+    .centerInfo {
         background: #21273d;
         overflow: hidden;
-        .logo-wrap{
-            margin: 20px;
 
-            .logo{
-                width: 100px;
-                height: 100px;
-                display: table-cell;
-                vertical-align: middle;
-                text-align: center;
-                img{
-                    max-height:100px;
-                    max-width: 100px;
-                }
-            }
-            .name-div{
-                width: calc(100% - 140px);
-                height:inherit;
-                display: table-cell;
-                padding-left: 28px;
-                vertical-align: top;
+    .logo-wrap {
+        margin: 20px;
 
-                p{
-                    color: #c8cef5;
-                    height: 35px;
-                    line-height: 35px;
-                }
+    .logo {
+        width: 100px;
+        height: 100px;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
 
-                p.user-name{
-                    font-size: 18px;
-                    margin-top: 15px;
-
-                    span{
-                        color: #e4f09e;
-                    }
-                }
-            }
-        }
-
-        .summary-wrap{
-            text-align: center;
-
-            .circle-wrap{
-                margin: 40px;
-                display: inline-block;
-
-                .circle-div{
-                    width: 160px;
-                    height: 160px;
-                    border: 2px solid #60a3ff;
-                    -webkit-border-radius:50%;
-                    -moz-border-radius:50%;
-                    border-radius:50%;
-                    position: relative;
-
-                    .text{
-                        overflow: hidden;
-                        width: inherit;
-                        height: inherit;
-
-                        p.top{
-                            font-size:40px;
-                            color: #e4f09e;
-                            margin-bottom: 5px;
-                            margin-top: 20px;
-                        }
-
-                        p.middle{
-                            font-size: 18px;
-                            color: #d0d7ff;
-                            margin-bottom: 10px;
-                        }
-
-                        p.bottom{
-                            font-size: 16px;
-                            color: #757a97;
-                        }
-                    }
-
-                    .mask{
-                        height: 100%;
-                        width: 100%;
-                        -webkit-border-radius:50%;
-                        -moz-border-radius:50%;
-                        border-radius:50%;
-                        position: absolute;
-                        top: 0px;
-                        left: 0px;
-                        background: rgba(33,39,61,1);
-                        z-index: -1;
-
-                        .btn-wrap{
-                            margin-top: 55px;
-
-                            .el-button {
-                                font-size: 20px;
-                                font-weight: bold;
-                                opacity: 1;
-                            }
-                        }
-
-                        .line{
-                            width: 2px;
-                            height: 40px;
-                            display: inline-block;
-                        }
-                    }
-                }
-            }
-            .circle-div:hover{
-                .mask{
-                    z-index: 9999;
-                }
-            }
-        }
-
-        .detail-wrap{
-            margin: 0px 50px 30px 50px;
-            .el-table{
-                margin: auto;
-            }
-        }
-        .orderDetails{
-            h3{
-                border-bottom: 1px solid #48576a;
-                padding-bottom: 10px;
-            }
-            .item-details{
-                margin-top: 10px;
-            }
-        }
+    img {
+        max-height: 100px;
+        max-width: 100px;
     }
-    .addChild{
-        display: none !important; 
+
+    }
+    .name-div {
+        width: calc(100% - 140px);
+        height: inherit;
+        display: table-cell;
+        padding-left: 28px;
+        vertical-align: top;
+
+    p {
+        color: #c8cef5;
+        height: 35px;
+        line-height: 35px;
+    }
+
+    p.user-name {
+        font-size: 18px;
+        margin-top: 15px;
+
+    span {
+        color: #e4f09e;
+    }
+
+    }
+    }
+    }
+
+    .summary-wrap {
+        text-align: center;
+
+    .circle-wrap {
+        margin: 40px;
+        display: inline-block;
+
+    .circle-div {
+        width: 160px;
+        height: 160px;
+        border: 2px solid #60a3ff;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        position: relative;
+
+    .text {
+        overflow: hidden;
+        width: inherit;
+        height: inherit;
+
+    p.top {
+        font-size: 40px;
+        color: #e4f09e;
+        margin-bottom: 5px;
+        margin-top: 20px;
+    }
+
+    p.middle {
+        font-size: 18px;
+        color: #d0d7ff;
+        margin-bottom: 10px;
+    }
+
+    p.bottom {
+        font-size: 16px;
+        color: #757a97;
+    }
+
+    }
+
+    .mask {
+        height: 100%;
+        width: 100%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        background: rgba(33, 39, 61, 1);
+        z-index: -1;
+
+    .btn-wrap {
+        margin-top: 55px;
+
+    .el-button {
+        font-size: 20px;
+        font-weight: bold;
+        opacity: 1;
+    }
+
+    }
+
+    .line {
+        width: 2px;
+        height: 40px;
+        display: inline-block;
+    }
+
+    }
+    }
+    }
+    .circle-div:hover {
+
+    .mask {
+        z-index: 9999;
+    }
+
+    }
+    }
+
+    .detail-wrap {
+        margin: 0px 50px 30px 50px;
+
+    .el-table {
+        margin: auto;
+    }
+
+    }
+    .orderDetails {
+
+    h3 {
+        border-bottom: 1px solid #48576a;
+        padding-bottom: 10px;
+    }
+
+    .item-details {
+        margin-top: 10px;
+    }
+
+    }
+    }
+    .addChild {
+        display: none !important;
     }
 </style>
 <style lang="scss">
-    .centerInfo{
-        .el-dialog--tiny{
-            width: 40%;
-        }
+    .centerInfo {
+
+    .el-dialog--tiny {
+        width: 40%;
+    }
+
     }
 </style>
 <script>
@@ -280,44 +301,44 @@
         data(){
             return {
                 tableData: [],
-                total:0,
-                activeClass:false,
-                isShow:false,
-                item_one:["全景舆情","舆情监测","舆情预警","事件监测","舆情报告"],
-                item_two:["行业动态","人物动态","媒体声誉","两微洞察","内参报告"],
-                item_three:["两微监管"],
-                showOne:[],
-                showTwo:[],
-                showThree:[],
-                imgUrl:"",
-                username:"",
-                time:"",
+                total: 0,
+                activeClass: false,
+                isShow: false,
+                item_one: ["全景舆情", "舆情监测", "舆情预警", "事件监测", "舆情报告"],
+                item_two: ["行业动态", "人物动态", "媒体声誉", "两微洞察", "内参报告"],
+                item_three: ["两微监管"],
+                showOne: [],
+                showTwo: [],
+                showThree: [],
+                imgUrl: "",
+                username: "",
+                time: "",
                 param: {
-                    pageSize:　5,
+                    pageSize: 5,
                     pageNumber: 0,
                 },
-                usetDataList:{},
-                surplusCollege:"",
-                surplusPerson:"",
-                surplusAccount:"",
-                orderDetails:{},
+                usetDataList: {},
+                surplusCollege: "",
+                surplusPerson: "",
+                surplusAccount: "",
+                orderDetails: {},
             }
         },
         methods: {
             setItem(){
-                
+
             },
-            getItemData(arrShow,itemArr,arr){
+            getItemData(arrShow, itemArr, arr){
                 let str = "";
                 for (var i = 0; i < itemArr.length; i++) {
                     str += itemArr[i];
                 }
                 for (var j = 0; j < arrShow.length; j++) {
-                    if(str.indexOf(arrShow[j])!=-1){
+                    if (str.indexOf(arrShow[j]) != -1) {
                         arr.push(arrShow[j])
                     }
                 }
-               // console.log(arr);
+                // console.log(arr);
             },
 //            setBreadCrumb(){
 //                let breadcrumb=[
@@ -328,23 +349,25 @@
 //                this.$store.commit("setBreadCrumb",breadcrumb);
 //            },
             viewDetail(params){
-                this.$http.get("/apis/packageManage/getPackageOrderById.json/" + params.id).then((res)=>{
+                this.$http.get("/apis/packageManage/getPackageOrderById.json/" + params.id).then((res) => {
                     console.log(res);
-                    if(res.data.success){
+                    if (res.data.success) {
                         this.orderDetails = res.data.data;
-                      //  console.log(res.data.data.signedDate);
+                        //  console.log(res.data.data.signedDate);
                         this.orderDetails.signedDate = this.orderDetails.signedDate == null ? "--:--" : new Date(res.data.data.signedDate).format('yyyy-MM-dd');
                         this.orderDetails.expireDate = this.orderDetails.expireDate == null ? "--:--" : new Date(res.data.data.expireDate).format('yyyy-MM-dd');
-                        this.showOne = [];this.showTwo = [];this.showThree = [];
+                        this.showOne = [];
+                        this.showTwo = [];
+                        this.showThree = [];
                         let itemString = res.data.data.itemPriceList;
-                       // console.log(itemString);
-                        this.getItemData(itemString,this.item_one,this.showOne);
-                        this.getItemData(itemString,this.item_two,this.showTwo);
-                        this.getItemData(itemString,this.item_three,this.showThree);
+                        // console.log(itemString);
+                        this.getItemData(itemString, this.item_one, this.showOne);
+                        this.getItemData(itemString, this.item_two, this.showTwo);
+                        this.getItemData(itemString, this.item_three, this.showThree);
                         this.orderDetails.rank = params.rank;
                         this.isShow = true;
                     }
-                },(err)=>{
+                }, (err) => {
                     console.log(err);
                 })
             },
@@ -369,63 +392,63 @@
                 this.$parent.currentTabs.currentTab = "subCount";
             },
 
-            handleCurrentChange(pageNumber) { 
-                this.param.pageNumber = pageNumber -1;
+            handleCurrentChange(pageNumber) {
+                this.param.pageNumber = pageNumber - 1;
                 this.getDataList();
             },
 
             getDataList(){
-                 //console.log(this.param);
-                this.$http.post("/apis/packageManage/getPackageOrderList.json", this.param).then((res)=>{
-                    if(res.data.success){
+                //console.log(this.param);
+                this.$http.post("/apis/packageManage/getPackageOrderList.json", this.param).then((res) => {
+                    if (res.data.success) {
                         this.total = res.data.data.totalElements;
                         let data = res.data.data.content;
-                        if(data != null && data.length > 0){
-                            for(let i = 0; i <　data.length; i++){
-                                data[i].rank = (this.param.pageNumber) * this.param.pageSize +  i + 1;
+                        if (data != null && data.length > 0) {
+                            for (let i = 0; i < data.length; i++) {
+                                data[i].rank = (this.param.pageNumber) * this.param.pageSize + i + 1;
                             }
                         }
                         this.tableData = data;
                     }
-                },(err)=>{
+                }, (err) => {
                     console.log(err);
                 });
             },
             getUserData(){
-                 this.$http.post("/apis/user/getMemberInfo.json").then((res)=>{
-                     let date = new Date();
+                this.$http.post("/apis/user/getMemberInfo.json").then((res) => {
+                    let date = new Date();
 
-                    if(res.data.success){
-                        if(res.data.data.accountType=="试用"){
+                    if (res.data.success) {
+                        if (res.data.data.accountType == "试用") {
                             this.activeClass = true;
-                        }else{
+                        } else {
                             this.activeClass = false;
                         }
                         this.imgUrl = res.data.data.userImg;
                         this.username = res.data.data.realName;
                         this.time = new Date(res.data.data.createDate).format('yyyy-MM-dd hh:mm');
                         this.usetDataList.colleges = res.data.data.collegeNum;
-                        this.usetDataList.peoson = res.data.data.personageNum; 
+                        this.usetDataList.peoson = res.data.data.personageNum;
                         this.usetDataList.subAccountNum = res.data.data.subAccountNum;
-                        this.$http.post('/apis/user/getUnivsAndPersonage.json').then(res=>{
-                           if(res.data.success){
-                              this.surplusCollege = this.usetDataList.colleges - res.data.data.univs.length;
-                              this.surplusPerson = this.usetDataList.peoson - res.data.data.persons.length;
+                        this.$http.post('/apis/user/getUnivsAndPersonage.json').then(res => {
+                            if (res.data.success) {
+                                this.surplusCollege = this.usetDataList.colleges - res.data.data.univs.length;
+                                this.surplusPerson = this.usetDataList.peoson - res.data.data.persons.length;
                             }
-                        },err=>{
+                        }, err => {
                             console.log(err);
-                        }) 
-                        this.$http.post("/apis/user/findAllSubAccount.json", {pageNumber:0,pageSize:1}).then(res=>{
-                            if(res.data.success){
-                                this.surplusAccount =  this.usetDataList.subAccountNum - res.data.data.totalElements;
+                        });
+                        this.$http.post("/apis/user/findAllSubAccount.json", {pageNumber: 0, pageSize: 1}).then(res => {
+                            if (res.data.success) {
+                                this.surplusAccount = this.usetDataList.subAccountNum - res.data.data.totalElements;
                             }
-                         },(err)=>{
+                        }, (err) => {
                             console.log(err);
-                         })
-                       }
-                 },(err)=>{
+                        });
+                    }
+                }, (err) => {
                     console.log(err);
-                 })
+                })
 
             },
             formatSubmitDate(row, col){
@@ -433,15 +456,15 @@
             },
 
             formatExpireDate(row, col){
-                if(row.expireDate != null){
+                if (row.expireDate != null) {
                     return new Date(row.expireDate).format('yyyy-MM-dd');
                 }
                 return '';
             }
         },
-        computed:{
-            currentPage:function(){
-              return  this.param.pageNumber + 1;
+        computed: {
+            currentPage: function () {
+                return this.param.pageNumber + 1;
             }
         },
         mounted(){

@@ -13,7 +13,7 @@
                 </el-col>
                 <el-col :span="3" v-show="isPrimaryAccount">
                     <div class="tab-item" @click="currentFun('memberInfo')">
-                       <i class="icon icon-2"></i>
+                        <i class="icon icon-2"></i>
                         会员资料
                     </div>
                 </el-col>
@@ -25,12 +25,12 @@
                 </el-col>
                 <el-col :span="3" class="el-col-subCount" v-show="isPrimaryAccount">
                     <div class="tab-item" @click="currentFun('subCount')">
-                       <i class="icon icon-3"></i> 子账号管理
+                        <i class="icon icon-3"></i> 子账号管理
                     </div>
                 </el-col>
                 <el-col :span="3" v-if="isPrimaryAccount == true">
                     <div class="tab-item" @click="currentFun('modifyPwd')">
-                       <i class="icon icon-4"></i> 修改密码
+                        <i class="icon icon-4"></i> 修改密码
                     </div>
                 </el-col>
                 <el-col :span="6" v-else-if="isPrimaryAccount == false">
@@ -69,89 +69,98 @@
     </div>
 </template>
 <style lang="scss" scoped>
-    .attend-tabs{
+    .attend-tabs {
         background-color: #21273d;
         margin-top: 10px;
-        margin-bottom:10px;
-        padding:16px 22px;
-        .el-col-3{
-            width: 14.25%;
-        }
-        .el-col{
+        margin-bottom: 10px;
+        padding: 16px 22px;
 
-            .tab-item{
-                height:125px;
-                line-height: 125px;
-                font-size: 16px;
-                text-align: center;
-                color:rgba(193,202,240,.5);
-                background: #282e46;
-                transition: all .25s;
-                cursor: pointer;
-                border:1px solid #273451;
+    .el-col-3 {
+        width: 14.25%;
+    }
 
-                &:hover{
-                     color:#60a3ff;
-                    .icon{
-                        background-image: url(../../../assets/images/huiyuan@1x.png);
-                        background-repeat: no-repeat;
-                    }
-                }
+    .el-col {
 
-                .icon{
-                    background: url("../../../assets/images/huiyuan_gray@1x.png") no-repeat;
-                    width: 24px;
-                    height: 27px;
-                    display: inline-block;
-                    vertical-align: middle;
-                    margin-right: 5px;
-                    margin-top: -10px;
-                }
+    .tab-item {
+        height: 125px;
+        line-height: 125px;
+        font-size: 16px;
+        text-align: center;
+        color: rgba(193, 202, 240, .5);
+        background: #282e46;
+        transition: all .25s;
+        cursor: pointer;
+        border: 1px solid #273451;
 
-                 .icon-1{
-                     background-position: 0px 0px;
-                 }
+    &
+    :hover {
+        color: #60a3ff;
 
-                 .icon-2{
-                     background-position: -30px 0px;
-                 }
+    .icon {
+        background-image: url(../../../assets/images/huiyuan@1x.png);
+        background-repeat: no-repeat;
+    }
 
-                 .icon-3{
-                     background-position: -60px 0px;
-                 }
+    }
 
-                 .icon-4{
-                     background-position: -89px 0px;
-                     height: 28px;
-                 }
+    .icon {
+        background: url("../../../assets/images/huiyuan_gray@1x.png") no-repeat;
+        width: 24px;
+        height: 27px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 5px;
+        margin-top: -10px;
+    }
 
-                 .icon-5{
-                     background-position: -120px 0px;
-                     width: 29px;
-                     height: 27px;
-                 }
+    .icon-1 {
+        background-position: 0px 0px;
+    }
 
-                 .icon-6{
-                     background-position: -155px 0px;
-                     width: 27px;
-                     height: 27px;
-                 }
+    .icon-2 {
+        background-position: -30px 0px;
+    }
 
-                 .icon-7{
-                     background-position: -184px -2px;
-                 }
-            }
-            &.active{
-                .tab-item{
-                    color:#60a3ff;
+    .icon-3 {
+        background-position: -60px 0px;
+    }
 
-                    .icon{
-                        background-image: url(../../../assets/images/huiyuan@1x.png);
-                        background-repeat: no-repeat;
-                    }
-                }
-            }
-        }
+    .icon-4 {
+        background-position: -89px 0px;
+        height: 28px;
+    }
+
+    .icon-5 {
+        background-position: -120px 0px;
+        width: 29px;
+        height: 27px;
+    }
+
+    .icon-6 {
+        background-position: -155px 0px;
+        width: 27px;
+        height: 27px;
+    }
+
+    .icon-7 {
+        background-position: -184px -2px;
+    }
+
+    }
+    &
+    .active {
+
+    .tab-item {
+        color: #60a3ff;
+
+    .icon {
+        background-image: url(../../../assets/images/huiyuan@1x.png);
+        background-repeat: no-repeat;
+    }
+
+    }
+    }
+    }
     }
 </style>
 <script>
@@ -172,7 +181,7 @@
     export default{
         data(){
             return {
-                currentTabs:{
+                currentTabs: {
                     centerInfo: 'centerInfo',
                     memberInfo: 'memberInfo',
                     aboutMe: 'aboutMe',
@@ -186,8 +195,8 @@
                 isPrimaryAccount: false
             }
         },
-        components:{centerInfo,memberInfo,aboutMe,subCount,modifyPwd,operateLog,buyPackage,systemNotice} ,
-        methods:{
+        components: {centerInfo, memberInfo, aboutMe, subCount, modifyPwd, operateLog, buyPackage, systemNotice},
+        methods: {
 //            setBreadCrumb(){
 //                let breadcrumb=[
 //                    {
@@ -207,9 +216,9 @@
                 this.$http.post('/apis/userMgrt/getUserPermission.json', {type: 'user'}).then(
                     (response) => {
                         if (response.data.success) {
-                            if(response.data.data.primaryAccountId == null){
+                            if (response.data.data.primaryAccountId == null) {
                                 this.isPrimaryAccount = true;
-                            }else {
+                            } else {
                                 this.isPrimaryAccount = false;
                                 this.currentTabs = {
                                     aboutMe: 'aboutMe',
@@ -220,21 +229,21 @@
                                 };
                             }
                         } else {
-                             console.error(response.data.message);
+                            console.error(response.data.message);
                         }
-                     }, (response) => {
+                    }, (response) => {
                         console.error(response);
-                     }
+                    }
                 );
             }
         },
         mounted(){
-            $(".attend-tabs").on("click",".tab-item",function () {
+            $(".attend-tabs").on("click", ".tab-item", function () {
                 $(this).parent().addClass("active").siblings().removeClass("active");
             });
-            if(this.$route.query != undefined && this.$route.query.defaultActive != undefined){
+            if (this.$route.query != undefined && this.$route.query.defaultActive != undefined) {
                 let defaultActive = this.$route.query.defaultActive;
-                if(defaultActive == 'sysNotice'){
+                if (defaultActive == 'sysNotice') {
                     $(".tab-item").parent().removeClass('active');
                     $('.systemNotice').parent().addClass('active');
                     this.currentFun('systemNotice');

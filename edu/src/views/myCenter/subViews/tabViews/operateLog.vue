@@ -6,14 +6,15 @@
         <div class="block content-bar-pagination">
             <el-pagination class="edu-pagination"
                            @current-change="handleCurrentChange"
-                           :page-size= "param.pageSize"
+                           :page-size="param.pageSize"
                            layout="prev, next, jumper, total"
                            :total="total">
             </el-pagination>
         </div>
         <div class="table-wrap">
-            <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
-                      :resizable="false" >
+            <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border
+                      style="width: 100%"
+                      :resizable="false">
                 <el-table-column label="序号" prop="rank" align="center" width="100"></el-table-column>
                 <el-table-column label="时间" prop="createDate" align="center" :formatter="formatDate"></el-table-column>
                 <el-table-column label="IP" prop="ip" align="center"></el-table-column>
@@ -22,14 +23,15 @@
     </div>
 </template>
 <style lang="scss" scoped>
-    .operateLog{
+    .operateLog {
         background: #21273d;
         overflow: hidden;
 
-        .table-wrap{
-            margin: 50px 50px 134px 50px;
-            min-height: 400px;
-        }
+    .table-wrap {
+        margin: 50px 50px 134px 50px;
+        min-height: 400px;
+    }
+
     }
 </style>
 <script>
@@ -60,11 +62,11 @@
             getOperateLogs(){
                 this.$http.post('/apis/user/getUserOperation.json', this.param).then(
                     function (response) {
-                        if(response.data.success){
+                        if (response.data.success) {
                             let data = response.data.data.content;
-                            if(data != null && data.length > 0){
-                                for(let i = 0; i <　data.length; i++){
-                                    data[i].rank = (this.param.pageNumber) * this.param.pageSize +  i + 1;
+                            if (data != null && data.length > 0) {
+                                for (let i = 0; i < data.length; i++) {
+                                    data[i].rank = (this.param.pageNumber) * this.param.pageSize + i + 1;
                                 }
                             }
                             this.tableData = data;

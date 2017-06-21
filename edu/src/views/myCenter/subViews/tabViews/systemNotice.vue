@@ -12,7 +12,8 @@
             </el-pagination>
         </div>
         <div class="content-wrap">
-            <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%"
+            <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border
+                      style="width: 100%"
                       :resizable="false" :show-header="false">
                 <el-table-column label="序号" prop="rank" align="center" width="100"></el-table-column>
                 <el-table-column label="noticeTitle" prop="noticeTitle" align="left">
@@ -22,11 +23,12 @@
                     </span>
                     </template>
                 </el-table-column>
-                <el-table-column label="date" prop="createDate" align="center" width="150" :formatter="formatDate"></el-table-column>
+                <el-table-column label="date" prop="createDate" align="center" width="150"
+                                 :formatter="formatDate"></el-table-column>
             </el-table>
         </div>
 
-        <el-dialog  v-model="dialogVisible" size="tiny" class="notice-dialog" @close="closeDialog">
+        <el-dialog v-model="dialogVisible" size="tiny" class="notice-dialog" @close="closeDialog">
             <div class="title">
                 {{notice.noticeTitle}}
             </div>
@@ -45,34 +47,34 @@
     </div>
 </template>
 <style lang="scss" scoped>
-    .systemNotice{
+    .systemNotice {
         background: #21273d;
         overflow: hidden;
 
-        .content-wrap{
-            margin: 55px 50px 134px 50px;
-            min-height: 400px;
-        }
+    .content-wrap {
+        margin: 55px 50px 134px 50px;
+        min-height: 400px;
+    }
 
+    .notice-dialog {
 
-        .notice-dialog{
+    .title {
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 18px;
+    }
 
-            .title{
-                font-size: 24px;
-                text-align: center;
-                margin-bottom: 18px;
-            }
+    .subTitle {
+        text-align: center;
+    }
 
-            .subTitle{
-                text-align: center;
-            }
+    .content {
+        margin: 20px auto;
+        line-height: 35px;
+        text-indent: 2em;
+    }
 
-            .content{
-                margin: 20px auto;
-                line-height:35px;
-                text-indent: 2em;
-            }
-        }
+    }
 
     }
 </style>
@@ -123,16 +125,16 @@
             getSysNoticeList(){
                 this.$http.post('/apis/userMgrt/getSysNoticeList.json', this.param).then(
                     function (response) {
-                        if(response.data.success){
+                        if (response.data.success) {
                             this.total = response.data.data.totalElements;
                             let data = response.data.data.content;
-                            if(data != null && data.length > 0){
-                                for(let i = 0; i <　data.length; i++){
-                                    data[i].rank = (this.param.pageNumber) * this.param.pageSize +  i + 1;
+                            if (data != null && data.length > 0) {
+                                for (let i = 0; i < data.length; i++) {
+                                    data[i].rank = (this.param.pageNumber) * this.param.pageSize + i + 1;
                                 }
                             }
                             this.tableData = data;
-                        }else {
+                        } else {
                             console.error(response.data);
                         }
                     }

@@ -73,81 +73,79 @@
             }
         }
 
-    .bottom{
-        margin: 0 50px 250px 50px;
+        .bottom{
+            margin: 0 50px 250px 50px;
 
-        .box{
-            border:1px solid #3a598b;
-        }
+            .box{
+                border:1px solid #3a598b;
+            }
 
-        .el-row{
-            border-bottom: 1px solid #2e4064;
-            .el-col{
-                //height: 50px;
-                line-height: 50px;
-               // border-bottom: 1px solid #2e4064;
-               // overflow: hidden;
+            .el-row{
+                border-bottom: 1px solid #2e4064;
+                .el-col{
+                    /*height: 50px;*/
+                    line-height: 50px;
+                   /*border-bottom: 1px solid #2e4064;*/
+                    /*overflow: hidden;*/
 
-                .province-list{
-                    position: relative;
+                    .province-list{
+                        position: relative;
 
-                    .el-icon-arrow-down {
-                        position: absolute;
-                        top: 16px;
-                        right: 5px;
+                        .el-icon-arrow-down {
+                            position: absolute;
+                            top: 16px;
+                            right: 5px;
+                        }
+                    }
+
+                    .list{
+                        display: inline-block;
+                        text-align: center;
+                        padding-left: 15px;
+                        padding-right: 15px;
+                        cursor: pointer;
+                    }
+
+                    .el-button{
+                        margin-left: 24px;
                     }
                 }
 
-                .list{
-                    display: inline-block;
+                .el-col-2{
                     text-align: center;
-                    padding-left: 15px;
-                    padding-right: 15px;
-                    cursor: pointer;
-                }
-
-                .el-button{
-                    margin-left: 24px;
+                   /*// background: #1b1f31;*/
                 }
             }
+        }
 
-            .el-col-2{
-                text-align: center;
-               // background: #1b1f31;
+        .yellow{
+            color: #e4f09e;
+        }
+
+        .list-selected {
+            color: #60a3ff;
+        }
+        .transition{
+            transition: 0.5s;
+            -moz-transition: 0.5s; /* Firefox 4 */
+            -webkit-transition: 0.5s; /* Safari 和 Chrome */
+            -o-transition: 0.5s; /* Opera */
+        }
+        .choose{
+            >span{
+                margin-left: 10px;
             }
         }
-    }
-
-    .yellow{
-        color: #e4f09e;
-    }
-
-    .list-selected {
-        color: #60a3ff;
-    }
-    .transition{
-        transition: 0.5s;
-        -moz-transition: 0.5s; /* Firefox 4 */
-        -webkit-transition: 0.5s; /* Safari 和 Chrome */
-        -o-transition: 0.5s; /* Opera */
-    }
-    .choose{
-        >span{
-            margin-left: 10px; 
-        }
-    }
-    .provinceActive{
-        color: #20a0ff; 
-     }
+        .provinceActive{
+            color: #20a0ff;
+         }
     }
 </style>
 <script>
     export default{
         data(){
             return {
-                tableData: [
-                    {name: '王小二', college: '清华大学', department: '哲学系', keyword: '时间相对论', count:　'2929292929'},
-                ],
+                tableData: [],
                 province:["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","香港","澳门","台湾"],
                 selected:[],
                 collegeList:[],
@@ -190,7 +188,6 @@
                 if(this.tags.length>this.addColleges||this.addTags.length>this.addColleges||this.tags.length+this.addTags.length>this.addColleges){
                     this.$message("已添加"+this.tags.length+"可添加"+(this.addColleges-this.tags.length)+"所高校")
                 }else{
-                    console.log(this.addTags);
                     for (let j in this.addTags) {
                         if(j==this.addTags.length-1){
                             str += this.addTags[j].name

@@ -3,35 +3,41 @@
 */
 <template>
     <div class="modifyPwd">
-       <div class="form-wrap">
-           <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2"  class="pwdForm dark" id="pwdForm">
-               <el-form-item prop="oldPwd">
-                   <el-input type="password" v-model="ruleForm2.oldPwd" placeholder="输入当前密码" auto-complete="off" name="oldPwd"></el-input>
-               </el-form-item>
-               <el-form-item label="" prop="pass">
-                   <el-input type="password" v-model="ruleForm2.pass" auto-complete="off" placeholder="输入新密码" name="newPwd1"></el-input>
-               </el-form-item>
-               <el-form-item prop="checkPass">
-                   <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="确认新密码" name="newPwd2"></el-input>
-               </el-form-item>
-               <el-form-item>
-                   <el-button type="primary" @click="submitForm('ruleForm2')">确认修改</el-button>
-               </el-form-item>
-           </el-form>
-       </div>
+        <div class="form-wrap">
+            <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" class="pwdForm dark" id="pwdForm">
+                <el-form-item prop="oldPwd">
+                    <el-input type="password" v-model="ruleForm2.oldPwd" placeholder="输入当前密码" auto-complete="off"
+                              name="oldPwd"></el-input>
+                </el-form-item>
+                <el-form-item label="" prop="pass">
+                    <el-input type="password" v-model="ruleForm2.pass" auto-complete="off" placeholder="输入新密码"
+                              name="newPwd1"></el-input>
+                </el-form-item>
+                <el-form-item prop="checkPass">
+                    <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="确认新密码"
+                              name="newPwd2"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="submitForm('ruleForm2')">确认修改</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
     </div>
 </template>
 <style lang="scss" scoped>
-    .modifyPwd{
+    .modifyPwd {
         background: #21273d;
         overflow: hidden;
-        .form-wrap{
-            width: 300px;
-            margin: 100px auto;
-            .el-button{
-                width: 100%;
-            }
-        }
+
+    .form-wrap {
+        width: 300px;
+        margin: 100px auto;
+
+    .el-button {
+        width: 100%;
+    }
+
+    }
     }
 </style>
 <script>
@@ -39,22 +45,22 @@
         data(){
             var checkOldPwd = (rule, value, callback) => {
                 //验证当前密码是否正确
-                if(value === ''){
+                if (value === '') {
                     callback(new Error('请输入当前密码'));
-                }else{
+                } else {
                     callback();
                 }
             };
-            var validNewOldPass = (rule, value, callback) =>{
-                    if(value == ''){
-                        callback(new Error('请输入密码'));
-                    }else {
-                        if(this.ruleForm2.oldPwd != '' && this.ruleForm2.oldPwd == value){
-                            callback(new Error('新密码不能与旧密码相同!'));
-                        }else {
-                            callback();
-                        }
+            var validNewOldPass = (rule, value, callback) => {
+                if (value == '') {
+                    callback(new Error('请输入密码'));
+                } else {
+                    if (this.ruleForm2.oldPwd != '' && this.ruleForm2.oldPwd == value) {
+                        callback(new Error('新密码不能与旧密码相同!'));
+                    } else {
+                        callback();
                     }
+                }
             };
 
             var validatePass = (rule, value, callback) => {
@@ -84,17 +90,17 @@
                 },
                 rules2: {
                     pass: [
-                        { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur'},
+                        {min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur'},
                         {validator: validNewOldPass, trigger: 'blur'},
-                        { validator: validatePass, trigger: 'blur' }
+                        {validator: validatePass, trigger: 'blur'}
                     ],
                     checkPass: [
-                        { validator: validatePass2, trigger: 'blur' },
-                        { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur'}
+                        {validator: validatePass2, trigger: 'blur'},
+                        {min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur'}
                     ],
                     oldPwd: [
-                        { validator: checkOldPwd, trigger: 'blur' },
-                        { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
+                        {validator: checkOldPwd, trigger: 'blur'},
+                        {min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur'}
                     ]
                 }
             };
@@ -115,7 +121,7 @@
             submitForm(formName){
                 this.$refs[formName].validate(
                     (valid) => {
-                        if(valid){
+                        if (valid) {
                             this.$http.post('/apis/security/generateKey.do').then(
                                 (response) => {
                                     if (response.data.success) {
@@ -124,11 +130,11 @@
                                         RSAUtils.setMaxDigits(200);
                                         let key = new RSAUtils.getKeyPair(exponent, "", modulus);
                                         //新密码
-                                        let password =  this.ruleForm2.pass;
+                                        let password = this.ruleForm2.pass;
                                         //旧密码
                                         let oldPwd = this.ruleForm2.oldPwd;
-                                        let encrypedNewPwd = RSAUtils.encryptedString(key,password);
-                                        let encrypedOldPwd = RSAUtils.encryptedString(key,oldPwd);
+                                        let encrypedNewPwd = RSAUtils.encryptedString(key, password);
+                                        let encrypedOldPwd = RSAUtils.encryptedString(key, oldPwd);
                                         $('input[name=oldPwd]').val(encrypedOldPwd);
                                         $('input[name=newPwd1]').val(encrypedNewPwd);
                                         $('input[name=newPwd2]').val(encrypedNewPwd);
@@ -142,7 +148,7 @@
                                     }
                                 }
                             )
-                        }else{
+                        } else {
                             //表单填写是否完全
 
                         }
@@ -157,14 +163,14 @@
                 }
                 this.$http.post('/apis/user/updatePassword.json', param).then(
                     (res) => {
-                        if(res.data.success){
+                        if (res.data.success) {
                             //console.log();
                             this.$message({
                                 type: 'success',
                                 message: '密码修改成功'
                             });
                             this.$refs['ruleForm2'].resetFields();
-                        }else {
+                        } else {
                             this.$message.error(res.data.message);
                             this.ruleForm2.oldPwd = "";
                             this.ruleForm2.pass = "";

@@ -25,7 +25,8 @@
                 </el-form-item>
                 <el-form-item label="所在地">
                     <el-col :span="24">
-                        <el-cascader size="large" :options="options" v-model="selectedOptions" @change="handleChange" class="edu-cascader">
+                        <el-cascader size="large" :options="options" v-model="selectedOptions" @change="handleChange"
+                                     class="edu-cascader">
 
                         </el-cascader>
                     </el-col>
@@ -37,7 +38,8 @@
                     </div>
                     <div class="btn-wrap">
                         <el-button type="text" @click="triggerUpload">上传头像</el-button>
-                        <input type="file" class="el-upload__input" id="uploadInput" @change="uploadFileChange" accept="image/png,image/jpg,image/jpeg">
+                        <input type="file" class="el-upload__input" id="uploadInput" @change="uploadFileChange"
+                               accept="image/png,image/jpg,image/jpeg">
                     </div>
                 </el-form-item>
                 <el-form-item>
@@ -48,41 +50,44 @@
     </div>
 </template>
 <style lang="scss" scoped>
-    .memberInfo{
+    .memberInfo {
         background: #21273d;
         overflow: hidden;
 
-        .form-wrap{
-            width: 60%;
-            margin: 67px auto 134px auto;
+    .form-wrap {
+        width: 60%;
+        margin: 67px auto 134px auto;
 
-            .img-wrap{
-                width: 100px;
-                max-height: 100px;
-                overflow: hidden;
-                display: inline-block;
+    .img-wrap {
+        width: 100px;
+        max-height: 100px;
+        overflow: hidden;
+        display: inline-block;
 
-                img{
-                    max-width: 100px;
-                }
-            }
+    img {
+        max-width: 100px;
+    }
 
-            .btn-wrap{
-                display: inline-block;
-                margin-left: 10px;
-                vertical-align: top;
-                line-height: 100px;
-            }
-        }
+    }
 
-        .save-btn{
-            width: 100%;
-        }
+    .btn-wrap {
+        display: inline-block;
+        margin-left: 10px;
+        vertical-align: top;
+        line-height: 100px;
+    }
+
+    }
+
+    .save-btn {
+        width: 100%;
+    }
+
     }
 </style>
 
 <script>
-    import {regionData,CodeToText} from "element-china-area-data"
+    import {regionData, CodeToText} from "element-china-area-data"
     export default{
         data(){
             var validPhone = (rule, value, callback) => {
@@ -90,7 +95,7 @@
                     callback(new Error('联系电话不能为空'));
                 } else {
                     let cellPhone = /^1(3|4|5|7|8)\d{9}$/, phone = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
-                    if(!cellPhone.test(value) && !phone.test(value)){
+                    if (!cellPhone.test(value) && !phone.test(value)) {
                         callback(new Error('请输入正确手机号或座机号'));
                     }
                     callback();
@@ -111,37 +116,37 @@
                 },
                 rules: {
                     userDepartment: [
-                        {required: true, message: '请输入您的职务',trigger: 'blur'}
+                        {required: true, message: '请输入您的职务', trigger: 'blur'}
                     ],
                     userPhone: [
-                        {required: true, message: '请输入您的手机号码',trigger: 'blur'},
-                        { validator: validPhone, trigger: 'blur' }
+                        {required: true, message: '请输入您的手机号码', trigger: 'blur'},
+                        {validator: validPhone, trigger: 'blur'}
                     ],
                     userEmail: [
-                        {required: true, message: '请输入邮箱地址',trigger: 'blur'},
+                        {required: true, message: '请输入邮箱地址', trigger: 'blur'},
                         {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
                     ]
                 },
                 options: regionData,
                 selectedOptions: [],
-                addColleges:"",
+                addColleges: "",
             }
         },
         methods: {
             submitForm(formName){
                 this.$refs[formName].validate(
                     (valid) => {
-                        if(valid){
-                            this.$http.post("/apis/user/updateMemberInfo.json",this.memberForm).then((res)=>{
-                                if(res.data.success){
-                                     this.$message(res.data.data);
-                                 }else{
-                                     this.$message(res.data.message);
-                                 }
-                            },(err)=>{
+                        if (valid) {
+                            this.$http.post("/apis/user/updateMemberInfo.json", this.memberForm).then((res) => {
+                                if (res.data.success) {
+                                    this.$message(res.data.data);
+                                } else {
+                                    this.$message(res.data.message);
+                                }
+                            }, (err) => {
                                 console.log(err);
-                             });
-                        }else{
+                            });
+                        } else {
                             console.error('fail');
                             return false;
                         }
@@ -152,9 +157,9 @@
             handleChange(val){
                 let str = "";
                 for (var i = 0; i < val.length; i++) {
-                    if(i == val.length-1){
+                    if (i == val.length - 1) {
                         str += val[i];
-                    }else{
+                    } else {
                         str += val[i] + ","
                     }
                 }
@@ -175,18 +180,18 @@
 //            },
 
             getUserData(){
-                this.$http.post("/apis/user/getMemberInfo.json").then((res)=>{
-                    if(res.data.success){
+                this.$http.post("/apis/user/getMemberInfo.json").then((res) => {
+                    if (res.data.success) {
                         this.memberForm = res.data.data;
-                        if(res.data.data.createDate != null){
+                        if (res.data.data.createDate != null) {
                             this.memberForm.createDateFormat = new Date(res.data.data.createDate).format('yyyy-MM-dd');
                         }
-                        if(this.memberForm.areaCode != null){
+                        if (this.memberForm.areaCode != null) {
                             this.selectedOptions = this.memberForm.areaCode.split(',');
                         }
                         this.userImg = res.data.data.userImg;
                     }
-                },(err)=>{
+                }, (err) => {
                     console.log(err);
                 });
             },
@@ -201,29 +206,29 @@
                 let fileEle = document.getElementById('uploadInput');
                 let file = null;
 
-                if(fileEle.files){
+                if (fileEle.files) {
                     file = fileEle.files[0];
-                }else {
+                } else {
                     let fso = new ActiveXObject("Scripting.FileSystemObject");
                     fileEle.select();
                     fileEle.blur();
                     let filePath = document.selection.createRange().text;
-                    if(fso.FileExists(filePath)){
+                    if (fso.FileExists(filePath)) {
                         file = fso.GetFile(filePath);
                     }
                 }
 
-                if(!file){
+                if (!file) {
                     this.$message.error('上传图片失败');
                     return false;
                 }
 
-                if(!/image\/\w+/.test(file.type)){
+                if (!/image\/\w+/.test(file.type)) {
                     this.$message.error('请上传图片类型的文件');
                     return false;
                 }
                 let isLt1M = file.size / 1024 / 1024 < 1;
-                if(!isLt1M){
+                if (!isLt1M) {
                     this.$message.error('上传头像照片大小不能超过1MB!');
                     return isLt1M;
                 }
@@ -243,11 +248,11 @@
                 let dataUrl = this.$compressImg(canvas, img, 200, 200, 0.5);
                 this.memberForm.userImg = dataUrl;
             },
-           
+
         },
         mounted(){
-            this.getUserData(); 
-            
+            this.getUserData();
+
         },
         created(){
 //            this.setBreadCrumb();
