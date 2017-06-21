@@ -12,7 +12,7 @@
                 </div>
                 <div class="content-bar-pagination">
                     <el-pagination class="edu-pagination"
-                                    v-initjump = 'currentPage'
+                                   v-initjump='currentPage'
                                    @current-change="handleCurrentChange"
                                    :current-page="currentPage"
                                    :page-size="10"
@@ -22,7 +22,8 @@
                 </div>
             </div>
             <el-card class="box-card">
-                <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border style="width: 100%" :resizable="false" @selection-change="handleSelectionChange">
+                <el-table :data="tableData" class="tran-table no-col-title yellow-table mt20" stripe border
+                          style="width: 100%" :resizable="false" @selection-change="handleSelectionChange">
                     <el-table-column type="selection" width="50" align="center"></el-table-column>
                     <el-table-column label="排名" align="center" prop="index" width="80">
                         <template scope="scope">
@@ -66,13 +67,16 @@
     </div>
 </template>
 <style scoped lang="scss">
-    .myAttention-weibo{
-        .content .content-bar .content-bar-button{
-            margin-left: 20px;
-        }
-        .blue{
-            color: #60a3ff;
-        }
+    .myAttention-weibo {
+
+    .content .content-bar .content-bar-button {
+        margin-left: 20px;
+    }
+
+    .blue {
+        color: #60a3ff;
+    }
+
     }
 </style>
 <script>
@@ -82,50 +86,49 @@
     export default{
         data(){
             return {
-               
+
                 total: 0,
                 loading: false,
                 param: {
                     pageSize: 10,
                     pageNumber: 0,
-                    authcStatus:"",
-                    startDate:"",
-                    endDate:"",
-                    university:[],
+                    authcStatus: "",
+                    startDate: "",
+                    endDate: "",
+                    university: [],
                 },
                 searchNames: ['university', 'verified', 'exactDate'],
                 articleData: [],
                 curContent: this.$store.state.curContent,
                 tableData: [],
-                removeParams:{concernsContent:[]},
+                removeParams: {concernsContent: []},
                 eventPermission: true
             }
         },
         components: {searchBox, dropDown},
-        methods:{
+        methods: {
             cancelAttention(){
                 this.removeParams.concernsType = 4;
-                if(this.removeParams.concernsContent.length==0){
+                if (this.removeParams.concernsContent.length == 0) {
                     this.$message("未选择微博");
                     return false;
                 }
-               this.$http.post("/apis/concerns/removeConcernsMore.json",this.removeParams).then(res=>{
-                  if(res.data.success){
-                    this.$message("取消关注成功");
-                    this.getWeiboData();
-                  }else{
-                    this.$message(res.data.message);
-                  }
-               },err=>{
-                  console.log(err);
-               })
+                this.$http.post("/apis/concerns/removeConcernsMore.json", this.removeParams).then(res => {
+                    if (res.data.success) {
+                        this.$message("取消关注成功");
+                        this.getWeiboData();
+                    } else {
+                        this.$message(res.data.message);
+                    }
+                }, err => {
+                    console.log(err);
+                })
             },
             handleSelectionChange(val){
-                console.log(val);
-                 this.removeParams.concernsContent = [];
-               for (let i = 0; i < val.length; i++) {
-                 this.removeParams.concernsContent.push(val[i].microblogName);
-               }
+                this.removeParams.concernsContent = [];
+                for (let i = 0; i < val.length; i++) {
+                    this.removeParams.concernsContent.push(val[i].microblogName);
+                }
             },
             handleCurrentChange(pageNumber) {
                 //后台是从0开始
@@ -133,33 +136,32 @@
                 this.getWeiboData();
             },
             onSearchDataChange(data) {
-                 this.param.authcStatus = data.verified;
-                 this.param.university = data.university; 
-                 this.param.startDate = data.startDate;
-                 this.param.endDate = data.endDate;
-              
+                this.param.authcStatus = data.verified;
+                this.param.university = data.university;
+                this.param.startDate = data.startDate;
+                this.param.endDate = data.endDate;
+
                 this.param.pageSize = 10;
                 this.param.pageNumber = 0;
-                this.getWeiboData(); 
+                this.getWeiboData();
             },
             getWeiboData(){
                 this.tableData = [];
                 this.loading = true;
-                console.log(this.param);  
-                this.$http.post("/apis/concerns/getMicroblogData.json",this.param).then((res)=>{
-                    if(res.data.success){
+                this.$http.post("/apis/concerns/getMicroblogData.json", this.param).then((res) => {
+                    if (res.data.success) {
                         if (res.data.data.page) {
-                            this.total = res.data.data.page.totalElements>10000?10000:res.data.data.page.totalElements;
+                            this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
                             for (var i = 0; i < res.data.data.page.content.length; i++) {
                                 res.data.data.page.content[i].index = this.param.pageNumber * this.param.pageSize + i + 1;
                                 this.tableData.push(res.data.data.page.content[i])
                             }
-                        }else{
-                             this.total = 0;
-                        } 
+                        } else {
+                            this.total = 0;
+                        }
                     }
                     this.loading = false;
-                },(err)=>{
+                }, (err) => {
                     console.log(err);
                     this.loading = false;
                 })
@@ -169,48 +171,48 @@
             },
 
             onSaveEvent(eventId){
-                if(this.removeParams.concernsContent == undefined || this.removeParams.concernsContent.length == 0){
+                if (this.removeParams.concernsContent == undefined || this.removeParams.concernsContent.length == 0) {
                     this.$message('没有选中的微博');
                     return
                 }
 
-                let param ={
+                let param = {
                     eventId: eventId,
                     contents: this.removeParams.concernsContent
                 }
                 this.$http.post('/apis/eventAnalysis/saveEventWeBo.json', param).then(
                     (response) => {
                         if (response.data.success) {
-                        this.$message({
-                            title: '成功',
-                            message: '添加成功',
-                            type: 'success',
-                            duration: 2000
-                        });
-                    } else {
-                        this.$message({
-                            title: '失败',
-                            message: '单个事件不能超过100个微博号',
-                            type: 'error',
-                            duration: 2000
-                        });
-                    }
-                }, (response) => {
+                            this.$message({
+                                title: '成功',
+                                message: '添加成功',
+                                type: 'success',
+                                duration: 2000
+                            });
+                        } else {
+                            this.$message({
+                                title: '失败',
+                                message: '单个事件不能超过100个微博号',
+                                type: 'error',
+                                duration: 2000
+                            });
+                        }
+                    }, (response) => {
                         console.error(response);
                     }
                 );
             }
         },
-        computed:{
-             currentPage:function(){
+        computed: {
+            currentPage: function () {
                 return this.param.pageNumber + 1;
-             }
+            }
         },
         created(){
 
         },
         mounted(){
-            this.$nextTick(function(){
+            this.$nextTick(function () {
                 this.getWeiboData();
                 this.eventPermission = this.$root.$children[0].$children[0].eventPermission;
             });

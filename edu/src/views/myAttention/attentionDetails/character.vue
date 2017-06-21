@@ -15,7 +15,7 @@
                 </div>
                 <div class="content-bar-pagination">
                     <el-pagination class="edu-pagination"
-                                  v-initjump = 'currentPage'
+                                   v-initjump='currentPage'
                                    @size-change="handleSizeChange"
                                    @current-change="handleCurrentChange"
                                    :current-page="currentPage"
@@ -24,8 +24,9 @@
                                    :total="total">
                     </el-pagination>
                 </div>
-            </div>  
-            <character-table class="dark" ref="table" :tableData="getPersonList" :param="this.params" @select="removeData"></character-table>
+            </div>
+            <character-table class="dark" ref="table" :tableData="getPersonList" :param="this.params"
+                             @select="removeData"></character-table>
         </div>
     </div>
 </template>
@@ -39,127 +40,127 @@
             return {
                 loading: false,
                 searchNames: ['university', 'dimension', 'vector', 'emotion', 'publishDateTime'],
-               
+
                 order0: "DESC",
-                getBodyData:{
-                    personageType:[],
-                    reportPersonage : [],
-                    pageSize:10,
-                    pageNumber:0,
+                getBodyData: {
+                    personageType: [],
+                    reportPersonage: [],
+                    pageSize: 10,
+                    pageNumber: 0,
                 },
-                total:0,
+                total: 0,
                 labelPosition: 'left',
                 getPersonList: [],
-                params:{pageNumber:1},
-                removeParams:{},
+                params: {pageNumber: 1},
+                removeParams: {},
                 eventPermission: true
             }
         },
-        components:{characterTable,cascadeBox,dropDown},
-        methods:{
+        components: {characterTable, cascadeBox, dropDown},
+        methods: {
             sort(index){
-             let orders = [{property: "totalHitCount"}];
-              if(this.order0 == 'DESC'){
-                this.order0 = 'ASC'
-              }else{
-                this.order0 = 'DESC'
-              }
-             orders[0].direction =  this.order0 ;
-             this.params.orders = orders;
-              this.getDataList();
+                let orders = [{property: "totalHitCount"}];
+                if (this.order0 == 'DESC') {
+                    this.order0 = 'ASC'
+                } else {
+                    this.order0 = 'DESC'
+                }
+                orders[0].direction = this.order0;
+                this.params.orders = orders;
+                this.getDataList();
             },
             removeData(val){
-              this.removeParams.concernsContent = [];
-               for (let i = 0; i < val.length; i++) {
-                 this.removeParams.concernsContent.push(val[i].name);
-               } 
-               console.log(this.removeParams.concernsContent);
+                this.removeParams.concernsContent = [];
+                for (let i = 0; i < val.length; i++) {
+                    this.removeParams.concernsContent.push(val[i].name);
+                }
+                console.log(this.removeParams.concernsContent);
             },
             cancelAttention(){
-            //console.log(this.removeParams.concernsContent);
-             if(!this.removeParams.concernsContent||this.removeParams.concernsContent.length==0){
-                this.$message("未选择人物");
-                return false;
-             }
-              this.removeParams.concernsType = 2;
-               this.$http.post("/apis/concerns/removeConcernsMore.json",this.removeParams).then(res=>{
-                  if(res.data.success){
-                    this.$message("取消关注成功");
-                    this.getDataList();
-                  }else{
-                    this.$message(res.data.message);
-                  }
-               },err=>{
-                  console.log(err);
-               })
+                //console.log(this.removeParams.concernsContent);
+                if (!this.removeParams.concernsContent || this.removeParams.concernsContent.length == 0) {
+                    this.$message("未选择人物");
+                    return false;
+                }
+                this.removeParams.concernsType = 2;
+                this.$http.post("/apis/concerns/removeConcernsMore.json", this.removeParams).then(res => {
+                    if (res.data.success) {
+                        this.$message("取消关注成功");
+                        this.getDataList();
+                    } else {
+                        this.$message(res.data.message);
+                    }
+                }, err => {
+                    console.log(err);
+                })
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
-                 this.params.pageNumber = val - 1;
+                this.params.pageNumber = val - 1;
                 // console.log(this.params.pageNumber);
                 this.getDataList();
             },
-           getParams(params){
-              this.params.personageType = [];
-              this.params.reportPersonage = []; 
-
-              if(params.reportPersonage==null){
+            getParams(params){
+                this.params.personageType = [];
                 this.params.reportPersonage = [];
-              } else{
-                this.params.reportPersonage.push(params.reportPersonage);
-              }
-              //this.params.startDate = params.endDate.split(" ")[0] + " 00:00:00";
-               this.params.startDate = params.startDate;
-               this.params.endDate = params.endDate;
-              this.getDataList()
-           },  
-           loadData(params){
-              this.params.personageType = [];
-              this.params.reportPersonage = [];
-              //this.params.startDate = params.endDate.split(" ")[0] + " 00:00:00";
-               this.params.startDate = params.startDate;
-               this.params.endDate = params.endDate;
-              this.params.pageSize = 10;
-              this.params.pageNumber = 0;
-              this.params.orders = [{property: "totalHitCount", direction: "DESC"}];
-              this.getDataList();
-           },
-           getDataList(){
-              this.getPersonList = [];
-              this.loading = true;
-              this.$http.post("/apis/concerns/getPersonData.json",this.params).then((res)=>{
-                  if(res.data.success){
-                      if (res.data.data.page) {
-                          for (var i = 0; i < res.data.data.page.content.length; i++) {
-                              res.data.data.page.content[i].rank = this.params.pageNumber * this.params.pageSize + i + 1;
-                              this.getPersonList.push(res.data.data.page.content[i]);
-                          }
-                          this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
-                      }else{
-                        this.total = 0;
-                      }
-                      console.log(this.$refs);
-                      this.$refs.table.getTableDataEvent()
 
-                      this.loading = false;
-                  }
-              },(err)=>{
-                 console.log(err);
-                  this.loading = false;
-              })
-           },
+                if (params.reportPersonage == null) {
+                    this.params.reportPersonage = [];
+                } else {
+                    this.params.reportPersonage.push(params.reportPersonage);
+                }
+                //this.params.startDate = params.endDate.split(" ")[0] + " 00:00:00";
+                this.params.startDate = params.startDate;
+                this.params.endDate = params.endDate;
+                this.getDataList()
+            },
+            loadData(params){
+                this.params.personageType = [];
+                this.params.reportPersonage = [];
+                //this.params.startDate = params.endDate.split(" ")[0] + " 00:00:00";
+                this.params.startDate = params.startDate;
+                this.params.endDate = params.endDate;
+                this.params.pageSize = 10;
+                this.params.pageNumber = 0;
+                this.params.orders = [{property: "totalHitCount", direction: "DESC"}];
+                this.getDataList();
+            },
+            getDataList(){
+                this.getPersonList = [];
+                this.loading = true;
+                this.$http.post("/apis/concerns/getPersonData.json", this.params).then((res) => {
+                    if (res.data.success) {
+                        if (res.data.data.page) {
+                            for (var i = 0; i < res.data.data.page.content.length; i++) {
+                                res.data.data.page.content[i].rank = this.params.pageNumber * this.params.pageSize + i + 1;
+                                this.getPersonList.push(res.data.data.page.content[i]);
+                            }
+                            this.total = res.data.data.page.totalElements > 10000 ? 10000 : res.data.data.page.totalElements;
+                        } else {
+                            this.total = 0;
+                        }
+                        console.log(this.$refs);
+                        this.$refs.table.getTableDataEvent()
+
+                        this.loading = false;
+                    }
+                }, (err) => {
+                    console.log(err);
+                    this.loading = false;
+                })
+            },
             onSaveEvent(eventId){
-               if(this.removeParams.concernsContent == undefined || this.removeParams.concernsContent.length == 0){
-                   this.$message('没有选中的人物');
-                   return ;
-               }
+                if (this.removeParams.concernsContent == undefined || this.removeParams.concernsContent.length == 0) {
+                    this.$message('没有选中的人物');
+                    return;
+                }
 
-               let param = {
-                   eventId: eventId,
-                   contents: this.removeParams.concernsContent
-               }
+                let param = {
+                    eventId: eventId,
+                    contents: this.removeParams.concernsContent
+                }
                 this.$http.post('/apis/eventAnalysis/saveEventPersonage.json', param).then(
                     (response) => {
                         if (response.data.success) {
@@ -183,10 +184,10 @@
                 );
             }
         },
-        computed:{
-           currentPage:function(){
-             return this.params.pageNumber + 1;
-           }
+        computed: {
+            currentPage: function () {
+                return this.params.pageNumber + 1;
+            }
         },
         mounted(){
             this.$nextTick(function () {
@@ -196,35 +197,39 @@
         created(){
 
         },
-        watch:{  
-          
-        }    
+        watch: {}
     }
 </script>
 <style lang="scss">
-    .myAttention-character{
-        .custom-tabs>.el-tabs__header>.el-tabs__nav-wrap>.el-tabs__nav-scroll>.el-tabs__nav{
-                margin: 0;         
-            }
-        .custom-tabs .el-tabs__content{
-            margin-top: 10px; 
-        }
-       .chooseTime{
-           padding-left: 16px;
-           line-height: 50px; 
-           display: inline-block;
-           width: 100%;
-           color: #d0d7ff;   
-       }
-       .row-time{
-           border-bottom: 1px solid rgba(96, 163, 255, 0.1);
-       }
-       .el-select{
-           margin-top: 7px; 
-       }
-       .block{
-           margin-top: 7px; 
-       }
-      
+    .myAttention-character {
+
+    .custom-tabs > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav {
+        margin: 0;
+    }
+
+    .custom-tabs .el-tabs__content {
+        margin-top: 10px;
+    }
+
+    .chooseTime {
+        padding-left: 16px;
+        line-height: 50px;
+        display: inline-block;
+        width: 100%;
+        color: #d0d7ff;
+    }
+
+    .row-time {
+        border-bottom: 1px solid rgba(96, 163, 255, 0.1);
+    }
+
+    .el-select {
+        margin-top: 7px;
+    }
+
+    .block {
+        margin-top: 7px;
+    }
+
     }
 </style>
