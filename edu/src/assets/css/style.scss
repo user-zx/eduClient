@@ -556,3 +556,33 @@ margin: 0;
 .tran-table.el-table th .cell {
   text-align: center; 
 }
+
+.edu-tabs{
+  background-color: #21273d;
+  padding: 15px;
+
+  .tab-item {
+    height: 75px;
+    line-height: 75px;
+    font-size: 16px;
+    text-align: center;
+    color: rgba(193, 202, 240, .5);
+    background: #282e46;
+    transition: all .25s;
+    cursor: pointer;
+    border: 1px solid #273451;
+
+    &.blue{
+      background-color: #169BD5;
+      color: #ffffff;
+
+      &:hover{
+        color: #e4f09e;
+      }
+    }
+
+    &:hover {
+      color: #60a3ff;
+    }
+  }
+}

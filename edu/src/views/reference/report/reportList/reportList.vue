@@ -3,117 +3,270 @@
 */
 <template>
     <div class="report" v-loading="loading" element-loading-text="加载中……">
-        <div class="content-wrap">
-            <div class="btn-container">
-                <el-button type="primary" icon="plus" @click="addReport">生成报告</el-button>
-            </div>
-            <el-table :data="tableData" class="tran-table no-col-title" border style="width: 100%"
-                      :resizable="false">
-                <el-table-column label="序号" align="center" prop="rank" width="70"></el-table-column>
-                <el-table-column label="生成区间" prop="range" align="center" :formatter="formatRangeDate"></el-table-column>
-                <el-table-column label="报告名称" prop="title" align="center"></el-table-column>
-                <el-table-column label="添加时间" prop="createDate" align="center" :formatter="formatCreateDate" width="200"></el-table-column>
-                <el-table-column label="操作" prop="option" align="center">
-                    <template scope="scope">
-                        <el-button @click="editReport(scope.row)" type="text" size="small">编辑</el-button>
-                        <el-button @click="viewReport(scope.row)" type="text" size="small">预览</el-button>
-                        <el-button @click="deleteRow(scope.row.id)" type="text" size="small">删除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
+        <div class="edu-tabs">
+            <el-row :gutter="10">
+                <el-col :span="4" :offset="8">
+                    <div class="tab-item blue" @click="openBriefDialog()">
+                        制作简报
+                    </div>
+                </el-col>
+                <el-col :span="4">
+                    <div class="tab-item blue" @click="openReferenceDialog()">
+                        制作内参报告
+                    </div>
+                </el-col>
+            </el-row>
         </div>
-        <el-pagination class="edu-pagination"
-                       @current-change="handleCurrentChange"
-                       :current-page="param.pageNumber + 1"
-                       :page-size="10"
-                       layout="prev, next, jumper, total"
-                       :total="total">
-        </el-pagination>
-
-        <el-dialog :title="formTitle + '报告'" v-model="dialogFormVisible" class="createReport-dialog" @close="closeDialog('addReportForm')">
-            <el-form :model="addReportForm" :rules="rules" ref="addReportForm" label-width="150px">
-                <input type="hidden" name="id" :value="addReportForm.id"/>
-                <el-form-item label="开始时间" prop="startDate">
-                    <el-date-picker
-                            :editable="editable"
-                            v-model="startDate"
-                            type="datetime"
-                            placeholder="选择开始时间">
-                    </el-date-picker>
+        <div class="content-wrap">
+            <el-tabs v-model="activeName" class="custom-tabs" @tab-click="handleClick">
+                <el-tab-pane label="简报" name="briefReport">
+                    <div class="briefReport-list list-div">
+                        <div class="item" v-for="item in briefData">
+                            <div class="title">{{item.title}}</div>
+                            <div class="date">
+                                <span class="beginDate">{{item.startDate.substring(0, 10).split('-').join('/')}}</span>
+                                &nbsp;- &nbsp;
+                                <span class="endDate">{{item.endDate.substring(0, 10).split('-').join('/')}}</span>
+                            </div>
+                            <div class="btn-area">
+                                <el-button type="primary" size="small" @click="viewBriefReport(item.id)">预览</el-button>
+                                <el-button type="primary" size="small" @click="deleteBriefReport(item.id)">删除</el-button>
+                                <el-button type="primary" size="small" @click="downloadReport(item.id)">下载</el-button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page-bar">
+                        <el-pagination class="edu-pagination"
+                                       @current-change="handleBriefPageChange"
+                                       :current-page="briefParam.pageNumber + 1"
+                                       :page-size="briefParam.pageSize"
+                                       layout="prev, next, jumper, total"
+                                       :total="briefTotal">
+                        </el-pagination>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="内参报告" name="referenceReport">
+                    <div class="referenceReport-list list-div">
+                        <div class="item" v-for="item in referenceData">
+                            <div class="title">{{item.title}}</div>
+                            <div class="date">
+                                <span class="beginDate">{{item.startDate}}</span>
+                                &nbsp;- &nbsp;
+                                <span class="endDate">{{item.endDate}}</span>
+                            </div>
+                            <div class="btn-area">
+                                <el-button type="primary" size="small" @click="viewBriefReport(item.id)">预览</el-button>
+                                <el-button type="primary" size="small" @click="deleteBriefReport(item.id)">删除</el-button>
+                                <el-button type="primary" size="small" @click="downloadReport(item.id)">下载</el-button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page-bar">
+                        <el-pagination class="edu-pagination"
+                                       @current-change="handleRefPageChange"
+                                       :current-page="referenceParam.pageNumber + 1"
+                                       :page-size="referenceParam.pageSize"
+                                       layout="prev, next, jumper, total"
+                                       :total="referenceTotal">
+                        </el-pagination>
+                    </div>
+                </el-tab-pane>
+            </el-tabs>
+        </div>
+        <el-dialog :visible.sync="briefFormVisible" @close="closeDialog('briefForm')" title="制作简报">
+            <el-form :model="briefForm" ref="briefForm" class="edu-form small-form" :rules="briefRules">
+                <el-form-item label="开始时间" :label-width="formLabelWidth" prop="startDate">
+                    <el-date-picker type="date" placeholder="选择开始日期" v-model="briefForm.startDate" style="width: 100%;"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="结束时间" prop="endDate">
-                    <el-date-picker
-                            :editable="editable"
-                            v-model="endDate"
-                            type="datetime"
-                            placeholder="选择结束时间">
-                    </el-date-picker>
                 </el-form-item>
-                <el-form-item label="报告名称" prop="title">
-                    <el-input v-model="addReportForm.title" auto-complete="off" placeholder="请输入报告名称"></el-input>
+                <el-form-item label="截止时间" :label-width="formLabelWidth" prop="endDate">
+                    <el-date-picker type="date" placeholder="选择结束日期" v-model="briefForm.endDate" style="width: 100%;"></el-date-picker>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogSubmit('addReportForm')">确 定</el-button>
+                <el-button @click="closeDialog('briefForm')">取 消</el-button>
+                <el-button type="primary" @click="saveBriefReport('briefForm')">确 定</el-button>
+            </div>
+        </el-dialog>
+
+        <el-dialog :visible.sync="refFormVisible" @close="closeDialog('refForm')" title="制作内参报告">
+            <el-form :model="refForm" ref="refForm" class="edu-form refForm">
+                <el-form-item label="起止时间" :label-width="formLabelWidth">
+                    <el-col :span="11">
+                        <el-form-item prop="startDate">
+                            <el-date-picker type="date" placeholder="选择开始日期" v-model="refForm.startDate" style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col class="line" :span="2">-</el-col>
+                    <el-col :span="11">
+                        <el-form-item prop="endDate">
+                            <el-date-picker type="date" placeholder="选择结束时间" v-model="refForm.endDate" style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label="选择数据区域" :label-width="formLabelWidth">
+                    <el-select v-model="refForm.areas" multiple placeholder="请选择部委省厅">
+                        <el-option v-for="item in allArea" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="" :label-width="formLabelWidth">
+                    <el-select multiple v-model="refForm.colleges" placeholder="请选择大学名称">
+                        <el-option-group
+                                v-for="group in allCollege"
+                                :key="group.label"
+                                :label="group.label">
+                            <el-option
+                                    v-for="item in group.options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-option-group>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="关键字" :label-width="formLabelWidth">
+                    <el-input v-model="refForm.keyWords"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button type="primary">取 消</el-button>
+                <el-button type="primary">确 定</el-button>
             </div>
         </el-dialog>
     </div>
 </template>
 <style lang="scss" scoped>
     .report{
+        .content-wrap{
+            background: #21273d;
+            margin-top: 10px;
 
-    .content-wrap{
-        padding: 20px;
-        background: #21273d;
-        min-height: 526px;
+            .list-div{
+                font-size: 0;
+                min-height: 500px;
 
-    .btn-container{
-        margin-bottom: 10px;
-        text-align: right;
+                .item{
+                    display: inline-block;
+                    width: calc((100% - 100px) / 5);
+                    height: 200px;
+                    border: 1px solid #eee;
+                    text-align: center;
+                    margin: 10px;
+                    vertical-align: middle;
+
+                    .title{
+                        font-size: 18px;
+                        font-weight:bold;
+                        height: 90px;
+                        line-height: 90px;
+                    }
+
+                    .date{
+                        font-size: 14px;
+                        height: 20px;
+                        line-height: 20px;
+                    }
+
+                    .btn-area{
+                        height: 90px;
+                        line-height: 90px;
+                    }
+                }
+            }
+
+            .page-bar{
+                margin-bottom: 20px;
+            }
+        }
     }
+
+    .small-form{
+        width: 400px;
+        margin:auto;
     }
+    
+    .refForm{
+        .line{
+            text-align: center;
+        }
     }
 </style>
 <script>
-    /*
-     * import '../../assets/vendor/iCkeck-v1.0.2/js/icheck.min';
-     * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
-     * import loginButton from './components/loginButton.vue';
-     */
+    import schools from "../../../../school.json";
     export default{
         data(){
-            return {
-                tableData: [],
-                loading:true,
-                total: 0,
-                param: {
-                    pageSize: 10,
-                    pageNumber: 0,
-                },
-                dialogFormVisible: false,
-                startDate: '',
-                endDate: '',
-                editable: false,
-                formTitle: '',
-                addReportForm: {
-                    id: '',
-                    title: '',
-                    startDate: '',
-                    endDate: ''
-                },
-                rules:{
-                    title:[
-                        {required:true,message:"请输入报告名称",trigger: 'blur' },
-                        {min:4,max:16,message:"长度在 4 到 16 个字符",trigger: 'blur' },
-                    ],
-                    startDate:[
-                        {type: 'object',required:true,message:"请选择开始时间",trigger:'blur'}
-                    ],
-                    endDate:[
-                        {type: 'object',required:true,message:"请选择结束时间",trigger:'blur'}
-                    ]
+            var checkDate = (rule, value, callback) =>{
+                if(!value){
+                    return callback(new Error('请选择结束日期'));
                 }
+
+                var startDate = this.briefForm.startDate;
+                if(!startDate){
+                    return callback();
+                }
+                if(startDate > value){
+                    return callback(new Error('开始日期不能大于结束日期'));
+                }
+                return callback();
+            };
+            return {
+                loading:false,
+                activeName: 'briefReport',
+                briefTotal: 0,
+                briefParam: {
+                    pageSize: 10,
+                    pageNumber: 0
+                },
+                referenceTotal: 0,
+                referenceParam: {
+                    pageSize: 10,
+                    pageNumber: 0
+                },
+                briefForm: {
+                    startDate: '',
+                    endDate: '',
+                    title: '教育简报'
+                },
+                briefRules: {
+                    startDate :[
+                        { type: 'date', required: true, message: '请选择开始日期', trigger: 'change' }
+                    ],
+                    endDate :[
+                        { type: 'date', required: true, message: '请选择结束日期', trigger: 'change' },
+                        { validator: checkDate, trigger: 'change' }
+                    ],
+                },
+                refForm: {
+                    keyWords: '',
+                    startDate: '',
+                    endDate: '',
+                    areas: [],
+                    colleges: [],
+                    title: '内参报告'
+                },
+                formLabelWidth: '120px',
+                briefFormVisible: false,
+                refFormVisible: false,
+                briefData: [],
+                referenceData: [],
+                allArea: [{
+                    value: '选项1',
+                    label: '黄金糕'
+                }, {
+                    value: '选项2',
+                    label: '双皮奶'
+                }, {
+                    value: '选项3',
+                    label: '蚵仔煎'
+                }, {
+                    value: '选项4',
+                    label: '龙须面'
+                }, {
+                    value: '选项5',
+                    label: '北京烤鸭'
+                }],
+                allCollege: schools
             }
         },
         methods:{
@@ -128,19 +281,93 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
-            deleteRow(id) {
+
+            handleClick(tab, event){
+                console.log(tab)
+                console.log(event)
+            },
+
+            /**
+             * 分页获取教育简报列表
+             */
+            getBriefReportList(){
+                let url = '/apis/briefReport/getAllBriefReport.json?pageNumber=' + this.briefParam.pageNumber + '&pageSize=10';
+                this.$http.get(url).then(
+                    function (response) {
+                        if(response.data.success){
+                            this.briefData = response.data.data.list;
+                            console.log(this.briefData)
+                        }else {
+                            console.error(response.data.message);
+                        }
+                    }
+                )
+            },
+
+            /**
+             * 分页获取舆情报告列表
+             */
+            getReferenceReportList(){
+
+            },
+
+            /**
+             * 打开添加简报表单
+             */
+            openBriefDialog(){
+                this.briefFormVisible = true;
+            },
+
+            /**
+             * 打开添加舆情报告表单
+             */
+            openReferenceDialog(){
+                this.refFormVisible = true;
+            },
+
+            handleBriefPageChange(val){
+                this.briefParam.pageNumber = val - 1;
+            },
+
+            handleRefPageChange(val){
+                this.referenceParam.pageNumber = val - 1;
+            },
+
+            formatCreateDate(row, col) {
+                return new Date(row.createDate).format('yyyy-MM-dd');
+            },
+
+            formatRangeDate(row, col) {
+                return new Date(row.startDate).format('yyyy-MM-dd') + '至' + new Date(row.endDate).format('yyyy-MM-dd');
+            },
+
+            closeDialog(formName){
+                this.$refs[formName].resetFields();
+
+                if(formName == 'briefForm'){
+                    this.briefFormVisible = false;
+                }else {
+                    this.refFormVisible = false;
+                }
+            },
+
+            viewBriefReport(id){
+                console.log(id)
+            },
+
+            deleteBriefReport(id){
                 this.$confirm('是否删除该报告', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.delete('/apis/internalRefReport/deleteReport.json/' + id).then((response) => {
+                    this.$http.delete('/apis/briefReport/deleteBriefReport.json/' + id).then((response) => {
                             if (response.data.success) {
                                 this.$message({
                                     message: '删除成功',
                                     type: 'success'
                                 });
-                                this.getReportList();
+                                this.getBriefReportList();
                             } else {
                                 console.error(response.data.message);
                                 return false;
@@ -157,150 +384,71 @@
                     });
                 });
             },
-            addReport() {
-                this.formTitle = '添加';
-                this.startDate = '';
-                this.endDate = '';
-                this.addReportForm = {
-                    id: '',
-                    title: '',
-                    startDate: '',
-                    endDate: ''
-                };
-                this.dialogFormVisible = true;
+
+            deleteRefReport(id){
+                this.$confirm('是否删除该报告', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$http.delete('/apis/' + id).then((response) => {
+                            if (response.data.success) {
+                                this.$message({
+                                    message: '删除成功',
+                                    type: 'success'
+                                });
+                                this.getReferenceReportList();
+                            } else {
+                                console.error(response.data.message);
+                                return false;
+                            }
+                        }, (response) => {
+                            console.error(response);
+                            return false;
+                        }
+                    );
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
             },
-            editReport(form) {
-                this.formTitle = '编辑';
-                this.addReportForm = jQuery.extend({}, form);
-                this.startDate = new Date(this.addReportForm.startDate);
-                this.endDate = new Date(this.addReportForm.endDate);
-                this.dialogFormVisible = true;
+
+            downloadReport(id, type){
+
             },
-            formatCreateDate(row, col) {
-                return new Date(row.createDate).format('yyyy-MM-dd');
-            },
-            formatRangeDate(row, col) {
-                return new Date(row.startDate).format('yyyy-MM-dd') + '至' + new Date(row.endDate).format('yyyy-MM-dd');
-            },
-            viewReport(row) {
-                this.$router.push({path:"/home/reportDetails", query: {
-                    id: row.id,
-                    title: row.title,
-                    createDate: new Date(row.startDate).format('yyyy-MM-dd'),
-                    endDate: new Date(row.endDate).format('yyyy-MM-dd')
-                }});
-            },
-            dialogSubmit(formName) {
+
+            saveBriefReport(formName){
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        if (this.addReportForm.startDate > this.addReportForm.endDate) {
-                            this.$message({
-                                message: '开始时间不能大于结束时间',
-                                type: 'error'
-                            });
-                            return;
-                        }
-
-                        let sameCount = 0;
-                        if (this.tableData.length > 0) {
-                            for (let i = 0; i < this.tableData.length; i++) {
-                                if (this.tableData[i].title == this.addReportForm.title && this.tableData[i].id != this.addReportForm.id) {
-                                    sameCount++;
+                        this.briefForm.startDate = new Date(this.briefForm.startDate).format('yyyy-MM-dd 00:00:00');
+                        this.briefForm.endDate = new Date(this.briefForm.endDate).format('yyyy-MM-dd 23:59:59');
+                        this.$http.post('/apis/briefReport/saveOrUpdateBriefReport.json', this.briefForm).then(
+                            function (response) {
+                                if(response.data.success){
+                                    this.briefFormVisible = false;
+                                    this.getBriefReportList();
                                 }
-                            }
-                        }
-
-                        if (sameCount > 0) {
-                            this.$message({
-                                message: '标题不能重复',
-                                type: 'error'
-                            });
-                            return;
-                        }
-
-                        this.addReportForm.startDate = this.addReportForm.startDate.format('yyyy-MM-dd hh:mm:ss');
-                        this.addReportForm.endDate = this.addReportForm.endDate.format('yyyy-MM-dd hh:mm:ss');
-                        this.$http.post('/apis/internalRefReport/saveOrUpdateReport.json', this.addReportForm).then((response) => {
-                                if (response.data.success) {
-                                    this.$message({
-                                        message: this.formTitle + '成功',
-                                        type: 'success'
-                                    });
-                                    this.dialogFormVisible = false;
-                                    this.getReportList();
-                                } else {
-                                    this.$message({
-                                        message: '标题不能重复',
-                                        type: 'error'
-                                    });
-                                    this.startDate = new Date(this.addReportForm.startDate);
-                                    this.endDate = new Date(this.addReportForm.endDate);
-                                    return;
-                                }
-                            }, (response) => {
-                                console.error(response);
-                                return false;
                             }
                         );
                     } else {
-                        this.$message({message:'校验失败!',type:"error"});
+                        console.error('param is not valid');
                         return false;
                     }
                 });
             },
-            handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
-            },
-            handleCurrentChange(val) {
-                this.param.pageNumber = val - 1;
-                this.getReportList();
-            },
-            getReportList() {
-                this.loading = true;
-                this.$nextTick(function() {
-                    this.$http.post('/apis/internalRefReport/getReport.json', this.param).then(
-                        (response) => {
-                            if (response.data.success) {
-                                let data = response.data.data.content;
-                                if(data != null && data.length > 0){
-                                    for(let i = 0; i <　data.length; i++){
-                                        data[i].rank = (this.param.pageNumber) * this.param.pageSize +  i + 1;
-                                    }
-                                }
-                                this.tableData = data;
-                                // 最多允许翻1000页
-                                this.total = response.data.data.totalElements > 10000 ? 10000 : response.data.data.totalElements;
-                            } else {
-                                console.error(response.data.message);
-                            }
-                            this.$nextTick(function() {
-                                this.loading = false;
-                            });
-                        }, (response) => {
-                            this.loading = false;
-                            console.error(response);
-                        }
-                    );
-                });
-            },
 
-            closeDialog(formName){
-                this.$refs[formName].resetFields();
+            saveRefReport(){
+
             }
         },
         created(){
             this.setBreadCrumb();
-            this.getReportList();
+            this.getBriefReportList();
         },
         mounted(){
-        },
-        watch: {
-            startDate(val) {
-                this.addReportForm.startDate = val;
-            },
-            endDate(val) {
-                this.addReportForm.endDate = val;
-            }
+            console.log(this.allProvince())
         }
     }
 </script>
