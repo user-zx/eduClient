@@ -91,7 +91,7 @@
 
         <el-dialog :visible.sync="refFormVisible" @close="closeDialog('refForm')" title="制作内参报告">
             <el-form :model="refForm" ref="refForm" class="edu-form refForm">
-                <el-form-item label="起止时间" :label-width="formLabelWidth">
+                <el-form-item label="起止时间：" :label-width="formLabelWidth" class="half-form-item">
                     <el-col :span="11">
                         <el-form-item prop="startDate">
                             <el-date-picker type="date" placeholder="选择开始日期" v-model="refForm.startDate" style="width: 100%;"></el-date-picker>
@@ -104,29 +104,46 @@
                         </el-form-item>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="选择数据区域" :label-width="formLabelWidth">
-                    <el-select v-model="refForm.areas" multiple placeholder="请选择部委省厅">
-                        <el-option v-for="item in allArea" :key="item.value" :label="item.label" :value="item.value">
-                        </el-option>
-                    </el-select>
+
+                <el-form-item label="选择数据区域：" :label-width="formLabelWidth">
+                    <el-row>
+                        <el-col :span="24">
+                            部位省厅
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                       <el-col :span="24">
+                           <el-select v-model="refForm.areas" multiple placeholder="请选择部委省厅">
+                               <el-option v-for="item in allArea" :key="item.value" :label="item.label" :value="item.value">
+                               </el-option>
+                           </el-select>
+                       </el-col>
+                    </el-row>
                 </el-form-item>
                 <el-form-item label="" :label-width="formLabelWidth">
-                    <el-select multiple v-model="refForm.colleges" placeholder="请选择大学名称">
-                        <el-option-group
-                                v-for="group in allCollege"
-                                :key="group.label"
-                                :label="group.label">
-                            <el-option
-                                    v-for="item in group.options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                            </el-option>
-                        </el-option-group>
-                    </el-select>
+                    <el-row>
+                        <div class="el-col" :span="24">高校</div>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="24">
+                            <el-select multiple v-model="refForm.colleges" placeholder="请选择大学名称">
+                                <el-option-group
+                                        v-for="group in allCollege"
+                                        :key="group.label"
+                                        :label="group.label">
+                                    <el-option
+                                            v-for="item in group.options"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                    </el-option>
+                                </el-option-group>
+                            </el-select>
+                        </el-col>
+                    </el-row>
                 </el-form-item>
-                <el-form-item label="关键字" :label-width="formLabelWidth">
-                    <el-input v-model="refForm.keyWords"></el-input>
+                <el-form-item label="关键字：" :label-width="formLabelWidth">
+                    <el-input v-model="refForm.keyWords" placeholder="多个关键字用英文“,”隔开"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -196,7 +213,7 @@
     import schools from "../../../../school.json";
     export default{
         data(){
-            var checkDate = (rule, value, callback) =>{
+            var checkBriefDate = (rule, value, callback) =>{
                 if(!value){
                     return callback(new Error('请选择结束日期'));
                 }
@@ -208,6 +225,24 @@
                 if(startDate > value){
                     return callback(new Error('开始日期不能大于结束日期'));
                 }
+                return callback();
+            };
+            var checkRefDate = (rule, value, callback) =>{
+                if(!value){
+                    return callback(new Error('请选择结束日期'));
+                }
+
+                var startDate = this.refForm.startDate;
+                if(!startDate){
+                    return callback();
+                }
+                if(startDate > value){
+                    return callback(new Error('开始日期不能大于结束日期'));
+                }
+                return callback();
+            };
+            var validAreaLength =(rule, value, callback) =>{
+                console.log(value)
                 return callback();
             };
             return {
@@ -234,8 +269,25 @@
                     ],
                     endDate :[
                         { type: 'date', required: true, message: '请选择结束日期', trigger: 'change' },
-                        { validator: checkDate, trigger: 'change' }
+                        { validator: checkBriefDate, trigger: 'change' }
                     ],
+                },
+                refRules: {
+                    startDate :[
+                        { type: 'date', required: true, message: '请选择开始日期', trigger: 'change' }
+                    ],
+                    endDate :[
+                        { type: 'date', required: true, message: '请选择结束日期', trigger: 'change' },
+                        { validator: checkRefDate, trigger: 'change' }
+                    ],
+                    areas: [
+                        { type: 'array', required: true, message: '请至少选择一个部位省厅', trigger: 'change' },
+                        { validator: validAreaLength, trigger: 'change'}
+                    ],
+                    colleges: [
+                        { type: 'array', required: true, message: '请至少选择一所高校', trigger: 'change' },
+                        { type: 'array', max: 20, message: '最多能选择20所高校', trigger: 'change'}
+                    ]
                 },
                 refForm: {
                     keyWords: '',
@@ -250,22 +302,7 @@
                 refFormVisible: false,
                 briefData: [],
                 referenceData: [],
-                allArea: [{
-                    value: '选项1',
-                    label: '黄金糕'
-                }, {
-                    value: '选项2',
-                    label: '双皮奶'
-                }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
-                }, {
-                    value: '选项4',
-                    label: '龙须面'
-                }, {
-                    value: '选项5',
-                    label: '北京烤鸭'
-                }],
+                allArea: this.allProvince(),
                 allCollege: schools
             }
         },
@@ -447,8 +484,6 @@
             this.setBreadCrumb();
             this.getBriefReportList();
         },
-        mounted(){
-            console.log(this.allProvince())
-        }
+        mounted(){}
     }
 </script>

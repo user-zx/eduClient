@@ -14,29 +14,21 @@
             </div>
             <div class="eventCharts">
                 <el-row :gutter="10">
-                    <el-col :span="24">
-                        <el-card class="box-card">
-                            <div slot="header" class="clearfix">
-                                <span class="icons icons-chart1"></span><span>行业内参概要</span>
-                            </div>
-                            <div class="text item">
-                                <el-table :data="internalRefSummary" :resizable="false" style="width: 100%" border class="tran-table">
-                                    <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="center" width="245">
-                                        <template scope="scope">
-                                                    <span class="pointer" @click="toDetail(scope.row)">
-                                                        {{scope.row.title}}
-                                                    </span>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
-                                    <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
-                                    <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
-                                </el-table>
-                            </div>
-                        </el-card>
-                    </el-col>
+                    <el-card class="box-card">
+                        <div class="clearfix" slot="header">
+                            <span class="icons icons-chart1"></span><span> 媒体热点</span>
+                        </div>
+                        <div class="text item">
+                            <el-table class="tran-table" border style="width: 100%" :resizable="false" :data="mediaHotArticle">
+                                <el-table-column type="index" width="50"></el-table-column>
+                                <el-table-column label="标题" prop="title" align="center"></el-table-column>
+                                <el-table-column label="来源" prop="source" align="center" width="150"></el-table-column>
+                                <el-table-column label="日期" prop="publishDate" align="center" width="150"></el-table-column>
+                                <el-table-column label="报道学校" prop="college" align="center" width="150"></el-table-column>
+                            </el-table>
+                        </div>
+                    </el-card>
                 </el-row>
-
                 <el-row :gutter="10">
                     <el-col :span="24">
                         <el-card class="box-card">
@@ -93,25 +85,6 @@
                     </el-col>
                 </el-row>
 
-                <el-row :gutter="10">
-                    <el-col :span="24">
-                        <el-card class="box-card">
-                            <div slot="header" class="clearfix">
-                                <span class="icons icons-chart3"></span><span>载体分布</span>
-                            </div>
-                            <div class="col-item item-left">
-                                <div class="charts" id="vectorDistributionChart" style="height: 400px;"></div>
-                            </div>
-                            <div class="col-item item-right">
-                                <el-table :data="distributeData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title">
-                                    <el-table-column prop="name" label="载体" width="150" align="center"></el-table-column>
-                                    <el-table-column prop="positive" label="正面文章数" align="center"></el-table-column>
-                                    <el-table-column prop="negative" label="负面文章数" align="center"></el-table-column>
-                                </el-table>
-                            </div>
-                        </el-card>
-                    </el-col>
-                </el-row>
                 <el-row :gutter="10">
                     <el-col :span="24">
                         <el-card class="box-card">
@@ -365,7 +338,6 @@
                 wechatLoading: true,
                 weboLoading: true,
                 param: {},
-                internalRefSummary: [],
                 personageTop10: [],
                 personageTop10Details: [],
                 distributeData: [],
@@ -373,7 +345,19 @@
                 webo: [],
                 wechatHot: [],
                 weboHot: [],
-                hasCompleted: 0
+                hasCompleted: 0,
+                mediaHotArticle: [
+                    {id: 1, title: '清华研究生参加毕业典礼要抽签？学校回应', source: '北京青年报', publishDate: '2016-01-01', college: '清华大学'},
+                    {id: 1, title: '清华研究生参加毕业典礼要抽签？学校回应', source: '北京青年报', publishDate: '2016-01-01', college: '清华大学'},
+                    {id: 1, title: '清华研究生参加毕业典礼要抽签？学校回应', source: '北京青年报', publishDate: '2016-01-01', college: '清华大学'},
+                    {id: 1, title: '清华研究生参加毕业典礼要抽签？学校回应', source: '北京青年报', publishDate: '2016-01-01', college: '清华大学'},
+                    {id: 1, title: '清华研究生参加毕业典礼要抽签？学校回应', source: '北京青年报', publishDate: '2016-01-01', college: '清华大学'},
+                    {id: 1, title: '清华研究生参加毕业典礼要抽签？学校回应', source: '北京青年报', publishDate: '2016-01-01', college: '清华大学'},
+                    {id: 1, title: '清华研究生参加毕业典礼要抽签？学校回应', source: '北京青年报', publishDate: '2016-01-01', college: '清华大学'},
+                    {id: 1, title: '清华研究生参加毕业典礼要抽签？学校回应', source: '北京青年报', publishDate: '2016-01-01', college: '清华大学'},
+                    {id: 1, title: '清华研究生参加毕业典礼要抽签？学校回应', source: '北京青年报', publishDate: '2016-01-01', college: '清华大学'},
+
+                ]
             }
         },
         methods:{
@@ -419,21 +403,7 @@
                     }
                 });
             },
-            findInternalRefSummary() {
-                this.$http.get('/apis/internalRefReport/findInternalRefSummary.json/' + this.param.id).then(
-                    (response) => {
-                        if (response.data.success) {
-                            this.internalRefSummary = response.data.data;
-                        } else {
-                            console.error(response.data.message);
-                        }
-                        this.handleBack()
-                    }, (response) => {
-                        this.handleBack()
-                        console.error(response);
-                    }
-                );
-            },
+
             getPersonageRank() {
                 echarts.registerTheme('vintage', vintage);
                 let chart = echarts.init(document.getElementById('personageTop10Chart'),'vintage');
@@ -459,29 +429,7 @@
                     );
                 });
             },
-            /**获取载体分布图*/
-            getVectorDistribution() {
-                echarts.registerTheme('vintage', vintage);
-                let chart = echarts.init(document.getElementById('vectorDistributionChart'),'vintage');
-                chart.showLoading();
-                this.$http.get('/apis/internalRefReport/findPersonNewsVectorDistributionByVector.json/' + this.param.id).then(
-                    (response) => {
-                        if (response.data.success) {
-                            chart.setOption(response.data.data);
-                            this.$nextTick(function (){
-                                chart.hideLoading();
-                            });
 
-                        } else {
-                            console.error(response.data.message);
-                        }
-                        this.handleBack()
-                    }, (response) => {
-                        this.handleBack()
-                        console.error(response);
-                    }
-                );
-            },
             getVectorTable() {
                 this.$http.get('/apis/internalRefReport/getVectorTable.json/' + this.param.id).then(
                     (response) => {
