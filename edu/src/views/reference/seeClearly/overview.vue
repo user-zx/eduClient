@@ -4,7 +4,8 @@
 <template>
     <div class="overview">
         <div class="overview-title">
-            <h3 class="title">两微全量</h3>
+            <div class="title">两微全量</div>
+            <h1>统计</h1>
         </div>
         <div class="overview-content">
             <span class="number-icon number-icon1"></span>
@@ -37,14 +38,14 @@
                 <span class="number-icon number-icon5"></span>
                 <span class="number">{{platformData.data.universNum}}</span>
             </div>
-            <p class="overview-name">高校量</p>
+            <p class="overview-name">官微量</p>
         </div>
         <div class="overview-content">
             <div class="number-box">
                 <span class="number-icon number-icon6"></span>
                 <span class="number">{{platformData.data.universDataNum}}</span>
             </div>
-            <p class="overview-name">高校信息量</p>
+            <p class="overview-name">官微信息量</p>
         </div>
     </div>
 </template>
@@ -64,6 +65,9 @@
       text-align: right;
       .title{
         font-size: 14px;
+      }
+      h2{
+          text-align: center;
       }
     }
     &.overview-content{
@@ -99,8 +103,6 @@
 }
 </style>
 <script>
-    
-    
     export default{
         data(){
             return {

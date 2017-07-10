@@ -129,66 +129,13 @@
 
         <div class="base-info-box">
             <el-row :gutter="10">
-                <el-col :span="12">
+                <el-col :span="24">
                     <el-card class="box-card educationBox" style="height: 520px;margin-top: 0px">
                         <div slot="header" class="clearfix">
                             <span class="icons icons-chart6"></span><span>情感指数</span>
                         </div>
                         <div class="text item">
                             <div class="charts" id="emotionIndex_graph" style="height: 400px;"></div>
-                        </div>
-                    </el-card>
-                </el-col>
-                <el-col :span="12">
-                    <el-card class="box-card educationBox" style="height: 520px;margin-top: 0px">
-                        <div slot="header" class="clearfix">
-                            <span class="icons icons-chart7"></span><span>热点信息</span>
-                        </div>
-                        <div class="text item">
-                            <el-tabs v-model="activeName" class="custom-tabs">
-                                <el-tab-pane label="相关信息" name="related">
-                                    <el-card class="box-card">
-                                        <el-table :data="relatedData" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                                            <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="245">
-                                                <template scope="scope">
-                                                    <span class="pointer" @click="toDetail(scope.row)">
-                                                        {{scope.row.title}}
-                                                    </span>
-                                                </template>
-                                            </el-table-column>
-                                            <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
-                                        </el-table>
-                                    </el-card>
-                                </el-tab-pane>
-                                <el-tab-pane label="正面" name="positive">
-                                    <el-card class="box-card">
-                                        <el-table :data="positiveData" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                                            <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="245">
-                                                <template scope="scope">
-                                                    <span class="pointer" @click="toDetail(scope.row)">
-                                                        {{scope.row.title}}
-                                                    </span>
-                                                </template>
-                                            </el-table-column>
-                                            <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
-                                        </el-table>
-                                    </el-card>
-                                </el-tab-pane>
-                                <el-tab-pane label="负面" name="negative">
-                                    <el-card class="box-card">
-                                        <el-table :data="negativeData" :resizable="false" :show-header="false" style="width: 100%" border class="tran-table">
-                                            <el-table-column :show-overflow-tooltip="true" label="标题" align="center" width="245">
-                                                <template scope="scope">
-                                                    <span class="pointer" @click="toDetail(scope.row)">
-                                                        {{scope.row.title}}
-                                                    </span>
-                                                </template>
-                                            </el-table-column>
-                                            <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
-                                        </el-table>
-                                    </el-card>
-                                </el-tab-pane>
-                            </el-tabs>
                         </div>
                     </el-card>
                 </el-col>
@@ -221,62 +168,17 @@
                 </el-col>
             </el-row>
         </div>
-
         <div class="base-info-box">
-            <el-row :gutter="10">
+            <el-row>
                 <el-col :span="24">
-                    <el-card class="box-card">
-                        <div slot="header" class="clearfix">
-                            <span class="icons icons-chart10"></span><span>载体趋势周统计图</span>
-                        </div>
-                        <div class="text item">
-                            <div class="charts" id="vectorTrend_graph" style="height: 400px;"></div>
+                    <el-card class="box-card educationBox">
+                        <div class="clearfix" slot="header">
+                            <span>最新</span><span>近7天</span><span>近30天</span>
                         </div>
                     </el-card>
                 </el-col>
             </el-row>
         </div>
-
-        <div class="base-info-box">
-            <el-row :gutter="10">
-                <el-col :span="24">
-                    <el-card class="box-card">
-                        <div slot="header" class="clearfix">
-                            <span class="icons icons-chart11"></span><span>舆情数据统计</span>
-                        </div>
-                        <div class="text item">
-                            <el-table :data="vectorTableData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table fixed-table">
-                                <el-table-column prop="name" label="载体\时间" width="150" align="center">
-                                </el-table-column>
-                                <el-table-column v-for="item in vectorTableColumn" width="150" :prop="item" :label="item" align="center">
-                                </el-table-column>
-                            </el-table>
-                        </div>
-                    </el-card>
-                </el-col>
-            </el-row>
-        </div>
-
-        <el-row :gutter="10">
-            <el-col :span="24">
-                <el-card class="box-card">
-                    <div slot="header" class="clearfix">
-                        <span class="icons icons-chart12"></span><span>载体分布统计图</span>
-                    </div>
-                    <div class="col-item item-left">
-                        <div class="charts" id="carrierDis_graph" style="height: 400px;"></div>
-                    </div>
-                    <div class="col-item item-right">
-                        <el-table :data="distributeData" :resizable="false" :show-overflow-tooltip="true" style="width: 100%" border class="tran-table no-col-title white-table-text">
-                            <el-table-column prop="name" label="载体" width="150" align="center"></el-table-column>
-                            <el-table-column prop="positive" label="正面文章数" align="center"></el-table-column>
-                            <el-table-column prop="negative" label="负面文章数" align="center"></el-table-column>
-                        </el-table>
-                    </div>
-                </el-card>
-            </el-col>
-        </el-row>
-
     </div>
 </template>
 <style lang="scss" scoped>

@@ -12,7 +12,6 @@ import imgUtils from './imgUtil';
 import page from './components/currentPage.js';
 import "vue-style-loader!css-loader!sass-loader!./assets/css/style.scss";
 import 'vue-style-loader!css-loader!sass-loader!element-ui/lib/theme-default/index.css'
-import areas from './area'
 
 Vue.config.debug=true;
 Vue.use(ElementUI);
@@ -21,7 +20,6 @@ Vue.use(vueResource);
 Vue.use(Vuex);
 Vue.use(imgUtils);
 Vue.use(page);
-Vue.use(areas);
 const router =new vueRouter(routerConfig);
 const store = new Vuex.Store(vueConfig);
 Vue.http.interceptors.push((request, next) => {

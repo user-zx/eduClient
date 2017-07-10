@@ -21,11 +21,6 @@ export default{
             hasWarn: false,
             tableData: [],
             vectorTableColumn: [],
-            vectorTableData: [],
-            distributeData: [],
-            relatedData: [],
-            positiveData: [],
-            negativeData: [],
             param: {},
             timeLineData: [],
             activeName: 'related',
@@ -185,67 +180,6 @@ export default{
                 }
             );
         },
-
-        getVectorTrend(){
-            let chart = echarts.init(document.getElementById('vectorTrend_graph'), 'vintage');
-            chart.showLoading();
-
-            this.$http.post('/apis/opinionMonitor/getVectorTrend.json', this.param).then(
-                (response) => {
-                    if (response.data.success) {
-                        chart.setOption(response.data.data);
-                        this.$nextTick(function (){
-                            chart.hideLoading();
-                        });
-                        let data = response.data.data;
-                        this.vectorTableColumn = data.xAxis.data;
-                        for (let i = 0; i < data.series.length; i++) {
-                            for (let j = 0; j < data.series[i].data.length; j++) {
-                                data.series[i][data.xAxis.data[j]] = data.series[i].data[j];
-                            }
-                        }
-                        this.vectorTableData = data.series;
-                    } else {
-                        console.error(response.data.message);
-                    }
-                }, (response) => {
-                    console.error(response);
-                }
-            );
-        },
-        getVectorDistribution() {
-            let chart = echarts.init(document.getElementById('carrierDis_graph'), 'vintage');
-            chart.showLoading();
-
-            this.$http.post('/apis/opinionMonitor/getVectorDistribution.json', this.param).then(
-                (response) => {
-                    if (response.data.success) {
-                        chart.setOption(response.data.data);
-                        this.$nextTick(function (){
-                            chart.hideLoading();
-                        });
-                    } else {
-                        console.error(response.data.message);
-                    }
-                }, (response) => {
-                    console.error(response);
-                }
-            );
-        },
-        getVectorTable() {
-
-            this.$http.post('/apis/opinionMonitor/getVectorTable.json', this.param).then(
-                (response) => {
-                    if (response.data.success) {
-                        this.distributeData = response.data.data;
-                    } else {
-                        console.error(response.data.message);
-                    }
-                }, (response) => {
-                    console.error(response);
-                }
-            );
-        },
         getKeyWordsData(){
             let chart = echarts.init(document.getElementById('keywords'), 'vintage');
             chart.showLoading();
@@ -260,33 +194,6 @@ export default{
                     } else {
                         console.error(response.data.message);
                     }
-                }, (response) => {
-                    console.error(response);
-                }
-            );
-        },
-        getArticleByEmotion(emotion) {
-
-            let tmpParam = jQuery.extend({}, this.param);
-
-            if (emotion) {
-                tmpParam.emotion = emotion;
-            }
-
-            this.$http.post('/apis/opinionMonitor/getPersonageArticle.json', tmpParam).then(
-                (response) => {
-                    if (response.data.success) {
-                        if ('positive' == emotion) {
-                           this.positiveData = response.data.data.content;
-                        } else if ('negative' == emotion) {
-                            this.negativeData = response.data.data.content;
-                        } else {
-                            this.relatedData = response.data.data.content;;
-                        }
-                    } else {
-                        console.error(response.data.message);
-                    }
-                    this.time_loading = false;
                 }, (response) => {
                     console.error(response);
                 }
@@ -416,13 +323,7 @@ export default{
         this.getEmotionVal();
         this.getMediaVolume();
         this.getMediaHot();
-        this.getVectorTrend();
-        this.getVectorDistribution();
-        this.getVectorTable();
         this.getKeyWordsData();
-        this.getArticleByEmotion();
-        this.getArticleByEmotion('positive');
-        this.getArticleByEmotion('negative');
         this.$nextTick(function () {
             this.warnPermission = this.$root.$children[0].$children[0].warnPermission;
             this.eventPermission = this.$root.$children[0].$children[0].eventPermission;

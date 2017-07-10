@@ -32,43 +32,24 @@
                         <el-card class="educationBox box-card">
                             <div slot="header" class="clearfix">
                                 <span class="icons icons-chart2"></span>
-                                <span>两微热点</span>
+                                <span>微博热点</span>
                                 <div class="pull-right">
                                     <el-button type="text" icon="plus" size="small" @click="toMoreInfoPage('hot')">更多</el-button>
                                 </div>
                             </div>
                             <div class="text item" style="position: relative;">
-                                <el-tabs v-model="tab1">
-                                    <el-tab-pane label="微信" name="relation">
-                                        <el-table :data="wechatHot" :show-header="false" :resizable="false" style="width: 100%" border class="tran-table">
-                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="left" width="245">
-                                                <template scope="scope">
+                                <el-table :data="weboHot" :show-header="false" :resizable="false" style="width: 100%" border class="tran-table">
+                                    <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="left" width="245">
+                                        <template scope="scope">
                                                     <span class="pointer" @click="toDetail(scope.row)">
                                                         {{scope.row.title}}
                                                     </span>
-                                                </template>
-                                            </el-table-column>
-                                            <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
-                                            <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
-                                            <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
-                                        </el-table>
-                                    </el-tab-pane>
-                                    <el-tab-pane label="微博" name="positive">
-                                        <el-table :data="weboHot" :show-header="false" :resizable="false" style="width: 100%" border class="tran-table">
-                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="left" width="245">
-                                                <template scope="scope">
-                                                    <span class="pointer" @click="toDetail(scope.row)">
-                                                        {{scope.row.title}}
-                                                    </span>
-                                                </template>
-                                            </el-table-column>
-                                            <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
-                                            <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
-                                            <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
-                                        </el-table>
-                                    </el-tab-pane>
-                                </el-tabs>
-                                <div class="emotion-radio">
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
+                                    <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center" width="120"></el-table-column>
+                                </el-table>
+                                <div class="emotion-radio" style="display: none;">
                                     <el-radio class="radio" v-model="radio1" label="">相关</el-radio>
                                     <el-radio class="radio" v-model="radio1" label="positive">正面</el-radio>
                                     <el-radio class="radio" v-model="radio1" label="negative">负面</el-radio>
@@ -79,46 +60,28 @@
                     <el-col :span="12">
                         <el-card class="educationBox box-card">
                             <div slot="header" class="clearfix">
-                                <span class="icons icons-chart3"></span><span>两微舆情</span>
+                                <span class="icons icons-chart2"></span>
+                                <span>微信热点</span>
                                 <div class="pull-right">
-                                    <el-button type="text" icon="plus" size="small" @click="toMoreInfoPage('pomp')">更多</el-button>
+                                    <el-button type="text" icon="plus" size="small" @click="toMoreInfoPage('hot')">更多</el-button>
                                 </div>
                             </div>
                             <div class="text item" style="position: relative;">
-                                <el-tabs v-model="tab2">
-                                    <el-tab-pane label="微信" name="relation">
-                                        <el-table :data="wechatOpinion" :show-header="false" :resizable="false" style="width: 100%" border class="tran-table">
-                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="left" width="245">
-                                                <template scope="scope">
+                                <el-table :data="wechatHot" :show-header="false" :resizable="false" style="width: 100%" border class="tran-table">
+                                    <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="left" width="245">
+                                        <template scope="scope">
                                                     <span class="pointer" @click="toDetail(scope.row)">
                                                         {{scope.row.title}}
                                                     </span>
-                                                </template>
-                                            </el-table-column>
-                                            <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
-                                            <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
-                                            <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
-                                        </el-table>
-                                    </el-tab-pane>
-                                    <el-tab-pane label="微博" name="positive">
-                                        <el-table :data="weboOpinion" :show-header="false" :resizable="false" style="width: 100%" border class="tran-table">
-                                            <el-table-column :show-overflow-tooltip="true" prop="title" label="标题" align="left" width="245">
-                                                <template scope="scope">
-                                                    <span class="pointer" @click="toDetail(scope.row)">
-                                                        {{scope.row.title}}
-                                                    </span>
-                                                </template>
-                                            </el-table-column>
-                                            <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
-                                            <el-table-column :show-overflow-tooltip="true" prop="hitCount" label="阅读量" align="center"></el-table-column>
-                                            <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center"></el-table-column>
-                                        </el-table>
-                                    </el-tab-pane>
-                                </el-tabs>
-                                <div class="emotion-radio">
-                                    <el-radio class="radio" v-model="radio2" label="">相关</el-radio>
-                                    <el-radio class="radio" v-model="radio2" label="positive">正面</el-radio>
-                                    <el-radio class="radio" v-model="radio2" label="negative">负面</el-radio>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column :show-overflow-tooltip="true" prop="author" label="作者" align="center"></el-table-column>
+                                    <el-table-column :show-overflow-tooltip="true" prop="publishDate" label="时间" align="center" width="120"></el-table-column>
+                                </el-table>
+                                <div class="emotion-radio" style="display: none;">
+                                    <el-radio class="radio" v-model="radio1" label="">相关</el-radio>
+                                    <el-radio class="radio" v-model="radio1" label="positive">正面</el-radio>
+                                    <el-radio class="radio" v-model="radio1" label="negative">负面</el-radio>
                                 </div>
                             </div>
                         </el-card>
@@ -150,7 +113,68 @@
                     </el-col>
                 </el-row>
             </el-tab-pane>
-            <el-tab-pane label="微博" name="configuration">
+            <el-tab-pane label="两微舆情" name="twoPomp">
+                两微舆情
+            </el-tab-pane>
+            <el-tab-pane label="官微聚焦" name="officialFocus">
+                官微聚焦
+            </el-tab-pane>
+            <el-tab-pane label="微信指数" name="wechatIndex">
+                <div class="article-wrap" v-loading="loading2" element-loading-text="加载中……">
+                    <search-box class="dark" :searchNames=searchNames2 @searchDataChange="onSearchDataChange2"  @onload="onSearchLoad2"></search-box>
+                    <div class="content dark">
+
+                        <div class="content-bar dark">
+                            <div class="content-bar-button" style="margin-left: 10px;">
+                                <dropDown @onSaveEvent="onSaveEvent2" v-show="eventPermission"></dropDown>
+                                <el-button type="primary" icon="plus" class="button-icon" @click="batchConcerned2">批量关注</el-button>
+                            </div>
+
+                            <div class="content-bar-page">
+                                <el-pagination class="edu-pagination"
+                                               @current-change="handleCurrentChange2"
+                                               :current-page="param2.pageNumber + 1"
+                                               :page-size="15"
+                                               layout="prev, next, jumper, total"
+                                               :total="total2">
+                                </el-pagination>
+                            </div>
+                        </div>
+                        <el-table :data="tableData2" class="tran-table" border style="width: 100%"
+                                  :resizable="false" @selection-change="handleSelectionChange2">
+                            <el-table-column type="selection" width="50" align="center"></el-table-column>
+                            <el-table-column label="排名" align="center" prop="rank">
+                                <template scope="scope">
+                                <span v-if="scope.row.rank == 1">
+                                     <i class="icon-rank icon-gold"></i>
+                                </span>
+                                    <span v-else-if="scope.row.rank == 2">
+                                    <i class="icon-rank icon-silver"></i>
+                               </span>
+                                    <span v-else-if="scope.row.rank == 3">
+                                     <i class="icon-rank icon-copper"></i>
+                                </span>
+                                    {{scope.row.rank}}
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="公众号" prop="author" align="center" :show-overflow-tooltip="true">
+                                <template scope="scope">
+                                    <span @click="toWechatDetail(scope.row)" style="cursor: pointer">
+                                        {{scope.row.author}}
+                                    </span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="文章数" prop="articleCount" align="center"></el-table-column>
+                            <el-table-column label="总点赞量" prop="supportSum" align="center"></el-table-column>
+                            <el-table-column label="总阅读量" prop="hitSum" align="center"></el-table-column>
+                            <el-table-column label="平均阅读量" prop="hitAvg" align="center"></el-table-column>
+                            <el-table-column label="平均点赞量" prop="supportAvg" align="center"></el-table-column>
+                            <el-table-column label="活跃指数" prop="activityIndex" align="center"></el-table-column>
+                        </el-table>
+                    </div>
+                </div>
+            </el-tab-pane>
+            <el-tab-pane label="微博指数" name="weiboIndex">
                 <div class="article-wrap" v-loading="loading1" element-loading-text="加载中……">
                     <search-box class="dark" :searchNames=searchNames1 @searchDataChange="onSearchDataChange1" @onload="onSearchLoad1"></search-box>
                     <div class="content dark">
@@ -207,61 +231,6 @@
                                     <span v-else>未认证</span>
                                 </template>
                             </el-table-column>
-                        </el-table>
-                    </div>
-                </div>
-            </el-tab-pane>
-            <el-tab-pane label="微信" name="rule">
-                <div class="article-wrap" v-loading="loading2" element-loading-text="加载中……">
-                    <search-box class="dark" :searchNames=searchNames2 @searchDataChange="onSearchDataChange2"  @onload="onSearchLoad2"></search-box>
-                    <div class="content dark">
-
-                        <div class="content-bar dark">
-                            <div class="content-bar-button" style="margin-left: 10px;">
-                                <dropDown @onSaveEvent="onSaveEvent2" v-show="eventPermission"></dropDown>
-                                <el-button type="primary" icon="plus" class="button-icon" @click="batchConcerned2">批量关注</el-button>
-                            </div>
-
-                            <div class="content-bar-page">
-                                <el-pagination class="edu-pagination"
-                                               @current-change="handleCurrentChange2"
-                                               :current-page="param2.pageNumber + 1"
-                                               :page-size="15"
-                                               layout="prev, next, jumper, total"
-                                               :total="total2">
-                                </el-pagination>
-                            </div>
-                        </div>
-                        <el-table :data="tableData2" class="tran-table" border style="width: 100%"
-                                  :resizable="false" @selection-change="handleSelectionChange2">
-                            <el-table-column type="selection" width="50" align="center"></el-table-column>
-                            <el-table-column label="排名" align="center" prop="rank">
-                                <template scope="scope">
-                                <span v-if="scope.row.rank == 1">
-                                     <i class="icon-rank icon-gold"></i>
-                                </span>
-                                    <span v-else-if="scope.row.rank == 2">
-                                    <i class="icon-rank icon-silver"></i>
-                               </span>
-                                    <span v-else-if="scope.row.rank == 3">
-                                     <i class="icon-rank icon-copper"></i>
-                                </span>
-                                    {{scope.row.rank}}
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="公众号" prop="author" align="center" :show-overflow-tooltip="true">
-                                <template scope="scope">
-                                    <span @click="toWechatDetail(scope.row)" style="cursor: pointer">
-                                        {{scope.row.author}}
-                                    </span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="文章数" prop="articleCount" align="center"></el-table-column>
-                            <el-table-column label="总点赞量" prop="supportSum" align="center"></el-table-column>
-                            <el-table-column label="总阅读量" prop="hitSum" align="center"></el-table-column>
-                            <el-table-column label="平均阅读量" prop="hitAvg" align="center"></el-table-column>
-                            <el-table-column label="平均点赞量" prop="supportAvg" align="center"></el-table-column>
-                            <el-table-column label="活跃指数" prop="activityIndex" align="center"></el-table-column>
                         </el-table>
                     </div>
                 </div>

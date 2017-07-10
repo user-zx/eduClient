@@ -551,6 +551,17 @@ margin: 0;
     width: 100%;
     margin-top: 0px;
   }
+
+  .half-form-item.right{
+    .el-form-item__label{
+      text-align: center;
+      padding: 11px;
+    }
+
+    .el-form-item__label:before{
+      content: '';
+    }
+  }
 }
 
 .tran-table.el-table th .cell {
@@ -583,6 +594,17 @@ margin: 0;
 
     &:hover {
       color: #60a3ff;
+    }
+  }
+}
+
+/* ------------------------ 公共级联样式begin ----------------------------  */
+.cascadeBox-wrap{
+  .el-row{
+    .el-col{
+      .el-select{
+        width: 193px;
+      }
     }
   }
 }

@@ -35,8 +35,6 @@
                 tab2: 'relation',
                 wechatHot: [],
                 weboHot: [],
-                wechatOpinion: [],
-                weboOpinion: [],
                 radio1: '',
                 radio2: '',
                 radio3: '微信',
@@ -165,37 +163,6 @@
                                 this.wechatHot = response.data.data.content;
                             } else {
                                 this.weboHot = response.data.data.content;
-                            }
-                        } else {
-                            console.error(response.data.message);
-                        }
-                    }, (response) => {
-                        console.error(response);
-                    }
-                );
-            },
-            get2VOpinion(vector, emotion) {
-                let param = {
-                    pageSize: 10,
-                    pageNumber: 0,
-                    orders: [
-                        {
-                            property: 'publishDateTime',
-                            direction: 'DESC'
-                        }
-                    ],
-                    vector: vector
-                };
-                if (emotion) {
-                    param.emotion = emotion;
-                }
-                this.$http.post('/apis/twoMicroInsight/findTwoMicroInsightInfo.json', param).then(
-                    (response) => {
-                        if (response.data.success) {
-                            if ('微信' == vector) {
-                                this.wechatOpinion = response.data.data.content;
-                            } else {
-                                this.weboOpinion = response.data.data.content;
                             }
                         } else {
                             console.error(response.data.message);
@@ -458,9 +425,7 @@
 
             this.getVectorTrend($('#TREND_TODAY>.text')[0], 'TODAY');
             this.get2VHot('微信');
-            this.get2VHot('微博');
-            this.get2VOpinion('微信');
-            this.get2VOpinion('微博');
+            this.get2VHot('微博')
             this.get2VDistribute("微信");
             this.get2VDistribute("微博");
             this.$nextTick(function () {
@@ -474,10 +439,6 @@
             radio1: function (val, oldVal) {
                 this.get2VHot('微信', val);
                 this.get2VHot('微博', val);
-            },
-            radio2: function(val, oldVal) {
-                this.get2VOpinion('微信', val);
-                this.get2VOpinion('微博', val);
             },
             radio3: function(val, oldVal) {
                 if ('微信' == val) {

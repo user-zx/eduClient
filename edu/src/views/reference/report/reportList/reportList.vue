@@ -90,25 +90,17 @@
         </el-dialog>
 
         <el-dialog :visible.sync="refFormVisible" @close="closeDialog('refForm')" title="制作内参报告">
-            <el-form :model="refForm" ref="refForm" class="edu-form refForm">
-                <el-form-item label="起止时间：" :label-width="formLabelWidth" class="half-form-item">
-                    <el-col :span="11">
-                        <el-form-item prop="startDate">
-                            <el-date-picker type="date" placeholder="选择开始日期" v-model="refForm.startDate" style="width: 100%;"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                    <el-col class="line" :span="2">-</el-col>
-                    <el-col :span="11">
-                        <el-form-item prop="endDate">
-                            <el-date-picker type="date" placeholder="选择结束时间" v-model="refForm.endDate" style="width: 100%;"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
+            <el-form :model="refForm" ref="refForm" class="edu-form refForm" :rules="refRules">
+                <el-form-item label="起止时间：" :label-width="formLabelWidth" class="half-form-item" prop="startDate">
+                    <el-date-picker type="date" placeholder="选择开始日期" v-model="refForm.startDate" style="width: 100%;"></el-date-picker>
                 </el-form-item>
-
-                <el-form-item label="选择数据区域：" :label-width="formLabelWidth">
+                <el-form-item label="-" :label-width="shortFormLabelWidth" class="half-form-item right" prop="endDate">
+                    <el-date-picker type="date" placeholder="选择结束时间" v-model="refForm.endDate" style="width: 100%;"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="选择数据区域：" :label-width="formLabelWidth" prop="areas">
                     <el-row>
                         <el-col :span="24">
-                            部位省厅
+                            部委省厅
                         </el-col>
                     </el-row>
                     <el-row>
@@ -120,7 +112,7 @@
                        </el-col>
                     </el-row>
                 </el-form-item>
-                <el-form-item label="" :label-width="formLabelWidth">
+                <el-form-item label="" :label-width="formLabelWidth" prop="colleges">
                     <el-row>
                         <div class="el-col" :span="24">高校</div>
                     </el-row>
@@ -142,13 +134,13 @@
                         </el-col>
                     </el-row>
                 </el-form-item>
-                <el-form-item label="关键字：" :label-width="formLabelWidth">
+                <el-form-item label="关键字：" :label-width="formLabelWidth" prop="keyWords">
                     <el-input v-model="refForm.keyWords" placeholder="多个关键字用英文“,”隔开"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button type="primary">取 消</el-button>
-                <el-button type="primary">确 定</el-button>
+                <el-button type="primary" @click="closeDialog('refForm')">取 消</el-button>
+                <el-button type="primary" @click="">确 定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -204,8 +196,15 @@
     }
     
     .refForm{
+        font-size: 0;
+
         .line{
             text-align: center;
+        }
+
+        .half-form-item{
+            width: 50%;
+            display: inline-block;
         }
     }
 </style>
@@ -242,8 +241,22 @@
                 return callback();
             };
             var validAreaLength =(rule, value, callback) =>{
-                console.log(value)
+                if(!value){
+                    return callback(new Error('请选择部委省厅'));
+                }
+                if(value.length >　20){
+                    return callback(new Error('最多只能选择20个部委省厅'));
+                }
                 return callback();
+            };
+            var validCollegeLength = (rule, value, callback) =>{
+              if(!value){
+                  return callback(new Error('请选择高校'));
+              }
+              if(value.length > 20){
+                  return callback(new Error('最多只能选择20所高校'));
+              }
+              callback();
             };
             return {
                 loading:false,
@@ -281,12 +294,12 @@
                         { validator: checkRefDate, trigger: 'change' }
                     ],
                     areas: [
-                        { type: 'array', required: true, message: '请至少选择一个部位省厅', trigger: 'change' },
+                        { type: 'array', required: true, message: '请至少选择一个部委省厅', trigger: 'change' },
                         { validator: validAreaLength, trigger: 'change'}
                     ],
                     colleges: [
                         { type: 'array', required: true, message: '请至少选择一所高校', trigger: 'change' },
-                        { type: 'array', max: 20, message: '最多能选择20所高校', trigger: 'change'}
+                        { validator: validCollegeLength, trigger: 'change'}
                     ]
                 },
                 refForm: {
@@ -298,6 +311,7 @@
                     title: '内参报告'
                 },
                 formLabelWidth: '120px',
+                shortFormLabelWidth: '55px',
                 briefFormVisible: false,
                 refFormVisible: false,
                 briefData: [],
@@ -333,7 +347,6 @@
                     function (response) {
                         if(response.data.success){
                             this.briefData = response.data.data.list;
-                            console.log(this.briefData)
                         }else {
                             console.error(response.data.message);
                         }
@@ -345,7 +358,16 @@
              * 分页获取舆情报告列表
              */
             getReferenceReportList(){
-
+                let url = '/apis/?pageNumber=' + this.referenceParam.pageNumber + '&pageSize=10';
+                this.$http.get(url).then(
+                    function (response) {
+                        if(response.data.success){
+                            this.referenceData = response.data.data.list;
+                        }else {
+                            console.error(response.data.message);
+                        }
+                    }
+                )
             },
 
             /**
@@ -476,14 +498,22 @@
                 });
             },
 
-            saveRefReport(){
-
+            saveRefReport(formName){
+                this.$refs[formName].validate((valid) => {
+                    if(valid){
+                        console.log(this.refForm);
+                    }else {
+                        console.error('param is not valid');
+                        return false;
+                    }
+                });
             }
         },
         created(){
             this.setBreadCrumb();
             this.getBriefReportList();
         },
-        mounted(){}
+        mounted(){
+        }
     }
 </script>
