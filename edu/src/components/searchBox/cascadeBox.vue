@@ -3,14 +3,14 @@
         <el-tabs v-model="activeName" @tab-click="handleClick" class="custom-tabs" >
             <el-tab-pane label="全部" name="all">
             </el-tab-pane>
-            <el-tab-pane label="部委省厅" name="provinceHall">
+            <el-tab-pane label="部委省厅领导" name="provinceHall">
                 <el-row type="flex" class="row-bg row-time">
                     <el-col :span="2">
-                        <span class="chooseTime">部委省厅</span>
+                        <span class="chooseTime">部委省厅领导</span>
                     </el-col>
                     <el-col :span="8">
-                        <el-select v-model="reportPersonage" placeholder="请选择省份">
-                            <el-option v-for="item in provinces" :label="item.label" :value="item.value"></el-option>
+                        <el-select v-model="reportPersonage" placeholder="请选择">
+                            <el-option v-for="item in provinces" :label="item.text" :value="item.value"></el-option>
                         </el-select>
                     </el-col>
                 </el-row>
@@ -21,7 +21,7 @@
                         <span class="chooseTime">高校领导</span>
                     </el-col>
                     <el-col :span="8">
-                        <el-select filterable placeholder="请选择高校名称" v-model="reportPersonage">
+                        <el-select filterable placeholder="请选择" v-model="reportPersonage">
                             <el-option-group v-for="group in schools" :key="group.label" :label="group.label">
                                 <el-option v-for="item in group.options" :key="item.value" :label="item.label" :value="item.value">
                                 </el-option>
@@ -36,8 +36,8 @@
                         <span class="chooseTime">知名学者</span>
                     </el-col>
                     <el-col :span="8">
-                        <el-select v-model="reportPersonage" placeholder="请选择省份">
-                            <el-option v-for="item in provinces" :label="item.label" :value="item.value"></el-option>
+                        <el-select v-model="reportPersonage" placeholder="请选择">
+                            <el-option v-for="item in provinces" :label="item.text" :value="item.value"></el-option>
                         </el-select>
                     </el-col>
                 </el-row>
@@ -92,9 +92,12 @@
             handleClick(tab, event) {
                 this.reportPersonage = '';
                 this.param.area = '';
+
                 if (tab.label == '全部') {
                     this.param.reportPersonage = null;
                     this.$emit('onSearchChange', this.param);
+                }else if(tab.label == 'add'){
+                    //我关注的人物
                 }
             },
 
@@ -119,9 +122,6 @@
         mounted() {
             this.getUserParams(); 
             this.$emit('onSearchLoad', this.param);
-            this.$nextTick(function () {
-                console.log(this.schools)
-            })
         },
         watch: {
             valueTime: function (val, oldVal) {

@@ -3,7 +3,8 @@
 */
 <template>
     <div class="industryNews article-wrap" v-loading="loading" element-loading-text="加载中……">
-        <search-box :searchNames=searchNames @onload="onSearchLoad" @searchDataChange="onSearchDataChange"></search-box>
+        <!--<search-box :searchNames=searchNames @onload="onSearchLoad" @searchDataChange="onSearchDataChange"></search-box>-->
+        <publicSearch :searchNames=searchNames></publicSearch>
         <articleView :articleData="articleData" :total="total" :pageNumber="param.pageNumber" :eventBtn="true" :concernBtn="true" @onchange="pageChange" ref="article"></articleView>
     </div>
 </template> 
@@ -13,14 +14,15 @@
      * import "vue-style-loader!css-loader!sass-loader!../../assets/vendor/iCkeck-v1.0.2/css/skins/square/blue.css";
      * import loginButton from './components/loginButton.vue';
      */
-    import searchBox from '../../../../components/searchBox/searchBox.vue'
-    import articleView from '../../../../components/content/article.vue'
+    import searchBox from '../../../../components/searchBox/searchBox.vue';
+    import articleView from '../../../../components/content/article.vue';
+    import publicSearch from '../../../../components/searchBox/publicSearch.vue';
 
     export default{
         data(){
             return {
                 total:0,
-                searchNames: ['university', 'vector', 'emotion', 'publishDateTime'],
+                searchNames: ['topNews', 'emotion', 'province', 'publishDateTime'],
                 param: {
                     pageSize: 5,
                     pageNumber: 0,
@@ -39,7 +41,7 @@
                 loading: false,
             }
         },
-        components:{searchBox, articleView} ,
+        components:{searchBox, articleView, publicSearch} ,
         methods:{
             onSearchLoad(data) {
                 data.pageSize = 5; 

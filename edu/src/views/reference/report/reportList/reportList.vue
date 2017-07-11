@@ -106,7 +106,7 @@
                     <el-row>
                        <el-col :span="24">
                            <el-select v-model="refForm.areas" multiple placeholder="请选择部委省厅">
-                               <el-option v-for="item in allArea" :key="item.value" :label="item.label" :value="item.value">
+                               <el-option v-for="item in allArea" :key="item.value" :label="item.text" :value="item.value">
                                </el-option>
                            </el-select>
                        </el-col>
@@ -210,6 +210,7 @@
 </style>
 <script>
     import schools from "../../../../school.json";
+    import provinces from "../../../../province.json";
     export default{
         data(){
             var checkBriefDate = (rule, value, callback) =>{
@@ -316,7 +317,7 @@
                 refFormVisible: false,
                 briefData: [],
                 referenceData: [],
-                allArea: this.allProvince(),
+                allArea: provinces,
                 allCollege: schools
             }
         },

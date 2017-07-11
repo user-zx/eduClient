@@ -4,8 +4,26 @@
 <template>
     <div class="mediaCoverage article-wrap" v-loading="loading" element-loading-text="加载中……">
         <breadCrumb></breadCrumb>
-        <search-box :searchNames=searchNames @onload="onSearchLoad" @searchDataChange="onSearchDataChange"></search-box>
-        <articleView :articleData="articleData" :total="total" :pageNumber="param.pageNumber" :eventBtn="true" :concernBtn="true" @onchange="pageChange" ref="article"></articleView>
+        <el-tabs v-model="activeName" @tab-click="handleTabChange" class="custom-tabs">
+            <el-tab-pane label="官媒报道" name="officialReport">
+                <search-box :searchNames=searchNames @onload="onSearchLoad" @searchDataChange="onSearchDataChange"></search-box>
+                <articleView :articleData="articleData" :total="total" :pageNumber="param.pageNumber" :eventBtn="true" :concernBtn="true" @onchange="pageChange" ref="article"></articleView>
+            </el-tab-pane>
+            <el-tab-pane label="网媒声量" name="internetReport">
+                <search-box :searchNames=searchNames1 @onload="onSearchLoad" @searchDataChange="onSearchDataChange"></search-box>
+                <el-table :data="internetData" class="tran-table white-table" border style="width: 100%" :resizable="false">
+                    <el-table-column label="排名" prop="rank" align="center"></el-table-column>
+                    <el-table-column label="高校" prop="university" align="center" :show-overflow-tooltip="true"></el-table-column>
+                    <el-table-column label="媒体发声量" prop="mediaVoiceNum" align="center"></el-table-column>
+                    <el-table-column label="媒体信息量" prop="mediaInfoNum" align="center"></el-table-column>
+                    <el-table-column label="微信信息量" prop="wechatInfoNum" align="center"></el-table-column>
+                    <el-table-column label="微博信息量" prop="weiboInfoNum" align="center"></el-table-column>
+                    <el-table-column label="信息总量" prop="infoSumNum" align="center"></el-table-column>
+                    <el-table-column label="活跃度" prop="activeNum" align="center"></el-table-column>
+                </el-table>
+            </el-tab-pane>
+        </el-tabs>
+
     </div>
 </template> 
 <script>
@@ -22,7 +40,9 @@
         data(){
             return {
                 total:0,
+                activeName: 'officialReport',
                 searchNames: ['university', 'emotion', 'publishDateTime'],
+                searchNames1: ['university'],
                 param: {
                     pageSize: 5,
                     pageNumber: 0,
@@ -39,6 +59,7 @@
                 },
                 articleData:[],
                 loading: false,
+                internetData: []
             }
         },
         components:{searchBox, breadCrumb, articleView} ,
@@ -97,6 +118,10 @@
                         }
                     );
                 });
+            },
+
+            handleTabChange(){
+
             }
         },
         mounted(){
