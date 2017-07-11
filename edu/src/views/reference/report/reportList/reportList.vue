@@ -97,7 +97,7 @@
                 <el-form-item label="-" :label-width="shortFormLabelWidth" class="half-form-item right" prop="endDate">
                     <el-date-picker type="date" placeholder="选择结束时间" v-model="refForm.endDate" style="width: 100%;"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="选择数据区域：" :label-width="formLabelWidth" prop="areas">
+                <el-form-item label="选择数据区域：" :label-width="formLabelWidth" prop="ministries">
                     <el-row>
                         <el-col :span="24">
                             部委省厅
@@ -105,7 +105,7 @@
                     </el-row>
                     <el-row>
                        <el-col :span="24">
-                           <el-select v-model="refForm.areas" multiple placeholder="请选择部委省厅">
+                           <el-select v-model="refForm.ministries" multiple placeholder="请选择部委省厅">
                                <el-option v-for="item in allArea" :key="item.value" :label="item.text" :value="item.value">
                                </el-option>
                            </el-select>
@@ -140,7 +140,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="closeDialog('refForm')">取 消</el-button>
-                <el-button type="primary" @click="">确 定</el-button>
+                <el-button type="primary" @click="saveRefReport('refForm')">确 定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -294,7 +294,7 @@
                         { type: 'date', required: true, message: '请选择结束日期', trigger: 'change' },
                         { validator: checkRefDate, trigger: 'change' }
                     ],
-                    areas: [
+                    ministries: [
                         { type: 'array', required: true, message: '请至少选择一个部委省厅', trigger: 'change' },
                         { validator: validAreaLength, trigger: 'change'}
                     ],
@@ -307,7 +307,7 @@
                     keyWords: '',
                     startDate: '',
                     endDate: '',
-                    areas: [],
+                    ministries: [],
                     colleges: [],
                     title: '内参报告'
                 },
@@ -359,7 +359,7 @@
              * 分页获取舆情报告列表
              */
             getReferenceReportList(){
-                let url = '/apis/?pageNumber=' + this.referenceParam.pageNumber + '&pageSize=10';
+                let url = '/apis/referenceReport/getAllReferenceReport?pageNumber=' + this.referenceParam.pageNumber + '&pageSize=10';
                 this.$http.get(url).then(
                     function (response) {
                         if(response.data.success){
@@ -501,14 +501,31 @@
 
             saveRefReport(formName){
                 this.$refs[formName].validate((valid) => {
-                    if(valid){
-                        console.log(this.refForm);
-                    }else {
+                    if (valid) {
+                        let param = {
+                            startDate:  new Date(this.refForm.startDate).format('yyyy-MM-dd 00:00:00'),
+                            endDate:  new Date(this.refForm.endDate).format('yyyy-MM-dd 23:59:59'),
+                            college: this.refForm.colleges.toString(),
+                            ministries: this.refForm.ministries.toString(),
+                            title: '舆情报告',
+                            keywords:　this.refForm.keyWords
+                        }
+
+                        this.$http.post('/apis/referenceReport/saveOrUpdateReferenceReport', param).then(
+                            function (response) {
+                                if(response.data.success){
+                                    this.refFormVisible = false;
+                                    this.getReferenceReportList();
+                                }
+                            }
+                        );
+                    } else {
                         console.error('param is not valid');
                         return false;
                     }
                 });
-            }
+            },
+
         },
         created(){
             this.setBreadCrumb();
