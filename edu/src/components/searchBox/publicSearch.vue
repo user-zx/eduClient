@@ -13,24 +13,38 @@
                 </ul>
             </el-col>
         </el-row>
-        <el-row id="provinceDiv" v-show="showProvince">
-            <el-col :span="2">省份:</el-col>
-            <el-col :span="22">
-                <ul>
-                    <li class="search-list" v-for="item in provinces">
-                        {{item.value}}
-                    </li>
-                </ul>
-            </el-col>
-        </el-row>
-        <el-row id="collegeDiv" v-show="showCollege">
-            <el-col :span="2">高校:</el-col>
-            <el-col :span="22">
-                <ul>
-                    <li class="search-list special-list" v-for="item in colleges">{{item.label}}</li>
-                </ul>
-            </el-col>
-        </el-row>
+        <div id="dynamicDiv">
+            <el-row id="provinceDiv" v-show="showProvince">
+                <el-col :span="2">省份:</el-col>
+                <el-col :span="22">
+                    <ul>
+                        <li class="search-list" v-for="item in provinces"
+                            :class="{'search-selected': item.selected}"
+                            @click="searchLiClick(item, index1, data)">
+                            {{item.value}}
+                        </li>
+                    </ul>
+                </el-col>
+            </el-row>
+            <el-row id="collegeDiv" v-show="showCollege">
+                <el-col :span="2">高校:</el-col>
+                <el-col :span="22">
+                    <ul>
+                        <li class="search-list special-list" v-for="item in colleges" @click="showCollegeClick(item)">{{item.label}}</li>
+                    </ul>
+                </el-col>
+            </el-row>
+            <el-row id="weiSiteDiv" v-show="showWebSites">
+                <el-col :span="2">门户网站</el-col>
+                <el-col :span="22">
+                    <ul>
+                        <li class="search-list" v-for="(item, index1) in webSites"
+                            :class="{'search-selected': item.selected}"
+                            @click="searchLiClick(item, index1, data)">{{item.text}}</li>
+                    </ul>
+                </el-col>
+            </el-row>
+        </div>
     </div>
 </template>
 
@@ -103,7 +117,7 @@
     export default{
         data(){
             return{
-                provinces: provinces,
+                provinces: [],
                 colleges: colleges,
                 showProvince: false,
                 showCollege: false,
@@ -165,44 +179,76 @@
                         'title': '选择区域:',
                         'searchList': Object.assign(provinces)
                     }
-                ]
+                ],
+                webSites: [
+                    {value: '新浪教育', text: '新浪教育'},
+                    {value: '腾讯教育', text: '腾讯教育'},
+                    {value: '搜狐教育', text: '搜狐教育'},
+                    {value: '网易教育', text: '网易教育'}
+                ],
+                showWebSites: false
             }
         },
         methods:{
             searchLiClick(item, index, data){
-                console.log(item)
-                console.log(index)
-                console.log(data)
                 for (var i  in data.searchList) {
                     data.searchList[i].selected = false;
                 }
                 item.selected = true;
                 
                 if(item.clickEvent && item.clickEvent == 'handleProvinceClick'){
+                    this.showCollege = false;
+                    this.showWebSites = false;
 
+                    this.provinces[0].selected = true;
+                    this.showProvince = true;
                 }else if(item.clickEvent && item.clickEvent == 'handleCollegeClick'){
+                    this.showProvince = false;
+                    this.showWebSites = false;
 
+                    this.showCollege = true;
                 }else if(item.clickEvent && item.clickEvent == 'handleWebSiteClick'){
+                    this.showCollege = false;
+                    this.showProvince = false;
 
+                    this.showWebSites = true;
                 }else {
-
+                    this.showCollege = false;
+                    this.showProvince = false;
+                    this.showWebSites = false;
                 }
             },
 
             judgeHeight(){
                 this.$nextTick(function () {
                     $('.publicSearch .el-row').each(function (index) {
-                        if($(this).height() > 47){
+                        if($(this).find('ul').height() > 47){
                             let height = $(this).height();
                             $(this).find('.el-col').height(height);
                         }
                     })
                 });
+            },
+
+            showCollegeClick(item){
+                console.log(item)
+
             }
         },
         props: ["searchNames"],
         mounted(){
             this.judgeHeight();
+            //处理省份数据
+            let provinceData = Object.assign(provinces, provinceData);
+            if(provinceData[0].text != '全部'){
+                provinceData.unshift(  {"value": "全部", "text": "全部"});
+            }
+            this.provinces = provinceData;
+            this.$nextTick(function () {
+               $('#dynamicDiv').insertAfter('.publicSearch .el-row:first');
+            });
+            console.log(this.colleges)
+            this.colleges.unshift({label: '全部'})
         }
     }
 </script>

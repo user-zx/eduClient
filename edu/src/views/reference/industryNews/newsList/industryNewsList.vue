@@ -22,7 +22,7 @@
         data(){
             return {
                 total:0,
-                searchNames: ['topNews', 'emotion', 'province', 'publishDateTime'],
+                searchNames: ['topNews', 'emotion', 'publishDateTime'],
                 param: {
                     pageSize: 5,
                     pageNumber: 0,

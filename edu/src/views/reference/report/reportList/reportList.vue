@@ -55,8 +55,8 @@
                                 <span class="endDate">{{item.endDate}}</span>
                             </div>
                             <div class="btn-area">
-                                <el-button type="primary" size="small" @click="viewBriefReport(item.id)">预览</el-button>
-                                <el-button type="primary" size="small" @click="deleteBriefReport(item.id)">删除</el-button>
+                                <el-button type="primary" size="small" @click="viewRefReport(item.id)">预览</el-button>
+                                <el-button type="primary" size="small" @click="deleteRefReport(item.id)">删除</el-button>
                                 <el-button type="primary" size="small" @click="downloadReport(item.id)">下载</el-button>
                             </div>
                         </div>
@@ -335,8 +335,11 @@
             },
 
             handleClick(tab, event){
-                console.log(tab)
-                console.log(event)
+                if(tab.label == '内参报告'){
+                    this.getReferenceReportList();
+                }else{
+                    this.getBriefReportList();
+                }
             },
 
             /**
@@ -451,7 +454,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.delete('/apis/' + id).then((response) => {
+                    this.$http.delete('/apis/referenceReport/deleteBriefReport/' + id).then((response) => {
                             if (response.data.success) {
                                 this.$message({
                                     message: '删除成功',

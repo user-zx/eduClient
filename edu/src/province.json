@@ -1,5 +1,4 @@
 [
-  {"value": "all", "text": "全部", "selected": true},
   {"value": "北京", "text": "北京"},
   {"value": "天津", "text": "天津"},
   {"value": "上海", "text": "上海"},
