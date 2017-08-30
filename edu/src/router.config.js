@@ -18,7 +18,8 @@ import seeClearlyMore from './views/reference/seeClearly/moreInfo.vue';
 import mediaCoverage from './views/reference/mediaCoverage/mediaCoverage.vue';
 import report from './views/reference/report/report.vue';
 import reportList from './views/reference/report/reportList/reportList.vue';
-import reportDetails from './views/reference/report/reportDetails/reportDetails.vue';
+import briefDetails from './views/reference/report/reportDetails/briefDetails.vue';
+import referenceDetails from './views/reference/report/reportDetails/referenceDetails.vue';
 import seeWeChat from './views/serviceTool/seeweChat/seeweChat.vue';
 import weChatList from './views/serviceTool/seeWeChat/weChatList/weChatList.vue';
 import weChatVerify from "./views/serviceTool/seeWeChat/weChatVerify/weChatVerify.vue";
@@ -243,13 +244,24 @@ export default {
                     ]
                 },
                 {
-                    name: "内参报告详情",
-                    path:"reportDetails",
+                    name: "简报详情",
+                    path:"briefDetails",
                     component:report,
                     children:[
                         {
                             path:"",
-                            component:reportDetails
+                            component:briefDetails
+                        }
+                    ]
+                },
+                {
+                    name: "内参报告详情",
+                    path: "referenceDetails",
+                    component: report,
+                    children: [
+                        {
+                            path: "",
+                            component: referenceDetails
                         }
                     ]
                 },

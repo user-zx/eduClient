@@ -29,9 +29,10 @@
             <el-row id="collegeDiv" v-show="showCollege">
                 <el-col :span="2">高校:</el-col>
                 <el-col :span="22">
-                    <ul>
-                        <li class="search-list special-list" v-for="item in colleges" @click="showCollegeClick(item)">{{item.label}}</li>
+                    <ul id="collegeSpellUl">
+                        <li class="search-list special-list" v-for="item in colleges" @click="showCollegeEvent(item)">{{item.label}}</li>
                     </ul>
+                    <ul id="college-list"></ul>
                 </el-col>
             </el-row>
             <el-row id="weiSiteDiv" v-show="showWebSites">
@@ -202,6 +203,7 @@
 
                     this.provinces[0].selected = true;
                     this.showProvince = true;
+
                 }else if(item.clickEvent && item.clickEvent == 'handleCollegeClick'){
                     this.showProvince = false;
                     this.showWebSites = false;
@@ -230,25 +232,52 @@
                 });
             },
 
-            showCollegeClick(item){
+            showCollegeEvent(item){
                 console.log(item)
+                $('#college-list').empty();
+                var options = item.options;
+                if(options){
+                    var li = '';
+                    for(var i in options){
+                        li = li + '<li class="search-list">' + options[i].label + '</li>';
+                    }
+
+                    $('#college-list').append(li);
+                }else {
+                    //
+                    if(item.label == '全部'){
+                        //特殊处理搜索全部
+                    }
+                }
+            },
+
+            //动态搜索框的高度计算
+            resetDynamicHeight(id){
 
             }
         },
         props: ["searchNames"],
         mounted(){
-            this.judgeHeight();
             //处理省份数据
             let provinceData = Object.assign(provinces, provinceData);
             if(provinceData[0].text != '全部'){
                 provinceData.unshift(  {"value": "全部", "text": "全部"});
             }
             this.provinces = provinceData;
+
+            //高校拼音前加全部
+            if(this.colleges[0].label != '全部'){
+                this.colleges.unshift({label: '全部'});
+            }
+
+            //动态选择框插入搜索框第二的位置
             this.$nextTick(function () {
                $('#dynamicDiv').insertAfter('.publicSearch .el-row:first');
             });
-            console.log(this.colleges)
-            this.colleges.unshift({label: '全部'})
+
+            //
+            this.judgeHeight();
+            console.log(this.colleges);
         }
     }
 </script>

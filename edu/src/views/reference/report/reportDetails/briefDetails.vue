@@ -9,7 +9,7 @@
                     <h3 class="title">{{param.title}}</h3>
                 </div>
                 <div>
-                    <h3 class="date">{{param.createDate}} 至 {{param.endDate}}</h3>
+                    <h3 class="date">{{param.startDate}} 至 {{param.endDate}}</h3>
                 </div>
             </div>
             <div class="eventCharts">
@@ -20,7 +20,7 @@
                         </div>
                         <div class="text item">
                             <el-table class="tran-table" border style="width: 100%" :resizable="false" :data="mediaHotArticle">
-                                <el-table-column type="index" width="50"></el-table-column>
+                                <el-table-column label="序号" type="index" width="80"></el-table-column>
                                 <el-table-column label="标题" prop="title" align="center"></el-table-column>
                                 <el-table-column label="来源" prop="source" align="center" width="150"></el-table-column>
                                 <el-table-column label="日期" prop="publishDate" align="center" width="150"></el-table-column>
@@ -89,7 +89,7 @@
                     <el-col :span="24">
                         <el-card class="box-card">
                             <div slot="header" class="clearfix">
-                                <span class="icons icons-chart4"></span><span>重点高校关注度</span>
+                                <span class="icons icons-chart4"></span><span>重点高校媒体关注度</span>
                             </div>
                             <div class="text item">
                                 <div class="charts" id="univsChart" style="height: 400px;"></div>
@@ -100,9 +100,9 @@
 
                 <el-row :gutter="10">
                     <el-col :span="24">
-                        <el-card class="box-card"  v-loading="weboLoading" element-loading-text="加载中……">
+                        <el-card class="box-card">
                             <div slot="header" class="clearfix">
-                                <span class="icons icons-chart5"></span><span>两微洞察</span>
+                                <span class="icons icons-chart5"></span><span>活跃微博排行</span>
                             </div>
                             <div class="text item">
                                 <el-table :data="webo" :resizable="false" style="width: 100%" border class="tran-table">
@@ -134,7 +134,10 @@
                     </el-col>
 
                     <el-col :span="24">
-                        <el-card class="box-card" v-loading="wechatLoading" element-loading-text="加载中……">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span class="icons icons-chart5"></span><span>活跃微信排行</span>
+                            </div>
                             <div class="text item">
                                 <el-table :data="wechat" :resizable="false" style="width: 100%" border class="tran-table">
                                     <el-table-column label="排名" align="center" prop="rank">
@@ -334,7 +337,7 @@
     export default{
         data(){
             return {
-                loading: true,
+                loading: false,
                 wechatLoading: true,
                 weboLoading: true,
                 param: {},
@@ -367,7 +370,7 @@
                         name:"情报内参",to:{path:"/home/industryNews"}
                     },
                     {
-                        name:"内参报告",to:{path:"/home/report"}
+                        name:"教育简报",to:{path:"/home/report"}
                     },
                     {
                         name:"报告详情"
@@ -409,7 +412,7 @@
                 let chart = echarts.init(document.getElementById('personageTop10Chart'),'vintage');
                 chart.showLoading();
                 this.$nextTick(function() {
-                    this.$http.get('/apis/internalRefReport/findInternalRefPersonTOP10.json/' + this.param.id).then(
+                    this.$http.get('/apis/briefReport/findInternalRefPersonTOP10.json/' + this.param.id).then(
                         (response) => {
                             if (response.data.success) {
                                 chart.setOption(response.data.data.echarts);
@@ -431,7 +434,7 @@
             },
 
             getVectorTable() {
-                this.$http.get('/apis/internalRefReport/getVectorTable.json/' + this.param.id).then(
+                this.$http.get('/apis/briefReport/getVectorTable.json/' + this.param.id).then(
                     (response) => {
                         if (response.data.success) {
                             this.distributeData = response.data.data;
@@ -450,7 +453,7 @@
                 echarts.registerTheme('vintage', vintage);
                 let chart = echarts.init(document.getElementById('univsChart'),'vintage');
                 chart.showLoading();
-                this.$http.get('/apis/internalRefReport/findUniversityMediaAttention.json/' + this.param.id).then(
+                this.$http.get('/apis/briefReport/findUniversityMediaAttention.json/' + this.param.id).then(
                     (response) => {
                         if (response.data.success) {
                             chart.setOption(response.data.data);
@@ -469,7 +472,7 @@
                 );
             },
             get2VSee(vector) {
-                let param = {pageNumber: 0, pageSize: 10, vector: [vector], startDate: this.param.createDate + ' 00:00:00', endDate: this.param.endDate + ' 23:59:59'};
+                let param = {pageNumber: 0, pageSize: 10, vector: [vector], startDate: this.param.startDate + ' 00:00:00', endDate: this.param.endDate + ' 23:59:59'};
                 let apiUrl;
                 if ("微博" == vector) {
                     this.weboLoading = true;
@@ -513,7 +516,7 @@
                 );
             },
             getWechatHot() {
-                this.$http.get('/apis/internalRefReport/findWeChatInsightInfo.json/' + this.param.id).then(
+                this.$http.get('/apis/briefReport/findWeChatInsightInfo.json/' + this.param.id).then(
                     (response) => {
                         if (response.data.success) {
                             this.wechatHot = response.data.data.content;
@@ -528,7 +531,7 @@
                 );
             },
             getWeboHot() {
-                this.$http.get('/apis/internalRefReport/findWeboInsightInfo.json/' + this.param.id).then(
+                this.$http.get('/apis/briefReport/findWeboInsightInfo.json/' + this.param.id).then(
                     (response) => {
                         if (response.data.success) {
                             this.weboHot = response.data.data.content;
@@ -558,9 +561,7 @@
             }
         },
         mounted(){
-            this.findInternalRefSummary();
             this.getPersonageRank();
-            this.getVectorDistribution();
             this.getVectorTable();
             this.getUnivsMediaFocus();
             this.get2VSee('微博');

@@ -29,7 +29,7 @@
                                 <span class="endDate">{{item.endDate.substring(0, 10).split('-').join('/')}}</span>
                             </div>
                             <div class="btn-area">
-                                <el-button type="primary" size="small" @click="viewBriefReport(item.id)">预览</el-button>
+                                <el-button type="primary" size="small" @click="viewBriefReport(item)">预览</el-button>
                                 <el-button type="primary" size="small" @click="deleteBriefReport(item.id)">删除</el-button>
                                 <el-button type="primary" size="small" @click="downloadReport(item.id)">下载</el-button>
                             </div>
@@ -50,12 +50,12 @@
                         <div class="item" v-for="item in referenceData">
                             <div class="title">{{item.title}}</div>
                             <div class="date">
-                                <span class="beginDate">{{item.startDate}}</span>
+                                <span class="beginDate">{{item.startDate.substring(0, 10).split('-').join('/')}}</span>
                                 &nbsp;- &nbsp;
-                                <span class="endDate">{{item.endDate}}</span>
+                                <span class="endDate">{{item.endDate.substring(0, 10).split('-').join('/')}}</span>
                             </div>
                             <div class="btn-area">
-                                <el-button type="primary" size="small" @click="viewRefReport(item.id)">预览</el-button>
+                                <el-button type="primary" size="small" @click="viewRefReport(item)">预览</el-button>
                                 <el-button type="primary" size="small" @click="deleteRefReport(item.id)">删除</el-button>
                                 <el-button type="primary" size="small" @click="downloadReport(item.id)">下载</el-button>
                             </div>
@@ -414,8 +414,22 @@
                 }
             },
 
-            viewBriefReport(id){
-                console.log(id)
+            viewBriefReport(data){
+                //参数不过全部带过去
+                var param = {
+                    title: data.title,
+                    startDate: data.startDate.substring(0, 10),
+                    endDate: data.endDate.substring(0, 10),
+                    id: data.id
+                }
+                this.$router.push({path: "/home/briefDetails", query: param});
+            },
+
+            viewRefReport(data){
+                var param = $.extend({}, data);
+                param.startDate = param.startDate.substring(0, 10);
+                param.endDate = param.endDate.substring(0, 10);
+                this.$router.push({path: "/home/referenceDetails", query: param});
             },
 
             deleteBriefReport(id){
@@ -510,7 +524,7 @@
                             endDate:  new Date(this.refForm.endDate).format('yyyy-MM-dd 23:59:59'),
                             college: this.refForm.colleges.toString(),
                             ministries: this.refForm.ministries.toString(),
-                            title: '舆情报告',
+                            title: '内参报告',
                             keywords:　this.refForm.keyWords
                         }
 

@@ -500,6 +500,7 @@
         text-align: center;
         font-size: 14px;
         margin-top: 30px;
+        min-height: 261px;
     }
 </style>
 <style lang="scss">

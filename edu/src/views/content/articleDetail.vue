@@ -241,6 +241,7 @@
                 .no-data {
                     text-align: center;
                     padding: 20px;
+                    min-height: 261px;
                 }
             }
         }
