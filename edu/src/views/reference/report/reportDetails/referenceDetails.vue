@@ -309,6 +309,7 @@
         data(){
            return{
                param: {},
+               requestParam : {},
                loading: false,
                detail: {
                    introduction: '慧数教育通过对教育行业大数据的解析、聚类、计算和挖掘，按照教育头条、人物动态、两微洞察和媒体声誉四大功能模块，对数据进行多维度的匹配。本报告中总共有180篇文章、20位人物、40个微博、40个微信，其中教育头条50篇，省厅领导10位、高校领导10位、知名学者20位、省厅微信30条、省厅微博30条、高校微信30条、高校微博30条、微博大V10条、微信大V10条，关键词云50个。',
@@ -365,19 +366,17 @@
                 ];
                 this.$store.commit("setBreadCrumb",breadcrumb);
             },
+
             downloadReport(){
                 console.log(111)
             },
 
+            /**
+             * 导读 内参概述
+             * */
             getIntroduction(){
-                var requestParam = {
-                    endDate: this.param.endDate,
-                    startDate: this.param.startDate,
-//                    keywords: this.param.keywords,
-                    college: this.param.college.split(',')
-                }
-                console.log(requestParam)
-                this.$http.post('/apis/referenceReport/findInternalControlReportIntroduction.json', requestParam).then(
+                console.log(this.requestParam)
+                this.$http.post('/apis/referenceReport/findInternalControlReportIntroduction.json', this.requestParam).then(
                     (response) => {
                         if(response.data.success){
                             console.log(response.data.data)
@@ -389,7 +388,7 @@
                     }
                 )
 
-                this.$http.post('/apis/referenceReport/findReferenceOverview.json', requestParam).then(
+                this.$http.post('/apis/referenceReport/findReferenceOverview.json', this.requestParam).then(
                     (response) => {
                         if(response.data.success){
                             console.log(response.data.data)
@@ -401,12 +400,188 @@
                     }
                 )
             },
+
+            /**
+             * 信息来源统计
+             * */
+            getSourceStatistics(){
+                this.$http.post('/apis/referenceReport/findInformationSourcesStatistics.json', this.requestParam).then(
+                    (response) => {
+                        if(response.data.success){
+
+                        }else {
+                            console.error(response.data.message);
+                        }
+                    }, (response) =>{
+                        console.error(response);
+                    }
+                )
+            },
+
+            /**
+             * 情感分布图
+             */
+            getEmotionDistribution(){
+                this.$http.post('/apis/referenceReport/findEmotionDistribution.json', this.requestParam).then(
+                    (response) =>{
+                        var data = response.data;
+                        console.log(data)
+                        if(data.success){
+
+                        }else {
+                            console.error(data.message);
+                        }
+                    }, (response) => {
+                        console.error(response)
+                    }
+                )
+            },
+
+            /***
+             * 教育头条: 部委省厅
+             * */
+            getEducationMinistries(){
+                this.$http.post('/apis/referenceReport/findEducationHeadlinesMinistries.json', this.requestParam).then(
+                    (response) =>{
+                        if(response.data.success){
+                            console.log(response.data)
+                        }else {
+                            console.error(response.data.message)
+                        }
+                    }, (response) =>{
+                        console.error(response)
+                    }
+                )
+            },
+
+            /**
+             * 人物动态: 部委省厅
+             * */
+            getCharacterMinistries(){
+                this.$http.post('/apis/referenceReport/findMinistriesNewsList.json', this.requestParam).then(
+                    (response) =>{
+                        if(response.data.success){
+                            console.log(response.data)
+                        }else {
+                            console.error(response.data.message)
+                        }
+                    }, (response) =>{
+                        console.error(response)
+                    }
+                )
+            },
+
+            /**
+             * 人物动态: 高校领导
+             * */
+            getCharacterSchoolLeaders(){
+                this.$http.post('/apis/referenceReport/findLeadingScholarsRankingList.json', this.requestParam).then(
+                    (response) =>{
+                        if(response.data.success){
+                            console.log(response.data)
+                        }else {
+                            console.error(response.data.message)
+                        }
+                    }, (response) =>{
+                        console.error(response)
+                    }
+                )
+            },
+
+            /**
+             * 两微洞察
+             */
+            getTwoMicroInsight(){
+                this.$http.post('/apis/referenceReport/findTwoMicroInsightIndexRanking.json', this.requestParam).then(
+                    (response) =>{
+                        if(response.data.success){
+                            console.log(response.data)
+                        }else {
+                            console.error(response.data.message)
+                        }
+                    }, (response) =>{
+                        console.error(response)
+                    }
+                )
+            },
+
+            /**
+             * 媒体声誉: 官媒报道
+             * */
+            getMediaReport(){
+                this.$http.post('/apis/referenceReport/mediaReputationList.json', this.requestParam).then(
+                    (response) =>{
+                        if(response.data.success){
+                            console.log(response.data)
+                        }else {
+                            console.error(response.data.message)
+                        }
+                    }, (response) =>{
+                        console.error(response)
+                    }
+                )
+            },
+
+            /**
+             * 媒体声誉: 高校媒体声量排行
+             * */
+            getMediaVolumeRanking(){
+                this.$http.post('/apis/referenceReport/mediaReputationList.json', this.requestParam).then(
+                    (response) =>{
+                        if(response.data.success){
+                            console.log(response.data)
+                        }else {
+                            console.error(response.data.message)
+                        }
+                    }, (response) =>{
+                        console.error(response)
+                    }
+                )
+            },
+
+            /**
+             * 大微观点
+             */
+            getBigPoint(){
+                this.$http.post('/apis/referenceReport/findBigPointV.json', this.requestParam).then(
+                    (response) =>{
+                        var data = response.data;
+                        if(data.success){
+
+                        }else {
+                            console.error(data.message);
+                        }
+                    }, (response) => {
+                        console.error(response)
+                    }
+                )
+            },
+
+
         },
         mounted(){
             this.getIntroduction();
+            this.getSourceStatistics();
+            this.getEmotionDistribution();
+            this.getEducationMinistries();
+            this.getCharacterMinistries();
+            this.getCharacterSchoolLeaders();
+            this.getTwoMicroInsight();
+            this.getMediaReport();
+            this.getMediaVolumeRanking();
+            this.getBigPoint();
         },
         created(){
             this.param = this.$route.query;
+            var requestParam1 = {
+                startDate: this.param.startDate + ' 00:00',
+                endDate: this.param.endDate + ' 23:59',
+                keywords: this.param.keywords,
+                university: this.param.college.split(','),
+                pageNum: 1,
+                pageSize: 10
+            };
+            this.requestParam = requestParam1;
             this.setBreadCrumb();
         }
     }

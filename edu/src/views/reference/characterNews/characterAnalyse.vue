@@ -129,13 +129,21 @@
 
         <div class="base-info-box">
             <el-row :gutter="10">
-                <el-col :span="24">
+                <el-col :span="12">
                     <el-card class="box-card educationBox" style="height: 520px;margin-top: 0px">
                         <div slot="header" class="clearfix">
                             <span class="icons icons-chart6"></span><span>情感指数</span>
                         </div>
                         <div class="text item">
                             <div class="charts" id="emotionIndex_graph" style="height: 400px;"></div>
+                        </div>
+                    </el-card>
+                </el-col>
+                <el-col :span="12">
+                    <el-card class="box-card">
+                        <div slot="header">相关信息</div>
+                        <div class="text item">
+
                         </div>
                     </el-card>
                 </el-col>
@@ -169,11 +177,37 @@
             </el-row>
         </div>
         <div class="base-info-box">
+            <el-row :gutter="10">
+                <el-col :span="24">
+                    <el-card class="box-card educationBox">
+                        <div slot="header">载体趋势周统计图</div>
+                        <div class="item text">
+                            <div class="charts" id="trend_week_statistics" style="height: 400px;"></div>
+
+                            <el-table class="tran-table no-col-title" border style="width: 100%">
+
+                            </el-table>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </div>
+        <div class="base-info-box">
             <el-row>
                 <el-col :span="24">
                     <el-card class="box-card educationBox">
                         <div class="clearfix" slot="header">
-                            <span>最新</span><span>近7天</span><span>近30天</span>
+                            载体分布统计图
+                        </div>
+                        <div class="item text">
+                            <el-row :gutter="10">
+                                <el-col :span="12">
+                                    <!--图-->
+                                </el-col>
+                                <el-col :span="12">
+                                    <!--表-->
+                                </el-col>
+                            </el-row>
                         </div>
                     </el-card>
                 </el-col>

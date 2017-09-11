@@ -32,7 +32,11 @@
                     <ul id="collegeSpellUl">
                         <li class="search-list special-list" v-for="item in colleges" @click="showCollegeEvent(item)">{{item.label}}</li>
                     </ul>
-                    <ul id="college-list"></ul>
+                    <ul id="college-list" v-show="showCollegeDetail">
+                        <li class="search-list" v-for="item in collegeDetails" :class="{'search-selected': item.selected}" @click="searchLiClick(item)">
+                            {{item.label}}
+                        </li>
+                    </ul>
                 </el-col>
             </el-row>
             <el-row id="weiSiteDiv" v-show="showWebSites">
@@ -78,35 +82,40 @@
                      background: #e6e6e6;
                      padding-left: 20px;
                  }
-
-                ul{
-                    position: relative;
-                    min-height: 44px;
-
-                    .search-list {
-                        display: inline-block;
-                        text-align: center;
-                        padding-left: 15px;
-                        padding-right: 15px;
-                        cursor: pointer;
-                        height: 44px;
-                        min-width: 44px;
-
-                        &.special-list{
-                             min-width: 30px;
-                             padding: 0px 8px;
-                         }
-                    }
-
-                    .date-search-li{
-                        position: absolute;
-                        padding-top: 1px;
-                    }
-                }
             }
         }
         .search-selected {
             color: #60a3ff;
+        }
+    }
+
+
+    ul{
+        position: relative;
+        min-height: 44px;
+
+        .search-list {
+            display: inline-block;
+            text-align: center;
+            padding-left: 15px;
+            padding-right: 15px;
+            cursor: pointer;
+            height: 44px;
+            min-width: 44px;
+
+            &.special-list{
+                 min-width: 30px;
+                 padding: 0px 8px;
+             }
+
+             &.special-list:first-child{
+                  padding-left: 15px;
+             }
+        }
+
+        .date-search-li{
+            position: absolute;
+            padding-top: 1px;
         }
     }
 </style>
@@ -122,6 +131,7 @@
                 colleges: colleges,
                 showProvince: false,
                 showCollege: false,
+                showCollegeDetail: false,
                 searchData: [
                     {   'name': 'topNews',
                         'title': '新闻头条:',
@@ -187,11 +197,15 @@
                     {value: '搜狐教育', text: '搜狐教育'},
                     {value: '网易教育', text: '网易教育'}
                 ],
-                showWebSites: false
+                showWebSites: false,
+                collegeDetails: []
             }
         },
         methods:{
             searchLiClick(item, index, data){
+                this.showCollegeDetail = false;
+                $('#college-list').empty();
+
                 for (var i  in data.searchList) {
                     data.searchList[i].selected = false;
                 }
@@ -203,7 +217,7 @@
 
                     this.provinces[0].selected = true;
                     this.showProvince = true;
-
+                    this.judgeHeight();
                 }else if(item.clickEvent && item.clickEvent == 'handleCollegeClick'){
                     this.showProvince = false;
                     this.showWebSites = false;
@@ -213,7 +227,9 @@
                     this.showCollege = false;
                     this.showProvince = false;
 
+
                     this.showWebSites = true;
+                    this.judgeHeight();
                 }else {
                     this.showCollege = false;
                     this.showProvince = false;
@@ -234,19 +250,17 @@
 
             showCollegeEvent(item){
                 console.log(item)
-                $('#college-list').empty();
-                var options = item.options;
-                if(options){
-                    var li = '';
-                    for(var i in options){
-                        li = li + '<li class="search-list">' + options[i].label + '</li>';
-                    }
+                this.collegeDetails = [];
 
-                    $('#college-list').append(li);
+                var options = item.options;
+                if(options.length > 0){
+                    this.collegeDetails = options;
+                    this.showCollegeDetail = true;
                 }else {
                     //
                     if(item.label == '全部'){
                         //特殊处理搜索全部
+                        this.showCollegeDetail = false;
                     }
                 }
             },
