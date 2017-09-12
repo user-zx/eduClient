@@ -240,20 +240,19 @@
             judgeHeight(){
                 this.$nextTick(function () {
                     $('.publicSearch .el-row').each(function (index) {
-                        if($(this).find('ul').height() > 47){
-                            let height = $(this).height();
-                            $(this).find('.el-col').height(height);
+                        let $this = $(this), $ul = $(this).find('ul');
+                        if(($ul.length == 1 && $ul.height() > 47) || ($ul.length > 1 && this.showCollegeDetail == true)){
+                            let height = $this.height();
+                            $this.find('.el-col').height(height);
                         }
                     })
                 });
             },
 
             showCollegeEvent(item){
-                console.log(item)
                 this.collegeDetails = [];
-
                 var options = item.options;
-                if(options.length > 0){
+                if(options && options.length > 0){
                     this.collegeDetails = options;
                     this.showCollegeDetail = true;
                 }else {
@@ -265,10 +264,6 @@
                 }
             },
 
-            //动态搜索框的高度计算
-            resetDynamicHeight(id){
-
-            }
         },
         props: ["searchNames"],
         mounted(){
@@ -291,7 +286,6 @@
 
             //
             this.judgeHeight();
-            console.log(this.colleges);
         }
     }
 </script>
